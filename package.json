@@ -1,0 +1,33 @@
+{
+  "name": "mikeworks-sql",
+  "version": "0.0.0",
+  "description": "Mike.Works SQL Fundamentals Course",
+  "main": "index.js",
+  "repository": "https://github.com/mike-north/sql-fundamentals.git",
+  "author": "Mike North <michael.l.north@gmail.com> (https://mike.works)",
+  "license": "NOLICENSE",
+  "private": true,
+  "engines": {
+    "node": ">= 9"
+  },
+  "scripts": {
+    "start": "scripty",
+    "build": "scripty"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "commander": "^2.11.0",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "sqlite3": "^3.1.13",
+    "scripty": "^1.7.2"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/commander": "^2.11.0",
+    "@types/debug": "0.0.30",
+    "@types/node": "^8.0.53",
+    "@types/sqlite3": "^3.1.1",
+    "typescript": "^2.6.1"
+  }
+}

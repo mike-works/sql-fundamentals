@@ -1,0 +1,4 @@
+*.sqlite
+node_modules
+dist
+!master.sqlite
