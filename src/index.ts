@@ -1,15 +1,27 @@
-import { existsSync } from "fs";
-import * as commander from 'commander';
-import { PROJECT_ROOT } from "./constants";
-import { initializeDb } from "./db/setup";
 import chalk from 'chalk';
+import * as commander from 'commander';
+import * as express from 'express';
+import { existsSync } from 'fs';
+import { PORT, PROJECT_ROOT } from './constants';
+import { initializeDb } from './db/setup';
+import { logger } from './utils';
 
+// tslint:disable-next-line:no-var-requires
 const pkg = require('../package.json');
 
-const app = commander
+const program = commander
   .version(pkg.version)
   .parse(process.argv);
 
 (async function main() {
   await initializeDb('dev');
-}())
+  const app = express();
+
+  app.get('/', (req, res) => {
+    res.send('hello');
+  });
+
+  const server = app.listen(PORT, () => {
+    logger.info('Server listening on http://localhost:3000');
+  });
+}());

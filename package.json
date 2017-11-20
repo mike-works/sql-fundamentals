@@ -12,22 +12,29 @@
   },
   "scripts": {
     "start": "scripty",
+    "bump": "npm run build && npm start",
+    "watch": "scripty",
+    "watch:debug": "scripty",
     "build": "scripty"
   },
   "dependencies": {
     "chalk": "^2.3.0",
     "commander": "^2.11.0",
-    "debug": "^3.1.0",
     "express": "^4.16.2",
+    "fs-extra": "^4.0.2",
+    "scripty": "^1.7.2",
     "sqlite3": "^3.1.13",
-    "scripty": "^1.7.2"
+    "winston": "^2.3.7"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.11.0",
-    "@types/debug": "0.0.30",
+    "@types/fs-extra": "^4.0.5",
     "@types/node": "^8.0.53",
     "@types/sqlite3": "^3.1.1",
+    "@types/winston": "^2.3.7",
+    "nodemon": "^1.12.1",
+    "tslint": "^5.8.0",
     "typescript": "^2.6.1"
   }
 }
