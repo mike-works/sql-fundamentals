@@ -15,7 +15,7 @@
     "bump": "npm run build && npm start",
     "watch": "scripty",
     "watch:debug": "scripty",
-    "test": "echo 'no tests'",
+    "test": "npm run build",
     "build": "scripty"
   },
   "dependencies": {

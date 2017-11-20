@@ -4,6 +4,8 @@ node_js:
 - '7'
 - '8'
 - '9'
+
+build:
 deploy:
   provider: heroku
   api_key:
