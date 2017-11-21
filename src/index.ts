@@ -4,6 +4,7 @@ import * as express from 'express';
 import { existsSync } from 'fs';
 import { PORT, PROJECT_ROOT } from './constants';
 import { initializeDb } from './db/setup';
+import router from './routes/main';
 import { logger } from './utils';
 
 // tslint:disable-next-line:no-var-requires
@@ -17,9 +18,7 @@ const program = commander
   await initializeDb('dev');
   const app = express();
 
-  app.get('/', (req, res) => {
-    res.send('hello0000oooooO');
-  });
+  app.use(router);
 
   const server = app.listen(PORT, () => {
     logger.info('Server listening on http://localhost:3000');
