@@ -1,0 +1,27 @@
+<div class="mui-container">
+  <h1>
+    <span class="mui-badge mui--pull-right">{{customer.Id}}</span>
+    {{customer.CompanyName}}
+  </h1>
+  <div class="mui-panel">
+    <div class="mui-row">
+      <div class="mui-col-md-6">
+        <h3>Contact Info</h3>
+        <p>
+          <strong>{{customer.ContactName}}</strong><br>
+          {{customer.ContactTitle}}
+        </p>
+        <p>
+          <div><strong>Phone: </strong> {{customer.Phone}}</div>
+          <div><strong>Fax: </strong> {{customer.Fax}}</div>
+        </p>
+        <p>
+          <div>{{customer.Address}}</div>
+          <div>{{customer.City}}, {{customer.Country}} {{customer.PostalCode}}</div>
+          <div>{{customer.Region}}</div>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>

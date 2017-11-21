@@ -7,6 +7,7 @@
     ],
     "interface-name": false,
     "trailing-comma": false,
-    "quotemark": [true, "single"]
+    "quotemark": [true, "single"],
+    "prefer-const": [false]
   }
 }

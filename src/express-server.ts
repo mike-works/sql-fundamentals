@@ -4,8 +4,9 @@ import * as expressWinston from 'express-winston';
 import * as http from 'http';
 import * as winston from 'winston';
 import { PORT } from './constants';
-import router from './routes/main';
-import { logger } from './utils';
+import { loadHandlebarsHelpers } from './load-helpers';
+import { logger } from './log';
+import router from './routers/main';
 
 async function startListening(app: express.Express): Promise<http.Server> {
   return new Promise<http.Server>((res, rej) => {
@@ -16,10 +17,11 @@ async function startListening(app: express.Express): Promise<http.Server> {
   });
 }
 
-function setupTemplating(app: express.Application) {
+async function setupTemplating(app: express.Application) {
   app.engine('.hbs', exphbs({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: await loadHandlebarsHelpers()
   }));
   app.set('view engine', '.hbs');
 }
@@ -28,7 +30,7 @@ function installMiddlewares(app: express.Application) {
   app.use(expressWinston.logger({
     // expressFormat: true,
     meta: false,
-    msg: '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms) {{req.url}}',
+    msg: '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
     transports: [
       new winston.transports.Console({
         colorize: true
@@ -41,7 +43,7 @@ function installMiddlewares(app: express.Application) {
 
 }
 
-function setupRouting(app: express.Application) {
+async function setupRouting(app: express.Application) {
   app.use(router);
   app.use('/static', express.static('public'));
 }
@@ -50,9 +52,9 @@ export async function startExpressServer(): Promise<[express.Application, http.S
   const app = express();
   app.disable('x-powered-by');
 
-  setupTemplating(app);
-  installMiddlewares(app);
-  setupRouting(app);
+  await setupTemplating(app);
+  await installMiddlewares(app);
+  await setupRouting(app);
 
   const server = await startListening(app);
   return [app, server];

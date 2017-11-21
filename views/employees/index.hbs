@@ -1,0 +1,17 @@
+<div class="mui-container">
+  <h1>All Employees</h1>
+  <ul class='collection'>
+    {{#each employees as |e|}}
+      <li>
+        <a class='mui-panel' href="/employees/{{e.Id}}">
+          <span class='mui-badge mui--pull-right'>{{e.Title}}</span>
+          <h3 class='mui-panel__title'>{{e.LastName}}, {{e.FirstName}}</h3>
+          <p><strong>Region: </strong>  {{e.Region}}</p>
+          <p><strong>Hired: </strong>  {{e.HireDate}}</p>
+        </a>
+      </li>
+    {{else}}
+      <li>No employees</li>
+    {{/each}}
+  </ul>
+</div>

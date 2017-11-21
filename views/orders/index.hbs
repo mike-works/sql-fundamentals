@@ -1,0 +1,25 @@
+<div class="mui-container">
+  <h1>All Orders</h1>
+  <div class="mui-panel">
+    <table class="mui-table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>CustomerId</th>
+          <th>EmployeeId</th>
+          <th>Ship To</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders as |o|}}
+        <tr>
+          <td>{{o.Id}}</td>
+          <td>{{o.CustomerId}}</td>
+          <td>{{o.EmployeeId}}</td>
+          <td>{{o.ShipCity}}, {{o.ShipCountry}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
