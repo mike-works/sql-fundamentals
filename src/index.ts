@@ -14,5 +14,5 @@ const program = commander
 
 (async function main() {
   await initializeDb('dev');
-  const { server, app } = await startExpressServer();
+  const [app, server] = await startExpressServer();
 }());

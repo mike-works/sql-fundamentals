@@ -37,6 +37,7 @@
     "@types/sqlite3": "^3.1.1",
     "@types/winston": "^2.3.7",
     "express-handlebars": "^3.0.0",
+    "express-winston": "^2.4.0",
     "nodemon": "^1.12.1",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1"
