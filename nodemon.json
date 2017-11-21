@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "*.sqlite",
+    ".git",
+    "dist/**",
+    "node_modules/**"
+  ],
+  "watch": [
+    "src",
+    "views",
+    "public"
+  ],
+  "ext": "ts hbs handlebars js json yaml yml css"
+}
