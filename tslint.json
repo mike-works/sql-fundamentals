@@ -6,6 +6,7 @@
       "always"
     ],
     "interface-name": false,
+    "trailing-comma": false,
     "quotemark": [true, "single"]
   }
 }
