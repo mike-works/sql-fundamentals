@@ -3,11 +3,10 @@
     "module": "commonjs",
     "target": "es2015",
     "inlineSourceMap": true,
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "outDir": "dist",
     "strict": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src", "tests"]
 }
