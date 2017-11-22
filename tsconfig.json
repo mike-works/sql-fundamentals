@@ -6,7 +6,8 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "outDir": "dist",
+    "baseUrl": ".",
     "strict": true
   },
-  "include": ["src", "tests"]
+  "include": ["src"]
 }
