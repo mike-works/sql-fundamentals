@@ -15,6 +15,7 @@
     "bump": "npm run build && npm start",
     "watch": "scripty",
     "watch:debug": "scripty",
+    "heroku-postinstall": "npm run build",
     "test": "scripty",
     "build": "scripty"
   },
