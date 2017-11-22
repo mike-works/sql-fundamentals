@@ -1799,9 +1799,9 @@ sqlite3@^3.1.13, sqlite3@^3.1.8:
     nan "~2.7.0"
     node-pre-gyp "~0.6.38"
 
-sqlite@^2.8.0:
+sqlite@mike-north/node-sqlite#master:
   version "2.8.0"
-  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.8.0.tgz#acb6d1869a5241c57016c88606eca009f0f31b90"
+  resolved "https://codeload.github.com/mike-north/node-sqlite/tar.gz/c43c2a6ac4763bab4109a21979fa0c41c5f8259d"
   dependencies:
     sqlite3 "^3.1.8"
 
