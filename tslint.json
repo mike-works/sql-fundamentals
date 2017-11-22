@@ -1,13 +1,11 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "semicolon": [
-      true,
-      "always"
-    ],
+    "semicolon": [true, "always"],
     "interface-name": false,
     "trailing-comma": false,
     "quotemark": [true, "single"],
+    "arrow-parens": [false],
     "prefer-const": [false]
   }
 }

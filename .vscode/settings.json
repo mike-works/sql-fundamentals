@@ -4,5 +4,6 @@
     "**/dist": true,
     "**/node_modules": true,
     "**/bower_components": true
-  }
+  },
+  "editor.formatOnSave": true
 }

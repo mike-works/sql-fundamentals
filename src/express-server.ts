@@ -18,29 +18,34 @@ async function startListening(app: express.Express): Promise<http.Server> {
 }
 
 async function setupTemplating(app: express.Application) {
-  app.engine('.hbs', exphbs({
-    defaultLayout: 'main',
-    extname: '.hbs',
-    helpers: await loadHandlebarsHelpers()
-  }));
+  app.engine(
+    '.hbs',
+    exphbs({
+      defaultLayout: 'main',
+      extname: '.hbs',
+      helpers: await loadHandlebarsHelpers()
+    })
+  );
   app.set('view engine', '.hbs');
 }
 
 function installMiddlewares(app: express.Application) {
-  app.use(expressWinston.logger({
-    // expressFormat: true,
-    meta: false,
-    msg: '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
-    transports: [
-      new winston.transports.Console({
-        colorize: true
-      })
-    ],
-    skip(req: express.Request, res: express.Response) {
-      return /^\/static\//.test(req.path);
-    }
-  }));
-
+  app.use(
+    expressWinston.logger({
+      // expressFormat: true,
+      meta: false,
+      msg:
+        '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
+      transports: [
+        new winston.transports.Console({
+          colorize: true
+        })
+      ],
+      skip(req: express.Request, res: express.Response) {
+        return /^\/static\//.test(req.path);
+      }
+    })
+  );
 }
 
 async function setupRouting(app: express.Application) {
@@ -48,9 +53,24 @@ async function setupRouting(app: express.Application) {
   app.use('/static', express.static('public'));
 }
 
-export async function startExpressServer(): Promise<[express.Application, http.Server]> {
-  const app = express();
+async function setupDevMiddleware(app: express.Application) {
+  app.enable('x-powered-by');
+}
+
+async function setupProdMiddleware(app: express.Application) {
   app.disable('x-powered-by');
+}
+
+export async function startExpressServer(): Promise<
+  [express.Application, http.Server]
+> {
+  const app = express();
+
+  if (process.env.NODE_ENV !== 'prod') {
+    await setupDevMiddleware(app);
+  } else {
+    await setupProdMiddleware(app);
+  }
 
   await setupTemplating(app);
   await installMiddlewares(app);

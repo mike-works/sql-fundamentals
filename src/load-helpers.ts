@@ -22,14 +22,16 @@ async function readdir(name: string): Promise<string[]> {
 
 async function getHelperNames() {
   let files: string[] = await readdir(join(PROJECT_ROOT, 'src', 'helpers'));
-  return files.map((f) => f.split('.')[0]);
+  return files.map(f => f.split('.')[0]);
 }
 
 export async function loadHandlebarsHelpers(): Promise<HelperSet> {
   let helperNames = await getHelperNames();
   let helpers: HelperSet = {};
   helperNames.reduce<HelperSet>((set, name) => {
-    return Object.assign(set, { [`${name}`]: require(`./helpers/${name}`).default});
+    return Object.assign(set, {
+      [`${name}`]: require(`./helpers/${name}`).default
+    });
   }, helpers);
   return helpers;
 }

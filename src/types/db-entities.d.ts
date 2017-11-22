@@ -1,7 +1,7 @@
 type DBRecordReference = number | string;
 
 interface DBRecord {
-  Id: DBRecordReference
+  Id: DBRecordReference;
 }
 
 interface Category extends DBRecord {
@@ -84,7 +84,7 @@ interface Shipper extends DBRecord {
 }
 
 interface Supplier extends Customer {
-  HomePage: string
+  HomePage: string;
 }
 
 interface Territory extends DBRecord {

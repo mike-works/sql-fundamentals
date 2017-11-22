@@ -10,4 +10,4 @@ const pkg = require('../package.json');
 (async function main() {
   await initializeDb('dev');
   const [app, server] = await startExpressServer();
-}());
+})();

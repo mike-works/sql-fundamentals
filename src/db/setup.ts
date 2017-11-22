@@ -11,7 +11,9 @@ const copyFile = promisify(fs.copyFile);
 export async function initializeDb(dbName = 'dev') {
   let pth = dbPath(dbName);
   if (!fs.existsSync(pth)) {
-    logger.debug(`Database ${dbName} was not found at ${pth}... creating it now`);
+    logger.debug(
+      `Database ${dbName} was not found at ${pth}... creating it now`
+    );
     await copyFile(MASTER_DB_FILE, pth);
   }
 }
