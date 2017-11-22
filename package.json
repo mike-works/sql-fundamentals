@@ -8,7 +8,7 @@
   "license": "NOLICENSE",
   "private": true,
   "engines": {
-    "node": ">= 9"
+    "node": ">= 8"
   },
   "scripts": {
     "start": "scripty",
