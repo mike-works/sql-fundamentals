@@ -1,10 +1,10 @@
-import * as fs from "fs-extra";
-import { promisify } from "util";
+import * as fs from 'fs-extra';
+import { promisify } from 'util';
 
-import { MASTER_DB_FILE } from "../constants";
+import { MASTER_DB_FILE } from '../constants';
 
-import { dbPath } from "./utils";
-import { logger } from "../utils";
+import { logger } from '../log';
+import { dbPath } from './utils';
 
 const copyFile = promisify(fs.copyFile);
 

@@ -5,8 +5,7 @@
     "inlineSourceMap": true,
     "moduleResolution": "node",
     "outDir": "dist",
-    "strict": true,
-    "allowJs": true
+    "strict": true
   },
   "include": [
     "src"

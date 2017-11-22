@@ -1,0 +1,51 @@
+body {
+  background: #eee;
+}
+
+ul.nav, ul.collection {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.nav > li,
+ul.collection > li {
+  list-style: none;
+}
+
+ul.nav > li {
+  display: inline-block;
+}
+
+ul.nav li.nav-item a {
+  color: white;
+  display: inline-block;
+  text-transform: uppercase;
+  line-height: 64px;
+  padding: 0 10px;
+}
+
+ul.collection > li {
+  display: block;
+}
+
+
+ul.collection > li a {
+  display: block;
+  color: inherit;
+}
+ul.collection > li a:hover {
+  text-decoration: none;
+}
+
+.mui-panel .mui-panel__title {
+  margin-top: 0;
+}
+
+.mui-badge {
+  background: #666;
+  color: white;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
