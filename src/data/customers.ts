@@ -11,9 +11,22 @@ export async function getAllCustomers(
   options: CustomerCollectionOptions = {}
 ): Promise<Customer[]> {
   const db = await getDb();
-  return await db.all(sql`
+  let whereClause = '';
+  let params: any[] = [];
+  if (options.filter) {
+    whereClause = sql`
+WHERE companyname LIKE $1
+OR contactname LIKE $1
+`;
+    params.push(`%${options.filter}%`);
+  }
+  return await db.all(
+    sql`
 SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
-FROM Customer`);
+FROM Customer ${whereClause}
+`,
+    ...params
+  );
 }
 
 export async function getCustomer(id: string | number): Promise<Customer> {

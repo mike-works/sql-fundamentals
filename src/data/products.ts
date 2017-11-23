@@ -30,13 +30,33 @@ const ALL_PRODUCT_COLUMNS = [
   'unitsonorder'
 ];
 
+function whereClauseForFilter(filter: ProductCollectionFilter) {
+  const expressions: string[] = [];
+  if (filter.inventory) {
+    switch (filter.inventory) {
+      case 'discontinued':
+        expressions.push('discontinued = 1');
+        break;
+      case 'needs-reorder':
+        expressions.push('discontinued = 0');
+        expressions.push('(unitsonorder + unitsinstock) < reorderlevel');
+        break;
+    }
+  }
+  if (expressions.length === 0) {
+    return '';
+  }
+  return sql`WHERE ${expressions.join(' AND ')}`;
+}
+
 export async function getAllProducts(
   opts: Partial<ProductCollectionOptions> = {}
 ): Promise<Product[]> {
   const db = await getDb();
+  const wh = opts && opts.filter ? whereClauseForFilter(opts.filter) : '';
   return await db.all(sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product`);
+FROM Product ${wh}`);
 }
 
 export async function getProduct(id: number | string): Promise<Product> {
