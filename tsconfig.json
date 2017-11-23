@@ -4,6 +4,7 @@
     "target": "es2015",
     "inlineSourceMap": true,
     "experimentalDecorators": true,
+    "strictFunctionTypes": true,
     "moduleResolution": "node",
     "outDir": "dist",
     "baseUrl": ".",

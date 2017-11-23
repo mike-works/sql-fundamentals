@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as sqlite from 'sqlite';
@@ -19,13 +20,24 @@ const dbPromises: { [key: string]: Promise<sqlite.Database> } = {};
 export async function getDb(name: string): Promise<sqlite.Database> {
   let pathToDb = dbPath(name);
   let doesExist = await fileExists(pathToDb);
+  let db: sqlite.Database;
   if (!doesExist) {
     await initializeDb(name);
   }
-  if (!dbPromises[name]) {
-    dbPromises[name] = sqlite.open(pathToDb);
+  if (dbPromises[name]) {
+    return await dbPromises[name];
   }
-  let db = await dbPromises[name];
+  dbPromises[name] = sqlite.open(pathToDb, {
+    verbose: true
+  });
+  db = await dbPromises[name];
+  db.on('profile', (sql: string, time: number) => {
+    logger.info(
+      [chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(
+        ' '
+      )
+    );
+  });
   return db;
 }
 
