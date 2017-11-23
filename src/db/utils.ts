@@ -31,13 +31,16 @@ export async function getDb(name: string): Promise<sqlite.Database> {
     verbose: true
   });
   db = await dbPromises[name];
-  db.on('profile', (sql: string, time: number) => {
-    logger.info(
-      [chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(
-        ' '
-      )
-    );
-  });
+
+  if (process.env.NODE_ENV !== 'test') {
+    db.on('trace', (sql: string, time: number) => {
+      logger.info(
+        [chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(
+          ' '
+        )
+      );
+    });
+  }
   return db;
 }
 
