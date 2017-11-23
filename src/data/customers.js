@@ -22,9 +22,23 @@ const ALL_CUSTOMERS_COLUMNS = ['id', 'contactname', 'companyname'];
  */
 export async function getAllCustomers(options = {}) {
   const db = await getDb();
-  return await db.all(sql`
+  let whereClause = '';
+  let params = [];
+  if (options.filter) {
+    whereClause = sql`
+WHERE lower(companyname) LIKE $1
+OR lower(contactname) LIKE $2
+`;
+    params.push(`%${options.filter.toLowerCase()}%`);
+    params.push(`%${options.filter.toLowerCase()}%`);
+  }
+  return await db.all(
+    sql`
 SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
-FROM Customer`);
+FROM Customer ${whereClause}
+`,
+    ...params
+  );
 }
 
 /**
