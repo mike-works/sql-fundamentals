@@ -1,11 +1,18 @@
 <div class="mui-container">
   <h1>All Customers</h1>
-  <ul class='collection'>
+  <form class="mui-form--inline">
+    <div class="mui-textfield">
+      <input name='filter' value='{{filter}}' placeholder='Filter' type="text">
+    </div>
+    <button class="mui-btn">Search</button>
+  </form>
+  <br>
+  <ul class=' collection '>
     {{#each customers as |c|}}
     <li>
-      <a class='mui-panel' href="/customers/{{c.Id}}">
-        <span class='mui-badge mui--pull-right'>{{c.Id}}</span>
-        <h3 class='mui-panel__title'>{{c.CompanyName}}</h3>
+      <a class='mui-panel ' href="/customers/{{c.Id}}">
+        <span class='mui-badge mui--pull-right '>{{c.Id}}</span>
+        <h3 class='mui-panel__title '>{{c.CompanyName}}</h3>
         <p>
           <strong>Contact Name:</strong> {{c.ContactName}}
         </p>

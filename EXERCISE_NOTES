@@ -4,4 +4,6 @@
  - Suppliers query: Id,ContactName,CompanyName
  - Employees query: Id,FirstName,LastName,Region,HireDate,Title
 
-2. Pagination of orders page
+2. Filtering Via WHERE clauses
+ - Products query: Discontinued, Needs Reorder
+ - Customers query: Filter by ContactName, CustomerName using LIKE

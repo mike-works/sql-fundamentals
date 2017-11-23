@@ -5,8 +5,9 @@ import { logger } from '../log';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  let customers = await getAllCustomers();
-  res.render('customers', { customers });
+  let { filter = '' } = req.query || {};
+  let customers = await getAllCustomers({ filter });
+  res.render('customers', { customers, filter });
 });
 
 router.get('/:id', async (req, res) => {

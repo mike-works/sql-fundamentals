@@ -2,7 +2,11 @@ import * as sqlite from 'sqlite';
 import * as sqlite3 from 'sqlite3';
 import { dbPath, getDb } from '../db/utils';
 
-export async function getAllCustomers(): Promise<Customer[]> {
+interface AllCustOptions {
+  filter?: string;
+}
+
+export async function getAllCustomers(options: AllCustOptions = {}): Promise<Customer[]> {
   const db = await getDb('dev');
   return await db.all('SELECT * FROM Customer');
 }
