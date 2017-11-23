@@ -31,7 +31,18 @@ import { sql } from '../sql-string';
 /**
  * Columns to select for the `getAllProducts` query
  */
-const ALL_PRODUCT_COLUMNS = ['*'];
+const ALL_PRODUCT_COLUMNS = [
+  'id',
+  'categoryid',
+  'discontinued',
+  'productname',
+  'quantityperunit',
+  'reorderlevel',
+  'supplierid',
+  'unitprice',
+  'unitsinstock',
+  'unitsonorder'
+];
 
 /**
  * Retrieve a collection of all Product records from the database

@@ -4,7 +4,7 @@ import { sql } from '../sql-string';
 /**
  * Columns to select in the `getAllSuppliers` query
  */
-const ALL_SUPPLIERS_COLUMNS = ['*'];
+const ALL_SUPPLIERS_COLUMNS = ['id', 'contactname', 'companyname'];
 
 /**
  * Retrieve a collection of all Supplier records from the database
