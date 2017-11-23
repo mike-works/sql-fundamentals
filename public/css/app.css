@@ -47,5 +47,24 @@ ul.collection > li a:hover {
   color: white;
   text-transform: uppercase;
   padding: 2px 8px;
+  margin-right: 3px;
   border-radius: 2px;
+}
+
+.mui-badge.purple {
+  background: #673ab7;
+}
+.mui-badge.cyan {
+  background: #00bcd4;
+  color: black;
+}
+.mui-badge.deep-orange {
+  background: #ff5722;
+}
+.mui-badge.red {
+  background: #f44336;
+}
+
+.fade-out {
+  opacity: 0.5;
 }

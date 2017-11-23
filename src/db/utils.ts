@@ -43,7 +43,7 @@ export async function getDb(name: string): Promise<sqlite.Database> {
   db = await dbPromises[name];
 
   if (process.env.NODE_ENV !== 'test') {
-    db.on('trace', (sql: string, time: number) => {
+    db.on('profile', (sql: string, time: number) => {
       logger.info(
         [chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(
           ' '

@@ -1,0 +1,7 @@
+1. Selecting columns
+ - Orders query: Id,CustomerId,EmployeeId,ShipCity,ShipCountry
+ - Customers query: Id,ContactName,CompanyName
+ - Suppliers query: Id,ContactName,CompanyName
+ - Employees query: Id,FirstName,LastName,Region,HireDate,Title
+
+2. Pagination of orders page

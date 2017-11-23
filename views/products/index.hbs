@@ -1,0 +1,43 @@
+<div class="mui-container">
+  <h1>All Products</h1>
+  <ul class='collection'>
+    {{#each products as |p|}}
+    <li>
+      <div class='mui-panel {{#if p.Discontinued}}fade-out{{/if}}' href="/products/{{p.Id}}">
+        <span class='mui--pull-right'>
+          {{#if p.Discontinued}}
+          <span class="mui-badge mui--bg-color-red">DISCONTINUED</span>
+          {{else}}
+          <span>
+            {{#if (less-than (add p.UnitsInStock p.UnitsOnOrder) p.ReorderLevel)}}
+            <span class="mui-badge mui--bg-color-indigo">REORDER</span>
+            {{/if}}
+          </span>
+          {{/if}}
+        </span>
+        <h3 class='mui-panel__title mui--pull-left' style='margin-right: 10px'>
+          {{p.ProductName}}
+        </h3>
+        <p style='line-height: 3rem'>
+          {{p.QuantityPerUnit}}
+        </p>
+        <p>
+          <b>Supplier:</b> {{p.SupplierId}}
+        </p>
+        <p>
+          <b>Category:</b> {{p.CategoryId}}
+        </p>
+        <p>
+          <b>Inventory:</b>
+          {{p.UnitsInStock}} in stock and {{p.UnitsOnOrder}} on order.
+        </p>
+        <p>
+          <b>Reorder Level: </b> {{p.ReorderLevel}}
+        </p>
+      </div>
+    </li>
+    {{else}}
+    <li>No products</li>
+    {{/each}}
+  </ul>
+</div>
