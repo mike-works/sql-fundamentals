@@ -45,15 +45,40 @@ const ALL_PRODUCT_COLUMNS = [
 ];
 
 /**
+ * Build the appropriate WHERE clause for a given ProductCollectionFilter
+ * @param {Partial<ProductCollectionFilter>} filter filter for Product collection query
+ */
+function whereClauseForFilter(filter) {
+  /** @type {string[]} */
+  const expressions = [];
+  if (filter.inventory) {
+    switch (filter.inventory) {
+      case 'discontinued':
+        expressions.push('discontinued = 1');
+        break;
+      case 'needs-reorder':
+        expressions.push('discontinued = 0');
+        expressions.push('(unitsonorder + unitsinstock) < reorderlevel');
+        break;
+    }
+  }
+  if (expressions.length === 0) {
+    return '';
+  }
+  return sql`WHERE ${expressions.join(' AND ')}`;
+}
+
+/**
  * Retrieve a collection of all Product records from the database
  * @param {Partial<ProductCollectionOptions>} opts options that may be used to customize the query
  * @returns {Promise<Product[]>} the products
  */
 export async function getAllProducts(opts = {}) {
   const db = await getDb();
+  const wh = opts && opts.filter ? whereClauseForFilter(opts.filter) : '';
   return await db.all(sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product`);
+FROM Product ${wh}`);
 }
 
 /**
