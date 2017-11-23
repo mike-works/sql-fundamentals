@@ -1,6 +1,5 @@
 import * as fs from 'fs-extra';
 import { join } from 'path';
-import { promisify } from 'util';
 import { PROJECT_ROOT } from './constants';
 import { logger } from './log';
 
