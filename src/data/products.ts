@@ -17,7 +17,18 @@ interface ProductCollectionOptions {
   filter?: ProductCollectionFilter;
 }
 
-const ALL_PRODUCT_COLUMNS = ['*'];
+const ALL_PRODUCT_COLUMNS = [
+  'id',
+  'categoryid',
+  'discontinued',
+  'productname',
+  'quantityperunit',
+  'reorderlevel',
+  'supplierid',
+  'unitprice',
+  'unitsinstock',
+  'unitsonorder'
+];
 
 export async function getAllProducts(
   opts: Partial<ProductCollectionOptions> = {}

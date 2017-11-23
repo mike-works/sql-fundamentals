@@ -1,7 +1,7 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-const ALL_CUSTOMERS_COLUMNS = ['*'];
+const ALL_CUSTOMERS_COLUMNS = ['id', 'contactname', 'companyname'];
 
 interface CustomerCollectionOptions {
   filter?: string;
