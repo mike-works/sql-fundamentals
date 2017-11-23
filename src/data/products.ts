@@ -22,20 +22,9 @@ FROM Product
 }
 
 export async function getDiscontinuedProducts(): Promise<Product[]> {
-  const db = await getDb('dev');
-  return await db.all(`
-SELECT ${ALL_COLUMNS.join(',')}
-FROM Product
-WHERE Discontinued = 1
-`);
+  return getAllProducts();
 }
 
 export async function getProductsNeedingReorder(): Promise<Product[]> {
-  const db = await getDb('dev');
-  return await db.all(`
-SELECT ${ALL_COLUMNS.join(',')}
-FROM Product
-WHERE Discontinued=0
-  AND (UnitsOnOrder+UnitsInStock) <= ReorderLevel
-`);
+  return getAllProducts();
 }
