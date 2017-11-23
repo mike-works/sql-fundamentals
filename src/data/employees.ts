@@ -1,7 +1,15 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-const ALL_EMPLOYEES_COLUMNS = ['*'];
+const ALL_EMPLOYEES_COLUMNS = [
+  'id',
+  'firstname',
+  'lastname',
+  'region',
+  'reportsto',
+  'hiredate',
+  'title'
+];
 
 export async function getAllEmployees(): Promise<Employee[]> {
   const db = await getDb();
