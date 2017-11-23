@@ -13,7 +13,7 @@ async function fileExists(pth: string) {
 
 const copyFile = (src: string, dst: string) =>
   new Promise((resolve, reject) => {
-    fs.copyFile(src, dst, err => {
+    fs.copy(src, dst, err => {
       if (err) {
         reject(err);
       } else {
