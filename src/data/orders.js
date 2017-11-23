@@ -1,8 +1,24 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-export const ALL_ORDERS_COLUMNS = ['*'];
-export const ORDER_COLUMNS = ['*'];
+export const ALL_ORDERS_COLUMNS = [
+  'id',
+  'customerid',
+  'employeeid',
+  'shippeddate',
+  'requireddate',
+  'orderdate',
+  'shipcity',
+  'shipcountry'
+];
+export const ORDER_COLUMNS = [
+  ...ALL_ORDERS_COLUMNS,
+  'shipname',
+  'shipaddress',
+  'shippostalcode',
+  'shipcountry',
+  'freight'
+];
 
 /**
  * @typedef OrderCollectionOptions

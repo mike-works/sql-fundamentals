@@ -4,7 +4,7 @@ import { sql } from '../sql-string';
 /**
  * Columns to SELECT for the getAllCustomers query
  */
-const ALL_CUSTOMERS_COLUMNS = ['*'];
+const ALL_CUSTOMERS_COLUMNS = ['id', 'contactname', 'companyname'];
 
 /**
  * Options that may be used to customize a query for a collection of Customers
