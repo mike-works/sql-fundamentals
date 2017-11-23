@@ -1,6 +1,6 @@
 import * as sqlite from 'sqlite';
 import * as sqlite3 from 'sqlite3';
-import { dbPath, getDb } from '../db/utils';
+import { getDb } from '../db/utils';
 
 export async function getAllProducts(): Promise<Product[]> {
   const db = await getDb('dev');

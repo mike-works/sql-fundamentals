@@ -2077,8 +2077,8 @@ sqlite3@^3.1.13, sqlite3@^3.1.8:
     node-pre-gyp "~0.6.38"
 
 sqlite@mike-north/node-sqlite#dist:
-  version "2.8.1"
-  resolved "https://codeload.github.com/mike-north/node-sqlite/tar.gz/84803336334dc613738b0400b4f8cf294473d279"
+  version "2.8.0"
+  resolved "https://codeload.github.com/mike-north/node-sqlite/tar.gz/d26ca70be7b2f1442bbfbf0a0bec634d7dc11a30"
   dependencies:
     sqlite3 "^3.1.8"
 
