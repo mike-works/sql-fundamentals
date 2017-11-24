@@ -6,7 +6,7 @@ else
   filter='BEGIN'
 fi
 echo $filter
-if [ git_branch == 'solution' ]; then
+if [ git_branch == 'solutions' ]; then
   NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register ./tests/*.test.ts
 else 
   NODE_ENV=test ./node_modules/.bin/mocha --grep $filter --require ts-node/register ./tests/*.test.ts
