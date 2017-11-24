@@ -45,7 +45,7 @@ class EmployeeDataTest {
   public async productsNeedingReorder() {
     let result = await getProductsNeedingReorder();
     assert.isArray(result, 'Expected result to be an array');
-    assert.equal(result.length, 3, 'Expected 3 products in array');
+    assert.equal(result.length, 2, 'Expected 2 products in array');
     assertProductCols(result[0]);
 
     let numNeedingReorder = result.filter(r => r.UnitsInStock + r.UnitsOnOrder < r.ReorderLevel).length;
