@@ -1,22 +1,12 @@
 import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
 
-const ALL_COLUMNS = [
-  'Id',
-  'QuantityPerUnit',
-  'Discontinued',
-  'SupplierId',
-  'CategoryId',
-  'UnitPrice',
-  'UnitsOnOrder',
-  'UnitsInStock',
-  'ReorderLevel',
-  'ProductName'
-];
+const ALL_PRODUCT_COLUMNS = ['*'];
+
 export async function getAllProducts(): Promise<Product[]> {
   const db = await getDb('dev');
   return await db.all(`
-SELECT ${ALL_COLUMNS.join(',')}
+SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product
 `);
 }

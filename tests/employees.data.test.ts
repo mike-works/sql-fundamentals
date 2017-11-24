@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllEmployees } from '../src/data/employees';
 
-@suite('Employee DB queries')
+@suite('BEGIN: Employee DB queries')
 class EmployeeDataTest {
   @test('Get all employees')
   public async allEmployees() {

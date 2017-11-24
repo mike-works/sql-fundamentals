@@ -4,7 +4,7 @@ import { getAllEmployees } from '../src/data/employees';
 import { getAllOrders } from '../src/data/orders';
 import { getAllProducts } from '../src/data/products';
 
-@suite('Collection Queries - Ask for specific columns')
+@suite('EX1: Collection Queries - Ask for specific columns')
 class EmployeeDataTest {
   @test('All employees')
   public async allEmployees() {
