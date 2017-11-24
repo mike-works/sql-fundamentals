@@ -8,10 +8,14 @@ node_js:
 script:  
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+  - echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
   - npm test
 
 deploy:
   provider: heroku
+  on:
+    branch: solutions
+    condition: $TRAVIS_NODE_VERSION=9
   api_key:
     secure: oiHK6gRtBYlY0YwC+mKowBIFYikpr8hdAB4eizNRjzF2XNBioPPeMeAd2XJKn82Ph8VQflXN1NdatLBMoX/+mEgdlzDzXystaxuK0hz2rIwKSjpamyZaYh9lcqGRqgX5Kbycw42IzY19zbb5g3asyQWusIaaq2yMBl+KQM8RIXm/qbvGVfeyFGzoCVIVthr8QCmN7O5YlAevJNrk2qhp4KUTNJ4mcZwODcARrd12ZQ3T5RZ4UAogiJ+Hd9xbJTe9m2RxfkvGzwRvJdhpD/bxJyQStBh6H01XMaInNDzfjlzJnHR+gUKC2AzUfh5IGMyxVfdf6dAntMMMdZbfrmIcWpjxc27LJsJZxBraOTU/QJrQidm0pRgX6Jp3cd08MDuyAODojCBxbqScsLIaFvZtfb/jLzC57sxwYDRr1C+TNB57aYvRCU7CfjRU8cnYH1b+HQUmcNKbBfZPDwOzS3ZS9SBZUZ5Ojp4SXjYhd15Owd+bwyO7co0Lc/fYQzIUnzjX2GbJ6/Sp1LuQBaRN3ykw3mivl//2uet0SFcL3ZVr6GPlE22QdHHM3/EVZlpFaz3Rzu+fofsGq1jtFGkj7SP37DK+TVw0sy4IKJ+Cu8KraSb2XSEJgef96+1wE1h3M9Sgg0ZOr9Ebg4O6DPaEhdSZutcTUPwA/SSVB8tsiuNICAE=
   app: damp-oasis-38940
