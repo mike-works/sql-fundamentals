@@ -1,3 +1,5 @@
-export default function(a: string, b: string) {
-  return JSON.parse(a) || JSON.parse(b);
+import { jsonize } from '../utils';
+
+export default function or(a: string, b: string) {
+  return jsonize(a) || jsonize(b);
 }

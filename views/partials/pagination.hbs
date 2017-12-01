@@ -1,0 +1,6 @@
+<div class='pagination'>
+  {{#link-to href=(concat "/orders?page=" (subtract page 1)) disabled=(less-than page 2) classNames="mui-btn mui--pull-left"
+  }} Prev {{/link-to}}
+  <span class="current-page">Page {{page}}</span>
+  {{#link-to href=(concat "/orders?page=" (add page 1)) classNames="mui-btn mui--pull-right" }}Next{{/link-to}}
+</div>

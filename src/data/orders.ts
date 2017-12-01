@@ -3,7 +3,12 @@ import { getDb } from '../db/utils';
 
 const ALL_ORDERS_COLUMNS = ['*'];
 
-export async function getAllOrders(): Promise<Order[]> {
+interface AllOrdersOptions {
+  page: number;
+  perPage: number;
+}
+
+export async function getAllOrders(opts?: AllOrdersOptions): Promise<Order[]> {
   const db = await getDb('dev');
   return await db.all(`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}

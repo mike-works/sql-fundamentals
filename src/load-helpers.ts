@@ -3,10 +3,6 @@ import { join } from 'path';
 import { PROJECT_ROOT } from './constants';
 import { logger } from './log';
 
-interface HelperSet {
-  [key: string]: () => any;
-}
-
 async function readdir(name: string): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {
     fs.readdir(name, (err, files: string[]) => {
@@ -24,10 +20,10 @@ async function getHelperNames() {
   return files.map(f => f.split('.')[0]);
 }
 
-export async function loadHandlebarsHelpers(): Promise<HelperSet> {
+export async function loadHandlebarsHelpers(): Promise<Handlebars.HelperSet> {
   let helperNames = await getHelperNames();
-  let helpers: HelperSet = {};
-  helperNames.reduce<HelperSet>((set, name) => {
+  let helpers: Handlebars.HelperSet = {};
+  helperNames.reduce<Handlebars.HelperSet>((set, name) => {
     return Object.assign(set, {
       [`${name}`]: require(`./helpers/${name}`).default
     });
