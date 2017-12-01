@@ -5,7 +5,7 @@ import { logger } from '../log';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  let { page = 1, perPage = 25, sort, order } = req.query;
+  let { page, perPage, sort, order } = req.query;
   let orders = await getAllOrders({ page, perPage, sort, order });
   res.render('orders', { orders, page });
 });
