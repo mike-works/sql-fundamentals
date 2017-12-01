@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { slow, suite, test, timeout, only } from 'mocha-typescript';
+import { only, slow, suite, test, timeout } from 'mocha-typescript';
 import { getCustomerOrders } from '../src/data/orders';
 
 @suite('EX3: "Customer Orders List" Query - Pagination tests')
