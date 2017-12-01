@@ -5,12 +5,12 @@ const ALL_ORDERS_COLUMNS = ['*'];
 
 interface AllOrdersOptions {
   page: number;
-  sort: string;
-  order: 'asc' | 'desc';
   perPage: number;
+  order?: 'asc' | 'desc';
+  sort?: string;
 }
 
-export async function getAllOrders(opts?: AllOrdersOptions): Promise<Order[]> {
+export async function getAllOrders(opts: AllOrdersOptions): Promise<Order[]> {
   const db = await getDb('dev');
   return await db.all(`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
