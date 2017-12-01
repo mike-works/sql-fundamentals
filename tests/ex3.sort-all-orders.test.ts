@@ -3,8 +3,8 @@ import { sortBy } from 'lodash';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllOrders } from '../src/data/orders';
 
-@suite('EX3: Order List Query - Sort tests')
-class EmployeeDataTest {
+@suite('EX3: "All Orders List" Query - Sort tests')
+class AllOrdersSortTest {
   @test('By default, order list is sorted ascending by Id')
   public async orderListDefaults() {
     let firstPageResult = await getAllOrders({ perPage: 3 });

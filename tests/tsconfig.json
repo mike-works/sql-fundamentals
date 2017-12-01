@@ -1,4 +1,7 @@
 {
   "extends": "../tsconfig",
-  "include": ["./", "../src/types"]
+  "include": ["./", "../src/types"],
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
 }
