@@ -68,3 +68,20 @@ ul.collection > li a:hover {
 .fade-out {
   opacity: 0.5;
 }
+
+.invisible {
+  visibility: hidden;
+}
+
+a.disabled {
+  pointer-events: none;
+}
+a.mui-btn.disabled {
+  opacity: 0.5;
+}
+
+.pagination {
+  text-align: center;
+  height: 48px;
+  line-height: 48px;
+}

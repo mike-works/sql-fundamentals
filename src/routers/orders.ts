@@ -5,8 +5,9 @@ import { logger } from '../log';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  let orders = await getAllOrders();
-  res.render('orders', { orders });
+  let { page = 1, perPage = 25 } = req.query;
+  let orders = await getAllOrders({ page, perPage });
+  res.render('orders', { orders, page });
 });
 
 router.get('/:id', async (req, res) => {

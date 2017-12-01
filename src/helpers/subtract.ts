@@ -1,3 +1,5 @@
-export default function(a: string, b: string) {
-  return parseFloat(a) - parseFloat(b);
+import { numberize } from '../utils';
+
+export default function subtract(a: any, b: any) {
+  return numberize(a) - numberize(b);
 }
