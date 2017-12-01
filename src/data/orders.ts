@@ -4,13 +4,20 @@ import { getDb } from '../db/utils';
 const ALL_ORDERS_COLUMNS = ['*'];
 
 interface AllOrdersOptions {
-  page: number;
-  perPage: number;
+  page?: number;
+  perPage?: number;
   order?: 'asc' | 'desc';
   sort?: string;
 }
 
-export async function getAllOrders(opts: AllOrdersOptions): Promise<Order[]> {
+export async function getAllOrders(
+  { page = 1, perPage = 20, sort = 'Id', order = 'asc' }: AllOrdersOptions = {
+    order: 'asc',
+    page: 1,
+    perPage: 20,
+    sort: 'Id'
+  }
+): Promise<Order[]> {
   const db = await getDb('dev');
   return await db.all(`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}

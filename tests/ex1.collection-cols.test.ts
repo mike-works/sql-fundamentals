@@ -20,7 +20,7 @@ class EmployeeDataTest {
 
   @test('All orders')
   public async allOrders() {
-    let result = await getAllOrders({ perPage: 20, page: 1 });
+    let result = await getAllOrders({ perPage: 50000 });
     assert.isArray(result, 'Expected result to be an array');
     assert.equal(result.length, 16818, 'Expected 16818 orders in array');
     assert.hasAllKeys(
