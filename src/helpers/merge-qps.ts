@@ -1,5 +1,4 @@
 import { assign } from 'lodash';
-import * as querystring from 'querystring';
 import * as url from 'url';
 
 const mergeQps = (originalUrl: string, opts?: Handlebars.HelperOptions) => {

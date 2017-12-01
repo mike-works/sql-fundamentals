@@ -5,6 +5,8 @@ const ALL_ORDERS_COLUMNS = ['*'];
 
 interface AllOrdersOptions {
   page: number;
+  sort: string;
+  order: 'asc' | 'desc';
   perPage: number;
 }
 

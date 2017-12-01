@@ -85,3 +85,15 @@ a.mui-btn.disabled {
   height: 48px;
   line-height: 48px;
 }
+
+.mui-appbar .nav .nav-item a.active {
+  background: navy;
+}
+
+.table-col-sort a.sort-button {
+  color: grey;
+}
+
+.table-col-sort a.sort-button.active {
+  color: blue;
+}

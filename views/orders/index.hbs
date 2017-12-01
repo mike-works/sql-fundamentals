@@ -5,10 +5,10 @@
     <table class="mui-table">
       <thead>
         <tr>
-          <th>Id</th>
-          <th>CustomerId</th>
-          <th>EmployeeId</th>
-          <th>Ship To</th>
+          <th>Id {{> 'table-col-sort' by='Id'}} </th>
+          <th>CustomerId {{> 'table-col-sort' by='CustomerId'}} </th>
+          <th>EmployeeId {{> 'table-col-sort' by='EmployeeId'}} </th>
+          <th>Ship To {{> 'table-col-sort' by='ShipCountry'}} </th>
         </tr>
       </thead>
       <tbody>
