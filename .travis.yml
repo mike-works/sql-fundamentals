@@ -5,10 +5,14 @@ node_js:
 - '8'
 - '9'
 
+install:
+- npm install --no-shrinkwrap
+
 script:  
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
   - echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
+  - echo "SHOULD_DEPLOY=($TRAVIS_NODE_VERSION=9)"
   - npm test
 
 deploy:
@@ -19,4 +23,4 @@ deploy:
   on:
     repo: mike-north/sql-fundamentals
     branch: solutions
-    condition: $TRAVIS_NODE_VERSION=9
+    condition: SHOULD_DEPLOY
