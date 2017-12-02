@@ -44,7 +44,7 @@ class EmployeeDataTest {
   public async allOrders() {
     let result = await getAllOrders({ perPage: 50000 });
     assert.isArray(result, 'Expected result to be an array');
-    assert.equal(result.length, 16818, 'Expected 16818 orders in array');
+    assert.isAbove(result.length, 16000, 'Expected over 16,000 orders in array');
     validateRecordColumns(
       { recordType: 'order', functionName: 'getAllOrders' },
       result[3],
