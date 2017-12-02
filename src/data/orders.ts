@@ -1,6 +1,5 @@
 import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
-import { logger } from '../log';
 
 const ALL_ORDERS_COLUMNS = ['*'];
 
@@ -39,11 +38,9 @@ export async function getCustomerOrders(
 
 export async function getOrder(id: string | number): Promise<Order> {
   const db = await getDb('dev');
-  let query = `
+  return await db.get(`
 SELECT *
 FROM "Order"
 WHERE Id = ${id}
-`;
-  logger.warn(query);
-  return await db.get(query);
+`);
 }
