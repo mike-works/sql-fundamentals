@@ -49,7 +49,7 @@ class InitialListQueriesTest {
   public async productsNeedingReorder() {
     let result = await getProductsNeedingReorder();
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 2, 'Expected more than 2 products in array');
+    assert.isAbove(result.length, 1, 'Expected more than 1 products in array');
     validateRecordColumns(
       { recordType: 'product', functionName: 'getProductsNeedingReorder' },
       result[0],
