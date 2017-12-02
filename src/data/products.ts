@@ -49,14 +49,23 @@ function whereClauseForFilter(filter: ProductCollectionFilter) {
   return sql`WHERE ${expressions.join(' AND ')}`;
 }
 
+function allProductsBaseQuery(opts: ProductCollectionOptions = {}) {
+  const wh = opts.filter ? whereClauseForFilter(opts.filter) : '';
+  return sql`SELECT ${ALL_PRODUCT_COLUMNS.map(c => `p.${c}`).join(',')},
+  c.categoryname, s.companyname as suppliername
+FROM Product as p
+INNER JOIN Supplier as s
+  ON p.supplierid=s.id
+INNER JOIN Category as c
+  ON p.categoryid=c.id
+${wh}`;
+}
+
 export async function getAllProducts(
   opts: Partial<ProductCollectionOptions> = {}
 ): Promise<Product[]> {
   const db = await getDb();
-  const wh = opts && opts.filter ? whereClauseForFilter(opts.filter) : '';
-  return await db.all(sql`
-SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product ${wh}`);
+  return await db.all(allProductsBaseQuery(opts));
 }
 
 export async function getProduct(id: number | string): Promise<Product> {

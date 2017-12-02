@@ -32,8 +32,8 @@
             <button onClick="deleteOrder({{o.id}});">❌</button>
           </td>
           <td>{{#link-to href=(concat '/orders/' o.id)}} {{o.id}} {{/link-to}}</td>
-          <td>{{#link-to href=(concat '/customers/' o.customerid)}} {{o.customerid}} {{/link-to}}</td>
-          <td>{{#link-to href=(concat '/employees/' o.employeeid)}} {{o.employeeid}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/customers/' o.customerid)}} {{o.customername}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/employees/' o.employeeid)}} {{o.employeename}} {{/link-to}}</td>
           <td>{{o.shipcity}}, {{o.shipcountry}}</td>
           <td>{{format-money o.total}}</td>
         </tr>
