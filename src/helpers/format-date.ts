@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 
 const DEFAULT_PATTERN = 'YYYY';
 
