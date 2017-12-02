@@ -3,6 +3,7 @@ import { getDb } from '../db/utils';
 import { logger } from '../log';
 
 const ALL_ORDERS_COLUMNS = ['*'];
+const ORDER_COLUMNS = ['*'];
 
 interface AllOrdersOptions {
   page?: number;
