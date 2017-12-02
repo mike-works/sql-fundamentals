@@ -5,7 +5,6 @@
     "inlineSourceMap": true,
     "experimentalDecorators": true,
     "strictFunctionTypes": true,
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "outDir": "dist",
     "baseUrl": ".",
