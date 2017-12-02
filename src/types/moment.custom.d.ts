@@ -754,5 +754,5 @@ declare module 'moment' {
     export var defaultFormat: string;
     export var defaultFormatUtc: string;
   }
-  export default moment;
+  export = moment;
 }
