@@ -8,7 +8,7 @@ export function validateRecordColumns(
   opts: RecordColumnsValidationOptions,
   record: DBRecord,
   required: string[],
-  forbidden: string[]
+  forbidden: string[] = []
 ) {
   required.forEach(k => {
     assert.isDefined(
