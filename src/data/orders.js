@@ -63,11 +63,19 @@ export async function getAllOrders(opts = {}) {
   let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
   let sortClause = '';
   if (order) {
-    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+    sortClause = sql`ORDER BY o.${sort} ${order.toUpperCase()}`;
   }
   return await db.all(sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder ${sortClause} ${paginationClause}`);
+SELECT ${ALL_ORDERS_COLUMNS.map(c => `o.${c}`).join(',')},
+  c.companyname as customername,
+  e.lastname as employeename
+FROM CustomerOrder as o
+LEFT JOIN Customer as c
+  ON o.customerid = c.id
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+${sortClause} ${paginationClause}
+`);
 }
 
 /**
@@ -89,13 +97,16 @@ export async function getCustomerOrders(customerId, opts = {}) {
   let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
   let sortClause = '';
   if (order) {
-    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+    sortClause = sql`ORDER BY o.${sort} ${order.toUpperCase()}`;
   }
   return await db.all(
     sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder
-WHERE customerid = $1
+SELECT ${ALL_ORDERS_COLUMNS.map(c => `o.${c}`).join(',')},
+  e.lastname as employeename
+FROM CustomerOrder as o
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+WHERE o.customerid = $1
  ${sortClause} ${paginationClause}
 `,
     customerId
@@ -109,13 +120,17 @@ WHERE customerid = $1
  */
 export async function getOrder(id) {
   const db = await getDb();
-  return await db.get(
-    sql`
-SELECT *
-FROM CustomerOrder
-WHERE id = $1`,
-    id
-  );
+  return await db.get(sql`
+SELECT ${ORDER_COLUMNS.map(c => `o.${c}`).join(',')},
+  c.companyname as customername,
+  e.lastname as employeename
+FROM CustomerOrder as o
+LEFT JOIN Customer as c
+  ON o.customerid = c.id
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+WHERE o.id = ${id}
+`);
 }
 
 /**
@@ -127,9 +142,10 @@ export async function getOrderDetails(id) {
   const db = await getDb();
   return await db.all(
     sql`
-SELECT *, unitprice * quantity as price
-FROM OrderDetail
-WHERE orderid = $1`,
+SELECT od.*, od.unitprice * od.quantity as price, p.productname
+FROM OrderDetail AS od
+LEFT JOIN Product AS p ON p.id=od.productid
+WHERE od.orderid = $1`,
     id
   );
 }
