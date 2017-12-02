@@ -61,7 +61,7 @@ class InitialListQueriesTest {
   public async discontinuedProducts() {
     let result = await getDiscontinuedProducts();
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 2, 'Expected more than 2 products in array');
+    assert.isAbove(result.length, 1, 'Expected more than 1 product in array');
     validateRecordColumns(
       { recordType: 'product', functionName: 'getDiscontinuedProducts' },
       result[0],
