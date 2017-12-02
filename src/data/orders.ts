@@ -1,5 +1,6 @@
 import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
+import { logger } from '../log';
 
 const ALL_ORDERS_COLUMNS = ['*'];
 
@@ -43,4 +44,19 @@ SELECT *
 FROM "Order"
 WHERE Id = ${id}
 `);
+}
+
+export async function getOrderDetails(orderId: string | number): Promise<OrderDetail[]> {
+  const db = await getDb('dev');
+  return await db.all(`
+SELECT *, UnitPrice * Quantity as Price
+FROM "OrderDetail"
+WHERE OrderId = ${orderId}
+`);
+}
+
+export async function getOrderWithDetails(id: string | number): Promise<[Order, OrderDetail[]]> {
+  let order = await getOrder(id);
+  let items = await getOrderDetails(id);
+  return [order, items];
 }

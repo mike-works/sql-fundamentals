@@ -1,0 +1,51 @@
+<div class="mui-container">
+  <h1>
+    {{#link-to href='/orders'}}Orders{{/link-to}} / {{order.Id}}</h1>
+
+  <div class="mui-panel">
+    <p>
+      <b>For Customer: </b>
+      <span class="customer">{{order.CustomerId}}</span>
+    </p>
+    <p>
+      <b>Placed By Employee: </b>
+      <span class="employee">{{order.EmployeeId}}</span>
+    </p>
+    <p>
+      <b>Placed on</b>
+      <span class="order-date">{{format-date order.OrderDate}}</span>,
+
+      <b>required by </b>
+      <span class="required-date">{{format-date order.RequiredDate}}</span>,
+
+      <b>shipped on </b>
+      <span class="shipped-date">{{format-date order.ShippedDate}}</span>
+    </p>
+  </div>
+  <div class="mui-panel">
+    <table class="mui-table">
+      <thead>
+        <th class='id-col'>Id</th>
+        <th class='id-col'>Product</th>
+        <th class='money-col'>Unit Price</th>
+        <th>Qty</th>
+        <th class='money-col'>Price</th>
+      </thead>
+      <tbody>
+        {{#each items as |item|}}
+        <tr>
+          <td class='id-col'>{{item.Id}}</td>
+          <td class='id-col'>{{item.ProductId}}</td>
+          <td class='money-col'>
+            {{format-money item.UnitPrice}} {{#if item.Discount}}
+            <span class="mui-badge mui--pull-left">-{{format-percent item.Discount}}</span>
+            {{/if}}
+          </td>
+          <td>{{item.Quantity}}</td>
+          <td class='money-col'>{{format-money item.Price}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

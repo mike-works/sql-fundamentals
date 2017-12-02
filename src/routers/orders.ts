@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { getAllOrders, getOrder } from '../data/orders';
+import { getAllOrders, getOrder, getOrderWithDetails } from '../data/orders';
 import { logger } from '../log';
 
 const router = express.Router();
@@ -11,8 +11,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  let order = await getOrder(req.param('id'));
-  res.render('orders/show', { order });
+  let [order, items] = await getOrderWithDetails(req.param('id'));
+  res.render('orders/show', { order, items });
 });
 
 export default router;

@@ -97,3 +97,17 @@ a.mui-btn.disabled {
 .table-col-sort a.sort-button.active {
   color: blue;
 }
+
+.mui-table > thead > tr > th.money-col,
+.mui-table > tbody > tr > td.money-col {
+  text-align: right;
+}
+
+.mui-table > thead > tr > th.date-col,
+.mui-table > tbody > tr > td.date-col {
+  text-align: right;
+}
+
+.mui-table > tbody > tr > td.id-col {
+  text-align: left;
+}
