@@ -15,9 +15,9 @@ else
 fi
 echo "Test Filter: $filter"
 
-if [ $git_branch = 'solutions' ]
+if [[ $git_branch = 'solutions' ]]
 then
   NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register ./tests/*.test.ts
-else 
+else
   NODE_ENV=test ./node_modules/.bin/mocha --grep $filter --require ts-node/register ./tests/*.test.ts
 fi
