@@ -1,10 +1,10 @@
 import { assert } from 'chai';
 import { slow, suite, test, timeout } from 'mocha-typescript';
-import { getAllCustomers } from '../src/data/customers';
-import { getAllEmployees } from '../src/data/employees';
-import { getAllOrders } from '../src/data/orders';
-import { getAllProducts } from '../src/data/products';
-import { getAllSuppliers } from '../src/data/suppliers';
+import { getAllCustomers, getCustomer } from '../src/data/customers';
+import { getAllEmployees, getEmployee } from '../src/data/employees';
+import { getAllOrders, getOrder } from '../src/data/orders';
+import { getAllProducts, getDiscontinuedProducts, getProduct, getProductsNeedingReorder } from '../src/data/products';
+import { getAllSuppliers, getSupplier } from '../src/data/suppliers';
 import { validateRecordColumns } from './helpers';
 
 const REQUIRED_EMPLOYEE_LIST_COLS = ['Id', 'FirstName', 'LastName'];
@@ -12,6 +12,12 @@ const REQUIRED_PRODUCT_LIST_COLS = ['Id', 'SupplierId', 'ProductName'];
 const REQUIRED_ORDER_LIST_COLS = ['Id', 'CustomerId', 'EmployeeId'];
 const REQUIRED_SUPPLIER_LIST_COLS = ['Id', 'CompanyName', 'ContactName'];
 const REQUIRED_CUSTOMER_LIST_COLS = REQUIRED_SUPPLIER_LIST_COLS;
+
+const REQUIRED_EMPLOYEE_COLS = ['Id', 'FirstName', 'LastName'];
+const REQUIRED_PRODUCT_COLS = ['Id', 'SupplierId', 'ProductName'];
+const REQUIRED_ORDER_COLS = ['Id', 'CustomerId', 'EmployeeId'];
+const REQUIRED_SUPPLIER_COLS = ['Id', 'CompanyName', 'ContactName'];
+const REQUIRED_CUSTOMER_COLS = REQUIRED_SUPPLIER_COLS;
 
 @suite('BEGIN: Initial DB queries')
 class InitialListQueriesTest {
@@ -35,6 +41,30 @@ class InitialListQueriesTest {
     validateRecordColumns(
       { recordType: 'product', functionName: 'getAllProducts' },
       result[3],
+      REQUIRED_PRODUCT_LIST_COLS
+    );
+  }
+
+  @test('Get products needing reorder')
+  public async productsNeedingReorder() {
+    let result = await getProductsNeedingReorder();
+    assert.isArray(result, 'Expected result to be an array');
+    assert.isAbove(result.length, 2, 'Expected more than 2 products in array');
+    validateRecordColumns(
+      { recordType: 'product', functionName: 'getProductsNeedingReorder' },
+      result[0],
+      REQUIRED_PRODUCT_LIST_COLS
+    );
+  }
+
+  @test('Get discontinued products')
+  public async discontinuedProducts() {
+    let result = await getDiscontinuedProducts();
+    assert.isArray(result, 'Expected result to be an array');
+    assert.isAbove(result.length, 2, 'Expected more than 2 products in array');
+    validateRecordColumns(
+      { recordType: 'product', functionName: 'getDiscontinuedProducts' },
+      result[0],
       REQUIRED_PRODUCT_LIST_COLS
     );
   }
@@ -68,6 +98,44 @@ class InitialListQueriesTest {
       { recordType: 'supplier', functionName: 'getAllSuppliers' },
       result[3],
       REQUIRED_SUPPLIER_LIST_COLS
+    );
+  }
+  @test('Get one employee')
+  public async getEmployee() {
+    let result = await getEmployee(1);
+    assert.isNotArray(result, 'Expected result NOT to be an array');
+    validateRecordColumns({ recordType: 'employee', functionName: 'getEmployee(1)' }, result, REQUIRED_EMPLOYEE_COLS);
+  }
+
+  @test('Get one order')
+  public async getOrder() {
+    let result = await getOrder(10252);
+    assert.isNotArray(result, 'Expected result NOT to be an array');
+    validateRecordColumns({ recordType: 'order', functionName: 'getOrder(10252)' }, result, REQUIRED_ORDER_COLS);
+  }
+
+  @test('Get one product')
+  public async getProduct() {
+    let result = await getProduct(1);
+    assert.isNotArray(result, 'Expected result NOT to be an array');
+    validateRecordColumns({ recordType: 'product', functionName: 'getProduct(1)' }, result, REQUIRED_PRODUCT_COLS);
+  }
+
+  @test('Get one supplier')
+  public async getSupplier() {
+    let result = await getSupplier(1);
+    assert.isNotArray(result, 'Expected result NOT to be an array');
+    validateRecordColumns({ recordType: 'supplier', functionName: 'getSupplier(1)' }, result, REQUIRED_SUPPLIER_COLS);
+  }
+
+  @test('Get one customer')
+  public async getCustomer() {
+    let result = await getCustomer('TOMSP');
+    assert.isNotArray(result, 'Expected result NOT to be an array');
+    validateRecordColumns(
+      { recordType: 'customer', functionName: 'getCustomer("TOMSP")' },
+      result,
+      REQUIRED_CUSTOMER_COLS
     );
   }
 }

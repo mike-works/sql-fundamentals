@@ -11,7 +11,7 @@ FROM Supplier
 `);
 }
 
-export async function getSupplier(id: string | number): Promise<Supplier[]> {
+export async function getSupplier(id: string | number): Promise<Supplier> {
   const db = await getDb('dev');
   return await db.get(
     `

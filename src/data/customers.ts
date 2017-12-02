@@ -16,7 +16,7 @@ FROM Customer
 `);
 }
 
-export async function getCustomer(id: string | number): Promise<Customer[]> {
+export async function getCustomer(id: string | number): Promise<Customer> {
   const db = await getDb('dev');
   return await db.get(
     `

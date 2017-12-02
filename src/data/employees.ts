@@ -10,7 +10,7 @@ SELECT ${ALL_EMPLOYEES_COLUMNS.join(',')}
 FROM Employee`);
 }
 
-export async function getEmployee(id: string | number): Promise<Employee[]> {
+export async function getEmployee(id: string | number): Promise<Employee> {
   const db = await getDb('dev');
   return await db.get(
     `
