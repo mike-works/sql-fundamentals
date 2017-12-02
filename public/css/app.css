@@ -2,6 +2,10 @@ body {
   background: #eee;
 }
 
+.text-right {
+  text-align: right;
+}
+
 ul.nav,
 ul.collection {
   list-style: none;

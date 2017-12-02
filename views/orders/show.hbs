@@ -66,6 +66,16 @@
             {{/each}}
           </tbody>
         </table>
+        <h3 class='text-right mui--color-indigo'>
+          Subtotal: {{format-money order.SubtotalPrice}}
+        </h3>
+        <h3 class='text-right mui--color-indigo'>
+          + Shipping: {{format-money order.Freight}}
+        </h3>
+        <div class="mui-divider"></div>
+        <h3 class='text-right mui--color-green'>
+          Grand total: {{format-money (add order.SubtotalPrice order.Freight)}}
+        </h3>
       </div>
     </div>
   </div>
