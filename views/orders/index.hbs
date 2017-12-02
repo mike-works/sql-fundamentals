@@ -9,6 +9,7 @@
           <th>Customer {{> 'table-col-sort' by='CustomerId'}} </th>
           <th>Employee {{> 'table-col-sort' by='EmployeeId'}} </th>
           <th>Ship To {{> 'table-col-sort' by='ShipCountry'}} </th>
+          <th>Total </th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +19,7 @@
           <td>{{#link-to href=(concat '/customers/' o.CustomerId)}} {{o.CustomerId}} {{/link-to}}</td>
           <td>{{#link-to href=(concat '/employees/' o.EmployeeId)}} {{o.EmployeeId}} {{/link-to}}</td>
           <td>{{o.ShipCity}}, {{o.ShipCountry}}</td>
+          <td>{{format-money o.Total}}</td>
         </tr>
         {{/each}}
       </tbody>
