@@ -69,16 +69,32 @@ function whereClauseForFilter(filter) {
 }
 
 /**
+ * Build a query for a collection of Product records
+ *
+ * @param {Partial<ProductCollectionOptions>} opts options
+ * @returns {string}
+ */
+function allProductsBaseQuery(opts) {
+  const wh = opts.filter ? whereClauseForFilter(opts.filter) : '';
+  return sql`
+SELECT ${ALL_PRODUCT_COLUMNS.map(c => `p.${c}`).join(',')},
+  c.categoryname, s.companyname as suppliername
+FROM Product as p
+INNER JOIN Supplier as s
+  ON p.supplierid=s.id
+INNER JOIN Category as c
+  ON p.categoryid=c.id
+${wh}`;
+}
+
+/**
  * Retrieve a collection of all Product records from the database
  * @param {Partial<ProductCollectionOptions>} opts options that may be used to customize the query
  * @returns {Promise<Product[]>} the products
  */
 export async function getAllProducts(opts = {}) {
   const db = await getDb();
-  const wh = opts && opts.filter ? whereClauseForFilter(opts.filter) : '';
-  return await db.all(sql`
-SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product ${wh}`);
+  return await db.all(allProductsBaseQuery(opts));
 }
 
 /**
