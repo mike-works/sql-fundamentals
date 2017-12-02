@@ -35,7 +35,7 @@ class EmployeeDataTest {
     let result = await getAllProducts();
     assert.isArray(result, 'Expected result to be an array');
     assert.equal(result.length, 77, 'Expected 77 products in array');
-    assert.hasAllKeys(
+    assert.containsAllKeys(
       result[3],
       [
         'Id',

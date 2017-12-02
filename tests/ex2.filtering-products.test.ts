@@ -3,7 +3,7 @@ import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllProducts, getDiscontinuedProducts, getProductsNeedingReorder } from '../src/data/products';
 
 function assertProductCols(item: any) {
-  assert.hasAllKeys(
+  assert.containsAllKeys(
     item,
     [
       'Id',
