@@ -45,11 +45,11 @@
         {{#each orders as |o|}}
         <tr>
           <td>{{#link-to href=(concat '/orders/' o.id)}} {{o.id}} {{/link-to}}</td>
-          <td>{{#link-to href=(concat '/employees/' o.employeeid)}} {{o.employeeid}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/employees/' o.employeeid)}} {{o.employeename}} {{/link-to}}</td>
           <td>{{format-date o.orderdate pattern='ll'}}</td>
           <td>{{format-date o.requireddate pattern='ll'}}</td>
           <td>{{format-date o.shippeddate pattern='ll'}}</td>
-          <td>{{o.ShipCity}}, {{o.shipcountry}}</td>
+          <td>{{o.shipcity}}, {{o.shipcountry}}</td>
         </tr>
         {{/each}}
       </tbody>

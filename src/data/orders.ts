@@ -59,11 +59,19 @@ export async function getAllOrders(
   let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
   let sortClause = '';
   if (order) {
-    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+    sortClause = sql`ORDER BY o.${sort} ${order.toUpperCase()}`;
   }
   return await db.all(sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder ${sortClause} ${paginationClause}`);
+SELECT ${ALL_ORDERS_COLUMNS.map(c => `o.${c}`).join(',')},
+  c.companyname as customername,
+  (e.firstname || ' ' || e.lastname) as employeename
+FROM CustomerOrder as o
+LEFT JOIN Customer as c
+  ON o.customerid = c.id
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+${sortClause} ${paginationClause}
+`);
 }
 
 export async function getCustomerOrders(
@@ -82,13 +90,16 @@ export async function getCustomerOrders(
   let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
   let sortClause = '';
   if (order) {
-    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+    sortClause = sql`ORDER BY o.${sort} ${order.toUpperCase()}`;
   }
   return await db.all(
     sql`
-SELECT ${CUSTOMER_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder
-WHERE customerid = $1
+SELECT ${CUSTOMER_ORDERS_COLUMNS.map(c => `o.${c}`).join(',')},
+  (e.firstname || ' ' || e.lastname) as employeename
+FROM CustomerOrder as o
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+WHERE o.customerid = $1
  ${sortClause} ${paginationClause}
 `,
     customerId
@@ -97,13 +108,17 @@ WHERE customerid = $1
 
 export async function getOrder(id: string | number): Promise<Order> {
   const db = await getDb();
-  return await db.get(
-    sql`
-SELECT *
-FROM CustomerOrder
-WHERE id = $1`,
-    id
-  );
+  return await db.get(sql`
+SELECT ${ORDER_COLUMNS.map(c => `o.${c}`).join(',')},
+  c.companyname as customername,
+  (e.firstname || ' ' || e.lastname) as employeename
+FROM CustomerOrder as o
+LEFT JOIN Customer as c
+  ON o.customerid = c.id
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+WHERE o.id = ${id}
+`);
 }
 
 export async function getOrderDetails(
