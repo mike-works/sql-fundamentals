@@ -26,6 +26,8 @@
     "express-winston": "^2.4.0",
     "fs-extra": "^4.0.2",
     "lodash": "~4.14.0",
+    "moment": "^2.19.3",
+    "momentjs": "moment/moment#c41dd27",
     "scripty": "^1.7.2",
     "sqlite": "mike-north/node-sqlite#dist",
     "sqlite3": "^3.1.13",

@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { getAllCustomers, getCustomer } from '../data/customers';
+import { getCustomerOrders } from '../data/orders';
 import { logger } from '../log';
 
 const router = express.Router();
@@ -11,8 +12,11 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  let customer = await getCustomer(req.param('id'));
-  res.render('customers/show', { customer });
+  let { page = 1, sort, order } = req.query;
+  let id = req.params.id;
+  let customer = await getCustomer(id);
+  let orders = await getCustomerOrders(id, { page, sort, order });
+  res.render('customers/show', { customer, orders, page });
 });
 
 export default router;

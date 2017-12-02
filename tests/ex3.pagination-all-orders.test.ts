@@ -2,8 +2,8 @@ import { assert } from 'chai';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllOrders } from '../src/data/orders';
 
-@suite('EX3: Order List Query - Pagination tests')
-class EmployeeDataTest {
+@suite('EX3: "All Orders List" Query - Pagination tests')
+class AllOrdersPaginationTest {
   @test('First item is the same, regardless of page size')
   public async firstPage() {
     let first40Result = await getAllOrders({ perPage: 40, page: 1 });

@@ -24,6 +24,18 @@ SELECT ${ALL_ORDERS_COLUMNS.join(',')}
 FROM "Order"`);
 }
 
+export async function getCustomerOrders(
+  customerId: string,
+  { page = 1, perPage = 20, sort = 'ShippedDate', order = 'asc' }: AllOrdersOptions = {
+    order: 'asc',
+    page: 1,
+    perPage: 20,
+    sort: 'ShippedDate'
+  }
+) {
+  return getAllOrders({ page, perPage, sort, order });
+}
+
 export async function getOrder(id: string | number): Promise<Order[]> {
   const db = await getDb('dev');
   return await db.get(
