@@ -10,6 +10,5 @@
     "baseUrl": ".",
     "strict": true
   },
-  "include": ["src"],
-  "files": ["./src/types/moment.custom.d.ts"]
+  "include": ["src"]
 }
