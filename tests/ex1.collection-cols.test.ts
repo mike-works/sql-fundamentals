@@ -11,7 +11,7 @@ class EmployeeDataTest {
     let result = await getAllEmployees();
     assert.isArray(result, 'Expected result to be an array');
     assert.equal(result.length, 9, 'Expected 9 employees in array');
-    assert.hasAllKeys(
+    assert.containsAllKeys(
       result[3],
       ['Id', 'FirstName', 'LastName', 'HireDate', 'Region', 'Title'],
       'each DB result has properties Id, FirstName, LastName, HireDate, Region and Title'
@@ -23,7 +23,7 @@ class EmployeeDataTest {
     let result = await getAllOrders({ perPage: 50000 });
     assert.isArray(result, 'Expected result to be an array');
     assert.equal(result.length, 16818, 'Expected 16818 orders in array');
-    assert.hasAllKeys(
+    assert.containsAllKeys(
       result[3],
       ['Id', 'ShipCity', 'ShipCountry', 'EmployeeId', 'CustomerId'],
       'each DB result has properties Id, ShipCity, ShipCountry, EmployeeId, CustomerId'
