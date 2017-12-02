@@ -14,9 +14,9 @@
       <tbody>
         {{#each orders as |o|}}
         <tr>
-          <td>{{o.Id}}</td>
-          <td>{{o.CustomerId}}</td>
-          <td>{{o.EmployeeId}}</td>
+          <td>{{#link-to href=(concat '/orders/' o.Id)}} {{o.Id}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/customers/' o.CustomerId)}} {{o.CustomerId}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/employees/' o.EmployeeId)}} {{o.EmployeeId}} {{/link-to}}</td>
           <td>{{o.ShipCity}}, {{o.ShipCountry}}</td>
         </tr>
         {{/each}}

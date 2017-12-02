@@ -30,11 +30,11 @@ ul.collection > li {
   display: block;
 }
 
-ul.collection > li a {
+ul.collection > li > a {
   display: block;
   color: inherit;
 }
-ul.collection > li a:hover {
+ul.collection > li > a:hover {
   text-decoration: none;
 }
 

@@ -34,7 +34,7 @@
       <thead>
         <tr>
           <th>Id {{> 'table-col-sort' by='Id'}}</th>
-          <th>EmployeeId {{> 'table-col-sort' by='EmployeeId'}}</th>
+          <th>Employee {{> 'table-col-sort' by='EmployeeId'}}</th>
           <th>Ordered On {{> 'table-col-sort' by='OrderDate'}}</th>
           <th>Required On {{> 'table-col-sort' by='RequiredDate'}}</th>
           <th>Shipped On {{> 'table-col-sort' by='ShippedDate'}}</th>
@@ -44,8 +44,8 @@
       <tbody>
         {{#each orders as |o|}}
         <tr>
-          <td>{{o.Id}}</td>
-          <td>{{o.EmployeeId}}</td>
+          <td>{{#link-to href=(concat '/orders/' o.Id)}} {{o.Id}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/employees/' o.EmployeeId)}} {{o.EmployeeId}} {{/link-to}}</td>
           <td>{{format-date o.OrderDate pattern='ll'}}</td>
           <td>{{format-date o.RequiredDate pattern='ll'}}</td>
           <td>{{format-date o.ShippedDate pattern='ll'}}</td>
