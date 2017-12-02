@@ -11,3 +11,8 @@
 3. Sorting and Paging
 - Pagination for orders (limit, offset)
 - Sorting for orders
+- Pagination for customer orders
+- Sorting for customer orders
+
+4. Join
+- Employee Territory
