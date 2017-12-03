@@ -1,3 +1,4 @@
+--RETRIEVING DATA---
 1. Selecting columns
  - Orders query: Id,CustomerId,EmployeeId,ShipCity,ShipCountry
  - Customers query: Id,ContactName,CompanyName
@@ -25,8 +26,45 @@
 - Count of orders per employee
 - Count of orders per customer
 
-6. Migrations & Indices
+--MANIPULATING DATA---
+
+6. Creating and Destroying Records
+
+7. Updating Records
+
+--MAINTAINING & DATA INTEGRITY--
+
+8. Migrations & Indices
 - Order Indices: Customer, Employee
 - Order Detail Indices: Order, Product
-- Product Indices: Supplier, UNIQUE[ProductId, OrderId]
+- Product Indices: Suppliers
 - Employee Indices: ReportsTo
+
+9. Constraints
+- Product Indices: UNIQUE[ProductId, OrderId]
+- Foreign Keys
+- NOT NULL
+
+10. Triggers
+
+--ADVANCED--
+
+11. Views
+
+12. Prepared Statements
+
+--POSTGRES--
+
+13. PG: JSON and Array column types
+
+14. PG: Pub-Sub
+
+15. PG: Full Text Search
+
+16. PG/MySQL: Materialized Views
+
+--DB Administration--
+
+17. Command Line & Backup
+
+18. Performance & Optimization
