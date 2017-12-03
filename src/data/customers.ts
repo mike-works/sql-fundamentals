@@ -22,9 +22,14 @@ OR contactname LIKE $1
   }
   return await db.all(
     sql`
-SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
-FROM Customer ${whereClause}
-`,
+  SELECT ${ALL_CUSTOMERS_COLUMNS.map(c => `c.${c}`).join(
+    ','
+  )},count(o.Id) as ordercount
+FROM Customer as c
+LEFT JOIN "order" as o
+   ON o.customerid=c.id
+${whereClause}
+GROUP BY c.id`,
     ...params
   );
 }
