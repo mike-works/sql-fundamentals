@@ -26,3 +26,7 @@
 - Count of orders per customer
 
 6. Migrations & Indices
+- Order Indices: Customer, Employee
+- Order Detail Indices: Order, Product
+- Product Indices: Supplier
+- Employee Indices: ReportsTo
