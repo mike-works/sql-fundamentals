@@ -19,5 +19,8 @@
 - Product list
 - Order Details
 
-5. Aggregate Functions
-- Supplier product count
+5. Aggregate Functions and GROUP BY
+- Order total
+- Supplier product list
+- Count of orders per employee
+- Count of orders per customer

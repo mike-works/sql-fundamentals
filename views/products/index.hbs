@@ -28,15 +28,12 @@
         </p>
         <p>
           <b>Supplier:</b> {{#link-to href=(concat '/suppliers/' p.SupplierId)}} {{p.SupplierId}} {{/link-to}}
-        </p>
-        <p>
+          <br>
           <b>Category:</b> {{p.CategoryId}}
-        </p>
-        <p>
+          <br>
           <b>Inventory:</b>
           {{p.UnitsInStock}} in stock and {{p.UnitsOnOrder}} on order.
-        </p>
-        <p>
+          <br>
           <b>Reorder Level: </b> {{p.ReorderLevel}}
         </p>
       </div>
