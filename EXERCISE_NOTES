@@ -28,5 +28,5 @@
 6. Migrations & Indices
 - Order Indices: Customer, Employee
 - Order Detail Indices: Order, Product
-- Product Indices: Supplier
+- Product Indices: Supplier, UNIQUE[ProductId, OrderId]
 - Employee Indices: ReportsTo
