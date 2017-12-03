@@ -14,8 +14,13 @@ const ALL_EMPLOYEES_COLUMNS = [
 export async function getAllEmployees(): Promise<Employee[]> {
   const db = await getDb();
   return await db.all(sql`
-SELECT ${ALL_EMPLOYEES_COLUMNS.join(',')}
-FROM Employee`);
+SELECT ${ALL_EMPLOYEES_COLUMNS.map(c => `e.${c}`).join(
+      ','
+    )}, count(o.id) as ordercount
+FROM Employee as e
+LEFT JOIN CustomerOrder as o
+  ON o.employeeid=e.id
+GROUP BY e.id`);
 }
 
 export async function getEmployee(id: string | number): Promise<Employee> {
