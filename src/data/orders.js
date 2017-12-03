@@ -120,17 +120,23 @@ WHERE o.customerid = $1
  */
 export async function getOrder(id) {
   const db = await getDb();
-  return await db.get(sql`
+  return await db.get(
+    sql`
 SELECT ${ORDER_COLUMNS.map(c => `o.${c}`).join(',')},
   c.companyname as customername,
-  e.lastname as employeename
+  e.lastname as employeename,
+  sum(od.unitprice * od.quantity) as subtotal
 FROM CustomerOrder as o
 LEFT JOIN Customer as c
   ON o.customerid = c.id
 LEFT JOIN Employee as e
   ON o.employeeid = e.id
-WHERE o.id = ${id}
-`);
+LEFT JOIN OrderDetail as od
+  ON od.orderid=o.id
+WHERE o.id=$1
+GROUP BY o.id, c.companyname, e.firstname, e.lastname`,
+    id
+  );
 }
 
 /**
