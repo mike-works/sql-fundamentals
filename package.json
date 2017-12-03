@@ -17,11 +17,14 @@
     "watch:debug": "scripty",
     "heroku-postinstall": "npm run build",
     "test": "scripty",
-    "build": "scripty"
+    "build": "scripty",
+    "db:migrate": "./node_modules/.bin/db-migrate"
   },
   "dependencies": {
     "accounting": "^0.4.1",
     "chalk": "^2.3.0",
+    "db-migrate": "^0.10.2",
+    "db-migrate-sqlite3": "^0.2.1",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "express-winston": "^2.4.0",
