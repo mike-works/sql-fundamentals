@@ -15,6 +15,8 @@
 - Pagination for customer orders
 - Sorting for customer orders
 
+--QUERYING ACROSS TABLES--
+
 4. Join
 - Order list
 - Product list
@@ -32,7 +34,7 @@
 
 7. Updating Records
 
---MAINTAINING & DATA INTEGRITY--
+--THE SCHEMA EVOLVES--
 
 8. Migrations & Indices
 - Order Indices: Customer, Employee
@@ -45,9 +47,9 @@
 - Foreign Keys
 - NOT NULL
 
-10. Triggers
-
 --ADVANCED--
+
+10. Triggers
 
 11. Views
 
