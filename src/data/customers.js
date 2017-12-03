@@ -34,9 +34,14 @@ OR lower(contactname) LIKE $2
   }
   return await db.all(
     sql`
-SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
-FROM Customer ${whereClause}
-`,
+  SELECT ${ALL_CUSTOMERS_COLUMNS.map(c => `c.${c}`).join(
+        ','
+      )},count(o.Id) as ordercount
+FROM Customer as c
+LEFT JOIN CustomerOrder as o
+   ON o.customerid=c.id
+${whereClause}
+GROUP BY c.id`,
     ...params
   );
 }
