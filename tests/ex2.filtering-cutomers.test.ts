@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllCustomers } from '../src/data/customers';
-import { validateRecordColumns } from 'tests/helpers';
+import { validateRecordColumns } from './helpers';
 
 const ALL_CUSTOMERS_REQUIRED_COLS = ['Id', 'ContactName', 'CompanyName'];
 
