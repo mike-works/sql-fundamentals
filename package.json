@@ -6,7 +6,6 @@
   "repository": "https://github.com/mike-north/sql-fundamentals.git",
   "author": "Mike North <michael.l.north@gmail.com> (https://mike.works)",
   "license": "BSD-3-Clause",
-  "private": true,
   "engines": {
     "node": ">= 6"
   },
