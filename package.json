@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "description": "Mike.Works SQL Fundamentals Course",
   "main": "index.js",
-  "repository": "https://github.com/mike-north/sql-fundamentals.git",
+  "repository": "https://github.com/mike-works/sql-fundamentals.git",
   "author": "Mike North <michael.l.north@gmail.com> (https://mike.works)",
-  "license": "BSD-3",
-  "private": true,
+  "license": "BSD-3-Clause",
   "engines": {
     "node": ">= 6"
   },
@@ -32,7 +31,7 @@
     "lodash": "~4.17.4",
     "moment": "^2.19.3",
     "scripty": "^1.7.2",
-    "sqlite": "mike-north/node-sqlite#dist",
+    "sqlite": "^2.9.0",
     "sqlite3": "^3.1.13",
     "winston": "^2.3.7"
   },
