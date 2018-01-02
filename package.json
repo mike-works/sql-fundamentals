@@ -28,7 +28,7 @@
     "express-handlebars": "^3.0.0",
     "express-winston": "^2.4.0",
     "fs-extra": "^5.0.0",
-    "lodash": "~4.14.0",
+    "lodash": "~4.17.4",
     "moment": "^2.19.3",
     "scripty": "^1.7.2",
     "sqlite": "^2.9.0",
@@ -52,7 +52,7 @@
     "mocha-typescript": "^1.1.12",
     "nodemon": "^1.12.1",
     "source-map-support": "^0.5.0",
-    "ts-node": "^3.3.0",
+    "ts-node": "^4.1.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1"
   }
