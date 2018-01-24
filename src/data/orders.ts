@@ -152,11 +152,30 @@ export async function createOrder(
   order: Partial<Order>,
   details: Array<Partial<OrderDetail>> = []
 ): Promise<Partial<Order>> {
-  return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
+  const db = await getDb();
+  let s = await db.run(
+    sql`
+INSERT INTO CustomerOrder
+  (employeeid, customerid, shipname, shipcity, shipaddress, shipvia, shipregion, shipcountry, shippostalcode, requireddate, freight)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+    order.employeeid,
+    order.customerid,
+    order.shipname,
+    order.shipcity,
+    order.shipaddress,
+    order.shipvia,
+    order.shipregion,
+    order.shipcountry,
+    order.shippostalcode,
+    order.requireddate,
+    order.freight
+  );
+  return (await Object.assign({ id: s.lastID }, order)) as Order;
 }
 
 export async function deleteOrder(id: string | number): Promise<void> {
-  return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
+  const db = await getDb();
+  await db.run(sql`DELETE FROM CustomerOrder WHERE id=$1;`, id);
 }
 
 export async function updateOrder(
