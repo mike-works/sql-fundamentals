@@ -151,26 +151,46 @@ export async function getOrderWithDetails(
 export async function createOrder(
   order: Partial<Order>,
   details: Array<Partial<OrderDetail>> = []
-): Promise<Partial<Order>> {
+): Promise<{ id: number | string }> {
   const db = await getDb();
-  let s = await db.run(
-    sql`
+  await db.run(sql`BEGIN`);
+  try {
+    let s = await db.run(
+      sql`
 INSERT INTO "order"
   (employeeid, customerid, shipname, shipcity, shipaddress, shipvia, shipregion, shipcountry, shippostalcode, requireddate, freight)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-    order.employeeid,
-    order.customerid,
-    order.shipname,
-    order.shipcity,
-    order.shipaddress,
-    order.shipvia,
-    order.shipregion,
-    order.shipcountry,
-    order.shippostalcode,
-    order.requireddate,
-    order.freight
-  );
-  return (await Object.assign({ id: s.lastID }, order)) as Order;
+      order.employeeid,
+      order.customerid,
+      order.shipname,
+      order.shipcity,
+      order.shipaddress,
+      order.shipvia,
+      order.shipregion,
+      order.shipcountry,
+      order.shippostalcode,
+      order.requireddate,
+      order.freight
+    );
+    let orderId = s.lastID;
+    for (let i = 0; i < details.length; i++) {
+      let detail = details[i];
+      await db.run(
+        sql`INSERT INTO OrderDetail (id, orderid, productid, unitprice, discount, quantity) VALUES ($1, $2, $3, $4, $5, $6)`,
+        `${orderId}/${i}`,
+        orderId,
+        detail.productid,
+        detail.unitprice,
+        detail.discount,
+        detail.quantity
+      );
+    }
+    await db.run(sql`COMMIT`);
+    return Object.assign({ id: orderId }, order);
+  } catch (e) {
+    await db.run(sql`ROLLBACK`);
+    throw e;
+  }
 }
 
 export async function deleteOrder(id: string | number): Promise<void> {
