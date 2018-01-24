@@ -26,6 +26,14 @@
 This is the example project used for the <a title="Mike.Works" href="https://mike.works">Mike.Works</a> <a title="SQL Fundamentals" href="https://mike.works/course/sql-fundamentals-ad811af">SQL Fundamentals</a> course.
 </p>
 
+# What are we building?
+
+We'll be working with several flavors of the [Northwind Database](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases), which Microsoft uses to demonstrate a wide range of features across their MS Access and MS SQL Server product lines.
+
+<p align="center">
+<img height=400 src="https://user-images.githubusercontent.com/558005/35312473-7646b68c-0070-11e8-83df-25800047b763.png" />
+</p>
+
 # License
 
 While the general license for this project is the BSD 3-clause, the exercises
