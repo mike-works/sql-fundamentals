@@ -175,42 +175,49 @@ export async function getOrderWithDetails(id) {
  */
 export async function createOrder(order, details = []) {
   const db = await getDb();
-  let s = await db.run(
-    sql`
+  await db.run(sql`BEGIN`);
+  try {
+    let s = await db.run(
+      sql`
 INSERT INTO CustomerOrder
   (employeeid, customerid, shipname, shipcity, shipaddress, shipvia, shipregion, shipcountry, shippostalcode, requireddate, freight)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-    order.employeeid,
-    order.customerid,
-    order.shipname,
-    order.shipcity,
-    order.shipaddress,
-    order.shipvia,
-    order.shipregion,
-    order.shipcountry,
-    order.shippostalcode,
-    order.requireddate,
-    order.freight
-  );
-  if (!s || typeof s.lastID === 'undefined')
-    throw new Error('No id returned from CustomerOrder insertion');
-  let c = 1;
-  const orderId = s.lastID;
-  await Promise.all(
-    details.map(d => {
-      return db.run(
-        sql`INSERT INTO OrderDetail(id,orderid,productid,unitprice,quantity,discount)
+      order.employeeid,
+      order.customerid,
+      order.shipname,
+      order.shipcity,
+      order.shipaddress,
+      order.shipvia,
+      order.shipregion,
+      order.shipcountry,
+      order.shippostalcode,
+      order.requireddate,
+      order.freight
+    );
+    if (!s || typeof s.lastID === 'undefined')
+      throw new Error('No id returned from CustomerOrder insertion');
+    let c = 1;
+    const orderId = s.lastID;
+    await Promise.all(
+      details.map(d => {
+        return db.run(
+          sql`INSERT INTO OrderDetail(id,orderid,productid,unitprice,quantity,discount)
 VALUES($1, $2, $3, $4, $5, $6);`,
-        `${orderId}/${c++}`,
-        orderId,
-        d.productid,
-        d.unitprice,
-        d.quantity,
-        d.discount
-      );
-    })
-  );
-  return { id: s.lastID };
+          `${orderId}/${c++}`,
+          orderId,
+          d.productid,
+          d.unitprice,
+          d.quantity,
+          d.discount
+        );
+      })
+    );
+    await db.run('COMMIT;');
+    return { id: s.lastID };
+  } catch (e) {
+    await db.run('ROLLBACK;');
+    throw e;
+  }
 }
 
 /**
