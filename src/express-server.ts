@@ -4,6 +4,7 @@ import * as expressWinston from 'express-winston';
 import * as http from 'http';
 import * as winston from 'winston';
 import { PORT } from './constants';
+import * as bodyParser from 'body-parser';
 import { loadHandlebarsHelpers } from './load-helpers';
 import { logger } from './log';
 import router from './routers/main';
@@ -67,6 +68,12 @@ async function setupProdMiddleware(app: express.Application) {
 
 export async function startExpressServer(): Promise<[express.Application, http.Server]> {
   const app = express();
+
+  // parse application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: false }));
+
+  // parse application/json
+  app.use(bodyParser.json());
 
   if (process.env.NODE_ENV !== 'prod') {
     await setupDevMiddleware(app);

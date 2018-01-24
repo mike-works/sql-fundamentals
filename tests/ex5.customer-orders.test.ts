@@ -20,7 +20,6 @@ class CustomerOrderCountTest {
     let orderCt = allOrders
       .filter(o => o.CustomerId === customer.Id)
       .length;
-    console.log('orderCt= ', orderCt);
     assert.ok(customer.OrderCount);
     assert.equal(customer.OrderCount, orderCt);
   }

@@ -62,3 +62,11 @@ export async function getOrderWithDetails(id: string | number): Promise<[Order, 
   let items = await getOrderDetails(id);
   return [order, items];
 }
+
+export async function createOrder(order: Partial<Order>): Promise<Order> {
+  return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
+}
+
+export async function deleteOrder(id: string | number): Promise<void> {
+  return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
+}

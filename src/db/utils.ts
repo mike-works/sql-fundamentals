@@ -5,6 +5,12 @@ import * as sqlite from 'sqlite';
 import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
 import { logger } from '../log';
 
+interface Database extends sqlite.Database {
+  statements?: {
+    [key: string]: sqlite.Statement;
+  };
+}
+
 async function fileExists(pth: string) {
   return new Promise(resolve => {
     fs.exists(pth, resolve);
@@ -22,15 +28,20 @@ const copyFile = (src: string, dst: string) =>
     });
   });
 
-export const dbPath = (name: string) =>
-  path.join(PROJECT_ROOT, `${name}.sqlite`);
+export const dbPath = (name: string) => path.join(PROJECT_ROOT, `${name}.sqlite`);
 
-const dbPromises: { [key: string]: Promise<sqlite.Database> } = {};
+const dbPromises: { [key: string]: Promise<Database> } = {};
 
-export async function getDb(name: string): Promise<sqlite.Database> {
+async function buildPreparedStatements(db: Database): Promise<{ [key: string]: sqlite.Statement }> {
+  let statements: { [key: string]: sqlite.Statement } = {};
+  statements.totalRevenue = await db.prepare('SELECT sum(UnitPrice*(1-Discount)*Quantity) as val from OrderDetail');
+  return statements;
+}
+
+export async function getDb(name: string): Promise<Database> {
   let pathToDb = dbPath(name);
   let doesExist = await fileExists(pathToDb);
-  let db: sqlite.Database;
+  let db: Database;
   if (!doesExist) {
     await initializeDb(name);
   }
@@ -41,14 +52,10 @@ export async function getDb(name: string): Promise<sqlite.Database> {
     verbose: true
   });
   db = await dbPromises[name];
-
+  db.statements = await buildPreparedStatements(db);
   if (process.env.NODE_ENV !== 'test') {
     db.on('profile', (sql: string, time: number) => {
-      logger.info(
-        [chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(
-          ' '
-        )
-      );
+      logger.info([chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(' '));
     });
   }
   return db;
@@ -57,9 +64,7 @@ export async function getDb(name: string): Promise<sqlite.Database> {
 export async function initializeDb(dbName = 'dev') {
   let pth = dbPath(dbName);
   if (!fs.existsSync(pth)) {
-    logger.debug(
-      `Database ${dbName} was not found at ${pth}... creating it now`
-    );
+    logger.debug(`Database ${dbName} was not found at ${pth}... creating it now`);
     await copyFile(MASTER_DB_FILE, pth);
   }
 }

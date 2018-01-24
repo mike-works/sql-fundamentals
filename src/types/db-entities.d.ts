@@ -51,12 +51,17 @@ interface EmployeeTerritory extends DBRecord {
 interface Order extends DBRecord {
   CustomerId: DBRecordReference;
   EmployeeId: DBRecordReference;
-  ShipCity: string;
-  ShipRegion: string;
-  ShipPostalCode: string;
+  Freight: number;
   OrderDate: string;
   RequiredDate: string;
+  ShipAddress: string;
+  ShipCity: string;
+  ShipCountry: string;
+  ShipName: string;
   ShippedDate: string;
+  ShipPostalCode: string;
+  ShipRegion: string;
+  ShipVia: number;
   SubtotalPrice: number;
 }
 

@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import { getAllSuppliers } from '../src/data/suppliers';
 import { getAllProducts } from '../src/data/products';
+import { getAllSuppliers } from '../src/data/suppliers';
 import { logger } from '../src/log';
 
 @suite('EX5: "Supplier Product List" - Aggregate Function Tests')

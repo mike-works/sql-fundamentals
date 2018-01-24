@@ -1,10 +1,21 @@
+<script type="text/javascript">
+  function deleteOrder(orderId) {
+    fetch(`/orders/${orderId}`, {
+      method: 'DELETE'
+    }).then(() => {
+      window.location.reload();
+    });
+  }
+</script>
 <div class="mui-container">
+  {{#link-to href="/orders/new" classNames="mui-btn mui-btn--primary mui--pull-right"}} New {{/link-to}}
   <h1>Orders</h1>
   {{> 'pagination'}}
   <div class="mui-panel">
     <table class="mui-table">
       <thead>
         <tr>
+          <th></th>
           <th>Id {{> 'table-col-sort' by='Id'}} </th>
           <th>Customer {{> 'table-col-sort' by='CustomerId'}} </th>
           <th>Employee {{> 'table-col-sort' by='EmployeeId'}} </th>
@@ -15,6 +26,9 @@
       <tbody>
         {{#each orders as |o|}}
         <tr>
+          <td class="actions">
+            <button onClick="deleteOrder({{o.Id}});">❌</button>
+          </td>
           <td>{{#link-to href=(concat '/orders/' o.Id)}} {{o.Id}} {{/link-to}}</td>
           <td>{{#link-to href=(concat '/customers/' o.CustomerId)}} {{o.CustomerId}} {{/link-to}}</td>
           <td>{{#link-to href=(concat '/employees/' o.EmployeeId)}} {{o.EmployeeId}} {{/link-to}}</td>

@@ -1,0 +1,80 @@
+<form class="mui-form" method='post' action='/orders'>
+  <legend>Create a new order</legend>
+  <div class='mui-row'>
+    <div class="mui-col-md-12 mui-textfield">
+      <input name="ShipName" type="text" required />
+      <label for="ShipName">Recipient Name</label>
+    </div>
+  </div>
+  <div class="mui-row">
+    <div class="mui-col-md-6 mui-select">
+      <select name="EmployeeId">
+        {{#each employees as |employee|}}
+        <option value={{employee.Id}}>{{employee.LastName}}, {{employee.FirstName}}</option>
+        {{/each}}
+      </select>
+      <label>Employee</label>
+    </div>
+    <div class="mui-col-md-6 mui-select">
+      <select name="CustomerId">
+        {{#each customers as |customer|}}
+        <option value={{customer.Id}}>{{customer.CompanyName}}</option>
+        {{/each}}
+      </select>
+      <label>Customer</label>
+    </div>
+  </div>
+  <div class='mui-row'>
+    <div class="mui-col-md-12 mui-textfield">
+      <input name="RequiredDate" type="date" required />
+      <label for="RequiredDate">Required By</label>
+    </div>
+  </div>
+  <h4>Shipping</h4>
+  <div class="mui-row">
+    <div class="mui-col-md-12 mui-textfield mui-textfield--float-label">
+      <input name="ShipAddress" type="text" required />
+      <label for="ShipAddress">Address</label>
+    </div>
+  </div>
+  <div class="mui-row">
+
+    <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
+      <input name="ShipCity" type="text" required />
+      <label for="ShipCity">City</label>
+    </div>
+    <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
+      <input name="ShipCountry" type="text" required />
+      <label for="ShipCountry">Country</label>
+    </div>
+    <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
+      <input name="ShipPostalCode" type="text" required />
+      <label for="ShipPostalCode">Postal Code</label>
+    </div>
+  </div>
+  <div class="mui-row">
+
+    <div class="mui-col-md-4 mui-select">
+      <select name="ShipRegion">
+        {{#each regions as |region|}}
+        <option value={{region.Id}}>{{region.RegionDescription}}</option>
+        {{/each}}
+      </select>
+      <label>Region</label>
+    </div>
+    <div class="mui-col-md-4 mui-select">
+
+      <select name="ShipVia">
+        {{#each shippers as |shipper|}}
+        <option value={{shipper.Id}}>{{shipper.CompanyName}}</option>
+        {{/each}}
+      </select>
+      <label>Shipper</label>
+    </div>
+    <div class="mui-col-md-4 mui-textfield">
+      <input name="Freight" type="text  " required />
+      <label for="Freight">Freight</label>
+    </div>
+  </div>
+  <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+</form>
