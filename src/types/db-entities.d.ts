@@ -20,6 +20,7 @@ interface Customer extends DBRecord {
   Country: string;
   Phone: string;
   Fax: string;
+  OrderCount: number;
 }
 
 interface Employee extends DBRecord {
@@ -39,6 +40,7 @@ interface Employee extends DBRecord {
   Notes: string;
   ReportsTo: number;
   PhotoPath: string;
+  OrderCount: number;
 }
 
 interface EmployeeTerritory extends DBRecord {
@@ -55,6 +57,7 @@ interface Order extends DBRecord {
   OrderDate: string;
   RequiredDate: string;
   ShippedDate: string;
+  SubtotalPrice: number;
 }
 
 interface OrderDetail extends DBRecord {
@@ -88,6 +91,7 @@ interface Shipper extends DBRecord {
 
 interface Supplier extends Customer {
   HomePage: string;
+  ProductList: string;
 }
 
 interface Territory extends DBRecord {
