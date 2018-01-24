@@ -28,11 +28,15 @@ This is the example project used for the <a title="Mike.Works" href="https://mik
 
 # What are we building?
 
-We'll be working with several flavors of the [Northwind Database](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases), which Microsoft uses to demonstrate a wide range of features across their MS Access and MS SQL Server product lines.
+We'll be working with several flavors of the [Northwind Database](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases), which Microsoft uses to demonstrate a wide range of features across their MS Access and MS SQL Server product lines. You'll be writing some application code in a small [Node.js](https://nodejs.org) web application (built with [Express](https://expressjs.com)) to view and make changes to this data.
+
+Here's what it looks like (and [here](https://damp-oasis-38940.herokuapp.com/) is a live demo):
 
 <p align="center">
 <img height=400 src="https://user-images.githubusercontent.com/558005/35312473-7646b68c-0070-11e8-83df-25800047b763.png" />
 </p>
+
+This app is not in a good state at the beginning of the workshop. Features are missing, there are major performances, and quite a few database-related bugs. We'll fix all these problems and learn as we go!
 
 # License
 
