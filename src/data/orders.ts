@@ -70,3 +70,7 @@ export async function createOrder(order: Partial<Order>, details: Array<Partial<
 export async function deleteOrder(id: string | number): Promise<void> {
   return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
 }
+
+export async function updateOrder(id: string | number, data: Partial<Order>, details: Array<Partial<OrderDetail>> = []): Promise<Partial<Order>> {
+  return Promise.reject('Orders#updateOrder() NOT YET IMPLEMENTED');
+}

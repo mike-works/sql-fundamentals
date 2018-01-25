@@ -6,12 +6,30 @@ import { matchedData } from 'express-validator/filter';
 import { Request, Response } from 'express';
 import { getAllCustomers } from '../data/customers';
 import { getAllEmployees } from '../data/employees';
-import { createOrder, deleteOrder, getAllOrders, getOrder, getOrderWithDetails } from '../data/orders';
+import { createOrder, deleteOrder, getAllOrders, getOrder, updateOrder, getOrderWithDetails } from '../data/orders';
 import { getAllRegions } from '../data/regions';
 import { getAllShippers } from '../data/shippers';
 import { logger } from '../log';
 import { getAllProducts } from '../data/products';
 import { mapValues } from 'lodash';
+
+const ORDER_VALIDATIONS = [
+  check('EmployeeId').exists().isNumeric().toInt(),
+  check('CustomerId').exists().isAlphanumeric().trim(),
+  check('ShipCity').exists().trim(),
+  check('ShipAddress').exists().trim(),
+  check('ShipName').exists().trim(),
+  check('ShipVia').exists().isNumeric().toInt(),
+  check('ShipRegion').exists().isNumeric().toInt(),
+  check('ShipCountry').exists().isAlphanumeric().trim(),
+  check('ShipPostalCode').exists().isAlphanumeric().trim(),
+  check('RequiredDate').exists(),
+  check('Freight').exists().isFloat().toFloat(),
+  check('details.Id').optional().custom((value: any[]) => value instanceof Array),
+  check('details.ProductId').optional().custom((value: any[]) => value instanceof Array),
+  check('details.Quantity').optional().custom((value: any[]) => value instanceof Array),
+  check('details.Discount').optional().custom((value: any[]) => value instanceof Array)
+];
 
 const router = express.Router();
 
@@ -30,11 +48,13 @@ function normalizeOrderDetails(raw: { [k: string]: any[] }): Array<Partial<Order
   }
   return details.map(d => {
     let [id, price] = d.ProductId.split(';');
+    let discount = parseFloat(d.Discount as string);
     return {
+      Id: d.Id,
       ProductId: parseInt(id, 10),
-      UnitPrice: parseFloat(price),
+      UnitPrice: parseFloat(price) * (1 - discount),
       Quantity: parseInt(d.Quantity as string, 10),
-      Discount: parseFloat(d.Discount as string),
+      Discount: discount,
     };
   });
 }
@@ -60,22 +80,7 @@ router.get('/new', async (req, res) => {
   res.render('orders/new', { customers, employees, regions, shippers, products });
 });
 
-router.post('/', [
-  check('EmployeeId').exists().isNumeric().toInt(),
-  check('CustomerId').exists().isAlphanumeric().trim(),
-  check('ShipCity').exists().trim(),
-  check('ShipAddress').exists().trim(),
-  check('ShipName').exists().trim(),
-  check('ShipVia').exists().isNumeric().toInt(),
-  check('ShipRegion').exists().isNumeric().toInt(),
-  check('ShipCountry').exists().isAlphanumeric().trim(),
-  check('ShipPostalCode').exists().isAlphanumeric().trim(),
-  check('RequiredDate').exists().toDate().isAfter(),
-  check('Freight').exists().isFloat().toFloat(),
-  check('details.ProductId').optional().custom((value: any[]) => value instanceof Array),
-  check('details.Quantity').optional().custom((value: any[]) => value instanceof Array),
-  check('details.Discount').optional().custom((value: any[]) => value instanceof Array)
-], async (req: Request, res: Response) => {
+router.post('/', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.mapped() });
@@ -94,9 +99,43 @@ router.post('/', [
   }
 });
 
+router.post('/:id', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.mapped() });
+  }
+
+  // matchedData returns only the subset of data validated by the middleware
+  const orderData = matchedData(req);
+  let detailsObj = orderData.details || {};
+  let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
+  try {
+    let order = await updateOrder(req.params.id, orderData as any, details);
+    res.redirect(`/orders/${order.Id}`);
+  } catch (e) {
+    res.status(500);
+    res.send(e.toString());
+  }
+});
+
 router.get('/:id', async (req, res) => {
   let [order, items] = await getOrderWithDetails(req.param('id'));
   res.render('orders/show', { order, items });
+});
+
+router.get('/:id/edit', async (req, res) => {
+  let cp = getAllCustomers();
+  let ep = getAllEmployees();
+  let rp = getAllRegions();
+  let sp = getAllShippers();
+  let pp = getAllProducts();
+  let [order, details] = await getOrderWithDetails(req.param('id'));
+  let customers = await cp;
+  let employees = await ep;
+  let regions = await rp;
+  let shippers = await sp;
+  let products = await pp;
+  res.render('orders/edit', { order, details, customers, employees, regions, shippers, products });
 });
 
 router.delete('/:id', async (req, res) => {
