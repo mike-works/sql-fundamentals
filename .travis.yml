@@ -8,6 +8,11 @@ node_js:
 install:
 - npm install --no-shrinkwrap
 
+before_script: 
+  - rm dev.sqlite
+  - cp master.sqlite dev.sqlite
+  - npm run db:migrate --- up
+
 script:  
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
