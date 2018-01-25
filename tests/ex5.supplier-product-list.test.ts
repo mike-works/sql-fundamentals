@@ -20,6 +20,7 @@ class SupplierProductListTest {
     let productsString = allProducts
       .filter(p => p.SupplierId === supplierResult.Id)
       .map(p => p.ProductName)
+      .sort()
       .join(', ');
 
     assert.equal(supplierResult.ProductList, productsString);
