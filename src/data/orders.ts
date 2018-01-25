@@ -1,5 +1,6 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
+import { sqlFormat } from '../utils';
 
 export const ALL_ORDERS_COLUMNS = [
   'id',
@@ -15,6 +16,7 @@ export const ORDER_COLUMNS = [
   'shipname',
   'shipaddress',
   'shippostalcode',
+  'requireddate',
   'shipcountry',
   'freight'
 ];
@@ -202,6 +204,38 @@ export async function updateOrder(
   id: string | number,
   data: Partial<Order>,
   details: Array<Partial<OrderDetail>> = []
-): Promise<Partial<Order>> {
-  return Promise.reject('Orders#updateOrder() NOT YET IMPLEMENTED');
+): Promise<{ id: number | string }> {
+  const db = await getDb();
+  await db.run(sql`BEGIN`);
+  try {
+    let updates: string[] = [];
+    for (let i in data) {
+      if (data.hasOwnProperty(i) && typeof (data as any)[i] !== 'object') {
+        updates.push(`${i}=${sqlFormat(data[i as keyof Order])}`);
+      }
+    }
+    let query = sql`UPDATE CustomerOrder
+  SET ${updates.join(', ')}
+  WHERE id=$1;`;
+    await db.run(query, id);
+    for (let detail of details) {
+      let detailUpdates: string[] = [];
+      for (let di in detail) {
+        if (detail.hasOwnProperty(di) && di !== 'id' && di !== 'price') {
+          detailUpdates.push(
+            `${di}=${sqlFormat(detail[di as keyof OrderDetail])}`
+          );
+        }
+      }
+      await db.run(
+        sql`UPDATE OrderDetail SET ${detailUpdates.join(', ')} WHERE id=$1`,
+        detail.id
+      );
+    }
+    await db.run(sql`COMMIT`);
+    return { id };
+  } catch (e) {
+    await db.run(sql`ROLLBACK`);
+    throw e;
+  }
 }
