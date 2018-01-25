@@ -2,6 +2,7 @@
   "extends": "tslint:recommended",
   "rules": {
     "no-unused-variable": [true],
+    "no-console": false,
     "semicolon": [true, "always"],
     "interface-name": false,
     "trailing-comma": false,

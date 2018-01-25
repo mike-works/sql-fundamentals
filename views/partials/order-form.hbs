@@ -1,8 +1,18 @@
+<script type="text/javascript">
+  function addOrderDetail(evt) {
+    evt.preventDefault();
+    let item = document.createElement('div');
+    item.classList.add('mui-row');
+    item.innerHTML = document.querySelector('.product-selector').parentElement.parentElement.innerHTML;
+    document.querySelector('#order-details').appendChild(item);
+  }
+</script>
+
 <form class="mui-form" method='post' action='/orders'>
   <legend>Create a new order</legend>
   <div class='mui-row'>
     <div class="mui-col-md-12 mui-textfield">
-      <input name="ShipName" type="text" required />
+      <input name="ShipName" type="text" value="FRONT DESK" required />
       <label for="ShipName">Recipient Name</label>
     </div>
   </div>
@@ -26,29 +36,29 @@
   </div>
   <div class='mui-row'>
     <div class="mui-col-md-12 mui-textfield">
-      <input name="RequiredDate" type="date" required />
+      <input name="RequiredDate" type="date" value={{tomorrow}} required />
       <label for="RequiredDate">Required By</label>
     </div>
   </div>
   <h4>Shipping</h4>
   <div class="mui-row">
     <div class="mui-col-md-12 mui-textfield mui-textfield--float-label">
-      <input name="ShipAddress" type="text" required />
+      <input name="ShipAddress" type="text" value="5000 Forbes Ave" required />
       <label for="ShipAddress">Address</label>
     </div>
   </div>
   <div class="mui-row">
 
     <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
-      <input name="ShipCity" type="text" required />
+      <input name="ShipCity" type="text" value="Pittsburgh, PA" required />
       <label for="ShipCity">City</label>
     </div>
     <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
-      <input name="ShipCountry" type="text" required />
+      <input name="ShipCountry" type="text" value="USA" required />
       <label for="ShipCountry">Country</label>
     </div>
     <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
-      <input name="ShipPostalCode" type="text" required />
+      <input name="ShipPostalCode" type="text" value="15213" required />
       <label for="ShipPostalCode">Postal Code</label>
     </div>
   </div>
@@ -72,9 +82,44 @@
       <label>Shipper</label>
     </div>
     <div class="mui-col-md-4 mui-textfield">
-      <input name="Freight" type="text  " required />
+      <input name="Freight" type="number" step="0.01" value="2.50" required />
       <label for="Freight">Freight</label>
     </div>
   </div>
-  <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+  <legend>Order Items</legend>
+  <a onClick="addOrderDetail(event)">Add Item</a>
+
+  <!--
+    interface OrderDetail extends DBRecord {
+  OrderId: DBRecordReference;
+  ProductId: DBRecordReference;
+  UnitPrice: number;
+  Quantity: number;
+  Discount: number;
+}
+  -->
+  <div id="order-details">
+    <div class="mui-row">
+      <div class="mui-col-md-4 mui-select">
+        <select name="details.ProductId[]" class="product-selector">
+          {{#each products as |product|}}
+          <option value="{{product.Id}};{{product.UnitPrice}}">{{product.ProductName}} ({{format-money product.UnitPrice}})</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="mui-col-md-4 mui-textfield">
+        <input name="details.Quantity[]" type="number" value=1 min=1 required />
+        <label for="Quantity">Quantity</label>
+      </div>
+      <div class="mui-col-md-4 mui-textfield">
+        <input name="details.Discount[]" type="number" value="0" step="0.1" required />
+        <label for="Discount">Discount</label>
+      </div>
+    </div>
+  </div>
+  <div class="mui-row">
+    <div class="mui-col-md-12">
+      <button type="submit" class="mui-btn mui-btn--primary mui-btn--raised">Save Order</button>
+    </div>
+  </div>
 </form>

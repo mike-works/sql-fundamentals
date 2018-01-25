@@ -63,7 +63,7 @@ export async function getOrderWithDetails(id: string | number): Promise<[Order, 
   return [order, items];
 }
 
-export async function createOrder(order: Partial<Order>): Promise<Order> {
+export async function createOrder(order: Partial<Order>, details: Array<Partial<OrderDetail>> = []): Promise<Partial<Order>> {
   return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
 }
 
