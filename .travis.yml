@@ -9,7 +9,7 @@ install:
 - npm install --no-shrinkwrap
 
 before_script: 
-  - [ -e dev.sqlite ] rm dev.sqlite
+  - rm -f dev.sqlite
   - cp master.sqlite dev.sqlite
   - npm run db:migrate --- up
 
