@@ -3,7 +3,7 @@ import { orderBy } from 'lodash';
 import { suite, test, slow, timeout } from 'mocha-typescript';
 import { logger } from '../src/log';
 import { updateOrder, createOrder, getOrder, deleteOrder, getOrderDetails } from '../src/data/orders';
-import { VALID_ORDER_DATA } from '../tests/ex6.create-order.test';
+import { VALID_ORDER_DATA } from '../tests/ex06.create-order.test';
 import { merge } from 'lodash';
 
 @suite('EX8: "Update an Order with OrderDetail items" - Update / Transaction test')

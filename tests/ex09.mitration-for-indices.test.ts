@@ -3,7 +3,7 @@ import { suite, test, only } from 'mocha-typescript';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getDb } from '../src/db/utils';
-import { sql } from '../src//sql-string';
+import { sql } from '../src/sql-string';
 
 @suite('EX9: "Create indices to boost query performance" - Migration test')
 class MigrationIndicesTest {

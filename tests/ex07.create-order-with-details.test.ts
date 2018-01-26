@@ -2,8 +2,8 @@ import { assert } from 'chai';
 import { orderBy } from 'lodash';
 import { suite, test, slow, timeout } from 'mocha-typescript';
 import { logger } from '../src/log';
-import { createOrder, getAllOrders, deleteOrder, getOrderDetails, getAllOrderDetails } from '../src/data/orders';
-import { VALID_ORDER_DATA } from '../tests/ex6.create-order.test';
+import { createOrder, getAllOrders, deleteOrder, getOrderDetails } from '../src/data/orders';
+import { VALID_ORDER_DATA } from '../tests/ex06.create-order.test';
 
 @suite('EX7: "Create an Order with OrderDetail items" - Transaction test')
 class CreateOrderWithDetailsTest {

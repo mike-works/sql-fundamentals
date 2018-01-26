@@ -3,7 +3,7 @@ import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
 import { logger } from '../src/log';
 import { createOrder, getAllOrders, deleteOrder } from '../src/data/orders';
-import { VALID_ORDER_DATA } from '../tests/ex6.create-order.test';
+import { VALID_ORDER_DATA } from '../tests/ex06.create-order.test';
 
 @suite('EX6: "Delete an Order" - Record deletion test')
 class DeleteOrderTest {

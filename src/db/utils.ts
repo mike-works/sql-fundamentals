@@ -55,6 +55,7 @@ export async function getDb(name: string): Promise<Database> {
   db = await dbPromises[name];
   db.statements = await buildPreparedStatements(db);
   if (process.env.NODE_ENV !== 'test') {
+    // tslint:disable-next-line:no-shadowed-variable
     db.on('profile', (sql: string, time: number) => {
       logger.info([chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(' '));
     });
