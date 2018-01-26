@@ -28,12 +28,6 @@ matrix:
     env: DB_TYPE=pg
   - node_js: 'stable'
     env: DB_TYPE=pg SHOULD_DEPLOY=true
-  - node_js: '6'
-    env: DB_TYPE=sqlite
-  - node_js: '8'
-    env: DB_TYPE=sqlite
-  - node_js: 'stable'
-    env: DB_TYPE=sqlite
 
 before_install:
   - echo "[mysqld]" > $HOME/.my.cnf
