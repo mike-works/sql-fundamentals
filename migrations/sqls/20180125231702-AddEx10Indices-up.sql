@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX OrderDetailUniqueProduct ON OrderDetail (productid, orderid);
