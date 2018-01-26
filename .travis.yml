@@ -21,12 +21,6 @@ matrix:
     env: DB_TYPE=pg
   - node_js: 'stable'
     env: DB_TYPE=pg SHOULD_DEPLOY=true
-  - node_js: '6'
-    env: DB_TYPE=sqlite
-  - node_js: '8'
-    env: DB_TYPE=sqlite
-  - node_js: 'stable'
-    env: DB_TYPE=sqlite
 
 install:
 - if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi

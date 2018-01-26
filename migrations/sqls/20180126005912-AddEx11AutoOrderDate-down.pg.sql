@@ -1,0 +1,1 @@
+DROP TRIGGER IF EXISTS "ordertransaction" on "transaction";
