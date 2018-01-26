@@ -1,4 +1,4 @@
-import { getDb } from '../db/utils';
+import { getDb, DbType, DB_TYPE } from '../db/utils';
 import { sql } from '../sql-string';
 
 /**
@@ -31,19 +31,7 @@ function concatClause(colname, sortDirection = 'ASC', dbType = process.env.DB_TY
  */
 export async function getAllSuppliers() {
   const db = await getDb();
-  let query = sql`
-  SELECT ${ALL_SUPPLIERS_COLUMNS.map(c => `sp.${c}`).join(', ')}, ${concatClause(
-    'sp.productname',
-    'ASC'
-  )} AS productlist FROM
-  (SELECT ${ALL_SUPPLIERS_COLUMNS.map(c => `s.${c}`).join(', ')}, p.productname FROM  Supplier AS s
-  LEFT JOIN Product AS p
-    ON p.supplierid=s.id
-  ORDER BY s.id ASC, p.productname ASC) AS sp
-  GROUP BY sp.id, sp.contactname, sp.companyname
-  ORDER BY sp.id
-  `;
-  return await db.all(query);
+  return await db.all(sql`SELECT * from SupplierList_V`);
 }
 
 /**
