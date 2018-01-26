@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as sqlite from 'sqlite';
 import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
 import { logger } from '../log';
+import { sql } from '../sql-string';
 
 interface Database extends sqlite.Database {
   statements?: {
@@ -58,13 +59,14 @@ export async function getDb(name: string): Promise<Database> {
       logger.info([chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(' '));
     });
   }
+  await db.get(sql`PRAGMA foreign_keys = ON`);
   return db;
 }
 
 export async function initializeDb(dbName = 'dev') {
   let pth = dbPath(dbName);
   if (!fs.existsSync(pth)) {
-    logger.debug(`Database ${dbName} was not found at ${pth}... creating it now`);
+    logger.debug(`Database ${dbName} was not found at ${pth}...creating it now`);
     await copyFile(MASTER_DB_FILE, pth);
   }
 }
