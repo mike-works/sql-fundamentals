@@ -31,12 +31,6 @@ matrix:
       env: DB_TYPE=pg
     - node_js: 'stable'
       env: DB_TYPE=pg SHOULD_DEPLOY=true
-    - node_js: '6'
-      env: DB_TYPE=sqlite
-    - node_js: '8'
-      env: DB_TYPE=sqlite
-    - node_js: 'stable'
-      env: DB_TYPE=sqlite
 
 before_install:
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"

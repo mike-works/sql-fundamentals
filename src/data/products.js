@@ -165,5 +165,10 @@ export async function deleteProduct(id) {
  * @returns {Promise<ProductPriceInfo[]>} Pricing history info
  */
 export async function getProductPricingHistory(id) {
-  return [];
+  const db = await getDb();
+
+  return await db.all(
+    sql`SELECT fromprice,toprice,changedate FROM ProductPricingInfo WHERE productid=$1`,
+    parseInt(id, 10)
+  );
 }
