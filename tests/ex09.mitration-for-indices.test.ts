@@ -19,8 +19,8 @@ class MigrationIndicesTest {
     let downMigrationCount = 0;
     let upMigrationCount = 0;
     migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('down')) { downMigrationCount++; }
-      if (fileName.includes('up')) { upMigrationCount++; }
+      if (fileName.includes('-down')) { downMigrationCount++; }
+      if (fileName.includes('-up')) { upMigrationCount++; }
     });
     assert.equal(downMigrationCount, upMigrationCount, 'There is a matching up migration for every down migration');
     assert.isAtLeast(downMigrationCount, 2, 'There are at least two down migrations');

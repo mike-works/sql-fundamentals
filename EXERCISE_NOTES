@@ -56,8 +56,10 @@
 --ADVANCED--
 
 11. Triggers
+- Set order.OrderDate on Transaction insert
 
 12. Views
+- 
 
 13. Prepared Statements
 
@@ -69,9 +71,7 @@
 
 16. PG/MySQL: Full Text Search
 
---POSTGRES/MySQL--
-
-17. PG: Pub-Sub
+17. PG/MySQL: Pub-Sub
 
 --DB Administration--
 

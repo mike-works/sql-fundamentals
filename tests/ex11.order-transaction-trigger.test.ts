@@ -6,7 +6,6 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex06.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
-import { timeout } from './helpers';
 
 @suite('EX11: "Transaction Trigger" - AFTER INSERT trigger test')
 class TransactionsTriggerTest {
@@ -19,8 +18,8 @@ class TransactionsTriggerTest {
     let downMigrationCount = 0;
     let upMigrationCount = 0;
     migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('down')) { downMigrationCount++; }
-      if (fileName.includes('up')) { upMigrationCount++; }
+      if (fileName.includes('-down')) { downMigrationCount++; }
+      if (fileName.includes('-up')) { upMigrationCount++; }
     });
     assert.isAtLeast(downMigrationCount, 5, 'There are at least three down migrations');
     assert.isAtLeast(upMigrationCount, 5, 'There are at least three up migrations');

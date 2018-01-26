@@ -18,8 +18,8 @@ class OrderDetailUniqueIndexTest {
     let downMigrationCount = 0;
     let upMigrationCount = 0;
     migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('down')) { downMigrationCount++; }
-      if (fileName.includes('up')) { upMigrationCount++; }
+      if (fileName.includes('-down')) { downMigrationCount++; }
+      if (fileName.includes('-up')) { upMigrationCount++; }
     });
     assert.isAtLeast(downMigrationCount, 4, 'There are at least three down migrations');
     assert.isAtLeast(upMigrationCount, 4, 'There are at least three up migrations');
