@@ -5,9 +5,10 @@ import * as sqlite from 'sqlite';
 import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
 import { logger } from '../log';
 import { sql } from '../sql-string';
+import { setupPreparedStatements } from './prepared';
 
 interface Database extends sqlite.Database {
-  statements?: {
+  statements: {
     [key: string]: sqlite.Statement;
   };
 }
@@ -51,7 +52,7 @@ export async function getDb(name: string): Promise<Database> {
   }
   dbPromises[name] = sqlite.open(pathToDb, {
     verbose: true
-  });
+  }) as any;
   db = await dbPromises[name];
   db.statements = await buildPreparedStatements(db);
   if (process.env.NODE_ENV !== 'test') {
@@ -61,6 +62,7 @@ export async function getDb(name: string): Promise<Database> {
     });
   }
   await db.get(sql`PRAGMA foreign_keys = ON`);
+  db.statements = await setupPreparedStatements(db);
   return db;
 }
 
