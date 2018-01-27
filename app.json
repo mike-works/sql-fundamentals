@@ -6,7 +6,7 @@
     "postgresql"
   ],
   "website": "https://mike.works/course/sql-fundamentals-ad811af",
-  "repository": "https://github.com/mike-works/sql-fundamentals",
+  "repository": "https://github.com/mike-works/sql-fundamentals#solutions",
   "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
   "success_url": "/",
   "image": "heroku/node",
