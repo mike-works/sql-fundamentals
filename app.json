@@ -8,10 +8,10 @@
   "website": "https://mike.works/course/sql-fundamentals-ad811af",
   "repository": "https://github.com/mike-works/sql-fundamentals",
   "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
-  "success_url": "/welcome",
+  "success_url": "/",
   "image": "heroku/node",
   "addons": [{
-    "plan": "heroku-postgresql",
+    "plan": "heroku-postgresql:free",
     "as": "DATABASE_URL",
     "options": {
       "version": "9.6"
