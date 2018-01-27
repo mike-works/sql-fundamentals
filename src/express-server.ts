@@ -12,7 +12,7 @@ import router from './routers/main';
 async function startListening(app: express.Express): Promise<http.Server> {
   return new Promise<http.Server>((res, rej) => {
     const server = app.listen(PORT, () => {
-      logger.info('Server listening on http://localhost:3000');
+      logger.info(`Server listening on http://localhost:${PORT}`);
       res(server);
     });
   });
