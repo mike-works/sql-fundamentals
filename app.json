@@ -11,7 +11,7 @@
   "success_url": "/",
   "image": "heroku/node",
   "addons": [{
-    "plan": "heroku-postgresql:free",
+    "plan": "heroku-postgresql:hobby-dev",
     "as": "DATABASE_URL",
     "options": {
       "version": "9.6"
