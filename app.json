@@ -9,11 +9,14 @@
   "repository": "https://github.com/mike-works/sql-fundamentals",
   "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
   "success_url": "/welcome",
-  "scripts": {
-    "postdeploy": "bundle exec rake bootstrap"
-  },
   "image": "heroku/node",
-  "addons": [],
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "as": "STUDENT_DATABASE",
+    "options": {
+      "version": "9.6"
+    }
+  }],
   "buildpacks": [{
     "url": "https://github.com/heroku/heroku-buildpack-nodejs#v83"
   }]
