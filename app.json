@@ -11,7 +11,11 @@
   "success_url": "/",
   "image": "heroku/node",
   "scripts": {
-    "postdeploy": "NODE_ENV=development npm i; npm run build"
+    "postdeploy": "rm -rf node_modules; NODE_ENV=development npm i; npm run build"
+  },
+  "NODE_ENV": {
+    "description": "The node.js environment.",
+    "value": "development"
   },
   "addons": [{
     "plan": "heroku-postgresql:hobby-dev",
