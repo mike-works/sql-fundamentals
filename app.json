@@ -13,9 +13,11 @@
   "scripts": {
     "postdeploy": "rm -rf node_modules; NODE_ENV=development npm i; npm run build"
   },
-  "NODE_ENV": {
-    "description": "The node.js environment.",
-    "value": "development"
+  "env": {
+    "NODE_ENV": {
+      "description": "The node.js environment.",
+      "value": "development"
+    }
   },
   "addons": [{
     "plan": "heroku-postgresql:hobby-dev",
