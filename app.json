@@ -1,0 +1,20 @@
+{
+  "name": "mikeworks-sql",
+  "description": "Mike.Works SQL Fundaments / Pro Workshop",
+  "keywords": [
+    "sql",
+    "postgresql"
+  ],
+  "website": "https://mike.works/course/sql-fundamentals-ad811af",
+  "repository": "https://github.com/mike-works/sql-fundamentals",
+  "logo": "https://assets.mike.works/img/logo-9ca977a8891de612aec50bf68b6c8845.png",
+  "success_url": "/welcome",
+  "scripts": {
+    "postdeploy": "bundle exec rake bootstrap"
+  },
+  "image": "heroku/node",
+  "addons": [],
+  "buildpacks": [{
+    "url": "https://github.com/heroku/heroku-buildpack-nodejs#v83"
+  }]
+}
