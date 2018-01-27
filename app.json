@@ -16,8 +16,6 @@
     "options": {
       "version": "9.6"
     }
-  }, {
-    "plan": "adminium"
   }],
   "buildpacks": [{
     "url": "https://github.com/heroku/heroku-buildpack-nodejs#v83"
