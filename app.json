@@ -10,6 +10,9 @@
   "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
   "success_url": "/",
   "image": "heroku/node",
+  "scripts": {
+    "postdeploy": "NODE_ENV=development npm i; npm run build"
+  },
   "addons": [{
     "plan": "heroku-postgresql:hobby-dev",
     "as": "DATABASE_URL",

@@ -3,8 +3,8 @@ import { getDb } from '../db/utils';
 import { logger } from '../log';
 import { sql } from '../sql-string';
 
-const ALL_ORDERS_COLUMNS = ['*'];
-const ORDER_COLUMNS = ['*'];
+export const ALL_ORDERS_COLUMNS = ['*'];
+export const ORDER_COLUMNS = ['*'];
 
 interface AllOrdersOptions {
   page?: number;
