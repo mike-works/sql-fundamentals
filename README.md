@@ -38,6 +38,12 @@ Here's what it looks like (and [here](https://damp-oasis-38940.herokuapp.com/) i
 
 This app is not in a good state at the beginning of the workshop. Features are missing, there are major performances, and quite a few database-related bugs. We'll fix all these problems and learn as we go!
 
+# Deploy this app on heroku
+
+If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) database locally, you can deploy this app onto heroku and use their free (up to 10k records) hosted PostgreSQL service.
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 # License
 
 While the general license for this project is the BSD 3-clause, the exercises
