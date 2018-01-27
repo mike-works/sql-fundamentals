@@ -12,7 +12,7 @@
   "image": "heroku/node",
   "addons": [{
     "plan": "heroku-postgresql",
-    "as": "STUDENT_DATABASE",
+    "as": "DATABASE_URL",
     "options": {
       "version": "9.6"
     }
