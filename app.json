@@ -7,7 +7,7 @@
   ],
   "website": "https://mike.works/course/sql-fundamentals-ad811af",
   "repository": "https://github.com/mike-works/sql-fundamentals",
-  "logo": "https://assets.mike.works/img/logo-9ca977a8891de612aec50bf68b6c8845.png",
+  "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
   "success_url": "/welcome",
   "scripts": {
     "postdeploy": "bundle exec rake bootstrap"
