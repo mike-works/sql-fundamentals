@@ -8,7 +8,9 @@
   }
 </script>
 <div class="mui-container">
-  {{#link-to href="/orders/new" classNames="mui-btn mui-btn--primary mui--pull-right"}} New {{/link-to}}
+  {{#link-to href="/orders/new" classNames="mui-btn mui-btn--primary mui--pull-right"}}
+    New
+  {{/link-to}}
   <h1>Orders</h1>
   {{> 'pagination'}}
   <div class="mui-panel">
@@ -16,10 +18,10 @@
       <thead>
         <tr>
           <th></th>
-          <th>Id {{> 'table-col-sort' by='Id'}} </th>
-          <th>Customer {{> 'table-col-sort' by='CustomerId'}} </th>
-          <th>Employee {{> 'table-col-sort' by='EmployeeId'}} </th>
-          <th>Ship To {{> 'table-col-sort' by='ShipCountry'}} </th>
+          <th>Id {{> 'table-col-sort' by='id'}} </th>
+          <th>Customer {{> 'table-col-sort' by='customerid'}} </th>
+          <th>Employee {{> 'table-col-sort' by='employeeid'}} </th>
+          <th>Ship To {{> 'table-col-sort' by='shipcountry'}} </th>
           <th>Total </th>
         </tr>
       </thead>
@@ -27,13 +29,13 @@
         {{#each orders as |o|}}
         <tr>
           <td class="actions">
-            <button onClick="deleteOrder({{o.Id}});">❌</button>
+            <button onClick="deleteOrder({{o.id}});">❌</button>
           </td>
-          <td>{{#link-to href=(concat '/orders/' o.Id)}} {{o.Id}} {{/link-to}}</td>
-          <td>{{#link-to href=(concat '/customers/' o.CustomerId)}} {{o.CustomerId}} {{/link-to}}</td>
-          <td>{{#link-to href=(concat '/employees/' o.EmployeeId)}} {{o.EmployeeId}} {{/link-to}}</td>
-          <td>{{o.ShipCity}}, {{o.ShipCountry}}</td>
-          <td>{{format-money o.Total}}</td>
+          <td>{{#link-to href=(concat '/orders/' o.id)}} {{o.id}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/customers/' o.customerid)}} {{o.customerid}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/employees/' o.employeeid)}} {{o.employeeid}} {{/link-to}}</td>
+          <td>{{o.shipcity}}, {{o.shipcountry}}</td>
+          <td>{{format-money o.total}}</td>
         </tr>
         {{/each}}
       </tbody>

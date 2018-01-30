@@ -1,27 +1,29 @@
 <div class="mui-container">
   <h1>
-    {{#link-to href='/orders'}}Orders{{/link-to}} / {{order.Id}}
-    <a href="/orders/{{order.Id}}/edit" class="mui-btn mui--pull-right">✏️&nbsp;&nbsp;&nbsp;Edit</a>
+    {{#link-to href='/orders'}}
+      Orders
+    {{/link-to}} / {{order.id}}
+    <a href="/orders/{{order.id}}/edit" class="mui-btn mui--pull-right">✏️&nbsp;&nbsp;&nbsp;Edit</a>
   </h1>
   <div class="mui-row">
     <div class="mui-col-md-6">
       <div class="mui-panel">
 
         <b>Ordered for customer: </b>
-        <span class="customer">{{order.CustomerId}}</span>
+        <span class="customer">{{order.customerid}}</span>
         <br>
         <b>Placed by employee: </b>
-        <span class="employee">{{order.EmployeeId}}</span>
+        <span class="employee">{{order.employeeid}}</span>
         <br>
         <br>
         <b>Placed on:</b>
-        <span class="order-date">{{format-date order.OrderDate}}</span>
+        <span class="order-date">{{format-date order.orderdate}}</span>
         <br>
         <b>Required by: </b>
-        <span class="required-date">{{format-date order.RequiredDate}}</span>
+        <span class="required-date">{{format-date order.requireddate}}</span>
         <br>
         <b>Shipped on: </b>
-        <span class="shipped-date">{{format-date order.ShippedDate}}</span>
+        <span class="shipped-date">{{format-date order.shippeddate}}</span>
         </p>
       </div>
     </div>
@@ -31,12 +33,12 @@
           <b>Ship To: </b>
           <br>
           <br>
-          <span class="customer">{{order.CustomerId}}</span>
+          <span class="customer">{{order.customerid}}</span>
           <br>ATTN:
-          <span class="ship-name">{{order.ShipName}}</span>
+          <span class="ship-name">{{order.shipname}}</span>
           <br>
-          <span class="ship-address">{{order.ShipAddress}}</span>
-          <br> {{order.ShipCity}}, {{order.ShipCountry}} {{order.ShipPostalCode}}
+          <span class="ship-address">{{order.shipaddress}}</span>
+          <br> {{order.shipcity}}, {{order.shipcountry}} {{order.shippostalcode}}
         </p>
       </div>
     </div>
@@ -55,28 +57,28 @@
           <tbody>
             {{#each items as |item|}}
             <tr>
-              <td class='id-col'>{{item.Id}}</td>
-              <td class='id-col'>{{item.ProductId}}</td>
+              <td class='id-col'>{{item.id}}</td>
+              <td class='id-col'>{{item.productid}}</td>
               <td class='money-col'>
-                {{format-money item.UnitPrice}} {{#if item.Discount}}
-                <span class="mui-badge mui--pull-left">-{{format-percent item.Discount}}</span>
+                {{format-money item.unitprice}} {{#if item.discount}}
+                <span class="mui-badge mui--pull-left">-{{format-percent item.discount}}</span>
                 {{/if}}
               </td>
-              <td>{{item.Quantity}}</td>
-              <td class='money-col'>{{format-money item.Price}}</td>
+              <td>{{item.quantity}}</td>
+              <td class='money-col'>{{format-money item.price}}</td>
             </tr>
             {{/each}}
           </tbody>
         </table>
         <h3 class='text-right mui--color-indigo'>
-          Subtotal: {{format-money order.SubtotalPrice}}
+          Subtotal: {{format-money order.subtotalprice}}
         </h3>
         <h3 class='text-right mui--color-indigo'>
-          + Shipping: {{format-money order.Freight}}
+          + Shipping: {{format-money order.freight}}
         </h3>
         <div class="mui-divider"></div>
         <h3 class='text-right mui--color-green'>
-          Grand total: {{format-money (add order.SubtotalPrice order.Freight)}}
+          Grand total: {{format-money (add order.subtotalprice order.freight)}}
         </h3>
       </div>
     </div>

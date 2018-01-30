@@ -3,13 +3,13 @@
   <ul class='collection'>
     {{#each suppliers as |s|}}
     <li>
-      <a class='mui-panel' href="/suppliers/{{s.Id}}">
-        <span class='mui-badge mui--pull-right'>{{s.Id}}</span>
-        <h3 class='mui-panel__title'>{{s.CompanyName}}</h3>
+      <a class='mui-panel' href="/suppliers/{{s.id}}">
+        <span class='mui-badge mui--pull-right'>{{s.id}}</span>
+        <h3 class='mui-panel__title'>{{s.companyname}}</h3>
         <p>
-          <b>Contact Name:</b> {{s.ContactName}}
+          <b>Contact Name:</b> {{s.contactname}}
           <br>
-          <b>Supplier of: </b> {{s.ProductList}}
+          <b>Supplier of: </b> {{s.productlist}}
         </p>
       </a>
     </li>

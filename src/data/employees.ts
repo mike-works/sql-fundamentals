@@ -15,5 +15,5 @@ export async function getEmployee(id: string | number): Promise<Employee> {
   return await db.get(sql`
 SELECT *
 FROM Employee
-WHERE id = $1`, id);
+WHERE id = ?`, id);
 }

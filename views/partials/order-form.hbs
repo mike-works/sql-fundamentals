@@ -8,27 +8,31 @@
   }
 </script>
 
-<form class="mui-form" method='post' action='{{#if order.Id}}/orders/{{order.Id}}{{else}}/orders{{/if}}'>
+<form class="mui-form" method='post' action='{{#if order.id}}/orders/{{order.id}}{{else}}/orders{{/if}}'>
   <legend>Create a new order</legend>
   <div class='mui-row'>
     <div class="mui-col-md-12 mui-textfield">
-      <input name="ShipName" type="text" value="{{or order.ShipName "FRONT DESK"}}" required />
-      <label for="ShipName">Recipient Name</label>
+      <input name="shipname" type="text" value="{{or order.shipname "FRONT DESK"}}" required />
+      <label for="shipname">Recipient Name</label>
     </div>
   </div>
   <div class="mui-row">
     <div class="mui-col-md-6 mui-select">
-      <select name="EmployeeId">
+      <select name="employeeid">
         {{#each employees as |employee|}}
-        <option {{#if (equal employee.Id ../order.EmployeeId)}}selected{{/if}} value={{employee.Id}}>{{employee.LastName}}, {{employee.FirstName}}</option>
+        <option {{#if (equal employee.id ../order.employeeid)}}selected{{/if}} value={{employee.id}}>
+          {{employee.lastname}}, {{employee.firstname}}
+        </option>
         {{/each}}
       </select>
       <label>Employee</label>
     </div>
     <div class="mui-col-md-6 mui-select">
-      <select name="CustomerId">
+      <select name="customerid">
         {{#each customers as |customer|}}
-        <option {{#if (equal customer.Id ../order.CustomerId)}}selected{{/if}} value={{customer.Id}}>{{customer.CompanyName}}</option>
+        <option {{#if (equal customer.id ../order.customerid)}}selected{{/if}} value={{customer.id}}>
+          {{customer.companyname}}
+        </option>
         {{/each}}
       </select>
       <label>Customer</label>
@@ -36,55 +40,55 @@
   </div>
   <div class='mui-row'>
     <div class="mui-col-md-12 mui-textfield">
-      <input name="RequiredDate" type="date" value="{{or order.RequiredDate (tomorrow)}}"
+      <input name="requireddate" type="date" value="{{or order.requireddate (tomorrow)}}"
         required />
-      <label for="RequiredDate">Required By</label>
+      <label for="requireddate">Required By</label>
     </div>
   </div>
   <h4>Shipping</h4>
   <div class="mui-row">
     <div class="mui-col-md-12 mui-textfield mui-textfield--float-label ">
-      <input name="ShipAddress" type="text" value="{{or order.ShipAddress "5000 Forbes Ave"}}" required />
-      <label for="ShipAddress">Address</label>
+      <input name="shipaddress" type="text" value="{{or order.shipaddress "5000 Forbes Ave"}}" required />
+      <label for="shipaddress">Address</label>
     </div>
   </div>
   <div class="mui-row">
 
     <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
-      <input name="ShipCity" type="text" value="{{or order.ShipCity "Pittsburgh, PA"}}" required />
-      <label for="ShipCity">City</label>
+      <input name="shipcity" type="text" value="{{or order.shipcity "Pittsburgh, PA"}}" required />
+      <label for="shipcity">City</label>
     </div>
     <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
-      <input name="ShipCountry" type="text" value="{{or order.ShipCountry "USA"}}" required />
-      <label for="ShipCountry">Country</label>
+      <input name="shipcountry" type="text" value="{{or order.shipcountry "USA"}}" required />
+      <label for="shipcountry">Country</label>
     </div>
     <div class="mui-col-md-4 mui-textfield mui-textfield--float-label ">
-      <input name="ShipPostalCode" type="text" value="{{or order.ShipPostalCode "15213"}}" required />
-      <label for="ShipPostalCode">Postal Code</label>
+      <input name="shippostalcode" type="text" value="{{or order.shippostalcode "15213"}}" required />
+      <label for="shippostalcode">Postal Code</label>
     </div>
   </div>
   <div class="mui-row">
 
     <div class="mui-col-md-4 mui-select">
-      <select name="ShipRegion">
+      <select name="shipregion">
         {{#each regions as |region|}}
-          <option {{#if (equal region.Id ../order.ShipRegion)}}selected{{/if}} value={{region.Id}}>{{region.RegionDescription}}</option>
+          <option {{#if (equal region.id ../order.shipregion)}}selected{{/if}} value={{region.id}}>{{region.regiondescription}}</option>
         {{/each}}
       </select>
-      <label>Region</label>
+      <label for="shipregion">Region</label>
     </div>
     <div class="mui-col-md-4 mui-select">
 
-      <select name="ShipVia">
+      <select name="shipvia">
         {{#each shippers as |shipper|}}
-        <option {{#if (equal shipper.Id ../order.ShipVia)}}selected{{/if}} value={{shipper.Id}}>{{shipper.CompanyName}}</option>
+        <option {{#if (equal shipper.id ../order.shipvia)}}selected{{/if}} value={{shipper.id}}>{{shipper.companyname}}</option>
         {{/each}}
       </select>
-      <label>Shipper</label>
+      <label for="shipvia">Shipper</label>
     </div>
     <div class="mui-col-md-4 mui-textfield">
-      <input name="Freight" type="number" step="0.01" value="{{or order.Freight "2.50"}}" required />
-      <label for="Freight">Freight</label>
+      <input name="freight" type="number" step="0.01" value="{{or order.freight "2.50"}}" required />
+      <label for="freight">Freight</label>
     </div>
   </div>
   <legend>Order Items</legend>
@@ -102,39 +106,45 @@
   <div id="order-details">
     {{#each details as |detail|}}
     <div class="mui-row">
-      <input type="hidden" name="details.Id[]" value={{detail.Id}} />
+      <input type="hidden" name="details.id[]" value={{detail.id}} />
       <div class="mui-col-md-4 mui-select">
-        <select name="details.ProductId[]" class="product-selector">
-          {{ProductId}} {{#each ../products as |product|}}
-          <option {{#if (equal ../ProductId product.Id)}}selected{{/if}} value="{{product.Id}};{{product.UnitPrice}}">{{product.ProductName}} ({{format-money product.UnitPrice}})</option>
+        <select name="details.productid[]" class="product-selector">
+          {{#each ../products as |product|}}
+          <option {{#if (equal ../productid product.id)}}selected{{/if}} value="{{product.id}};{{product.unitprice}}">
+            {{product.productname}} ({{format-money product.unitprice}})
+          </option>
           {{/each}}
         </select>
+        <label for="details.productid[]">Product</label>
       </div>
       <div class="mui-col-md-4 mui-textfield">
-        <input name="details.Quantity[]" type="number" value={{detail.Quantity}} min=1 required />
-        <label for="Quantity">Quantity</label>
+        <input name="details.quantity[]" type="number" value={{detail.quantity}} min=1 required />
+        <label for="details.quantity[]">Quantity</label>
       </div>
       <div class="mui-col-md-4 mui-textfield">
-        <input name="details.Discount[]" type="number" value={{detail.Discount}} step="0.01" required />
-        <label for="Discount">Discount</label>
+        <input name="details.discount[]" type="number" value={{detail.discount}} step="0.01" required />
+        <label for="details.discount[]">Discount</label>
       </div>
     </div>
     {{else}}
     <div class="mui-row">
       <div class="mui-col-md-4 mui-select">
-        <select name="details.ProductId[]" class="product-selector">
+        <select name="details.productid[]" class="product-selector">
           {{#each products as |product|}}
-          <option value="{{product.Id}};{{product.UnitPrice}}">{{product.ProductName}} ({{format-money product.UnitPrice}})</option>
+          <option value="{{product.id}};{{product.unitprice}}">
+            {{product.productname}} ({{format-money product.unitprice}})
+          </option>
           {{/each}}
         </select>
+        <label for="details.productid[]">Product</label>
       </div>
       <div class="mui-col-md-4 mui-textfield">
-        <input name="details.Quantity[]" type="number" value=1 min=1 required />
-        <label for="Quantity">Quantity</label>
+        <input name="details.quantity[]" type="number" value=1 min=1 required />
+        <label for="details.quantity[]">Quantity</label>
       </div>
       <div class="mui-col-md-4 mui-textfield">
-        <input name="details.Discount[]" type="number" value="0" step="0.01" required />
-        <label for="Discount">Discount</label>
+        <input name="details.discount[]" type="number" value="0" step="0.01" required />
+        <label for="details.discount[]">Discount</label>
       </div>
     </div>
     {{/each}}

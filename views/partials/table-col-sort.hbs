@@ -1,4 +1,10 @@
 <span class="table-col-sort mui--pull-right">
-  {{#link-to classNames='sort-button' href=(merge-qps request.url sort=by order='asc') }}⬆{{/link-to}} {{#link-to classNames='sort-button'
-  href=(merge-qps request.url sort=by order='desc') }}⬇{{/link-to}}
+  {{#link-to classNames='sort-button'
+             href=(merge-qps request.url sort=by order='asc') }}
+    ⬆
+  {{/link-to}}
+  {{#link-to classNames='sort-button'
+             href=(merge-qps request.url sort=by order='desc')}}
+    ⬇
+  {{/link-to}}
 </span>
