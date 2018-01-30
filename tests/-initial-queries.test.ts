@@ -7,16 +7,16 @@ import { getAllProducts, getDiscontinuedProducts, getProduct, getProductsNeeding
 import { getAllSuppliers, getSupplier } from '../src/data/suppliers';
 import { validateRecordColumns } from './helpers';
 
-const REQUIRED_EMPLOYEE_LIST_COLS = ['Id', 'FirstName', 'LastName'];
-const REQUIRED_PRODUCT_LIST_COLS = ['Id', 'SupplierId', 'ProductName'];
-const REQUIRED_ORDER_LIST_COLS = ['Id', 'CustomerId', 'EmployeeId'];
-const REQUIRED_SUPPLIER_LIST_COLS = ['Id', 'CompanyName', 'ContactName'];
+const REQUIRED_EMPLOYEE_LIST_COLS = ['id', 'firstname', 'lastname'];
+const REQUIRED_PRODUCT_LIST_COLS = ['id', 'supplierid', 'productname'];
+const REQUIRED_ORDER_LIST_COLS = ['id', 'customerid', 'employeeid'];
+const REQUIRED_SUPPLIER_LIST_COLS = ['id', 'companyname', 'contactname'];
 const REQUIRED_CUSTOMER_LIST_COLS = REQUIRED_SUPPLIER_LIST_COLS;
 
-const REQUIRED_EMPLOYEE_COLS = ['Id', 'FirstName', 'LastName'];
-const REQUIRED_PRODUCT_COLS = ['Id', 'SupplierId', 'ProductName'];
-const REQUIRED_ORDER_COLS = ['Id', 'CustomerId', 'EmployeeId'];
-const REQUIRED_SUPPLIER_COLS = ['Id', 'CompanyName', 'ContactName'];
+const REQUIRED_EMPLOYEE_COLS = ['id', 'firstname', 'lastname'];
+const REQUIRED_PRODUCT_COLS = ['id', 'supplierid', 'productname'];
+const REQUIRED_ORDER_COLS = ['id', 'customerid', 'employeeid'];
+const REQUIRED_SUPPLIER_COLS = ['id', 'companyname', 'contactname'];
 const REQUIRED_CUSTOMER_COLS = REQUIRED_SUPPLIER_COLS;
 
 @suite('BEGIN: Initial DB queries')
