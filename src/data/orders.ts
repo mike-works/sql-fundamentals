@@ -47,7 +47,7 @@ WHERE Id = $1`, id);
 
 export async function getOrderDetails(orderId: string | number): Promise<OrderDetail[]> {
   const db = await getDb('dev');
-  return await db.all<OrderDetail>(sql`
+  return await db.all(sql`
 SELECT *, UnitPrice * Quantity as Price
 FROM "OrderDetail"
 WHERE OrderId = $1`, orderId);
