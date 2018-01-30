@@ -1,75 +1,13 @@
-import chalk from 'chalk';
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as sqlite from 'sqlite';
-import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
-import { logger } from '../log';
 import { sql } from '../sql-string';
-import { setupPreparedStatements } from './prepared';
+import SQLiteDB from './sqlite-db';
+import PostgresDB from './postgres-db';
+import { SQLDatabase, SQLStatement } from 'src/db/db';
 
-interface Database extends sqlite.Database {
-  statements: {
-    [key: string]: sqlite.Statement;
-  };
-}
-
-async function fileExists(pth: string) {
-  return new Promise(resolve => {
-    fs.exists(pth, resolve);
-  });
-}
-
-const copyFile = (src: string, dst: string) =>
-  new Promise((resolve, reject) => {
-    fs.copy(src, dst, err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-
-export const dbPath = (name: string) => path.join(PROJECT_ROOT, `${name}.sqlite`);
-
-const dbPromises: { [key: string]: Promise<Database> } = {};
-
-async function buildPreparedStatements(db: Database): Promise<{ [key: string]: sqlite.Statement }> {
-  let statements: { [key: string]: sqlite.Statement } = {};
-  statements.totalRevenue = await db.prepare('SELECT sum(UnitPrice*(1-Discount)*Quantity) as val from OrderDetail');
-  return statements;
-}
-
-export async function getDb(name: string): Promise<Database> {
-  let pathToDb = dbPath(name);
-  let doesExist = await fileExists(pathToDb);
-  let db: Database;
-  if (!doesExist) {
-    await initializeDb(name);
-  }
-  if (dbPromises[name]) {
-    return await dbPromises[name];
-  }
-  dbPromises[name] = sqlite.open(pathToDb, {
-    verbose: true
-  }) as any;
-  db = await dbPromises[name];
-  db.statements = await buildPreparedStatements(db);
-  if (process.env.NODE_ENV !== 'test') {
-    // tslint:disable-next-line:no-shadowed-variable
-    db.on('profile', (sql: string, time: number) => {
-      logger.info([chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(' '));
-    });
-  }
-  await db.get(sql`PRAGMA foreign_keys = ON`);
-  db.statements = await setupPreparedStatements(db);
-  return db;
-}
-
-export async function initializeDb(dbName = 'dev') {
-  let pth = dbPath(dbName);
-  if (!fs.existsSync(pth)) {
-    logger.debug(`Database ${dbName} was not found at ${pth}...creating it now`);
-    await copyFile(MASTER_DB_FILE, pth);
-  }
+export async function getDb(name: string): Promise<SQLDatabase<SQLStatement>> {
+  return await SQLiteDB.setup(name);
+  // return await PostgresDB.setup({
+  //   name,
+  //   host: 'localhost',
+  //   port: 5432
+  // });
 }

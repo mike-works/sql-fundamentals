@@ -17,6 +17,7 @@
     "heroku-postinstall": "npm run build",
     "test": "scripty",
     "build": "scripty",
+    "pg:setup": "scripty",
     "db:migrate": "./node_modules/.bin/db-migrate"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "fs-extra": "^5.0.0",
     "lodash": "~4.17.4",
     "moment": "^2.19.3",
+    "pg": "^7.4.1",
     "scripty": "^1.7.2",
     "sqlite": "^2.9.1",
     "sqlite3": "^3.1.13",
@@ -48,6 +50,7 @@
     "@types/lodash": "~4.14.0",
     "@types/mocha": "^2.2.44",
     "@types/node": "^9.3.0",
+    "@types/pg": "^7.4.1",
     "@types/sqlite3": "^3.1.1",
     "@types/winston": "^2.3.7",
     "chai": "^4.1.2",

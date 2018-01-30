@@ -1,4 +1,3 @@
-import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 

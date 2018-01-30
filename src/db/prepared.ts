@@ -1,7 +1,7 @@
-import { Database, Statement } from 'sqlite';
 import { sql } from '../sql-string';
 import { ORDER_COLUMNS } from '../data/orders';
+import { SQLDatabase, SQLStatement } from './db';
 
-export async function setupPreparedStatements(db: Database): Promise<{ [k: string]: Statement }> {
+export async function setupPreparedStatements<S extends SQLStatement, D extends SQLDatabase<S>>(db: D): Promise<{ [k: string]: S }> {
   return {};
 }

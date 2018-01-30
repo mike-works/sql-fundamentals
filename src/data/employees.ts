@@ -1,4 +1,3 @@
-import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
@@ -13,13 +12,8 @@ FROM Employee`);
 
 export async function getEmployee(id: string | number): Promise<Employee> {
   const db = await getDb('dev');
-  return await db.get(
-    sql`
+  return await db.get(sql`
 SELECT *
 FROM Employee
-WHERE id = $1
-`,
-    id
-  );
+WHERE id = $1`, id);
 }
-
