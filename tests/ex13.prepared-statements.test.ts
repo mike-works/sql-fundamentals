@@ -15,6 +15,6 @@ class OrdersPreparedStatementTest {
     let db = await getDb('dev');
     let order = await db.statements.getOrder.get(26960);
     assert.ok(order, 'statement returns a truthy value when run');
-    assert.equal(order.Id, 26960, 'statement returns the correct record');
+    assert.equal(order.id, 26960, 'statement returns the correct record');
   }
 }
