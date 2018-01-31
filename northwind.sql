@@ -103,7 +103,7 @@ CREATE TABLE customer (
 --
 
 CREATE TABLE employee (
-    employeeid smallint NOT NULL,
+    id smallint NOT NULL,
     lastname character varying(20) NOT NULL,
     firstname character varying(10) NOT NULL,
     title character varying(30),
@@ -176,7 +176,7 @@ CREATE TABLE "Order" (
 --
 
 CREATE TABLE product (
-    productid smallint NOT NULL,
+    id smallint NOT NULL,
     productname character varying(40) NOT NULL,
     supplierid smallint,
     categoryid smallint,
@@ -194,7 +194,7 @@ CREATE TABLE product (
 --
 
 CREATE TABLE region (
-    regionid smallint NOT NULL,
+    id smallint NOT NULL,
     regiondescription bpchar NOT NULL
 );
 
@@ -204,7 +204,7 @@ CREATE TABLE region (
 --
 
 CREATE TABLE shipper (
-    shipperid smallint NOT NULL,
+    id smallint NOT NULL,
     companyname character varying(40) NOT NULL,
     phone character varying(24)
 );
@@ -216,7 +216,7 @@ CREATE TABLE shipper (
 --
 
 CREATE TABLE supplier (
-    supplierid smallint NOT NULL,
+    id smallint NOT NULL,
     companyname character varying(40) NOT NULL,
     contactname character varying(30),
     contacttitle character varying(30),
@@ -3738,7 +3738,7 @@ ALTER TABLE ONLY customer
 --
 
 ALTER TABLE ONLY employee
-    ADD CONSTRAINT pk_employee PRIMARY KEY (employeeid);
+    ADD CONSTRAINT pk_employee PRIMARY KEY (id);
 
 
 --
@@ -3770,7 +3770,7 @@ ALTER TABLE ONLY "Order"
 --
 
 ALTER TABLE ONLY product
-    ADD CONSTRAINT pk_product PRIMARY KEY (productid);
+    ADD CONSTRAINT pk_product PRIMARY KEY (id);
 
 
 --
@@ -3778,7 +3778,7 @@ ALTER TABLE ONLY product
 --
 
 ALTER TABLE ONLY region
-    ADD CONSTRAINT pk_region PRIMARY KEY (regionid);
+    ADD CONSTRAINT pk_region PRIMARY KEY (id);
 
 
 --
@@ -3786,7 +3786,7 @@ ALTER TABLE ONLY region
 --
 
 ALTER TABLE ONLY shipper
-    ADD CONSTRAINT pk_shipper PRIMARY KEY (shipperid);
+    ADD CONSTRAINT pk_shipper PRIMARY KEY (id);
 
 
 --
@@ -3794,7 +3794,7 @@ ALTER TABLE ONLY shipper
 --
 
 ALTER TABLE ONLY supplier
-    ADD CONSTRAINT pk_supplier PRIMARY KEY (supplierid);
+    ADD CONSTRAINT pk_supplier PRIMARY KEY (id);
 
 
 --

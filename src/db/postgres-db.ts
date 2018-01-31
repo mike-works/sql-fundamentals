@@ -9,7 +9,12 @@ class PostgresStatement implements SQLStatement {
   protected text: string;
   protected values: any[];
   protected client: pg.Client;
-  public constructor(name: string, text: string, values: any[], client: pg.Client) {
+  public constructor(
+    name: string,
+    text: string,
+    values: any[],
+    client: pg.Client
+  ) {
     this.client = client;
     this.name = name;
     this.text = text;
@@ -31,13 +36,12 @@ class PostgresStatement implements SQLStatement {
     });
     return res.rows;
   }
-
 }
 
 const pool: pg.Pool = new pg.Pool({
   database: 'northwind',
   host: 'localhost',
-  port: 5432,
+  port: 5432
 });
 
 pool.on('error', (err, client) => {
@@ -48,9 +52,9 @@ pool.on('error', (err, client) => {
 // tslint:disable-next-line:max-classes-per-file
 export default class PostgresDB extends SQLDatabase<PostgresStatement> {
   public static async setup(opts: {
-    name: string,
-    host: string,
-    port: number
+    name: string;
+    host: string;
+    port: number;
   }): Promise<PostgresDB> {
     const client = await pool.connect();
     try {
@@ -68,24 +72,37 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     this.client = client;
   }
 
-  public async run(query: string, ...params: any[]): Promise<{ lastID: number | string }> {
+  public async run(
+    query: string,
+    ...params: any[]
+  ): Promise<{ lastID: number | string }> {
     logger.info(query);
     let res = await this.client.query(query, ...params);
     return { lastID: res.oid };
   }
   public async get<T>(query: string, ...params: any[]): Promise<T> {
     logger.info(query);
-    let r = await this.client.query(query, ...params).then(result => result.rows[0]);
+    let r = await this.client
+      .query(query, params)
+      .then(result => result.rows[0]);
     // console.log('row', r);
     return r;
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
     logger.info(query);
-    let rows = await this.client.query(query, ...params).then(result => result.rows);
+    let rows = await this.client
+      .query(query, params)
+      .then(result => result.rows);
     // console.log('rows', rows);
     return rows;
   }
-  public prepare(name: string, query: string, ...params: any[]): Promise<PostgresStatement> {
-    return Promise.resolve(new PostgresStatement(name, query, params, this.client));
+  public prepare(
+    name: string,
+    query: string,
+    ...params: any[]
+  ): Promise<PostgresStatement> {
+    return Promise.resolve(
+      new PostgresStatement(name, query, params, this.client)
+    );
   }
 }

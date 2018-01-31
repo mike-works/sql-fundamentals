@@ -3,7 +3,12 @@ import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllCustomers, getCustomer } from '../src/data/customers';
 import { getAllEmployees, getEmployee } from '../src/data/employees';
 import { getAllOrders, getOrder } from '../src/data/orders';
-import { getAllProducts, getDiscontinuedProducts, getProduct, getProductsNeedingReorder } from '../src/data/products';
+import {
+  getAllProducts,
+  getDiscontinuedProducts,
+  getProduct,
+  getProductsNeedingReorder
+} from '../src/data/products';
 import { getAllSuppliers, getSupplier } from '../src/data/suppliers';
 import { validateRecordColumns } from './helpers';
 
@@ -37,7 +42,11 @@ class InitialListQueriesTest {
   public async allProducts() {
     let result = await getAllProducts();
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 20, 'Expected more than 20 products in array');
+    assert.isAbove(
+      result.length,
+      20,
+      'Expected more than 20 products in array'
+    );
     validateRecordColumns(
       { recordType: 'product', functionName: 'getAllProducts' },
       result[3],
@@ -73,15 +82,27 @@ class InitialListQueriesTest {
   public async allOrders() {
     let result = await getAllOrders({ perPage: 50000 });
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 16000, 'Expected more than 16000 orders in array');
-    validateRecordColumns({ recordType: 'order', functionName: 'getAllOrders' }, result[2], REQUIRED_ORDER_LIST_COLS);
+    assert.isAbove(
+      result.length,
+      800,
+      'Expected more than 800 orders in array'
+    );
+    validateRecordColumns(
+      { recordType: 'order', functionName: 'getAllOrders' },
+      result[2],
+      REQUIRED_ORDER_LIST_COLS
+    );
   }
 
   @test('Get all customers')
   public async allCustomers() {
     let result = await getAllCustomers();
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 40, 'Expected more than 40 customers in array');
+    assert.isAbove(
+      result.length,
+      40,
+      'Expected more than 40 customers in array'
+    );
     validateRecordColumns(
       { recordType: 'customer', functionName: 'getAllCustomers' },
       result[2],
@@ -93,7 +114,11 @@ class InitialListQueriesTest {
   public async allSuppliers() {
     let result = await getAllSuppliers();
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 20, 'Expected more than 20 suppliers in array');
+    assert.isAbove(
+      result.length,
+      20,
+      'Expected more than 20 suppliers in array'
+    );
     validateRecordColumns(
       { recordType: 'supplier', functionName: 'getAllSuppliers' },
       result[3],
@@ -104,28 +129,44 @@ class InitialListQueriesTest {
   public async getEmployee() {
     let result = await getEmployee(1);
     assert.isNotArray(result, 'Expected result NOT to be an array');
-    validateRecordColumns({ recordType: 'employee', functionName: 'getEmployee(1)' }, result, REQUIRED_EMPLOYEE_COLS);
+    validateRecordColumns(
+      { recordType: 'employee', functionName: 'getEmployee(1)' },
+      result,
+      REQUIRED_EMPLOYEE_COLS
+    );
   }
 
   @test('Get one order')
   public async getOrder() {
     let result = await getOrder(10252);
     assert.isNotArray(result, 'Expected result NOT to be an array');
-    validateRecordColumns({ recordType: 'order', functionName: 'getOrder(10252)' }, result, REQUIRED_ORDER_COLS);
+    validateRecordColumns(
+      { recordType: 'order', functionName: 'getOrder(10252)' },
+      result,
+      REQUIRED_ORDER_COLS
+    );
   }
 
   @test('Get one product')
   public async getProduct() {
     let result = await getProduct(1);
     assert.isNotArray(result, 'Expected result NOT to be an array');
-    validateRecordColumns({ recordType: 'product', functionName: 'getProduct(1)' }, result, REQUIRED_PRODUCT_COLS);
+    validateRecordColumns(
+      { recordType: 'product', functionName: 'getProduct(1)' },
+      result,
+      REQUIRED_PRODUCT_COLS
+    );
   }
 
   @test('Get one supplier')
   public async getSupplier() {
     let result = await getSupplier(1);
     assert.isNotArray(result, 'Expected result NOT to be an array');
-    validateRecordColumns({ recordType: 'supplier', functionName: 'getSupplier(1)' }, result, REQUIRED_SUPPLIER_COLS);
+    validateRecordColumns(
+      { recordType: 'supplier', functionName: 'getSupplier(1)' },
+      result,
+      REQUIRED_SUPPLIER_COLS
+    );
   }
 
   @test('Get one customer')

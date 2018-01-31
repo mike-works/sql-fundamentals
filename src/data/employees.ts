@@ -12,8 +12,11 @@ FROM Employee`);
 
 export async function getEmployee(id: string | number): Promise<Employee> {
   const db = await getDb('dev');
-  return await db.get(sql`
+  return await db.get(
+    sql`
 SELECT *
 FROM Employee
-WHERE id = ?`, id);
+WHERE id = $1`,
+    id
+  );
 }

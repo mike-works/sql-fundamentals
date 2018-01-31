@@ -27,11 +27,16 @@ FROM "Order"`);
 
 export async function getCustomerOrders(
   customerId: string,
-  { page = 1, perPage = 20, sort = 'ShippedDate', order = 'asc' }: AllOrdersOptions = {
+  {
+    page = 1,
+    perPage = 20,
+    sort = 'shippeddate',
+    order = 'asc'
+  }: AllOrdersOptions = {
     order: 'asc',
     page: 1,
     perPage: 20,
-    sort: 'ShippedDate'
+    sort: 'shippeddate'
   }
 ) {
   return getAllOrders({ page, perPage, sort, order });
@@ -39,27 +44,40 @@ export async function getCustomerOrders(
 
 export async function getOrder(id: string | number): Promise<Order> {
   const db = await getDb('dev');
-  return await db.get(sql`
+  return await db.get(
+    sql`
 SELECT *
 FROM "Order"
-WHERE Id = $1`, id);
+WHERE Id = $1`,
+    id
+  );
 }
 
-export async function getOrderDetails(orderId: string | number): Promise<OrderDetail[]> {
+export async function getOrderDetails(
+  orderId: string | number
+): Promise<OrderDetail[]> {
   const db = await getDb('dev');
-  return await db.all(sql`
+  return await db.all(
+    sql`
 SELECT *, UnitPrice * Quantity as Price
-FROM "OrderDetail"
-WHERE OrderId = $1`, orderId);
+FROM OrderDetail
+WHERE OrderId = $1`,
+    orderId
+  );
 }
 
-export async function getOrderWithDetails(id: string | number): Promise<[Order, OrderDetail[]]> {
+export async function getOrderWithDetails(
+  id: string | number
+): Promise<[Order, OrderDetail[]]> {
   let order = await getOrder(id);
   let items = await getOrderDetails(id);
   return [order, items];
 }
 
-export async function createOrder(order: Partial<Order>, details: Array<Partial<OrderDetail>> = []): Promise<Partial<Order>> {
+export async function createOrder(
+  order: Partial<Order>,
+  details: Array<Partial<OrderDetail>> = []
+): Promise<Partial<Order>> {
   return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
 }
 
@@ -67,6 +85,10 @@ export async function deleteOrder(id: string | number): Promise<void> {
   return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
 }
 
-export async function updateOrder(id: string | number, data: Partial<Order>, details: Array<Partial<OrderDetail>> = []): Promise<Partial<Order>> {
+export async function updateOrder(
+  id: string | number,
+  data: Partial<Order>,
+  details: Array<Partial<OrderDetail>> = []
+): Promise<Partial<Order>> {
   return Promise.reject('Orders#updateOrder() NOT YET IMPLEMENTED');
 }
