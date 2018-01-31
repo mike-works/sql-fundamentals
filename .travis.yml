@@ -1,12 +1,16 @@
 language: node_js
 node_js:
-- '6'
-- '7'
+- '4'
 - '8'
-- '9'
+- 'stable'
 
 services:
   - postgresql
+
+env:
+  matrix:
+    - DB_TYPE=postgres
+    - DB_TYPE=sqlite
 
 install:
   - npm install --no-shrinkwrap
