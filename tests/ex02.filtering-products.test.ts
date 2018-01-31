@@ -39,7 +39,7 @@ class EmployeeDataTest {
   public async discontinuedProducts() {
     let result = await getDiscontinuedProducts();
     assert.isArray(result, 'Expected result to be an array');
-    assert.equal(result.length, 8, 'Expected 8 products in array');
+    assert.isAtLeast(result.length, 8, 'Expected 8 products in array');
     assertProductCols(result[0]);
     let numDiscontinued = result.filter(r => r.discontinued).length;
     assert.equal(
