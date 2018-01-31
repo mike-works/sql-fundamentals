@@ -8,19 +8,19 @@
       <div class="mui-col-md-6">
         <h3>Contact Info</h3>
         <p>
-          <strong>{{customer.ContactName}}</strong>
-          <br> {{customer.ContactTitle}}
+          <strong>{{customer.contactname}}</strong>
+          <br> {{customer.contacttitle}}
         </p>
         <p>
           <div>
-            <strong>Phone: </strong> {{customer.Phone}}</div>
+            <strong>Phone: </strong> {{customer.phone}}</div>
           <div>
-            <strong>Fax: </strong> {{customer.Fax}}</div>
+            <strong>Fax: </strong> {{customer.fax}}</div>
         </p>
         <p>
-          <div>{{customer.Address}}</div>
-          <div>{{customer.City}}, {{customer.Country}} {{customer.PostalCode}}</div>
-          <div>{{customer.Region}}</div>
+          <div>{{customer.address}}</div>
+          <div>{{customer.city}}, {{customer.country}} {{customer.postalcode}}</div>
+          <div>{{customer.region}}</div>
         </p>
 
       </div>
@@ -34,11 +34,11 @@
       <thead>
         <tr>
           <th>Id {{> 'table-col-sort' by='Id'}}</th>
-          <th>Employee {{> 'table-col-sort' by='EmployeeId'}}</th>
-          <th>Ordered On {{> 'table-col-sort' by='OrderDate'}}</th>
-          <th>Required On {{> 'table-col-sort' by='RequiredDate'}}</th>
-          <th>Shipped On {{> 'table-col-sort' by='ShippedDate'}}</th>
-          <th>Ship To {{> 'table-col-sort' by='ShipCountry'}}</th>
+          <th>Employee {{> 'table-col-sort' by='employeeid'}}</th>
+          <th>Ordered On {{> 'table-col-sort' by='orderdate'}}</th>
+          <th>Required On {{> 'table-col-sort' by='requireddate'}}</th>
+          <th>Shipped On {{> 'table-col-sort' by='shippeddate'}}</th>
+          <th>Ship To {{> 'table-col-sort' by='shipcountry'}}</th>
         </tr>
       </thead>
       <tbody>
