@@ -7,22 +7,22 @@ import { logger } from '../src/log';
 
 @suite('EX5: "Supplier Product List" - Aggregate Function Tests')
 class SupplierProductListTest {
-  @test('getAllSuppliers() results must now include ProductList')
+  @test('getAllSuppliers() results must now include productlist')
   public async productListIsPresent() {
     let [supplierResult] = await getAllSuppliers();
-    assert.containsAllKeys(supplierResult, ['ProductList']);
+    assert.containsAllKeys(supplierResult, ['productlist']);
   }
 
-  @test('getAllSuppliers() ProductList must be the correct value')
+  @test('getAllSuppliers() productlist must be the correct value')
   public async productListIsCorrect() {
     let [supplierResult] = await getAllSuppliers();
     let allProducts = await getAllProducts();
     let productsString = allProducts
-      .filter(p => p.SupplierId === supplierResult.Id)
-      .map(p => p.ProductName)
+      .filter(p => p.supplierid === supplierResult.id)
+      .map(p => p.productname)
       .sort()
       .join(', ');
 
-    assert.equal(supplierResult.ProductList, productsString);
+    assert.equal(supplierResult.productlist, productsString);
   }
 }

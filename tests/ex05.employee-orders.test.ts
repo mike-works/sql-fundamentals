@@ -10,17 +10,15 @@ class EmployeeOrderCountTest {
   @test('getAllEmployees() results must now include OrderCount')
   public async orderCountIsPresent() {
     let [result] = await getAllEmployees();
-    assert.containsAllKeys(result, ['OrderCount']);
+    assert.containsAllKeys(result, ['ordercount']);
   }
 
-  @test('getAllEmployees() OrderCount must be the correct value')
+  @test('getAllEmployees() ordercount must be the correct value')
   public async orderCountIsCorrect() {
     let [employee] = await getAllEmployees();
     let allOrders = await getAllOrders({ page: 1, perPage: 999999 });
-    let orderCt = allOrders
-      .filter(o => o.EmployeeId === employee.Id)
-      .length;
-    assert.ok(employee.OrderCount);
-    assert.equal(employee.OrderCount, orderCt);
+    let orderCt = allOrders.filter(o => o.employeeid === employee.id).length;
+    assert.ok(employee.ordercount);
+    assert.equal(employee.ordercount, orderCt);
   }
 }

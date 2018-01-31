@@ -5,18 +5,20 @@ import { getAllOrders } from '../src/data/orders';
 
 @suite('EX3: "All Orders List" Query - Sort tests')
 class AllOrdersSortTest {
-  @test('By default, order list is sorted ascending by Id')
+  @test('By default, order list is sorted ascending by id')
   public async orderListDefaults() {
     let firstPageResult = await getAllOrders({ perPage: 3 });
-    let sortedById = sortBy(firstPageResult, 'Id');
+    let sortedById = sortBy(firstPageResult, 'id');
     assert.deepEqual(firstPageResult, sortedById);
   }
 
-  @test('using order="desc" (and specifying no column to sort on) sorts decending by Id')
+  @test(
+    'using order="desc" (and specifying no column to sort on) sorts decending by id'
+  )
   public async orderListDesc() {
     let firstPageResult = await getAllOrders({ perPage: 3, order: 'desc' });
     let sortedById = sortBy(firstPageResult, o => {
-      let id: number = typeof o.Id === 'string' ? parseInt(o.Id, 10) : o.Id;
+      let id: number = typeof o.id === 'string' ? parseInt(o.id, 10) : o.id;
       return -1 * id;
     });
     assert.deepEqual(firstPageResult, sortedById);

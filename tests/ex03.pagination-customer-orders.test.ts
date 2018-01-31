@@ -6,18 +6,41 @@ import { getCustomerOrders } from '../src/data/orders';
 class CustomerOrdersPaginationTest {
   @test('First item is the same, regardless of page size')
   public async firstPage() {
-    let first40Result = await getCustomerOrders('ANTON', { perPage: 40, page: 1 });
-    let first20Result = await getCustomerOrders('ANTON', { perPage: 20, page: 1 });
+    let first40Result = await getCustomerOrders('ANTON', {
+      perPage: 40,
+      page: 1
+    });
+    let first20Result = await getCustomerOrders('ANTON', {
+      perPage: 20,
+      page: 1
+    });
     assert.isArray(first20Result, 'Expected result to be an array');
-    assert.equal(first20Result.length, 20, 'Expected 20 orders in array when perPage = 20');
-    assert.equal(first40Result.length, 40, 'Expected 40 orders in array when perPage = 40');
+    assert.equal(
+      first20Result.length,
+      20,
+      'Expected 20 orders in array when perPage = 20'
+    );
+    assert.equal(
+      first40Result.length,
+      40,
+      'Expected 40 orders in array when perPage = 40'
+    );
   }
 
   @test('When perPage = 20, page 2 starts at item 20')
   public async offset() {
-    let first40Result = await getCustomerOrders('ANTON', { perPage: 40, page: 1 });
-    let first20Result = await getCustomerOrders('ANTON', { perPage: 20, page: 1 });
-    let second20Result = await getCustomerOrders('ANTON', { perPage: 20, page: 2 });
+    let first40Result = await getCustomerOrders('ANTON', {
+      perPage: 40,
+      page: 1
+    });
+    let first20Result = await getCustomerOrders('ANTON', {
+      perPage: 20,
+      page: 1
+    });
+    let second20Result = await getCustomerOrders('ANTON', {
+      perPage: 20,
+      page: 2
+    });
 
     assert.isArray(second20Result, 'Expected result to be an array');
     assert.equal(second20Result.length, 20, 'Expected 20 orders in array');
@@ -41,7 +64,11 @@ class CustomerOrdersPaginationTest {
     let result = await getCustomerOrders('ANTON');
     let firstPageResult = await getCustomerOrders('ANTON', { page: 1 });
     assert.isArray(result, 'Expected result to be an array');
-    assert.equal(result.length, firstPageResult.length, 'Page length is the same');
+    assert.equal(
+      result.length,
+      firstPageResult.length,
+      'Page length is the same'
+    );
     assert.isArray(firstPageResult, 'Expected result to be an array');
     assert.deepEqual(
       result[0],

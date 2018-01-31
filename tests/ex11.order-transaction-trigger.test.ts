@@ -9,37 +9,76 @@ import { createOrder, getOrder } from '../src/data/orders';
 
 @suite('EX11: "Transaction Trigger" - AFTER INSERT trigger test')
 class TransactionsTriggerTest {
-  @test('migrationExists() new .sql file based migration exists in the ./migrations folder')
+  @test(
+    'migrationExists() new .sql file based migration exists in the ./migrations folder'
+  )
   public async migrationExists() {
-    let migrationsFiles = fs.readdirSync(path.join(__dirname, '..', 'migrations'));
-    assert.isAtLeast(migrationsFiles.length, 6, 'There are at least six things in the ./migrations folder');
-    let migrationsSqlsFiles = fs.readdirSync(path.join(__dirname, '..', 'migrations', 'sqls'));
-    assert.isAtLeast(migrationsSqlsFiles.length, 10, 'There are at least ten things in the ./migrations/sqls folder');
+    let migrationsFiles = fs.readdirSync(
+      path.join(__dirname, '..', 'migrations')
+    );
+    assert.isAtLeast(
+      migrationsFiles.length,
+      6,
+      'There are at least six things in the ./migrations folder'
+    );
+    let migrationsSqlsFiles = fs.readdirSync(
+      path.join(__dirname, '..', 'migrations', 'sqls')
+    );
+    assert.isAtLeast(
+      migrationsSqlsFiles.length,
+      10,
+      'There are at least ten things in the ./migrations/sqls folder'
+    );
     let downMigrationCount = 0;
     let upMigrationCount = 0;
     migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('-down')) { downMigrationCount++; }
-      if (fileName.includes('-up')) { upMigrationCount++; }
+      if (fileName.includes('-down')) {
+        downMigrationCount++;
+      }
+      if (fileName.includes('-up')) {
+        upMigrationCount++;
+      }
     });
-    assert.isAtLeast(downMigrationCount, 5, 'There are at least three down migrations');
-    assert.isAtLeast(upMigrationCount, 5, 'There are at least three up migrations');
+    assert.isAtLeast(
+      downMigrationCount,
+      5,
+      'There are at least three down migrations'
+    );
+    assert.isAtLeast(
+      upMigrationCount,
+      5,
+      'There are at least three up migrations'
+    );
   }
 
   @test('OrderTransaction trigger exists')
   public async triggerExists() {
     let db = await getDb('dev');
-    let allTriggers = (await db.all(sql`select * from sqlite_master where type = 'trigger';`)).map(i => i.name);
-    assert.includeMembers(allTriggers, ['OrderTransaction'], 'OrderTransaction trigger is found');
+    let allTriggers = (await db.all(
+      sql`select * from sqlite_master where type = 'trigger';`
+    )).map(i => i.name);
+    assert.includeMembers(
+      allTriggers,
+      ['OrderTransaction'],
+      'OrderTransaction trigger is found'
+    );
   }
 
-  @test('Inserting a new transaction results in an order\'s OrderDate being set')
+  @test("Inserting a new transaction results in an order's OrderDate being set")
   public async insertTransaction() {
     let db = await getDb('dev');
     let order = await createOrder(VALID_ORDER_DATA);
-    if (typeof order.Id === 'undefined') { assert.ok(false, 'newly created order Id is not truthy'); return; }
-    assert.notOk(order.OrderDate, 'OrderDate is not yet set');
-    let transaction = (await db.get(sql`INSERT INTO "Transaction" (Authorization, OrderId) VALUES (?, ?)`, 'lk1hdklh12ld', order.Id));
-    order = await getOrder(order.Id);
-    assert.ok(order.OrderDate, 'OrderDate is set');
+    if (typeof order.id === 'undefined') {
+      assert.ok(false, 'newly created order Id is not truthy');
+      return;
+    }
+    assert.notOk(order.orderdate, 'OrderDate is not yet set');
+    let transaction = await db.get(
+      sql`INSERT INTO "Transaction" (authorization, orderid) VALUES (?, ?)`,
+      'lk1hdklh12ld',
+      order.id
+    );
+    order = await getOrder(order.id);
+    assert.ok(order.orderdate, 'OrderDate is set');
   }
 }

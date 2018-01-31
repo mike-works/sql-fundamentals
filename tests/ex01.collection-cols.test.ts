@@ -5,23 +5,42 @@ import { getAllOrders } from '../src/data/orders';
 import { getAllProducts } from '../src/data/products';
 import { validateRecordColumns } from './helpers';
 
-const REQUIRED_EMPLOYEE_LIST_COLS = ['Id', 'FirstName', 'LastName', 'HireDate', 'Region', 'Title', 'ReportsTo'];
-const FORBIDDEN_EMPLOYEE_LIST_COLS = ['TitleOfCourtesy', 'Extension', 'Photo', 'PhotoPath'];
+const REQUIRED_EMPLOYEE_LIST_COLS = [
+  'id',
+  'firstname',
+  'lastname',
+  'hiredate',
+  'region',
+  'title',
+  'reportsto'
+];
+const FORBIDDEN_EMPLOYEE_LIST_COLS = [
+  'titleofcourtesy',
+  'extension',
+  'photo',
+  'photopath'
+];
 
-const REQUIRED_ORDER_LIST_COLS = ['Id', 'ShipCity', 'ShipCountry', 'EmployeeId', 'CustomerId'];
-const FORBIDDEN_ORDER_LIST_COLS = ['ShipAddress'];
+const REQUIRED_ORDER_LIST_COLS = [
+  'id',
+  'shipcity',
+  'shipcountry',
+  'employeeid',
+  'customerid'
+];
+const FORBIDDEN_ORDER_LIST_COLS = ['shipaddress'];
 
 const REQUIRED_PRODUCT_LIST_COLS = [
-  'Id',
-  'CategoryId',
-  'Discontinued',
-  'ProductName',
-  'QuantityPerUnit',
-  'ReorderLevel',
-  'SupplierId',
-  'UnitPrice',
-  'UnitsInStock',
-  'UnitsOnOrder'
+  'id',
+  'categoryid',
+  'discontinued',
+  'productname',
+  'quantityperunit',
+  'reorderlevel',
+  'supplierid',
+  'unitprice',
+  'unitsinstock',
+  'unitsonorder'
 ];
 const FORBIDDEN_PRODUCT_LIST_COLS: string[] = [];
 
@@ -44,7 +63,11 @@ class EmployeeDataTest {
   public async allOrders() {
     let result = await getAllOrders({ perPage: 50000 });
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 16000, 'Expected over 16,000 orders in array');
+    assert.isAbove(
+      result.length,
+      16000,
+      'Expected over 16,000 orders in array'
+    );
     validateRecordColumns(
       { recordType: 'order', functionName: 'getAllOrders' },
       result[3],

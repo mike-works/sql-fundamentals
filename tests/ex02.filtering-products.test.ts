@@ -1,23 +1,27 @@
 import { assert } from 'chai';
 import { slow, suite, test, timeout } from 'mocha-typescript';
-import { getAllProducts, getDiscontinuedProducts, getProductsNeedingReorder } from '../src/data/products';
+import {
+  getAllProducts,
+  getDiscontinuedProducts,
+  getProductsNeedingReorder
+} from '../src/data/products';
 
 function assertProductCols(item: any) {
   assert.containsAllKeys(
     item,
     [
-      'Id',
-      'CategoryId',
-      'Discontinued',
-      'ProductName',
-      'QuantityPerUnit',
-      'ReorderLevel',
-      'SupplierId',
-      'UnitPrice',
-      'UnitsInStock',
-      'UnitsOnOrder'
+      'id',
+      'categoryid',
+      'discontinued',
+      'productname',
+      'quantityperunit',
+      'reorderlevel',
+      'supplierid',
+      'unitprice',
+      'unitsinstock',
+      'unitsonorder'
     ], // tslint:disable-next-line:max-line-length
-    'each DB result has properties Id,CategoryId,Discontinued,ProductName,QuantityPerUnit,ReorderLevel,SupplierId,UnitPrice,UnitsInStock,UnitsOnOrder'
+    'each DB result has properties id, categoryid, discontinued, productname, quantityperunit, reorderlevel, supplierid, unitprice, unitsinstock, unitsonorder'
   );
 }
 
@@ -37,8 +41,12 @@ class EmployeeDataTest {
     assert.isArray(result, 'Expected result to be an array');
     assert.equal(result.length, 8, 'Expected 8 products in array');
     assertProductCols(result[0]);
-    let numDiscontinued = result.filter(r => r.Discontinued).length;
-    assert.equal(numDiscontinued, result.length, 'All items in result set are discontinued');
+    let numDiscontinued = result.filter(r => r.discontinued).length;
+    assert.equal(
+      numDiscontinued,
+      result.length,
+      'All items in result set are discontinued'
+    );
   }
 
   @test('getProductsNeedingReorder() only products that need to be reordered')
@@ -48,12 +56,14 @@ class EmployeeDataTest {
     assert.equal(result.length, 2, 'Expected 2 products in array');
     assertProductCols(result[0]);
 
-    let numNeedingReorder = result.filter(r => r.UnitsInStock + r.UnitsOnOrder < r.ReorderLevel).length;
+    let numNeedingReorder = result.filter(
+      r => r.unitsinstock + r.unitsonorder < r.reorderlevel
+    ).length;
 
     assert.equal(
       numNeedingReorder,
       result.length,
-      'All items in result set have UnitsInStock+UnitsOnOrder less than ReorderLevel'
+      'All items in result set have unitsinstock + unitsonorder less than reorderlevel'
     );
   }
 }

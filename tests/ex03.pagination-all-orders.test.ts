@@ -9,8 +9,16 @@ class AllOrdersPaginationTest {
     let first40Result = await getAllOrders({ perPage: 40, page: 1 });
     let first20Result = await getAllOrders({ perPage: 20, page: 1 });
     assert.isArray(first20Result, 'Expected result to be an array');
-    assert.equal(first20Result.length, 20, 'Expected 20 orders in array when perPage = 20');
-    assert.equal(first40Result.length, 40, 'Expected 40 orders in array when perPage = 40');
+    assert.equal(
+      first20Result.length,
+      20,
+      'Expected 20 orders in array when perPage = 20'
+    );
+    assert.equal(
+      first40Result.length,
+      40,
+      'Expected 40 orders in array when perPage = 40'
+    );
   }
 
   @test('When perPage = 20, page 2 starts at item 20')

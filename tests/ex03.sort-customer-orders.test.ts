@@ -10,16 +10,21 @@ class CustomerOrdersSortTest {
   public async orderListDefaults() {
     let firstPageResult = await getCustomerOrders('ANTON', { perPage: 3 });
 
-    let sortedById = orderBy(firstPageResult, 'ShippedDate', 'asc');
+    let sortedById = orderBy(firstPageResult, 'shippeddate', 'asc');
     assert.deepEqual(firstPageResult, sortedById);
   }
 
-  @test('using order="desc" (and specifying no column to sort on) sorts decending by ShippedDate')
+  @test(
+    'using order="desc" (and specifying no column to sort on) sorts decending by shippeddate'
+  )
   public async orderListDesc() {
-    let firstPageResult = await getCustomerOrders('ANTON', { perPage: 3, order: 'desc' });
-    assert.containsAllKeys(firstPageResult[0], ['ShippedDate']);
+    let firstPageResult = await getCustomerOrders('ANTON', {
+      perPage: 3,
+      order: 'desc'
+    });
+    assert.containsAllKeys(firstPageResult[0], ['shippeddate']);
 
-    let sortedById = orderBy(firstPageResult, 'ShippedDate', 'desc');
+    let sortedById = orderBy(firstPageResult, 'shippeddate', 'desc');
     assert.deepEqual(firstPageResult, sortedById);
   }
 }
