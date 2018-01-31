@@ -43,16 +43,16 @@ DROP TABLE IF EXISTS shipper;
 DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS territories;
 DROP TABLE IF EXISTS usstates;
-DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS region;
 DROP TABLE IF EXISTS employee;
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: category; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE categories (
-    categoryid smallint NOT NULL,
+CREATE TABLE category (
+    id smallint NOT NULL,
     categoryname character varying(15) NOT NULL,
     description text,
     picture bytea
@@ -255,17 +255,17 @@ CREATE TABLE usstates (
 
 
 --
--- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO categories VALUES (1, 'Beverages', 'Soft drinks, coffees, teas, beers, and ales', '\x');
-INSERT INTO categories VALUES (2, 'Condiments', 'Sweet and savory sauces, relishes, spreads, and seasonings', '\x');
-INSERT INTO categories VALUES (3, 'Confections', 'Desserts, candies, and sweet breads', '\x');
-INSERT INTO categories VALUES (4, 'Dairy Products', 'Cheeses', '\x');
-INSERT INTO categories VALUES (5, 'Grains/Cereals', 'Breads, crackers, pasta, and cereal', '\x');
-INSERT INTO categories VALUES (6, 'Meat/Poultry', 'Prepared meats', '\x');
-INSERT INTO categories VALUES (7, 'Produce', 'Dried fruit and bean curd', '\x');
-INSERT INTO categories VALUES (8, 'Seafood', 'Seaweed and fish', '\x');
+INSERT INTO category VALUES (1, 'Beverages', 'Soft drinks, coffees, teas, beers, and ales', '\x');
+INSERT INTO category VALUES (2, 'Condiments', 'Sweet and savory sauces, relishes, spreads, and seasonings', '\x');
+INSERT INTO category VALUES (3, 'Confections', 'Desserts, candies, and sweet breads', '\x');
+INSERT INTO category VALUES (4, 'Dairy Products', 'Cheeses', '\x');
+INSERT INTO category VALUES (5, 'Grains/Cereals', 'Breads, crackers, pasta, and cereal', '\x');
+INSERT INTO category VALUES (6, 'Meat/Poultry', 'Prepared meats', '\x');
+INSERT INTO category VALUES (7, 'Produce', 'Dried fruit and bean curd', '\x');
+INSERT INTO category VALUES (8, 'Seafood', 'Seaweed and fish', '\x');
 
 
 --
@@ -3702,11 +3702,11 @@ INSERT INTO usstates VALUES (51, 'Wyoming', 'WY', 'west');
 
 
 --
--- Name: pk_categories; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: pk_category; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY categories
-    ADD CONSTRAINT pk_categories PRIMARY KEY (categoryid);
+ALTER TABLE ONLY category
+    ADD CONSTRAINT pk_category PRIMARY KEY (id);
 
 
 --
@@ -3854,11 +3854,11 @@ ALTER TABLE ONLY orderdetail
 
 
 --
--- Name: fk_product_categories; Type: Constraint; Schema: -; Owner: -
+-- Name: fk_product_category; Type: Constraint; Schema: -; Owner: -
 --
 
 ALTER TABLE ONLY product
-    ADD CONSTRAINT fk_product_categories FOREIGN KEY (categoryid) REFERENCES categories;
+    ADD CONSTRAINT fk_product_category FOREIGN KEY (categoryid) REFERENCES category;
 
 
 --
