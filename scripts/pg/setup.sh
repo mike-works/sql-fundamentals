@@ -3,7 +3,7 @@ dropdb nw_postgresql
 dropuser northwind_user
 
 createdb nw_postgresql
-psql nw_postgresql < ./northwind.sql -q -e 
+psql nw_postgresql < ./northwind.sql -q 
 
 psql template1 -c "create user northwind_user;"
 psql template1 -c "alter user northwind_user password 'thewindisblowing';"

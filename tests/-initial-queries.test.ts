@@ -138,10 +138,10 @@ class InitialListQueriesTest {
 
   @test('Get one order')
   public async getOrder() {
-    let result = await getOrder(100);
+    let result = await getOrder(10705);
     assert.isNotArray(result, 'Expected result NOT to be an array');
     validateRecordColumns(
-      { recordType: 'order', functionName: 'getOrder(100)' },
+      { recordType: 'order', functionName: 'getOrder(10705)' },
       result,
       REQUIRED_ORDER_COLS
     );
