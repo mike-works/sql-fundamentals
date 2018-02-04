@@ -76,7 +76,11 @@ class EmployeeDataTest {
   public async allProducts() {
     let result = await getAllProducts();
     assert.isArray(result, 'Expected result to be an array');
-    assert.equal(result.length, 77, 'Expected 77 products in array');
+    assert.isAtLeast(
+      result.length,
+      60,
+      'Expected at least 60 products in array'
+    );
     validateRecordColumns(
       { recordType: 'product', functionName: 'getAllProducts' },
       result[3],
