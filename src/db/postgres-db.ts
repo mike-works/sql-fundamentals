@@ -39,7 +39,7 @@ class PostgresStatement implements SQLStatement {
 }
 
 const pool: pg.Pool = new pg.Pool({
-  database: 'northwind',
+  database: 'nw_postgresql',
   host: 'localhost',
   port: 5432
 });

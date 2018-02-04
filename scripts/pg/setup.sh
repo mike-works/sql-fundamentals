@@ -1,11 +1,11 @@
 #!/bin/bash
-dropdb northwind
+dropdb nw_postgresql
 dropuser northwind_user
 
-createdb northwind
-psql northwind < ./northwind.sql
+createdb nw_postgresql
+psql nw_postgresql < ./northwind.sql -q -e 
 
 psql template1 -c "create user northwind_user;"
 psql template1 -c "alter user northwind_user password 'thewindisblowing';"
-psql template1 -c "grant all on DATABASE northwind to northwind_user;"
-psql northwind -c "GRANT ALL on ALL tables IN SCHEMA public to northwind_user"
+psql template1 -c "grant all on DATABASE nw_postgresql to northwind_user;"
+psql nw_postgresql -c "GRANT ALL on ALL tables IN SCHEMA public to northwind_user"
