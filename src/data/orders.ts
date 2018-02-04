@@ -12,11 +12,11 @@ interface AllOrdersOptions {
 }
 
 export async function getAllOrders(
-  { page = 1, perPage = 20, sort = 'Id', order = 'asc' }: AllOrdersOptions = {
+  { page = 1, perPage = 20, sort = 'id', order = 'asc' }: AllOrdersOptions = {
     order: 'asc',
     page: 1,
     perPage: 20,
-    sort: 'Id'
+    sort: 'id'
   }
 ): Promise<Order[]> {
   const db = await getDb('dev');
@@ -48,7 +48,7 @@ export async function getOrder(id: string | number): Promise<Order> {
     sql`
 SELECT *
 FROM "order"
-WHERE Id = $1`,
+WHERE id = $1`,
     id
   );
 }
@@ -59,9 +59,9 @@ export async function getOrderDetails(
   const db = await getDb('dev');
   return await db.all(
     sql`
-SELECT *, UnitPrice * Quantity as Price
+SELECT *, unitprice * quantity as price
 FROM OrderDetail
-WHERE OrderId = $1`,
+WHERE orderid = $1`,
     orderId
   );
 }
