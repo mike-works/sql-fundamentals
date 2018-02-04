@@ -63,7 +63,7 @@ class EmployeeDataTest {
   public async allOrders() {
     let result = await getAllOrders({ perPage: 50000 });
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAbove(result.length, 800, 'Expected over 800 orders in array');
+    assert.isAbove(result.length, 9000, 'Expected over 9000 orders in array');
     validateRecordColumns(
       { recordType: 'order', functionName: 'getAllOrders' },
       result[3],
@@ -79,8 +79,8 @@ class EmployeeDataTest {
     // TODO: tighten assertion
     assert.isAtLeast(
       result.length,
-      60,
-      'Expected at least 60 products in array'
+      50,
+      'Expected at least 50 products in array'
     );
     validateRecordColumns(
       { recordType: 'product', functionName: 'getAllProducts' },
