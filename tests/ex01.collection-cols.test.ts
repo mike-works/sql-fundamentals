@@ -76,6 +76,7 @@ class EmployeeDataTest {
   public async allProducts() {
     let result = await getAllProducts();
     assert.isArray(result, 'Expected result to be an array');
+    // TODO: tighten assertion
     assert.isAtLeast(
       result.length,
       60,
