@@ -20,8 +20,11 @@ export async function getProductsNeedingReorder(): Promise<Product[]> {
 
 export async function getProduct(productId: number | string): Promise<Product> {
   const db = await getDb('dev');
-  return await db.get(sql`
+  return await db.get(
+    sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product
-WHERE Id = $1`, productId);
+WHERE Id = $1`,
+    productId
+  );
 }

@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { slow, suite, test, timeout } from 'mocha-typescript';
+import { slow, suite, test, timeout, only } from 'mocha-typescript';
 import { getAllCustomers, getCustomer } from '../src/data/customers';
 import { getAllEmployees, getEmployee } from '../src/data/employees';
 import { getAllOrders, getOrder } from '../src/data/orders';
@@ -138,10 +138,10 @@ class InitialListQueriesTest {
 
   @test('Get one order')
   public async getOrder() {
-    let result = await getOrder(10252);
+    let result = await getOrder(100);
     assert.isNotArray(result, 'Expected result NOT to be an array');
     validateRecordColumns(
-      { recordType: 'order', functionName: 'getOrder(10252)' },
+      { recordType: 'order', functionName: 'getOrder(100)' },
       result,
       REQUIRED_ORDER_COLS
     );
@@ -171,10 +171,10 @@ class InitialListQueriesTest {
 
   @test('Get one customer')
   public async getCustomer() {
-    let result = await getCustomer('TOMSP');
+    let result = await getCustomer('CHOPS');
     assert.isNotArray(result, 'Expected result NOT to be an array');
     validateRecordColumns(
-      { recordType: 'customer', functionName: 'getCustomer("TOMSP")' },
+      { recordType: 'customer', functionName: 'getCustomer("CHOPS")' },
       result,
       REQUIRED_CUSTOMER_COLS
     );

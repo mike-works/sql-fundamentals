@@ -12,8 +12,11 @@ FROM Supplier`);
 
 export async function getSupplier(id: string | number): Promise<Supplier> {
   const db = await getDb('dev');
-  return await db.get(sql`
+  return await db.get(
+    sql`
 SELECT *
 FROM Supplier
-WHERE id = $1`, id);
+WHERE id = $1`,
+    id
+  );
 }

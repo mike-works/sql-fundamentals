@@ -22,7 +22,7 @@ export async function getAllOrders(
   const db = await getDb('dev');
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM "Order"`);
+FROM "order"`);
 }
 
 export async function getCustomerOrders(
@@ -47,7 +47,7 @@ export async function getOrder(id: string | number): Promise<Order> {
   return await db.get(
     sql`
 SELECT *
-FROM "Order"
+FROM "order"
 WHERE Id = $1`,
     id
   );
