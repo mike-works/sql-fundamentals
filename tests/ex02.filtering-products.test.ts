@@ -34,8 +34,8 @@ class EmployeeDataTest {
     // TODO: tighten assertion
     assert.isAtLeast(
       result.length,
-      60,
-      'Expected at least 60 products in array'
+      50,
+      'Expected at least 50 products in array'
     );
     assertProductCols(result[0]);
   }
