@@ -70,8 +70,8 @@ class CreateOrderTest {
       'An error was thrown when trying to createOrder with invalid data'
     );
     assert.include(
-      errorMessages[0],
-      'NOT NULL constraint',
+      errorMessages[0].toLowerCase(),
+      'null constraint',
       'Error message had to do with a NOT NULL constraint'
     );
     // assert.ok(o, 'returns a promise that resolves to a non-empty vale');
