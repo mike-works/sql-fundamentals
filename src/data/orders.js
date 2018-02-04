@@ -59,9 +59,15 @@ export async function getAllOrders(opts = {}) {
   };
 
   const db = await getDb();
+  const { order, sort, page, perPage } = options;
+  let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
+  let sortClause = '';
+  if (order) {
+    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+  }
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder`);
+FROM CustomerOrder ${sortClause} ${paginationClause}`);
 }
 
 /**
@@ -70,8 +76,30 @@ FROM CustomerOrder`);
  * @param {Partial<OrderCollectionOptions>} opts Options for customizing the query
  */
 export async function getCustomerOrders(customerId, opts = {}) {
-  // ! This is going to retrieve ALL ORDERS, not just the ones that belong to a particular customer. We'll need to fix this
-  return getAllOrders(opts);
+  const db = await getDb();
+  /** @type {OrderCollectionOptions} */
+  let options = {
+    order: 'asc',
+    page: 1,
+    perPage: 20,
+    sort: 'shippeddate',
+    ...opts
+  };
+  const { order, sort, page, perPage } = options;
+  let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
+  let sortClause = '';
+  if (order) {
+    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+  }
+  return await db.all(
+    sql`
+SELECT ${ALL_ORDERS_COLUMNS.join(',')}
+FROM CustomerOrder
+WHERE customerid = $1
+ ${sortClause} ${paginationClause}
+`,
+    customerId
+  );
 }
 
 /**
