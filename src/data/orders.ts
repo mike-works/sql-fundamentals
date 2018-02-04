@@ -55,16 +55,44 @@ export async function getAllOrders(
   };
 
   const db = await getDb();
+  const { order, sort, page, perPage } = options;
+  let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
+  let sortClause = '';
+  if (order) {
+    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+  }
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder`);
+FROM CustomerOrder ${sortClause} ${paginationClause}`);
 }
 
 export async function getCustomerOrders(
   customerId: string,
   opts: Partial<OrderCollectionOptions> = {}
-) {
-  return getAllOrders(opts);
+): Promise<Order[]> {
+  const db = await getDb();
+  let options: OrderCollectionOptions = {
+    order: 'asc',
+    page: 1,
+    perPage: 20,
+    sort: 'shippeddate',
+    ...opts
+  };
+  const { order, sort, page, perPage } = options;
+  let paginationClause = sql`LIMIT ${perPage} OFFSET ${perPage * (page - 1)}`;
+  let sortClause = '';
+  if (order) {
+    sortClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+  }
+  return await db.all(
+    sql`
+SELECT ${CUSTOMER_ORDERS_COLUMNS.join(',')}
+FROM CustomerOrder
+WHERE customerid = $1
+ ${sortClause} ${paginationClause}
+`,
+    customerId
+  );
 }
 
 export async function getOrder(id: string | number): Promise<Order> {
