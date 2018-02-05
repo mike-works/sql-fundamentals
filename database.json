@@ -5,10 +5,10 @@
   },
   "pg": {
     "driver": "pg",
-    "user": "test",
-    "password": "test",
+    "user": "northwind_user",
+    "password": "thewindisblowing",
     "host": "localhost",
-    "database": "mydb",
-    "schema": "my_schema"
+    "database": "nw_postgresql",
+    "schema": "public"
   }
 }

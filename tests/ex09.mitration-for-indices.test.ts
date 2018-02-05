@@ -68,56 +68,51 @@ class MigrationIndicesTest {
   }
 
   @test(
-    'OrderDetail table now has indices OrderDetailProductId and OrderDetailOrderId'
+    'OrderDetail table now has indices orderdetailproductid and orderdetailorderid'
   )
   public async orderDetailIndicesPresent() {
     let db = await getDb('dev');
-    let indexInfo = (await db.all(sql`PRAGMA index_list("OrderDetail")`)).map(
-      i => i.name
-    );
+    let indexInfo = await db.getIndicesForTable('orderdetail');
     assert.includeMembers(
-      indexInfo,
-      ['OrderDetailProductId', 'OrderDetailOrderId'],
-      'OrderDetailProductId and OrderDetailOrderId are found'
+      indexInfo.map(s => s.toLowerCase()),
+      ['orderdetailproductid', 'orderdetailorderid'],
+      'orderdetailproductid and orderdetailorderid are found'
     );
   }
 
-  @test('Order table now has indices OrderCustomerId and OrderEmployeeId')
+  @test('Order table now has indices ordercustomerid and OrderEmployeeId')
   public async orderIndicesPresent() {
     let db = await getDb('dev');
-    let indexInfo = (await db.all(sql`PRAGMA index_list("Order")`)).map(
-      i => i.name
-    );
+    let indexInfo = await db.getIndicesForTable('order');
+
     assert.includeMembers(
-      indexInfo,
-      ['OrderEmployeeId', 'OrderCustomerId'],
-      'OrderCustomerId and OrderEmployeeId are found'
+      indexInfo.map(s => s.toLowerCase()),
+      ['orderemployeeid', 'ordercustomerid'],
+      'ordercustomerid and orderemployeeid are found'
     );
   }
 
-  @test('Product table now has index ProductSupplierId')
+  @test('Product table now has index productsupplierid')
   public async productIndicesPresent() {
     let db = await getDb('dev');
-    let indexInfo = (await db.all(sql`PRAGMA index_list("Product")`)).map(
-      i => i.name
-    );
+    let indexInfo = await db.getIndicesForTable('product');
+
     assert.includeMembers(
-      indexInfo,
-      ['ProductSupplierId'],
-      'ProductSupplierId is found'
+      indexInfo.map(s => s.toLowerCase()),
+      ['productsupplierid'],
+      'productsupplierid is found'
     );
   }
 
-  @test('Employee table now has index EmployeeReportsTo')
+  @test('Employee table now has index employeereportsto')
   public async employeeIndicesPresent() {
     let db = await getDb('dev');
-    let indexInfo = (await db.all(sql`PRAGMA index_list("Employee")`)).map(
-      i => i.name
-    );
+    let indexInfo = await db.getIndicesForTable('employee');
+
     assert.includeMembers(
-      indexInfo,
-      ['EmployeeReportsTo'],
-      'EmployeeReportsTo is found'
+      indexInfo.map(s => s.toLowerCase()),
+      ['employeereportsto'],
+      'employeereportsto is found'
     );
   }
 }

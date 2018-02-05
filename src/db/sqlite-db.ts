@@ -27,7 +27,8 @@ const copyFile = (src: string, dst: string) =>
 
 const dbPromises: { [k: string]: Promise<SQLiteDB> } = {};
 
-export const dbPath = (name: string) => path.join(PROJECT_ROOT, `${name}.sqlite`);
+export const dbPath = (name: string) =>
+  path.join(PROJECT_ROOT, `${name}.sqlite`);
 
 export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   public static async setup(name: string): Promise<SQLiteDB> {
@@ -35,22 +36,34 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     let doesExist = await fileExists(pathToDb);
     if (!doesExist) {
       if (!fs.existsSync(pathToDb)) {
-        logger.debug(`Database ${name} was not found at ${pathToDb}...creating it now`);
+        logger.debug(
+          `Database ${name} was not found at ${pathToDb}...creating it now`
+        );
         await copyFile(MASTER_DB_FILE, pathToDb);
       }
     }
-    if (dbPromises[name]) { return dbPromises[name]; }
-    dbPromises[name] = sqlite.open(pathToDb, {
-      verbose: true
-    }).then(sqliteDb => {
-      let db = new SQLiteDB(sqliteDb);
-      return db.get(sql`PRAGMA foreign_keys = ON`).then(() => {
-        return setupPreparedStatements<sqlite.Statement, SQLDatabase<sqlite.Statement>>(db);
-      }).then(statements => {
-        db.statements = statements;
-        return db;
+    if (dbPromises[name]) {
+      return dbPromises[name];
+    }
+    dbPromises[name] = sqlite
+      .open(pathToDb, {
+        verbose: true
+      })
+      .then(sqliteDb => {
+        let db = new SQLiteDB(sqliteDb);
+        return db
+          .get(sql`PRAGMA foreign_keys = ON`)
+          .then(() => {
+            return setupPreparedStatements<
+              sqlite.Statement,
+              SQLDatabase<sqlite.Statement>
+            >(db);
+          })
+          .then(statements => {
+            db.statements = statements;
+            return db;
+          });
       });
-    });
     return dbPromises[name];
   }
   private filePath: string;
@@ -61,12 +74,20 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     if (process.env.NODE_ENV !== 'test') {
       // tslint:disable-next-line:no-shadowed-variable
       this.db.on('profile', (sql: string, time: number) => {
-        logger.info([chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(' '));
+        logger.info(
+          [
+            chalk.cyan(sql),
+            `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`
+          ].join(' ')
+        );
       });
     }
   }
 
-  public async run(query: string, ...params: any[]): Promise<{ lastID: number | string }> {
+  public async run(
+    query: string,
+    ...params: any[]
+  ): Promise<{ lastID: number | string }> {
     let s = await this.db.run(query, ...params);
     return { lastID: s.lastID };
   }
@@ -76,9 +97,21 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   public all<T>(query: string, ...params: any[]): Promise<T[]> {
     return this.db.all<T>(query, ...params);
   }
-  public async prepare(name: string, query: string, ...params: any[]): Promise<sqlite.Statement> {
+  public async prepare(
+    name: string,
+    query: string,
+    ...params: any[]
+  ): Promise<sqlite.Statement> {
     let s = await this.db.prepare(query, ...params);
     this.statements[name] = s;
     return s;
+  }
+  public async getIndicesForTable(tableName: string): Promise<string[]> {
+    return (await this.all(sql`PRAGMA index_list("${tableName}")`)).map(
+      (i: any) => i.name
+    );
+  }
+  public allTables(): Promise<string[]> {
+    throw new Error('Method not implemented.');
   }
 }

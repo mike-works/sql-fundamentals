@@ -14,9 +14,18 @@ export abstract class SQLDatabase<S extends SQLStatement> {
   protected constructor() {
     this.statements = {};
   }
-  public abstract run(sql: string, ...params: any[]): Promise<{ lastID: number | string }>;
+  public abstract run(
+    sql: string,
+    ...params: any[]
+  ): Promise<{ lastID: number | string }>;
   public abstract get<T = any>(sql: string, ...params: any[]): Promise<T>;
   public abstract all<T = any>(sql: string, ...params: any[]): Promise<T[]>;
-  public abstract prepare(name: string, sql: string, ...params: any[]): Promise<S>;
+  public abstract prepare(
+    name: string,
+    sql: string,
+    ...params: any[]
+  ): Promise<S>;
 
+  public abstract getIndicesForTable(tableName: string): Promise<string[]>;
+  public abstract allTables(): Promise<string[]>;
 }

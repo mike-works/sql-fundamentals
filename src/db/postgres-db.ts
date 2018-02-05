@@ -117,4 +117,13 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       new PostgresStatement(name, query, params, this.client)
     );
   }
+  public async getIndicesForTable(tableName: string): Promise<string[]> {
+    return (await this.all(
+      sql`select indexname
+    from pg_indexes where tablename = \'${tableName}\'`
+    )).map((result: any) => result.indexname as string);
+  }
+  public allTables(): Promise<string[]> {
+    throw new Error('Method not implemented.');
+  }
 }
