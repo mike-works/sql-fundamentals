@@ -3,6 +3,7 @@ import * as pg from 'pg';
 import { logger } from '../log';
 import { sql } from '../sql-string';
 import { SQLDatabase, SQLStatement } from './db';
+import { setupPreparedStatements } from './prepared';
 
 class PostgresStatement implements SQLStatement {
   protected name: string;
@@ -61,6 +62,10 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       let pgdb = new this(client);
       // let data = await pgdb.get(sql`SELECT table_name FROM information_schema.tables WHERE table_schema='public'`);
       // console.log('DATA: ', data);
+      pgdb.statements = await setupPreparedStatements<
+        PostgresStatement,
+        PostgresDB
+      >(pgdb);
       return pgdb;
     } finally {
       client.release();
