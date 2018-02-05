@@ -58,7 +58,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
             return setupPreparedStatements<
               sqlite.Statement,
               SQLDatabase<sqlite.Statement>
-            >(db);
+              >(db);
           })
           .then(statements => {
             db.statements = statements;
@@ -67,7 +67,6 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
       });
     return dbPromises[name];
   }
-  private filePath: string;
   private db: sqlite.Database;
   protected constructor(db: sqlite.Database) {
     super();

@@ -47,14 +47,14 @@ function normalizeOrderDetails(raw: { [k: string]: any[] }): Array<Partial<Order
     details.push(o as any);
   }
   return details.map(d => {
-    let [id, price] = d.ProductId.split(';');
-    let discount = parseFloat(d.Discount as string);
+    let [id, price] = d.productid.split(';');
+    let discount = parseFloat(d.discount as string);
     return {
-      Id: d.Id,
-      ProductId: parseInt(id, 10),
-      UnitPrice: parseFloat(price) * (1 - discount),
-      Quantity: parseInt(d.Quantity as string, 10),
-      Discount: discount,
+      id: d.id,
+      productid: parseInt(id, 10),
+      unitprice: parseFloat(price) * (1 - discount),
+      quantity: parseInt(d.quantity as string, 10),
+      discount: discount,
     };
   });
 }
@@ -92,7 +92,7 @@ router.post('/', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
   try {
     let order = await createOrder(orderData, details);
-    res.redirect(`orders/${order.Id}`);
+    res.redirect(`orders/${order.id}`);
   } catch (e) {
     res.status(500);
     res.send(e.toString());
@@ -111,7 +111,7 @@ router.post('/:id', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
   try {
     let order = await updateOrder(req.params.id, orderData as any, details);
-    res.redirect(`/orders/${order.Id}`);
+    res.redirect(`/orders/${order.id}`);
   } catch (e) {
     res.status(500);
     res.send(e.toString());
