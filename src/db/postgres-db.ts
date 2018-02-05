@@ -101,7 +101,7 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     logger.info(
       [
         chalk.cyan(query),
-        `(${chalk.yellow(`${(end - begin).toPrecision(2)}ms`)})`
+        `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
       ].join(' ')
     );
     return r;
@@ -115,7 +115,7 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     logger.info(
       [
         chalk.cyan(query),
-        `(${chalk.yellow(`${(end - begin).toPrecision(2)}ms`)})`
+        `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
       ].join(' ')
     );
     return rows;
