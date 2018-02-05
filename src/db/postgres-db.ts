@@ -93,19 +93,31 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     return { lastID };
   }
   public async get<T>(query: string, ...params: any[]): Promise<T> {
-    logger.info(query);
+    let [, begin] = process.hrtime();
     let r = await this.client
       .query(query, params)
       .then(result => result.rows[0]);
-    // console.log('row', r);
+    let [, end] = process.hrtime();
+    logger.info(
+      [
+        chalk.cyan(query),
+        `(${chalk.yellow(`${(end - begin).toPrecision(2)}ms`)})`
+      ].join(' ')
+    );
     return r;
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
-    logger.info(query);
+    let [, begin] = process.hrtime();
     let rows = await this.client
       .query(query, params)
       .then(result => result.rows);
-    // console.log('rows', rows);
+    let [, end] = process.hrtime();
+    logger.info(
+      [
+        chalk.cyan(query),
+        `(${chalk.yellow(`${(end - begin).toPrecision(2)}ms`)})`
+      ].join(' ')
+    );
     return rows;
   }
   public prepare(
