@@ -102,7 +102,7 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     logger.info(
       [
         `
-${chalk.magentaBright('>>')} ${highlight(query.trim().replace(/\n+/g, ' '), {
+${chalk.magentaBright('>>')} ${highlight(query.trim(), {
           language: 'sql',
           ignoreIllegals: true
         })}`,
@@ -120,7 +120,7 @@ ${chalk.magentaBright('>>')} ${highlight(query.trim().replace(/\n+/g, ' '), {
     logger.info(
       [
         `
-${chalk.magentaBright('>>')} ${highlight(query.trim().replace(/\n+/g, ' '), {
+${chalk.magentaBright('>>')} ${highlight(query.trim(), {
           language: 'sql',
           ignoreIllegals: true
         })}`,

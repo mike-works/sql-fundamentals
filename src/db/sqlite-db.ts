@@ -78,7 +78,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
         logger.info(
           [
             `
-${chalk.magentaBright('>>')} ${highlight(sql.trim().replace(/\n+/g, ' '), {
+${chalk.magentaBright('>>')} ${highlight(sql.trim(), {
               language: 'sql',
               ignoreIllegals: true
             })}`,
