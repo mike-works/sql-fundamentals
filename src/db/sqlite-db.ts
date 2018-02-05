@@ -111,7 +111,9 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
       (i: any) => i.name
     );
   }
-  public allTables(): Promise<string[]> {
-    throw new Error('Method not implemented.');
+  public async getAllTriggers(): Promise<string[]> {
+    return (await this.all(
+      sql`select * from sqlite_master where type = 'trigger';`
+    )).map((i: any) => i.name as string);
   }
 }

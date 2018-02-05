@@ -119,11 +119,15 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
     return (await this.all(
-      sql`select indexname
+      sql`select indexname as name
     from pg_indexes where tablename = \'${tableName}\'`
-    )).map((result: any) => result.indexname as string);
+    )).map((result: any) => result.name as string);
   }
-  public allTables(): Promise<string[]> {
-    throw new Error('Method not implemented.');
+  public async getAllTriggers(): Promise<string[]> {
+    return (await this
+      .all(sql`select tgname as name from pg_trigger,pg_proc where
+    pg_proc.oid=pg_trigger.tgfoid AND tgisinternal = false`)).map(
+      (result: any) => result.name as string
+    );
   }
 }

@@ -51,30 +51,29 @@ class TransactionsTriggerTest {
     );
   }
 
-  @test('OrderTransaction trigger exists')
+  @test('ordertransaction trigger exists')
   public async triggerExists() {
     let db = await getDb('dev');
-    let allTriggers = (await db.all(
-      sql`select * from sqlite_master where type = 'trigger';`
-    )).map(i => i.name);
+    let allTriggers = await db.getAllTriggers();
     assert.includeMembers(
-      allTriggers,
-      ['OrderTransaction'],
-      'OrderTransaction trigger is found'
+      allTriggers.map(s => s.toLowerCase()),
+      ['ordertransaction'],
+      'ordertransaction trigger is found'
     );
   }
 
   @test("Inserting a new transaction results in an order's OrderDate being set")
   public async insertTransaction() {
     let db = await getDb('dev');
-    let order = await createOrder(VALID_ORDER_DATA);
+    let { id } = await createOrder(VALID_ORDER_DATA);
+    let order = await getOrder(id);
     if (typeof order.id === 'undefined') {
       assert.ok(false, 'newly created order Id is not truthy');
       return;
     }
     assert.notOk(order.orderdate, 'OrderDate is not yet set');
     let transaction = await db.get(
-      sql`INSERT INTO "Transaction" (authorization, orderid) VALUES (?, ?)`,
+      sql`INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
       'lk1hdklh12ld',
       order.id
     );

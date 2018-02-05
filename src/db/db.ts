@@ -27,5 +27,5 @@ export abstract class SQLDatabase<S extends SQLStatement> {
   ): Promise<S>;
 
   public abstract getIndicesForTable(tableName: string): Promise<string[]>;
-  public abstract allTables(): Promise<string[]>;
+  public abstract getAllTriggers(): Promise<string[]>;
 }
