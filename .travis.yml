@@ -16,11 +16,7 @@ install:
   - npm install --no-shrinkwrap
 
 before_script:
-  - rm -f dev.sqlite
-  - cp master.sqlite dev.sqlite
-  - npm run pg:setup
-  - npm run db:migrate --- up
-  - npm run db:migrate --- up -e pg
+  - ./scripts/ci/setup-db.sh
 
 script:  
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
