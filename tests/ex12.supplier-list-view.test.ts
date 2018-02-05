@@ -51,16 +51,14 @@ class SupplierListViewTest {
     );
   }
 
-  @test('SupplierList_V view exists')
+  @test('supplierlist_v view exists')
   public async viewExists() {
     let db = await getDb('dev');
-    let allViews = (await db.all(
-      sql`select * from sqlite_master where type = 'view';`
-    )).map(i => i.name);
+    let allViews = await db.getAllViews();
     assert.includeMembers(
-      allViews,
-      ['SupplierList_V'],
-      'SupplierList_V view is found'
+      allViews.map(s => s.toLowerCase()),
+      ['supplierlist_v'],
+      'supplierlist_v view is found'
     );
   }
 

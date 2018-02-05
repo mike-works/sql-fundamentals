@@ -116,4 +116,9 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
       sql`select * from sqlite_master where type = 'trigger';`
     )).map((i: any) => i.name as string);
   }
+  public async getAllViews(): Promise<string[]> {
+    return (await this.all(
+      sql`select * from sqlite_master where type = 'view';`
+    )).map((i: any) => i.name as string);
+  }
 }
