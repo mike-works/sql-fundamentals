@@ -51,16 +51,14 @@ class OrderDetailUniqueIndexTest {
     );
   }
 
-  @test('OrderDetailUniqueProduct index exists')
+  @test('orderdetailuniqueproduct index exists')
   public async indexExists() {
     let db = await getDb('dev');
-    let indexInfo = (await db.all(sql`PRAGMA index_list("OrderDetail")`)).map(
-      i => i.name
-    );
+    let indexInfo = await db.getIndicesForTable('orderdetail');
     assert.includeMembers(
-      indexInfo,
-      ['OrderDetailUniqueProduct'],
-      'OrderDetailUniqueProduct index was found'
+      indexInfo.map(s => s.toLowerCase()),
+      ['orderdetailuniqueproduct'],
+      'orderdetailuniqueproduct index was found'
     );
   }
 
@@ -80,9 +78,9 @@ class OrderDetailUniqueIndexTest {
     }
     assert.isAtLeast(errors.length, 1, 'At least one error was thrown');
     assert.include(
-      errors[0],
-      'UNIQUE',
-      'Error message mentions something about a "UNIQUE" constraint'
+      errors[0].toLowerCase(),
+      'unique',
+      'Error message mentions something about a "unique" constraint'
     );
   }
 }
