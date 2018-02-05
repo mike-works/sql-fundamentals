@@ -24,6 +24,7 @@
     "accounting": "^0.4.1",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
+    "cli-highlight": "^1.2.3",
     "db-migrate": "^0.10.2",
     "db-migrate-pg": "^0.3.0",
     "db-migrate-sqlite3": "^0.2.1",

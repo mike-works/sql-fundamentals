@@ -7,6 +7,7 @@ import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
 import { sql } from '../sql-string';
 import { setupPreparedStatements } from './prepared';
 import { SQLDatabase } from './db';
+import { highlight } from 'cli-highlight';
 
 async function fileExists(pth: string) {
   return new Promise(resolve => {
@@ -76,7 +77,11 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
       this.db.on('profile', (sql: string, time: number) => {
         logger.info(
           [
-            chalk.cyan(sql),
+            `
+${chalk.magentaBright('>>')} ${highlight(sql.trim().replace(/\n+/g, ' '), {
+              language: 'sql',
+              ignoreIllegals: true
+            })}`,
             `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`
           ].join(' ')
         );

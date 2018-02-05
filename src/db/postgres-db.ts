@@ -4,6 +4,7 @@ import { logger } from '../log';
 import { sql } from '../sql-string';
 import { SQLDatabase, SQLStatement } from './db';
 import { setupPreparedStatements } from './prepared';
+import { highlight } from 'cli-highlight';
 
 class PostgresStatement implements SQLStatement {
   protected name: string;
@@ -100,7 +101,11 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     let [, end] = process.hrtime();
     logger.info(
       [
-        chalk.cyan(query),
+        `
+${chalk.magentaBright('>>')} ${highlight(query.trim().replace(/\n+/g, ' '), {
+          language: 'sql',
+          ignoreIllegals: true
+        })}`,
         `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
       ].join(' ')
     );
@@ -114,7 +119,11 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     let [, end] = process.hrtime();
     logger.info(
       [
-        chalk.cyan(query),
+        `
+${chalk.magentaBright('>>')} ${highlight(query.trim().replace(/\n+/g, ' '), {
+          language: 'sql',
+          ignoreIllegals: true
+        })}`,
         `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
       ].join(' ')
     );
