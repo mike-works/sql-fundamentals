@@ -13,7 +13,7 @@ env:
     - DB_TYPE=sqlite
 
 install:
-  - npm install --no-shrinkwrap
+  - if [ "$DB_TYPE" == "postgres" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
 
 before_script:
   - ./scripts/ci/setup-db.sh
