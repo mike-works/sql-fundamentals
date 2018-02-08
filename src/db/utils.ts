@@ -1,6 +1,4 @@
 import { sql } from '../sql-string';
-import SQLiteDB from './sqlite-db';
-import PostgresDB from './postgres-db';
 import { SQLDatabase, SQLStatement } from 'src/db/db';
 import { logger } from '../log';
 
@@ -24,12 +22,16 @@ function determineDbType(): DbType {
 
 export async function getDb(name: string): Promise<SQLDatabase<SQLStatement>> {
   if (DB_TYPE === DbType.Postgres) {
+    // tslint:disable-next-line:variable-name
+    const PostgresDB = require('./postgres-db').default;
     return await PostgresDB.setup({
       name,
       host: 'localhost',
       port: 5432
     });
   } else {
+    // tslint:disable-next-line:variable-name
+    const SQLiteDB = require('./sqlite-db').default;
     return await SQLiteDB.setup(name);
   }
 }

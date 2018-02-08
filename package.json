@@ -26,7 +26,6 @@
     "chalk": "^2.3.0",
     "cli-highlight": "^1.2.3",
     "db-migrate": "^0.10.2",
-    "db-migrate-pg": "^0.3.0",
     "db-migrate-sqlite3": "^0.2.1",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
@@ -35,11 +34,14 @@
     "fs-extra": "^5.0.0",
     "lodash": "~4.17.4",
     "moment": "^2.20.1",
-    "pg": "^7.4.1",
     "scripty": "^1.7.2",
     "sqlite": "^2.9.1",
     "sqlite3": "^3.1.13",
     "winston": "^2.3.7"
+  },
+  "optionalDependencies": {
+    "db-migrate-pg": "^0.3.0",
+    "pg": "^7.4.1"
   },
   "devDependencies": {
     "@types/accounting": "^0.4.1",
