@@ -1,3 +1,3 @@
 #!/bin/bash
-npm run build
+# npm run build
 node dist/index.js

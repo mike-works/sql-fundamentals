@@ -1,26 +1,26 @@
 <div class="mui-container">
   <h1>
-    <span class="mui-badge mui--pull-right">{{customer.Id}}</span>
-    {{customer.CompanyName}}
+    <span class="mui-badge mui--pull-right">{{customer.id}}</span>
+    {{customer.companyname}}
   </h1>
   <div class="mui-panel">
     <div class="mui-row">
       <div class="mui-col-md-6">
         <h3>Contact Info</h3>
         <p>
-          <strong>{{customer.ContactName}}</strong>
-          <br> {{customer.ContactTitle}}
+          <strong>{{customer.contactname}}</strong>
+          <br> {{customer.contacttitle}}
         </p>
         <p>
           <div>
-            <strong>Phone: </strong> {{customer.Phone}}</div>
+            <strong>Phone: </strong> {{customer.phone}}</div>
           <div>
-            <strong>Fax: </strong> {{customer.Fax}}</div>
+            <strong>Fax: </strong> {{customer.fax}}</div>
         </p>
         <p>
-          <div>{{customer.Address}}</div>
-          <div>{{customer.City}}, {{customer.Country}} {{customer.PostalCode}}</div>
-          <div>{{customer.Region}}</div>
+          <div>{{customer.address}}</div>
+          <div>{{customer.city}}, {{customer.country}} {{customer.postalcode}}</div>
+          <div>{{customer.region}}</div>
         </p>
 
       </div>
@@ -34,22 +34,22 @@
       <thead>
         <tr>
           <th>Id {{> 'table-col-sort' by='Id'}}</th>
-          <th>Employee {{> 'table-col-sort' by='EmployeeId'}}</th>
-          <th>Ordered On {{> 'table-col-sort' by='OrderDate'}}</th>
-          <th>Required On {{> 'table-col-sort' by='RequiredDate'}}</th>
-          <th>Shipped On {{> 'table-col-sort' by='ShippedDate'}}</th>
-          <th>Ship To {{> 'table-col-sort' by='ShipCountry'}}</th>
+          <th>Employee {{> 'table-col-sort' by='employeeid'}}</th>
+          <th>Ordered On {{> 'table-col-sort' by='orderdate'}}</th>
+          <th>Required On {{> 'table-col-sort' by='requireddate'}}</th>
+          <th>Shipped On {{> 'table-col-sort' by='shippeddate'}}</th>
+          <th>Ship To {{> 'table-col-sort' by='shipcountry'}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each orders as |o|}}
         <tr>
-          <td>{{#link-to href=(concat '/orders/' o.Id)}} {{o.Id}} {{/link-to}}</td>
-          <td>{{#link-to href=(concat '/employees/' o.EmployeeId)}} {{o.EmployeeId}} {{/link-to}}</td>
-          <td>{{format-date o.OrderDate pattern='ll'}}</td>
-          <td>{{format-date o.RequiredDate pattern='ll'}}</td>
-          <td>{{format-date o.ShippedDate pattern='ll'}}</td>
-          <td>{{o.ShipCity}}, {{o.ShipCountry}}</td>
+          <td>{{#link-to href=(concat '/orders/' o.id)}} {{o.id}} {{/link-to}}</td>
+          <td>{{#link-to href=(concat '/employees/' o.employeeid)}} {{o.employeeid}} {{/link-to}}</td>
+          <td>{{format-date o.orderdate pattern='ll'}}</td>
+          <td>{{format-date o.requireddate pattern='ll'}}</td>
+          <td>{{format-date o.shippeddate pattern='ll'}}</td>
+          <td>{{o.ShipCity}}, {{o.shipcountry}}</td>
         </tr>
         {{/each}}
       </tbody>

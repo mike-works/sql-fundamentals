@@ -1,9 +1,8 @@
-import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
-import { logger } from '../log';
+import { sql } from '../sql-string';
 
-const ALL_ORDERS_COLUMNS = ['*'];
-const ORDER_COLUMNS = ['*'];
+export const ALL_ORDERS_COLUMNS = ['*'];
+export const ORDER_COLUMNS = ['*'];
 
 interface AllOrdersOptions {
   page?: number;
@@ -13,26 +12,31 @@ interface AllOrdersOptions {
 }
 
 export async function getAllOrders(
-  { page = 1, perPage = 20, sort = 'Id', order = 'asc' }: AllOrdersOptions = {
+  { page = 1, perPage = 20, sort = 'id', order = 'asc' }: AllOrdersOptions = {
     order: 'asc',
     page: 1,
     perPage: 20,
-    sort: 'Id'
+    sort: 'id'
   }
 ): Promise<Order[]> {
   const db = await getDb('dev');
-  return await db.all(`
+  return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM "Order"`);
+FROM "order"`);
 }
 
 export async function getCustomerOrders(
   customerId: string,
-  { page = 1, perPage = 20, sort = 'ShippedDate', order = 'asc' }: AllOrdersOptions = {
+  {
+    page = 1,
+    perPage = 20,
+    sort = 'shippeddate',
+    order = 'asc'
+  }: AllOrdersOptions = {
     order: 'asc',
     page: 1,
     perPage: 20,
-    sort: 'ShippedDate'
+    sort: 'shippeddate'
   }
 ) {
   return getAllOrders({ page, perPage, sort, order });
@@ -40,24 +44,51 @@ export async function getCustomerOrders(
 
 export async function getOrder(id: string | number): Promise<Order> {
   const db = await getDb('dev');
-  return await db.get(`
+  return await db.get(
+    sql`
 SELECT *
-FROM "Order"
-WHERE Id = ${id}
-`);
+FROM "order"
+WHERE id = $1`,
+    id
+  );
 }
 
-export async function getOrderDetails(orderId: string | number): Promise<OrderDetail[]> {
+export async function getOrderDetails(
+  orderId: string | number
+): Promise<OrderDetail[]> {
   const db = await getDb('dev');
-  return await db.all(`
-SELECT *, UnitPrice * Quantity as Price
-FROM "OrderDetail"
-WHERE OrderId = ${orderId}
-`);
+  return await db.all(
+    sql`
+SELECT *, unitprice * quantity as price
+FROM OrderDetail
+WHERE orderid = $1`,
+    orderId
+  );
 }
 
-export async function getOrderWithDetails(id: string | number): Promise<[Order, OrderDetail[]]> {
+export async function getOrderWithDetails(
+  id: string | number
+): Promise<[Order, OrderDetail[]]> {
   let order = await getOrder(id);
   let items = await getOrderDetails(id);
   return [order, items];
+}
+
+export async function createOrder(
+  order: Partial<Order>,
+  details: Array<Partial<OrderDetail>> = []
+): Promise<Partial<Order>> {
+  return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
+}
+
+export async function deleteOrder(id: string | number): Promise<void> {
+  return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
+}
+
+export async function updateOrder(
+  id: string | number,
+  data: Partial<Order>,
+  details: Array<Partial<OrderDetail>> = []
+): Promise<Partial<Order>> {
+  return Promise.reject('Orders#updateOrder() NOT YET IMPLEMENTED');
 }

@@ -1,12 +1,22 @@
 language: node_js
 node_js:
 - '6'
-- '7'
 - '8'
-- '9'
+- 'stable'
+
+services:
+  - postgresql
+
+env:
+  matrix:
+    - DB_TYPE=postgres
+    - DB_TYPE=sqlite
 
 install:
-- npm install --no-shrinkwrap
+  - if [ "$DB_TYPE" == "postgres" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
+
+before_script:
+  - ./scripts/ci/setup-db.sh
 
 script:  
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
@@ -22,5 +32,5 @@ deploy:
   app: damp-oasis-38940
   on:
     repo: mike-north/sql-fundamentals
-    branch: solutions
+    branch: solutions-pro
     condition: SHOULD_DEPLOY

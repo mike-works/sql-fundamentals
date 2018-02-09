@@ -31,42 +31,52 @@
 --MANIPULATING DATA---
 
 6. Creating and Destroying Records
+- Create an order
+- Delete an order
 
-7. Updating Records
+7. Transactions
+- Order items
+
+8. Updating Records
+- Update an existing order
 
 --THE SCHEMA EVOLVES--
 
-8. Migrations & Indices
+9. Migrations & Indices
 - Order Indices: Customer, Employee
 - Order Detail Indices: Order, Product
 - Product Indices: Suppliers
 - Employee Indices: ReportsTo
 
-9. Constraints
+10. Constraints
 - Product Indices: UNIQUE[ProductId, OrderId]
 - Foreign Keys
 - NOT NULL
 
 --ADVANCED--
 
-10. Triggers
+11. Triggers
+- Set order.OrderDate on Transaction insert
 
-11. Views
+12. Views
+- Supplier List
 
-12. Prepared Statements
+13. Prepared Statements
+- Get Order
 
---POSTGRES--
+--MySQL/POSTGRES--
 
-13. PG: JSON and Array column types
+14. PG/MySQL: JSON and Array column types
 
-14. PG: Pub-Sub
+15. PG/MySQL: Materialized Views
 
-15. PG: Full Text Search
+16. PG/MySQL: Full Text Search
 
-16. PG/MySQL: Materialized Views
+17. PG/MySQL: Pub-Sub
 
 --DB Administration--
 
-17. Command Line & Backup
+19. Command Line & Backup
 
-18. Performance & Optimization
+19. Performance & Optimization
+

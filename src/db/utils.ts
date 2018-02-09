@@ -1,65 +1,37 @@
-import chalk from 'chalk';
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as sqlite from 'sqlite';
-import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
+import { sql } from '../sql-string';
+import { SQLDatabase, SQLStatement } from 'src/db/db';
 import { logger } from '../log';
 
-async function fileExists(pth: string) {
-  return new Promise(resolve => {
-    fs.exists(pth, resolve);
-  });
+enum DbType {
+  Postgres,
+  SQLite
 }
 
-const copyFile = (src: string, dst: string) =>
-  new Promise((resolve, reject) => {
-    fs.copy(src, dst, err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
+const DB_TYPE: DbType = determineDbType();
 
-export const dbPath = (name: string) =>
-  path.join(PROJECT_ROOT, `${name}.sqlite`);
-
-const dbPromises: { [key: string]: Promise<sqlite.Database> } = {};
-
-export async function getDb(name: string): Promise<sqlite.Database> {
-  let pathToDb = dbPath(name);
-  let doesExist = await fileExists(pathToDb);
-  let db: sqlite.Database;
-  if (!doesExist) {
-    await initializeDb(name);
+function determineDbType(): DbType {
+  switch ((process.env.DB_TYPE || '').trim().toLowerCase()) {
+    case 'postgres':
+      logger.info('Database Type: PostgreSQL');
+      return DbType.Postgres;
+    default:
+      logger.info('Database Type: SQLite');
+      return DbType.SQLite;
   }
-  if (dbPromises[name]) {
-    return await dbPromises[name];
-  }
-  dbPromises[name] = sqlite.open(pathToDb, {
-    verbose: true
-  });
-  db = await dbPromises[name];
-
-  if (process.env.NODE_ENV !== 'test') {
-    db.on('profile', (sql: string, time: number) => {
-      logger.info(
-        [chalk.cyan(sql), `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`].join(
-          ' '
-        )
-      );
-    });
-  }
-  return db;
 }
 
-export async function initializeDb(dbName = 'dev') {
-  let pth = dbPath(dbName);
-  if (!fs.existsSync(pth)) {
-    logger.debug(
-      `Database ${dbName} was not found at ${pth}... creating it now`
-    );
-    await copyFile(MASTER_DB_FILE, pth);
+export async function getDb(name: string): Promise<SQLDatabase<SQLStatement>> {
+  if (DB_TYPE === DbType.Postgres) {
+    // tslint:disable-next-line:variable-name
+    const PostgresDB = require('./postgres-db').default;
+    return await PostgresDB.setup({
+      name,
+      host: 'localhost',
+      port: 5432
+    });
+  } else {
+    // tslint:disable-next-line:variable-name
+    const SQLiteDB = require('./sqlite-db').default;
+    return await SQLiteDB.setup(name);
   }
 }

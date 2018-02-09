@@ -1,0 +1,157 @@
+<script type="text/javascript">
+  function addOrderDetail(evt) {
+    evt.preventDefault();
+    let item = document.createElement('div');
+    item.classList.add('mui-row');
+    item.innerHTML = document.querySelector('.product-selector').parentElement.parentElement.innerHTML;
+    document.querySelector('#order-details').appendChild(item);
+  }
+</script>
+
+<form class="mui-form" method='post' action='{{#if order.id}}/orders/{{order.id}}{{else}}/orders{{/if}}'>
+  <legend>Create a new order</legend>
+  <div class='mui-row'>
+    <div class="mui-col-md-12 mui-textfield">
+      <input name="shipname" type="text" value="{{or order.shipname "FRONT DESK"}}" required />
+      <label for="shipname">Recipient Name</label>
+    </div>
+  </div>
+  <div class="mui-row">
+    <div class="mui-col-md-6 mui-select">
+      <select name="employeeid">
+        {{#each employees as |employee|}}
+        <option {{#if (equal employee.id ../order.employeeid)}}selected{{/if}} value={{employee.id}}>
+          {{employee.lastname}}, {{employee.firstname}}
+        </option>
+        {{/each}}
+      </select>
+      <label>Employee</label>
+    </div>
+    <div class="mui-col-md-6 mui-select">
+      <select name="customerid">
+        {{#each customers as |customer|}}
+        <option {{#if (equal customer.id ../order.customerid)}}selected{{/if}} value={{customer.id}}>
+          {{customer.companyname}}
+        </option>
+        {{/each}}
+      </select>
+      <label>Customer</label>
+    </div>
+  </div>
+  <div class='mui-row'>
+    <div class="mui-col-md-12 mui-textfield">
+      <input name="requireddate" type="date" value="{{or order.requireddate (tomorrow)}}"
+        required />
+      <label for="requireddate">Required By</label>
+    </div>
+  </div>
+  <h4>Shipping</h4>
+  <div class="mui-row">
+    <div class="mui-col-md-12 mui-textfield mui-textfield--float-label ">
+      <input name="shipaddress" type="text" value="{{or order.shipaddress "5000 Forbes Ave"}}" required />
+      <label for="shipaddress">Address</label>
+    </div>
+  </div>
+  <div class="mui-row">
+
+    <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
+      <input name="shipcity" type="text" value="{{or order.shipcity "Pittsburgh, PA"}}" required />
+      <label for="shipcity">City</label>
+    </div>
+    <div class="mui-col-md-4 mui-textfield mui-textfield--float-label">
+      <input name="shipcountry" type="text" value="{{or order.shipcountry "USA"}}" required />
+      <label for="shipcountry">Country</label>
+    </div>
+    <div class="mui-col-md-4 mui-textfield mui-textfield--float-label ">
+      <input name="shippostalcode" type="text" value="{{or order.shippostalcode "15213"}}" required />
+      <label for="shippostalcode">Postal Code</label>
+    </div>
+  </div>
+  <div class="mui-row">
+
+    <div class="mui-col-md-4 mui-select">
+      <select name="shipregion">
+        {{#each regions as |region|}}
+          <option {{#if (equal region.id ../order.shipregion)}}selected{{/if}} value={{region.id}}>{{region.regiondescription}}</option>
+        {{/each}}
+      </select>
+      <label for="shipregion">Region</label>
+    </div>
+    <div class="mui-col-md-4 mui-select">
+
+      <select name="shipvia">
+        {{#each shippers as |shipper|}}
+        <option {{#if (equal shipper.id ../order.shipvia)}}selected{{/if}} value={{shipper.id}}>{{shipper.companyname}}</option>
+        {{/each}}
+      </select>
+      <label for="shipvia">Shipper</label>
+    </div>
+    <div class="mui-col-md-4 mui-textfield">
+      <input name="freight" type="number" step="0.01" value="{{or order.freight "2.50"}}" required />
+      <label for="freight">Freight</label>
+    </div>
+  </div>
+  <legend>Order Items</legend>
+  <a onClick="addOrderDetail(event)">Add Item</a>
+
+  <!--
+    interface OrderDetail extends DBRecord {
+  OrderId: DBRecordReference;
+  ProductId: DBRecordReference;
+  UnitPrice: number;
+  Quantity: number;
+  Discount: number;
+}
+  -->
+  <div id="order-details">
+    {{#each details as |detail|}}
+    <div class="mui-row">
+      <input type="hidden" name="details.id[]" value={{detail.id}} />
+      <div class="mui-col-md-4 mui-select">
+        <select name="details.productid[]" class="product-selector">
+          {{#each ../products as |product|}}
+          <option {{#if (equal ../productid product.id)}}selected{{/if}} value="{{product.id}};{{product.unitprice}}">
+            {{product.productname}} ({{format-money product.unitprice}})
+          </option>
+          {{/each}}
+        </select>
+        <label for="details.productid[]">Product</label>
+      </div>
+      <div class="mui-col-md-4 mui-textfield">
+        <input name="details.quantity[]" type="number" value={{detail.quantity}} min=1 required />
+        <label for="details.quantity[]">Quantity</label>
+      </div>
+      <div class="mui-col-md-4 mui-textfield">
+        <input name="details.discount[]" type="number" value={{detail.discount}} step="0.01" required />
+        <label for="details.discount[]">Discount</label>
+      </div>
+    </div>
+    {{else}}
+    <div class="mui-row">
+      <div class="mui-col-md-4 mui-select">
+        <select name="details.productid[]" class="product-selector">
+          {{#each products as |product|}}
+          <option value="{{product.id}};{{product.unitprice}}">
+            {{product.productname}} ({{format-money product.unitprice}})
+          </option>
+          {{/each}}
+        </select>
+        <label for="details.productid[]">Product</label>
+      </div>
+      <div class="mui-col-md-4 mui-textfield">
+        <input name="details.quantity[]" type="number" value=1 min=1 required />
+        <label for="details.quantity[]">Quantity</label>
+      </div>
+      <div class="mui-col-md-4 mui-textfield">
+        <input name="details.discount[]" type="number" value="0" step="0.01" required />
+        <label for="details.discount[]">Discount</label>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="mui-row">
+    <div class="mui-col-md-12">
+      <button type="submit" class="mui-btn mui-btn--primary mui-btn--raised">Save Order</button>
+    </div>
+  </div>
+</form>

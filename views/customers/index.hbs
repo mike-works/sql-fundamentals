@@ -10,13 +10,13 @@
   <ul class=' collection '>
     {{#each customers as |c|}}
     <li>
-      <a class='mui-panel ' href="/customers/{{c.Id}}">
-        <span class='mui-badge mui--pull-right '>{{c.Id}}</span>
-        <h3 class='mui-panel__title '>{{c.CompanyName}}</h3>
+      <a class='mui-panel ' href="/customers/{{c.id}}">
+        <span class='mui-badge mui--pull-right '>{{c.id}}</span>
+        <h3 class='mui-panel__title '>{{c.companyname}}</h3>
         <p>
-          <b>Contact Name:</b> {{c.ContactName}}
+          <b>Contact Name:</b> {{c.contactname}}
           <br>
-          <b>Placed: </b> {{c.NumOrders}} orders
+          <b>Placed: </b> {{or c.numorders "??"}} orders
         </p>
       </a>
     </li>

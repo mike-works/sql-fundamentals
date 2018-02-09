@@ -1,96 +1,105 @@
 type DBRecordReference = number | string;
 
 interface DBRecord {
-  Id: DBRecordReference;
+  id: DBRecordReference;
 }
 
 interface Category extends DBRecord {
-  CategoryName: string;
-  Description: string;
+  categoryname: string;
+  description: string;
 }
 
 interface Customer extends DBRecord {
-  CompanyName: string;
-  ContactName: string;
-  ContactTitle: string;
-  Address: string;
-  City: string;
-  Region: string;
-  PostalCode: string;
-  Country: string;
-  Phone: string;
-  Fax: string;
+  companyname: string;
+  contactname: string;
+  contacttitle: string;
+  address: string;
+  city: string;
+  region: string;
+  postalcode: string;
+  country: string;
+  phone: string;
+  fax: string;
+  ordercount: number;
 }
 
 interface Employee extends DBRecord {
-  LastName: string;
-  FirstName: string;
-  Title: string;
-  TitleOfCourtesy: string;
-  BirthDate: string;
-  HireDate: string;
-  Address: string;
-  City: string;
-  Region: string;
-  PostalCode: string;
-  Country: string;
-  HomePhone: string;
-  Extension: string;
-  Notes: string;
-  ReportsTo: number;
-  PhotoPath: string;
+  lastname: string;
+  firstname: string;
+  title: string;
+  titleofcourtesy: string;
+  birthdate: string;
+  hiredate: string;
+  address: string;
+  city: string;
+  region: string;
+  postalcode: string;
+  country: string;
+  homephone: string;
+  extension: string;
+  notes: string;
+  reportsto: number;
+  photopath: string;
+  ordercount: number;
 }
 
 interface EmployeeTerritory extends DBRecord {
-  EmployeeId: DBRecordReference;
-  TerritoryId: DBRecordReference;
+  employeeid: DBRecordReference;
+  territoryid: DBRecordReference;
 }
 
 interface Order extends DBRecord {
-  CustomerId: DBRecordReference;
-  EmployeeId: DBRecordReference;
-  ShipCity: string;
-  ShipRegion: string;
-  ShipPostalCode: string;
-  OrderDate: string;
-  RequiredDate: string;
-  ShippedDate: string;
+  customerid: DBRecordReference;
+  employeeid: DBRecordReference;
+  freight: number;
+  orderdate: string;
+  requireddate: string;
+  shipaddress: string;
+  shipcity: string;
+  shipcountry: string;
+  shipname: string;
+  shippeddate: string;
+  shippostalcode: string;
+  shipregion: string;
+  shipvia: number;
+  subtotalprice: number;
 }
 
 interface OrderDetail extends DBRecord {
-  OrderId: DBRecordReference;
-  ProductId: DBRecordReference;
-  UnitPrice: number;
-  Quantity: number;
-  Discount: number;
+  orderid: DBRecordReference;
+  productid: DBRecordReference;
+  unitprice: number;
+  quantity: number;
+  discount: number;
 }
 
 interface Product extends DBRecord {
-  ProductName: string;
-  SupplierId: DBRecordReference;
-  CategoryId: DBRecordReference;
-  QuantityPerUnit: number;
-  UnitPrice: number;
-  UnitsInStock: number;
-  UnitsOnOrder: number;
-  ReorderLevel: number;
-  Discontinued: number;
+  productname: string;
+  supplierid: DBRecordReference;
+  categoryid: DBRecordReference;
+  quantityperunit: number;
+  unitprice: number;
+  unitsinstock: number;
+  unitsonorder: number;
+  reorderlevel: number;
+  discontinued: number;
 }
 
 interface Region extends DBRecord {
-  RegionDescription: string;
+  regiondescription: string;
 }
 
 interface Shipper extends DBRecord {
-  CompanyName: string;
-  Phone: string;
+  companyname: string;
+  phone: string;
 }
 
 interface Supplier extends Customer {
-  HomePage: string;
+  homepage: string;
+  productlist: string;
 }
 
 interface Territory extends DBRecord {
-  TerritoryDescription: string;
-  RegionId: DBRecordReference;
+  territorydescription: string;
+  regionid: DBRecordReference;
 }

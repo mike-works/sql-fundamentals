@@ -1,14 +1,13 @@
-import * as sqlite from 'sqlite';
 import { getDb } from '../db/utils';
+import { sql } from '../sql-string';
 
 const ALL_PRODUCT_COLUMNS = ['*'];
 
 export async function getAllProducts(): Promise<Product[]> {
   const db = await getDb('dev');
-  return await db.all(`
+  return await db.all(sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product
-`);
+FROM Product`);
 }
 
 export async function getDiscontinuedProducts(): Promise<Product[]> {
@@ -21,9 +20,11 @@ export async function getProductsNeedingReorder(): Promise<Product[]> {
 
 export async function getProduct(productId: number | string): Promise<Product> {
   const db = await getDb('dev');
-  return await db.get(`
+  return await db.get(
+    sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product
-WHERE Id=${productId}
-`);
+WHERE Id = $1`,
+    productId
+  );
 }
