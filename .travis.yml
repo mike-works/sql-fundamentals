@@ -32,5 +32,5 @@ deploy:
   app: damp-oasis-38940
   on:
     repo: mike-north/sql-fundamentals
-    branch: solutions
+    branch: solutions-pro
     condition: SHOULD_DEPLOY

@@ -15,7 +15,7 @@ else
 fi
 echo "Test Filter: $filter"
 
-if [ \( $git_branch = 'solutions' \) ] &&  [ \( $filter = 'BEGIN' \) ]
+if [ \( $git_branch = *'solution'* \) ] &&  [ \( $filter = 'BEGIN' \) ]
 then
   echo "Solutions branch with no filter"
   NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register ./tests/*.test.ts
