@@ -9,8 +9,8 @@
   </a>
 </p>
 <p align='center'>
-  <a href="https://travis-ci.org/mike-works/sql-fundamentals" title="Build Status">
-    <img title="Build Status" src="https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions"/>
+  <a href="https://travis-ci.org/mike-works/sql-fundamentals?branch=solutions-pro" title="Build Status">
+    <img title="Build Status" src="https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions-pro"/>
   </a>
   <a href="https://mike.works/course/sql-fundamentals-ad811af" title="SQL Fundamentals">
     <img title="Course Outline" src="https://img.shields.io/badge/mike.works-course%20outline-blue.svg"/>
