@@ -44,6 +44,13 @@ If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) da
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+# Build Status
+
+| Solutions Branch                                                                               | Status                                                                                                                                                                                  |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [SQL Fundamentals](https://github.com/mike-works/sql-fundamentals/tree/solutions-fundamentals) | [![Build Status](https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions-fundamentals)](https://travis-ci.org/mike-works/sql-fundamentals?branch=solutions-fundamentals) |
+| [SQL Pro](https://github.com/mike-works/sql-fundamentals/tree/solutions-pro)                   | [![Build Status](https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions-pro)](https://travis-ci.org/mike-works/sql-fundamentals?branch=solutions-pro)                   |
+
 # License
 
 While the general license for this project is the BSD 3-clause, the exercises
