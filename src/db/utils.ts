@@ -11,7 +11,7 @@ const DB_TYPE: DbType = determineDbType();
 
 function determineDbType(): DbType {
   switch ((process.env.DB_TYPE || '').trim().toLowerCase()) {
-    case 'postgres':
+    case 'pg':
       logger.info('Database Type: PostgreSQL');
       return DbType.Postgres;
     default:

@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "\033[0;32mSetting Up PostgreSQL Database...\033[0m"
 dropdb nw_postgresql
 dropuser northwind_user
 

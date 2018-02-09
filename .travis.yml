@@ -9,11 +9,11 @@ services:
 
 env:
   matrix:
-    - DB_TYPE=postgres
+    - DB_TYPE=pg
     - DB_TYPE=sqlite
 
 install:
-  - if [ "$DB_TYPE" == "postgres" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
+  - if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
 
 before_script:
   - ./scripts/ci/setup-db.sh

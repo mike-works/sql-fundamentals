@@ -17,8 +17,11 @@
     "heroku-postinstall": "npm run build",
     "test": "scripty",
     "build": "scripty",
-    "pg:setup": "scripty",
-    "db:migrate": "./node_modules/.bin/db-migrate"
+    "db:setup:pg": "scripty",
+    "db:setup:sqlite": "scripty",
+    "db:migrate:pg": "./node_modules/.bin/db-migrate -e pg",
+    "db:migrate:sqlite": "scripty",
+    "db:migrate:create": "scripty"
   },
   "dependencies": {
     "accounting": "^0.4.1",

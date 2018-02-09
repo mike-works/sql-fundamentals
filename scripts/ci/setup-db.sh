@@ -1,19 +1,17 @@
 #!/bin/bash
 if [ -n $DB_TYPE ]
 then
-  if [[ $DB_TYPE == "postgres" ]]
+  if [[ $DB_TYPE == "pg" ]]
   then
-    echo "setting up postgres"
-    npm run pg:setup
-    npm run db:migrate --- up -e pg
-    exit
+    npm run db:setup:pg
+    npm run db:migrate:pg --- up
+    exit 0
   else
-    echo "setting up sqlite"
-    rm -f dev.sqlite
-    cp master.sqlite dev.sqlite
-    npm run db:migrate --- up
-    exit
+    npm run db:setup:sqlite
+    npm run db:migrate:sqlite --- up
+    exit 0
   fi
 else
   echo -e "DB_TYPE not set\n"
+  exit 1
 fi
