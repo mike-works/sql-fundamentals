@@ -5,7 +5,7 @@ import { validateRecordColumns } from './helpers';
 
 const ALL_CUSTOMERS_REQUIRED_COLS = ['id', 'contactname', 'companyname'];
 
-@suite('EX2: Filtering Customers')
+@suite('EX002: Filtering Customers')
 class EmployeeDataTest {
   @test('Unfiltered query still behaves as expected')
   public async allCustomers() {

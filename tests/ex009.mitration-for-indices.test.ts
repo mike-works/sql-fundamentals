@@ -5,7 +5,7 @@ import * as path from 'path';
 import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 
-@suite('EX9: "Create indices to boost query performance" - Migration test')
+@suite('EX009: "Create indices to boost query performance" - Migration test')
 class MigrationIndicesTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'

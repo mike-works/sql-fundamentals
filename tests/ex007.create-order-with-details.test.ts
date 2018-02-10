@@ -8,9 +8,9 @@ import {
   deleteOrder,
   getOrderDetails
 } from '../src/data/orders';
-import { VALID_ORDER_DATA } from '../tests/ex06.create-order.test';
+import { VALID_ORDER_DATA } from './ex006.create-order.test';
 
-@suite('EX7: "Create an Order with OrderDetail items" - Transaction test')
+@suite('EX007: "Create an Order with OrderDetail items" - Transaction test')
 class CreateOrderWithDetailsTest {
   @test('createOrder() completes without throwing an error')
   public async createOrderForValidData() {

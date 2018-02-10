@@ -4,10 +4,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
-import { VALID_ORDER_DATA } from './ex06.create-order.test';
+import { VALID_ORDER_DATA } from './EX006.create-order.test';
 import { createOrder } from '../src/data/orders';
 
-@suite('EX10: "Unique Index" - Column constraints test')
+@suite('EX0010: "Unique Index" - Column constraints test')
 class OrderDetailUniqueIndexTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'

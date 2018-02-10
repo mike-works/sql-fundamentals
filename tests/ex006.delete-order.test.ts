@@ -1,9 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 import { createOrder, getAllOrders, deleteOrder } from '../src/data/orders';
-import { VALID_ORDER_DATA } from '../tests/ex06.create-order.test';
+import { VALID_ORDER_DATA } from '../tests/EX006.create-order.test';
 
-@suite('EX6: "Delete an Order" - Record deletion test')
+@suite('EX006: "Delete an Order" - Record deletion test')
 class DeleteOrderTest {
   @test(
     'deleteOrder() for a newly-created order, completes without throwing an error'

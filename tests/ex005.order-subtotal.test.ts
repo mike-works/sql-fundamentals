@@ -4,7 +4,7 @@ import { suite, test } from 'mocha-typescript';
 import { getOrder, getOrderWithDetails } from '../src/data/orders';
 import { logger } from '../src/log';
 
-@suite('EX5: "Order Subtotal" - Aggregate Function Tests')
+@suite('EX005: "Order Subtotal" - Aggregate Function Tests')
 class OrderSubtotalTest {
   @test('getOrder() results must now include subtotalprice')
   public async orderSubtotalPresent() {

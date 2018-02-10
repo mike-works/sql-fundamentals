@@ -4,7 +4,7 @@ import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getCustomerOrders } from '../src/data/orders';
 import { logger } from '../src/log';
 
-@suite('EX3: "Customer Orders List" Query - Sort tests')
+@suite('EX003: "Customer Orders List" Query - Sort tests')
 class CustomerOrdersSortTest {
   @test('By default, order list is sorted ascending by ShippedDate')
   public async orderListDefaults() {

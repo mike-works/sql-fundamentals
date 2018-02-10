@@ -4,11 +4,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
-import { VALID_ORDER_DATA } from './ex06.create-order.test';
+import { VALID_ORDER_DATA } from './EX006.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
 
-@suite('EX12: "Supplier List View" - View Test')
-class SupplierListViewTest {
+@suite('EX11: "Transaction Trigger" - AFTER INSERT trigger test')
+class TransactionsTriggerTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'
   )
@@ -18,16 +18,16 @@ class SupplierListViewTest {
     );
     assert.isAtLeast(
       migrationsFiles.length,
-      7,
-      'There are at least seven things in the ./migrations folder'
+      6,
+      'There are at least six things in the ./migrations folder'
     );
     let migrationsSqlsFiles = fs.readdirSync(
       path.join(__dirname, '..', 'migrations', 'sqls')
     );
     assert.isAtLeast(
       migrationsSqlsFiles.length,
-      12,
-      'There are at least twelve things in the ./migrations/sqls folder'
+      10,
+      'There are at least ten things in the ./migrations/sqls folder'
     );
     let downMigrationCount = 0;
     let upMigrationCount = 0;
@@ -51,26 +51,36 @@ class SupplierListViewTest {
     );
   }
 
-  @test('supplierlist_v view exists')
-  public async viewExists() {
+  @test('ordertransaction trigger exists')
+  public async triggerExists() {
     let db = await getDb('dev');
-    let allViews = await db.getAllViews();
+    let allTriggers = await db.getAllTriggers();
     assert.includeMembers(
-      allViews.map(s => s.toLowerCase()),
-      ['supplierlist_v'],
-      'supplierlist_v view is found'
+      allTriggers.map(s => s.toLowerCase()),
+      ['ordertransaction'],
+      'ordertransaction trigger is found'
     );
   }
 
-  @test('Querying the view yields expected results')
-  public async viewResults() {
+  @test("Inserting a new transaction results in an order's OrderDate being set")
+  public async insertTransaction() {
     let db = await getDb('dev');
-    let result = await db.get(sql`SELECT * from SupplierList_V`);
-    assert.ok(result, 'Results of query are truthy');
-    assert.includeMembers(
-      Object.keys(result),
-      ['id', 'companyname', 'contactname', 'productlist'],
-      "Columns: 'id', 'companyname', 'contactname', 'productlist'"
+    let { id } = await createOrder(VALID_ORDER_DATA);
+    if (typeof id === 'undefined') {
+      throw new Error('createOrder() failed to return an id');
+    }
+    let order = await getOrder(id);
+    if (typeof order.id === 'undefined') {
+      assert.ok(false, 'newly created order Id is not truthy');
+      return;
+    }
+    assert.notOk(order.orderdate, 'OrderDate is not yet set');
+    let transaction = await db.get(
+      sql`INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
+      'lk1hdklh12ld',
+      order.id
     );
+    order = await getOrder(order.id);
+    assert.ok(order.orderdate, 'OrderDate is set');
   }
 }

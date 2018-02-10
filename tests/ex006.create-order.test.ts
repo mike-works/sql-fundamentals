@@ -28,7 +28,7 @@ const INVALID_ORDER_DATA: Partial<Order> = {
   freight: 3.12
 };
 
-@suite('EX6: "Create an Order" - Record insertion test')
+@suite('EX006: "Create an Order" - Record insertion test')
 class CreateOrderTest {
   @test('createOrder() creates an order successfully for valid data')
   public async createOrderForValidData() {

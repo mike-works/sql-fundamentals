@@ -8,7 +8,7 @@ import {
 } from '../src/data/products';
 import { logger } from '../src/log';
 
-@suite('EX4: "Products List" Query - Join tests')
+@suite('EX004: "Products List" Query - Join tests')
 class ProductsListJoinTest {
   @test(
     'getAllProducts() results must now include categoryname and suppliername columns'
