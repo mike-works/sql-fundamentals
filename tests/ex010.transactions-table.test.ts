@@ -58,8 +58,8 @@ class TransactionsTableTest {
       sql`SELECT name FROM sqlite_master WHERE type='table'`
     )).map(i => i.name);
     assert.includeMembers(
-      allTables,
-      ['Transaction'],
+      allTables.map(t => t.toLowerCase()),
+      ['transaction'],
       'Transaction table is found'
     );
   }
