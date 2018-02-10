@@ -11,10 +11,10 @@ case $git_branch in
 master)
   filter="EX000"
   ;;
-solution-fundamentals)
+solutions-fundamentals)
   filter="EX00"
   ;;
-solution-pro)
+solutions-pro)
   filter="EX0"
   break
   ;;
