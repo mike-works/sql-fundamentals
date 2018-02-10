@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
-import { VALID_ORDER_DATA } from './EX006.create-order.test';
+import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
 
 @suite('EX12: "Supplier List View" - View Test')
