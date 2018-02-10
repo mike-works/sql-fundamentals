@@ -1,3 +1,2 @@
-#!/bin/bash
-# npm run build
+#!/usr/bin/env sh
 node dist/index.js

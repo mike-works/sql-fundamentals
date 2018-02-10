@@ -10,18 +10,18 @@
     "node": ">= 6"
   },
   "scripts": {
-    "start": "scripty",
+    "start": "SCRIPTY_SILENT=true scripty",
     "bump": "npm run build && npm start",
-    "watch": "scripty",
-    "watch:debug": "scripty",
+    "watch": "SCRIPTY_SILENT=true scripty",
+    "watch:debug": "SCRIPTY_SILENT=true scripty",
     "heroku-postinstall": "npm run build",
-    "test": "scripty",
-    "build": "scripty",
-    "db:setup:pg": "scripty",
-    "db:setup:sqlite": "scripty",
-    "db:migrate:pg": "./node_modules/.bin/db-migrate -e pg",
-    "db:migrate:sqlite": "scripty",
-    "db:migrate:create": "scripty"
+    "test": "SCRIPTY_SILENT=true scripty",
+    "build": "SCRIPTY_SILENT=true scripty",
+    "db:setup:pg": "SCRIPTY_SILENT=true scripty",
+    "db:setup:sqlite": "SCRIPTY_SILENT=true scripty",
+    "db:migrate:pg": "SCRIPTY_SILENT=true scripty",
+    "db:migrate:sqlite": "SCRIPTY_SILENT=true scripty",
+    "db:migrate:create": "SCRIPTY_SILENT=true scripty"
   },
   "dependencies": {
     "accounting": "^0.4.1",

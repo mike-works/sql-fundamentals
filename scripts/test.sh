@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 if [ -z "$TRAVIS_BRANCH" ]
 then
   git_branch=$(git symbolic-ref --short -q HEAD)

@@ -1,11 +1,16 @@
-#!/bin/bash
-echo "\033[0;32mSetting Up PostgreSQL Database...\033[0m"
+#!/usr/bin/env sh
+echo "\033[0;32mSetting Up PostgreSQL Database. This may take a few minutes...\033[0m"
+echo "\033[1;33m - Removing any existing nw_postgresql database (if this hangs: \"killall -9 psql\")\033[0m"
 dropdb nw_postgresql
+echo "\033[1;33m - Removing any existing northwind_user user\033[0m"
 dropuser northwind_user
 
+echo "\033[1;33m - Creating nw_postgresql database\033[0m"
 createdb nw_postgresql
+echo "\033[1;33m - Importing data from northwind.sql (this may take a while)\033[0m"
 psql nw_postgresql < ./northwind.sql -q 
 
+echo "\033[1;33m - Setting appropriate permissions\033[0m"
 psql template1 -c "create user northwind_user;"
 psql template1 -c "alter user northwind_user password 'thewindisblowing';"
 psql template1 -c "grant all on DATABASE nw_postgresql to northwind_user;"
