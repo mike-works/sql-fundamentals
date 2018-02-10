@@ -82,11 +82,24 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     query: string,
     ...params: any[]
   ): Promise<{ lastID: number | string }> {
+    let [, begin] = process.hrtime();
     if (query.toLowerCase().indexOf('insert into ') >= 0) {
       query = `${query} RETURNING id`;
     }
-    logger.info(query);
-    let res = await this.client.query(query, ...params);
+    if (process.env.NODE_ENV !== 'test') {
+      let [, end] = process.hrtime();
+      logger.info(
+        [
+          `
+${chalk.magentaBright('>>')} ${highlight(query.trim(), {
+            language: 'sql',
+            ignoreIllegals: true
+          })}`,
+          `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
+        ].join(' ')
+      );
+    }
+    let res = await this.client.query(query, params);
     let lastID = null;
     if (res.rows && res.rows.length > 0) {
       lastID = res.rows[0].id;
@@ -98,17 +111,19 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     let r = await this.client
       .query(query, params)
       .then(result => result.rows[0]);
-    let [, end] = process.hrtime();
-    logger.info(
-      [
-        `
+    if (process.env.NODE_ENV !== 'test') {
+      let [, end] = process.hrtime();
+      logger.info(
+        [
+          `
 ${chalk.magentaBright('>>')} ${highlight(query.trim(), {
-          language: 'sql',
-          ignoreIllegals: true
-        })}`,
-        `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
-      ].join(' ')
-    );
+            language: 'sql',
+            ignoreIllegals: true
+          })}`,
+          `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
+        ].join(' ')
+      );
+    }
     return r;
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
@@ -116,17 +131,19 @@ ${chalk.magentaBright('>>')} ${highlight(query.trim(), {
     let rows = await this.client
       .query(query, params)
       .then(result => result.rows);
-    let [, end] = process.hrtime();
-    logger.info(
-      [
-        `
+    if (process.env.NODE_ENV !== 'test') {
+      let [, end] = process.hrtime();
+      logger.info(
+        [
+          `
 ${chalk.magentaBright('>>')} ${highlight(query.trim(), {
-          language: 'sql',
-          ignoreIllegals: true
-        })}`,
-        `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
-      ].join(' ')
-    );
+            language: 'sql',
+            ignoreIllegals: true
+          })}`,
+          `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
+        ].join(' ')
+      );
+    }
     return rows;
   }
   public prepare(
