@@ -173,4 +173,12 @@ ${chalk.magentaBright('>>')} ${highlight(query.trim(), {
       sql`select viewname as name from pg_catalog.pg_views;`
     )).map((result: any) => result.name as string);
   }
+  public async getAllTableNames(): Promise<string[]> {
+    return (await this.all(
+      sql`SELECT table_name as name
+      FROM information_schema.tables
+     WHERE table_schema='public'
+       AND table_type='BASE TABLE';`
+    )).map((result: any) => result.name as string);
+  }
 }

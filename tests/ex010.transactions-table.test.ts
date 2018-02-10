@@ -54,9 +54,7 @@ class TransactionsTableTest {
   @test('Transactions table exists')
   public async transactionsExists() {
     let db = await getDb('dev');
-    let allTables = (await db.all(
-      sql`SELECT name FROM sqlite_master WHERE type='table'`
-    )).map(i => i.name);
+    let allTables = await db.getAllTableNames();
     assert.includeMembers(
       allTables.map(t => t.toLowerCase()),
       ['transaction'],
@@ -67,13 +65,13 @@ class TransactionsTableTest {
   @test('Inserting a new transaction completes successfully')
   public async insertTransaction() {
     let db = await getDb('dev');
-    let beforeTransactions = await db.all(sql`SELECT * from "Transaction"`);
+    let beforeTransactions = await db.all(sql`SELECT * from "transaction"`);
     let transaction = await db.get(
-      sql`INSERT INTO "Transaction" (Authorization, OrderId) VALUES (?, ?)`,
+      sql`INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
       'lk1hdklh12ld',
       10264
     );
-    let afterTransactions = await db.all(sql`SELECT * from "Transaction"`);
+    let afterTransactions = await db.all(sql`SELECT * from "transaction"`);
     assert.equal(
       beforeTransactions.length + 1,
       afterTransactions.length,
@@ -88,7 +86,7 @@ class TransactionsTableTest {
     try {
       let transaction = await db.run(
         sql`
-    INSERT INTO "Transaction" (Authorization, OrderId) VALUES (?, ?)`,
+    INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
         'lk1hdklh12ld',
         191927158
       );
@@ -105,9 +103,9 @@ class TransactionsTableTest {
       'At least one error (foreign key constraint violation) should have been thrown'
     );
     assert.include(
-      errors[0],
-      'FOREIGN KEY',
-      'Error message says something about "FOREIGN KEY'
+      errors[0].toLowerCase(),
+      'foreign key',
+      'Error message says something about "foreign key'
     );
   }
 }

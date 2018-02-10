@@ -58,7 +58,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
             return setupPreparedStatements<
               sqlite.Statement,
               SQLDatabase<sqlite.Statement>
-              >(db);
+            >(db);
           })
           .then(statements => {
             db.statements = statements;
@@ -123,6 +123,11 @@ ${chalk.magentaBright('>>')} ${highlight(sql.trim(), {
   public async getAllViews(): Promise<string[]> {
     return (await this.all(
       sql`select * from sqlite_master where type = 'view';`
+    )).map((i: any) => i.name as string);
+  }
+  public async getAllTableNames(): Promise<string[]> {
+    return (await this.all(
+      sql`SELECT name FROM sqlite_master WHERE type='table';`
     )).map((i: any) => i.name as string);
   }
 }
