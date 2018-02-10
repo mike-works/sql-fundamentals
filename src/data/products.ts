@@ -28,3 +28,10 @@ WHERE Id = $1`,
     productId
   );
 }
+
+export async function updateProduct(
+  productId: number | string,
+  data: any
+): Promise<Product> {
+  throw new Error('Not yet implemented');
+}

@@ -13,12 +13,12 @@ ul.collection {
   margin: 0;
 }
 
-ul.nav>li,
-ul.collection>li {
+ul.nav > li,
+ul.collection > li {
   list-style: none;
 }
 
-ul.nav>li {
+ul.nav > li {
   display: inline-block;
 }
 
@@ -30,16 +30,16 @@ ul.nav li.nav-item a {
   padding: 0 10px;
 }
 
-ul.collection>li {
+ul.collection > li {
   display: block;
 }
 
-ul.collection>li>a {
+ul.collection > li > a {
   display: block;
   color: inherit;
 }
 
-ul.collection>li>a:hover {
+ul.collection > li > a:hover {
   text-decoration: none;
 }
 
@@ -107,17 +107,17 @@ a.mui-btn.disabled {
   color: blue;
 }
 
-.mui-table>thead>tr>th.money-col,
-.mui-table>tbody>tr>td.money-col {
+.mui-table > thead > tr > th.money-col,
+.mui-table > tbody > tr > td.money-col {
   text-align: right;
 }
 
-.mui-table>thead>tr>th.date-col,
-.mui-table>tbody>tr>td.date-col {
+.mui-table > thead > tr > th.date-col,
+.mui-table > tbody > tr > td.date-col {
   text-align: right;
 }
 
-.mui-table>tbody>tr>td.id-col {
+.mui-table > tbody > tr > td.id-col {
   text-align: left;
 }
 
@@ -125,4 +125,9 @@ table .actions {
   display: table-cell;
   /* position: relative;
   left: -20px; */
+}
+
+.flavor-profile label {
+  width: 60px;
+  display: inline-block;
 }

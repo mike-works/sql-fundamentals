@@ -20,6 +20,29 @@
           </span>
           {{/if}}
         </span>
+        <form class="flavor-profile" action="/products/{{p.id}}">
+          <div>
+            <label for="spicy">Spicy</label>
+            <input type="range" name="spicy" value="{{p.metadata.flavor.spicy}}" min=-1 max=5 />
+          </div>
+          <div>
+            <label for="sour">Sour</label>
+            <input type="range" name="sour" value="{{p.metadata.flavor.sour}}" min=-1 max=5 />
+          </div>
+          <div>
+            <label for="sweet">Sweet</label>
+            <input type="range" name="sweet" value="{{p.metadata.flavor.sweet}}" min=-1 max=5 />
+          </div>
+          <div>
+            <label for="bitter">Bitter</label>
+            <input type="range" name="bitter" value="{{p.metadata.flavor.bitter}}" min=-1 max=5 />
+          </div>
+          <div>
+            <label for="salty">Salty</label>
+            <input type="range" name="salty" value="{{p.metadata.flavor.salty}}" min=-1 max=5 />
+          </div>
+          <button class='save-button mui--hide mui-btn mui-btn--accent'>Save</button>
+        </form>
         <h3 class='mui-panel__title mui--pull-left' style='margin-right: 10px'>
           {{p.productname}}
         </h3>
@@ -43,3 +66,46 @@
     {{/each}}
   </ul>
 </div>
+<script>
+  function updateFlavor(evt) {
+    evt.preventDefault();
+    let values = {};
+    for (let i in evt.target.elements) {
+      let n = evt.target.elements[i].name;
+      if (['sweet', 'spicy', 'salty', 'sour', 'bitter'].indexOf(n) >= 0) {
+        values[evt.target.elements[i].name] = parseInt(evt.target.elements[i].value, 10);
+      }
+    }
+    let saveButton = evt.target.querySelector('button.save-button');
+    saveButton.disabled = true;
+    fetch(evt.target.action, {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }).then(function() {
+      saveButton.classList.add('mui--hide');
+      saveButton.disabled = false;
+    })
+  }
+
+  function revealSaveButton(evt) {
+    evt.target.parentElement.parentElement.querySelector('button.save-button').classList.remove('mui--hide');
+  }
+
+  document.querySelectorAll('form.flavor-profile').forEach((form) => {
+    if (form.attachEvent) {
+      form.attachEvent('submit', updateFlavor);
+    } else {
+      form.addEventListener('submit', updateFlavor);
+    }
+  });
+  document.querySelectorAll('form.flavor-profile input[type="range"]').forEach((input) => {
+    if (input.attachEvent) {
+      input.attachEvent('change', revealSaveButton);
+    } else {
+      input.addEventListener('change', revealSaveButton);
+    }
+  });
+</script>

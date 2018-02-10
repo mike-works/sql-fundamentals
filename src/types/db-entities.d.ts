@@ -83,6 +83,15 @@ interface Product extends DBRecord {
   unitsonorder: number;
   reorderlevel: number;
   discontinued: number;
+  metadata: {
+    flavor: {
+      salty: number;
+      sweet: number;
+      spicy: number;
+      sour: number;
+      bitter: number;
+    };
+  };
 }
 
 interface Region extends DBRecord {
