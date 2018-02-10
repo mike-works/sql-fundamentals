@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 if [ -n $DB_TYPE ]
 then
   if [[ $DB_TYPE == "pg" ]]
