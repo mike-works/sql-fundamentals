@@ -12,10 +12,10 @@ master)
   filter="EX000"
   ;;
 solutions-fundamentals)
-  filter="EX00"
+  filter="EX0"
   ;;
 solutions-pro)
-  filter="EX0"
+  filter="EX"
   break
   ;;
 *)
