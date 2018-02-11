@@ -39,4 +39,4 @@ deploy:
   on:
     repo: mike-works/sql-fundamentals
     branch: solutions-pro
-    condition: SHOULD_DEPLOY
+    condition: $SHOULD_DEPLOY
