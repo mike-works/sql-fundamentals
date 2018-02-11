@@ -46,13 +46,17 @@ const pool: pg.Pool = (function() {
   const {
     pg: { database, host, port, schema, user, password }
   } = dbConfig as any;
-  let p = new pg.Pool({
-    database,
-    user,
-    password,
-    host,
-    port
-  });
+  let p = new pg.Pool(
+    process.env.DATABASE_URL
+      ? { connectionString: process.env.DATABASE_URL }
+      : {
+          database,
+          user,
+          password,
+          host,
+          port
+        }
+  );
   if (process.env.NODE_ENV !== 'test') {
     logger.info(
       chalk.yellow(
