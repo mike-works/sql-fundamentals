@@ -5,7 +5,7 @@ export interface SQLStatement {
 }
 export abstract class SQLDatabase<S extends SQLStatement> {
   // tslint:disable-next-line:no-empty
-  public static async setup(opts: any): Promise<SQLDatabase<any>> {
+  public static async setup(): Promise<SQLDatabase<any>> {
     return Promise.reject('Not yet implemented');
   }
   public statements: {

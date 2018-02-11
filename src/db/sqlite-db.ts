@@ -8,6 +8,7 @@ import { sql } from '../sql-string';
 import { setupPreparedStatements } from './prepared';
 import { SQLDatabase } from './db';
 import { highlight } from 'cli-highlight';
+import * as dbConfig from '../../database.json';
 
 async function fileExists(pth: string) {
   return new Promise(resolve => {
@@ -28,24 +29,30 @@ const copyFile = (src: string, dst: string) =>
 
 const dbPromises: { [k: string]: Promise<SQLiteDB> } = {};
 
-export const dbPath = (name: string) =>
-  path.join(PROJECT_ROOT, `${name}.sqlite`);
+// const dbPath = (name: string) => path.join(PROJECT_ROOT, `${name}.sqlite`);
 
 export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
-  public static async setup(name: string): Promise<SQLiteDB> {
-    let pathToDb = dbPath(name);
-    let doesExist = await fileExists(pathToDb);
-    if (!doesExist) {
-      if (!fs.existsSync(pathToDb)) {
-        logger.debug(
-          `Database ${name} was not found at ${pathToDb}...creating it now`
-        );
-        await copyFile(MASTER_DB_FILE, pathToDb);
-      }
-    }
+  public static async setup(): Promise<SQLiteDB> {
+    let name = (dbConfig as any).sqlite.filename;
     if (dbPromises[name]) {
       return dbPromises[name];
     }
+    let pathToDb = path.join(PROJECT_ROOT, name);
+    let doesExist = await fileExists(pathToDb);
+
+    if (!doesExist) {
+      if (!fs.existsSync(pathToDb)) {
+        logger.debug(`Database not found at ${pathToDb}...creating it now`);
+        await copyFile(MASTER_DB_FILE, pathToDb);
+      }
+    } else {
+      if (process.env.NODE_ENV !== 'test') {
+        logger.info(
+          chalk.yellow(`Reading from SQLite database at ${pathToDb}`)
+        );
+      }
+    }
+
     dbPromises[name] = sqlite
       .open(pathToDb, {
         verbose: true

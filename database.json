@@ -5,6 +5,7 @@
   },
   "pg": {
     "driver": "pg",
+    "port": 5432,
     "user": "northwind_user",
     "password": "thewindisblowing",
     "host": "localhost",

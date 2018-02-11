@@ -24,14 +24,10 @@ export async function getDb(name: string): Promise<SQLDatabase<SQLStatement>> {
   if (DB_TYPE === DbType.Postgres) {
     // tslint:disable-next-line:variable-name
     const PostgresDB = require('./postgres-db').default;
-    return await PostgresDB.setup({
-      name,
-      host: 'localhost',
-      port: 5432
-    });
+    return await PostgresDB.setup();
   } else {
     // tslint:disable-next-line:variable-name
     const SQLiteDB = require('./sqlite-db').default;
-    return await SQLiteDB.setup(name);
+    return await SQLiteDB.setup();
   }
 }

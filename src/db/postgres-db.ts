@@ -5,6 +5,7 @@ import { sql } from '../sql-string';
 import { SQLDatabase, SQLStatement } from './db';
 import { setupPreparedStatements } from './prepared';
 import { highlight } from 'cli-highlight';
+import * as dbConfig from '../../database.json';
 
 class PostgresStatement implements SQLStatement {
   protected name: string;
@@ -40,11 +41,27 @@ class PostgresStatement implements SQLStatement {
   }
 }
 
-const pool: pg.Pool = new pg.Pool({
-  database: 'nw_postgresql',
-  host: 'localhost',
-  port: 5432
-});
+// tslint:disable-next-line:only-arrow-functions
+const pool: pg.Pool = (function() {
+  const {
+    pg: { database, host, port, schema, user, password }
+  } = dbConfig as any;
+  let p = new pg.Pool({
+    database,
+    user,
+    password,
+    host,
+    port
+  });
+  if (process.env.NODE_ENV !== 'test') {
+    logger.info(
+      chalk.yellow(
+        `Creating database pool for postgres://${user}@${host}:${port}#${database}.${schema}`
+      )
+    );
+  }
+  return p;
+})();
 
 pool.on('error', (err, client) => {
   logger.error('Unexpected error on idle client', err);
@@ -53,11 +70,7 @@ pool.on('error', (err, client) => {
 
 // tslint:disable-next-line:max-classes-per-file
 export default class PostgresDB extends SQLDatabase<PostgresStatement> {
-  public static async setup(opts: {
-    name: string;
-    host: string;
-    port: number;
-  }): Promise<PostgresDB> {
+  public static async setup(): Promise<PostgresDB> {
     const client = await pool.connect();
     try {
       let pgdb = new this(client);
