@@ -22,7 +22,7 @@ install:
 - if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
 
 before_script:
-  - if [ "$SHOULD_DEPLOY" == "" ]; then wget -qO- https://toolbelt.heroku.com/install.sh | sh; fi
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - ./scripts/ci/setup-db.sh
 
 script:
