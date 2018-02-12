@@ -60,7 +60,9 @@ const pool: pg.Pool = (function() {
   if (process.env.NODE_ENV !== 'test') {
     logger.info(
       chalk.yellow(
-        `Creating database pool for postgres://${user}@${host}:${port}#${database}.${schema}`
+        process.env.DATABASE_URL
+          ? `Creating database pool for ${process.env.DATABASE_URL}`
+          : `Creating database pool for postgres://${user}@${host}:${port}#${database}.${schema}`
       )
     );
   }
