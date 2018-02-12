@@ -3,6 +3,8 @@ language: node_js
 services:
   - postgresql
 
+sudo: required
+
 matrix:
   include:
   - node_js: '6'
