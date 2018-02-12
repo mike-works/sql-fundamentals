@@ -14,8 +14,7 @@
     "bump": "npm run build && npm start",
     "watch": "SCRIPTY_SILENT=true scripty",
     "watch:debug": "SCRIPTY_SILENT=true scripty",
-    "heroku-postbuild":
-      "npm run build && npm run db:setup:pg && npm run db:migrate:pg --- up",
+    "heroku-postbuild": "npm run build",
     "test": "SCRIPTY_SILENT=true scripty",
     "build": "SCRIPTY_SILENT=true scripty",
     "db:setup:pg": "SCRIPTY_SILENT=true scripty",
