@@ -5,6 +5,13 @@ services:
 
 sudo: required
 
+addons:
+  apt:
+    sources:
+      - heroku
+    packages:
+      - heroku-toolbelt
+
 matrix:
   include:
   - node_js: '6'
@@ -24,8 +31,7 @@ install:
 - if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
 
 before_script:
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  - /usr/local/heroku/bin/heroku pg:info --app damp-oasis-38940
+  - heroku pg:info --app damp-oasis-38940
   - ./scripts/ci/setup-db.sh
 
 script:

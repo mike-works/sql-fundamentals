@@ -21,7 +21,7 @@
     "db:setup:sqlite": "SCRIPTY_SILENT=true scripty",
     "db:migrate:pg": "SCRIPTY_SILENT=true scripty",
     "db:migrate:heroku:pg":
-      "DATABASE_URL=$(/usr/local/heroku/bin/heroku config:get DATABASE_URL)?ssl=true npm run db:migrate:pg --- up",
+      "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
     "db:migrate:sqlite": "SCRIPTY_SILENT=true scripty",
     "db:migrate:create": "SCRIPTY_SILENT=true scripty"
   },
