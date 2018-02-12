@@ -22,7 +22,8 @@ install:
 - if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
 
 before_script:
-- ./scripts/ci/setup-db.sh
+  - if [ "$SHOULD_DEPLOY" == "" ]; then wget -qO- https://toolbelt.heroku.com/install.sh | sh; fi
+  - ./scripts/ci/setup-db.sh
 
 script:
 - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
