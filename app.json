@@ -7,14 +7,14 @@
   "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
   "success_url": "/",
   "image": "heroku/node",
-  "scripts": {
-    "postdeploy":
-      "rm -rf node_modules; NODE_ENV=development npm i; npm run build"
-  },
   "env": {
     "NODE_ENV": {
       "description": "The node.js environment.",
       "value": "development"
+    },
+    "DB_TYPE": {
+      "description": "'pg' for PostgreSQL, 'sqlite' for SQLite",
+      "value": "pg"
     }
   },
   "addons": [
