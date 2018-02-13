@@ -8,7 +8,7 @@
   "success_url": "/",
   "image": "heroku/node",
   "scripts": {
-    "postdeploy": "bash ./scripts/heroku-setup.sh"
+    "postdeploy": "npm run build"
   },
   "env": {
     "NPM_CONFIG_PRODUCTION": {
