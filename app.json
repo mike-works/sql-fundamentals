@@ -11,6 +11,10 @@
     "postdeploy": "npm run heroku-postbuild"
   },
   "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Skip installing devDependencies (leave this as false)",
+      "value": false
+    },
     "NODE_ENV": {
       "description": "The node.js environment.",
       "value": "development"
