@@ -20,8 +20,7 @@
     "db:setup:pg": "SCRIPTY_SILENT=true scripty",
     "db:setup:sqlite": "SCRIPTY_SILENT=true scripty",
     "db:migrate:pg": "SCRIPTY_SILENT=true scripty",
-    "db:migrate:heroku:pg":
-      "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
+    "db:migrate:heroku:pg": "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
     "db:migrate:sqlite": "SCRIPTY_SILENT=true scripty",
     "db:migrate:create": "SCRIPTY_SILENT=true scripty"
   },
@@ -42,6 +41,7 @@
     "scripty": "^1.7.2",
     "sqlite": "^2.9.1",
     "sqlite3": "^3.1.13",
+    "typescript": "^2.6.1",
     "winston": "^2.3.7"
   },
   "optionalDependencies": {
@@ -69,7 +69,6 @@
     "nodemon": "^1.14.11",
     "source-map-support": "^0.5.3",
     "ts-node": "^4.1.0",
-    "tslint": "^5.9.1",
-    "typescript": "^2.6.1"
+    "tslint": "^5.9.1"
   }
 }
