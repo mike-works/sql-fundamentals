@@ -7,6 +7,9 @@
   "logo": "https://files.mike.works/courses/20/course_banner_20_square2x.png",
   "success_url": "/",
   "image": "heroku/node",
+  "scripts": {
+    "postdeploy": "npm run heroku-postbuild"
+  },
   "env": {
     "NODE_ENV": {
       "description": "The node.js environment.",
