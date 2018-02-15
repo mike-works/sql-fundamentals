@@ -3,12 +3,12 @@ import { sql } from '../sql-string';
 
 const ALL_CUSTOMERS_COLUMNS = ['*'];
 
-interface AllCustOptions {
+interface CustomerCollectionOptions {
   filter?: string;
 }
 
 export async function getAllCustomers(
-  options: AllCustOptions = {}
+  options: CustomerCollectionOptions = {}
 ): Promise<Customer[]> {
   const db = await getDb('dev');
   return await db.all(sql`

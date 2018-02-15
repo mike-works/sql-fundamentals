@@ -3,7 +3,7 @@ import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllEmployees } from '../src/data/employees';
 import { getAllOrders } from '../src/data/orders';
 import { getAllProducts } from '../src/data/products';
-import { validateRecordColumns } from './helpers';
+import { validateRecordColumns } from './test-helpers';
 
 const REQUIRED_EMPLOYEE_LIST_COLS = [
   'id',

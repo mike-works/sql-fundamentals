@@ -4,7 +4,7 @@ import { sql } from '../sql-string';
 interface ProductFlavorFilter {
   flavorName: string;
   level: number;
-  type: 'lessThan' | 'greaterThan';
+  type: 'less-than' | 'greater-than';
 }
 
 interface ProductCollectionOptions {
@@ -41,7 +41,6 @@ export async function updateProduct(
   productId: number | string,
   data: Partial<Product>
 ): Promise<Product> {
-  console.log('data=', JSON.stringify(data.tags));
   const db = await getDb('dev');
   return await db.get(
     sql`UPDATE Product

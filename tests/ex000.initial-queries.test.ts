@@ -3,14 +3,9 @@ import { slow, suite, test, timeout, only } from 'mocha-typescript';
 import { getAllCustomers, getCustomer } from '../src/data/customers';
 import { getAllEmployees, getEmployee } from '../src/data/employees';
 import { getAllOrders, getOrder } from '../src/data/orders';
-import {
-  getAllProducts,
-  getDiscontinuedProducts,
-  getProduct,
-  getProductsNeedingReorder
-} from '../src/data/products';
+import { getAllProducts, getProduct } from '../src/data/products';
 import { getAllSuppliers, getSupplier } from '../src/data/suppliers';
-import { validateRecordColumns } from './helpers';
+import { validateRecordColumns } from './test-helpers';
 
 const REQUIRED_EMPLOYEE_LIST_COLS = ['id', 'firstname', 'lastname'];
 const REQUIRED_PRODUCT_LIST_COLS = ['id', 'supplierid', 'productname'];
@@ -56,11 +51,21 @@ class InitialListQueriesTest {
 
   @test('Get products needing reorder')
   public async productsNeedingReorder() {
-    let result = await getProductsNeedingReorder();
+    let result = await getAllProducts({
+      filter: { inventory: 'needs-reorder' }
+    });
     assert.isArray(result, 'Expected result to be an array');
     assert.isAbove(result.length, 1, 'Expected more than 1 products in array');
     validateRecordColumns(
-      { recordType: 'product', functionName: 'getProductsNeedingReorder' },
+      {
+        recordType: 'product',
+        functionName: 'getAllProducts',
+        functionArgs: [
+          {
+            filter: { inventory: 'needs-reorder' }
+          }
+        ]
+      },
       result[0],
       REQUIRED_PRODUCT_LIST_COLS
     );
@@ -68,11 +73,21 @@ class InitialListQueriesTest {
 
   @test('Get discontinued products')
   public async discontinuedProducts() {
-    let result = await getDiscontinuedProducts();
+    let result = await getAllProducts({
+      filter: { inventory: 'discontinued' }
+    });
     assert.isArray(result, 'Expected result to be an array');
     assert.isAbove(result.length, 1, 'Expected more than 1 product in array');
     validateRecordColumns(
-      { recordType: 'product', functionName: 'getDiscontinuedProducts' },
+      {
+        recordType: 'product',
+        functionName: 'getAllProducts',
+        functionArgs: [
+          {
+            filter: { inventory: 'discontinued' }
+          }
+        ]
+      },
       result[0],
       REQUIRED_PRODUCT_LIST_COLS
     );

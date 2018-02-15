@@ -4,21 +4,24 @@ import { sql } from '../sql-string';
 export const ALL_ORDERS_COLUMNS = ['*'];
 export const ORDER_COLUMNS = ['*'];
 
-interface AllOrdersOptions {
+interface OrderCollectionOptions {
   page?: number;
   perPage?: number;
   order?: 'asc' | 'desc';
   sort?: string;
 }
 
+const DEFAULT_ORDER_COLLECTION_OPTIONS: OrderCollectionOptions = {
+  order: 'asc',
+  page: 1,
+  perPage: 20,
+  sort: 'id'
+};
+
 export async function getAllOrders(
-  { page = 1, perPage = 20, sort = 'id', order = 'asc' }: AllOrdersOptions = {
-    order: 'asc',
-    page: 1,
-    perPage: 20,
-    sort: 'id'
-  }
+  opts: OrderCollectionOptions = DEFAULT_ORDER_COLLECTION_OPTIONS
 ): Promise<Order[]> {
+  let options = { ...DEFAULT_ORDER_COLLECTION_OPTIONS, ...opts };
   const db = await getDb('dev');
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
@@ -27,19 +30,9 @@ FROM "order"`);
 
 export async function getCustomerOrders(
   customerId: string,
-  {
-    page = 1,
-    perPage = 20,
-    sort = 'shippeddate',
-    order = 'asc'
-  }: AllOrdersOptions = {
-    order: 'asc',
-    page: 1,
-    perPage: 20,
-    sort: 'shippeddate'
-  }
+  opts: OrderCollectionOptions = DEFAULT_ORDER_COLLECTION_OPTIONS
 ) {
-  return getAllOrders({ page, perPage, sort, order });
+  return getAllOrders(opts);
 }
 
 export async function getOrder(id: string | number): Promise<Order> {
@@ -54,7 +47,7 @@ WHERE id = $1`,
 }
 
 export async function getOrderDetails(
-  orderId: string | number
+  id: string | number
 ): Promise<OrderDetail[]> {
   const db = await getDb('dev');
   return await db.all(
@@ -62,7 +55,7 @@ export async function getOrderDetails(
 SELECT *, unitprice * quantity as price
 FROM OrderDetail
 WHERE orderid = $1`,
-    orderId
+    id
   );
 }
 

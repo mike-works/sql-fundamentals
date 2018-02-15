@@ -1,7 +1,7 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-const ALL_SHIPPER_COLUMNS = ['Id', 'CompanyName', 'Phone'];
+const ALL_SHIPPER_COLUMNS = ['id', 'companyname', 'phone'];
 
 export async function getAllShippers(): Promise<Shipper[]> {
   const db = await getDb('dev');

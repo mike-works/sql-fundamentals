@@ -1,11 +1,7 @@
 import { assert } from 'chai';
 import { orderBy } from 'lodash';
 import { slow, suite, test, timeout } from 'mocha-typescript';
-import {
-  getAllProducts,
-  getDiscontinuedProducts,
-  getProductsNeedingReorder
-} from '../src/data/products';
+import { getAllProducts } from '../src/data/products';
 import { logger } from '../src/log';
 
 @suite('EX004: "Products List" Query - Join tests')
@@ -23,10 +19,12 @@ class ProductsListJoinTest {
     assert.ok((firstPageResult[0] as any).categoryname);
   }
   @test(
-    'getDiscontinuedProducts() results must now include categoryname and suppliername columns'
+    'getAllProducts({ filter: { inventory: "discontinued" } }) results must now include categoryname and suppliername columns'
   )
   public async discontinuedProductsColumnTest() {
-    let firstPageResult = await getDiscontinuedProducts();
+    let firstPageResult = await getAllProducts({
+      filter: { inventory: 'discontinued' }
+    });
     assert.containsAllKeys(firstPageResult[0], [
       'suppliername',
       'categoryname'
@@ -35,10 +33,12 @@ class ProductsListJoinTest {
     assert.ok((firstPageResult[0] as any).categoryname);
   }
   @test(
-    'getProductsNeedingReorder() results must now include categoryname and suppliername columns'
+    'getAllProducts({ filter: { inventory: "needs-reorder" } }) results must now include categoryname and suppliername columns'
   )
   public async reorderableProductsColumnTest() {
-    let firstPageResult = await getProductsNeedingReorder();
+    let firstPageResult = await getAllProducts({
+      filter: { inventory: 'needs-reorder' }
+    });
     assert.containsAllKeys(firstPageResult[0], [
       'suppliername',
       'categoryname'

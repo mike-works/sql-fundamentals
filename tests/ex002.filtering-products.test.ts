@@ -1,10 +1,6 @@
 import { assert } from 'chai';
 import { slow, suite, test, timeout } from 'mocha-typescript';
-import {
-  getAllProducts,
-  getDiscontinuedProducts,
-  getProductsNeedingReorder
-} from '../src/data/products';
+import { getAllProducts } from '../src/data/products';
 
 function assertProductCols(item: any) {
   assert.containsAllKeys(
@@ -40,9 +36,13 @@ class EmployeeDataTest {
     assertProductCols(result[0]);
   }
 
-  @test('getDiscontinuedProducts() only returns discontinued items')
+  @test(
+    'getAllProducts({ filter: { inventory: "discontinued" } }) only returns discontinued items'
+  )
   public async discontinuedProducts() {
-    let result = await getDiscontinuedProducts();
+    let result = await getAllProducts({
+      filter: { inventory: 'discontinued' }
+    });
     assert.isArray(result, 'Expected result to be an array');
     // TODO: tighten assertion
     assert.isAtLeast(result.length, 5, 'Expected at least 5 products in array');
@@ -55,9 +55,13 @@ class EmployeeDataTest {
     );
   }
 
-  @test('getProductsNeedingReorder() only products that need to be reordered')
+  @test(
+    'getAllProducts({ filter: { inventory: "needs-reorder" } }) only products that need to be reordered'
+  )
   public async productsNeedingReorder() {
-    let result = await getProductsNeedingReorder();
+    let result = await getAllProducts({
+      filter: { inventory: 'needs-reorder' }
+    });
     assert.isArray(result, 'Expected result to be an array');
     assert.equal(result.length, 2, 'Expected 2 products in array');
     assertProductCols(result[0]);
