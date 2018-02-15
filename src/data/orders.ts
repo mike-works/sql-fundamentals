@@ -5,10 +5,10 @@ export const ALL_ORDERS_COLUMNS = ['*'];
 export const ORDER_COLUMNS = ['*'];
 
 interface OrderCollectionOptions {
-  page?: number;
-  perPage?: number;
-  order?: 'asc' | 'desc';
-  sort?: string;
+  page: number;
+  perPage: number;
+  order: 'asc' | 'desc';
+  sort: string;
 }
 
 const DEFAULT_ORDER_COLLECTION_OPTIONS: OrderCollectionOptions = {
@@ -19,9 +19,12 @@ const DEFAULT_ORDER_COLLECTION_OPTIONS: OrderCollectionOptions = {
 };
 
 export async function getAllOrders(
-  opts: OrderCollectionOptions = DEFAULT_ORDER_COLLECTION_OPTIONS
+  opts: Partial<OrderCollectionOptions> = DEFAULT_ORDER_COLLECTION_OPTIONS
 ): Promise<Order[]> {
-  let options = { ...DEFAULT_ORDER_COLLECTION_OPTIONS, ...opts };
+  let options: OrderCollectionOptions = {
+    ...DEFAULT_ORDER_COLLECTION_OPTIONS,
+    ...opts
+  };
   const db = await getDb('dev');
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
