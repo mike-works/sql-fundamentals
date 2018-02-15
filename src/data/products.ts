@@ -26,29 +26,20 @@ SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product`);
 }
 
-export async function getProduct(productId: number | string): Promise<Product> {
+export async function getProduct(id: number | string): Promise<Product> {
   const db = await getDb('dev');
   return await db.get(
     sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product
-WHERE Id = $1`,
-    productId
+WHERE id = $1`,
+    id
   );
 }
 
 export async function updateProduct(
-  productId: number | string,
+  id: number | string,
   data: Partial<Product>
 ): Promise<Product> {
-  const db = await getDb('dev');
-  return await db.get(
-    sql`UPDATE Product
-    SET metadata=$2::json, tags=($3)
-  WHERE id = $1
-  `,
-    productId,
-    JSON.stringify(data.metadata),
-    data.tags
-  );
+  throw new Error('Not yet implemented');
 }
