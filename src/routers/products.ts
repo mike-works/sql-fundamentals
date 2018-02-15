@@ -1,10 +1,5 @@
 import * as express from 'express';
-import {
-  getAllProducts,
-  updateProduct,
-  getDiscontinuedProducts,
-  getProductsNeedingReorder
-} from '../data/products';
+import { getAllProducts, updateProduct } from '../data/products';
 import { matchedData } from 'express-validator/filter';
 import { check } from 'express-validator/check';
 import { logger } from '../log';
@@ -65,15 +60,5 @@ router.put(
     res.json({ ok: 'ok' });
   }
 );
-
-router.get('/discontinued', async (req, res) => {
-  let products = await getDiscontinuedProducts();
-  res.render('products', { products });
-});
-
-router.get('/needs-reorder', async (req, res) => {
-  let products = await getProductsNeedingReorder();
-  res.render('products', { products });
-});
 
 export default router;

@@ -12,10 +12,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  let { page = 1, sort, order } = req.query;
+  let { page = 1, perPage = 30, sort, order } = req.query;
   let id = req.params.id;
   let customer = await getCustomer(id);
-  let orders = await getCustomerOrders(id, { page, sort, order });
+  let orders = await getCustomerOrders(id, { page, perPage, sort, order });
   res.render('customers/show', { customer, orders, page });
 });
 

@@ -20,7 +20,7 @@ interface ProductCollectionOptions {
 const ALL_PRODUCT_COLUMNS = ['*'];
 
 export async function getAllProducts(
-  opts: Partial<ProductCollectionOptions>
+  opts: Partial<ProductCollectionOptions> = {}
 ): Promise<Product[]> {
   const db = await getDb('dev');
   return await db.all(sql`
