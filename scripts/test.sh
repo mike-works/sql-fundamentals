@@ -23,13 +23,13 @@ solutions-pro)
   then
     filter=$1
   else
-    filter='BEGIN'
+    filter='EX000'
   fi
   ;;
 esac
 echo "Test Filter: $filter"
 
-if [ \( $git_branch = *'solution'* \) ] &&  [ \( $filter = 'BEGIN' \) ]
+if [ \( $git_branch = *'solution'* \) ] &&  [ \( $filter = 'EX000' \) ]
 then
   echo "Solutions branch with no filter"
   NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register ./tests/*.test.ts
