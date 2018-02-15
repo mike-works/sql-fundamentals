@@ -1,23 +1,29 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
+interface ProductFlavorFilter {
+  flavorName: string;
+  level: number;
+  type: 'lessThan' | 'greaterThan';
+}
+
+interface ProductCollectionOptions {
+  filter?: {
+    inventory?: 'needs-reorder' | 'discontinued';
+    requiredTags?: string[];
+    flavor?: ProductFlavorFilter[];
+  };
+}
+
 const ALL_PRODUCT_COLUMNS = ['*'];
 
 export async function getAllProducts(
-  { tags }: { tags: string[] } = { tags: [] }
+  opts: ProductCollectionOptions = {}
 ): Promise<Product[]> {
   const db = await getDb('dev');
   return await db.all(sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product`);
-}
-
-export async function getDiscontinuedProducts(): Promise<Product[]> {
-  return getAllProducts();
-}
-
-export async function getProductsNeedingReorder(): Promise<Product[]> {
-  return getAllProducts();
 }
 
 export async function getProduct(productId: number | string): Promise<Product> {
