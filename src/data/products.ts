@@ -7,18 +7,20 @@ interface ProductFlavorFilter {
   type: 'less-than' | 'greater-than';
 }
 
+interface ProductCollectionFilter {
+  inventory?: 'needs-reorder' | 'discontinued';
+  requiredTags?: string[];
+  flavor?: ProductFlavorFilter[];
+}
+
 interface ProductCollectionOptions {
-  filter?: {
-    inventory?: 'needs-reorder' | 'discontinued';
-    requiredTags?: string[];
-    flavor?: ProductFlavorFilter[];
-  };
+  filter?: ProductCollectionFilter;
 }
 
 const ALL_PRODUCT_COLUMNS = ['*'];
 
 export async function getAllProducts(
-  opts: ProductCollectionOptions = {}
+  opts: Partial<ProductCollectionOptions>
 ): Promise<Product[]> {
   const db = await getDb('dev');
   return await db.all(sql`
