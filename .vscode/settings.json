@@ -8,5 +8,15 @@
   "editor.formatOnSave": true,
   "[handlebars]": {
     "editor.formatOnSave": false
-  }
+  },
+  "database.connections": [
+    {
+      "type": "postgres",
+      "name": "northwind_user@localhost:5432 (postgres)",
+      "host": "localhost:5432",
+      "user": "northwind_user",
+      "password": "thewindisblowing",
+      "database": "nw_postgresql"
+    }
+  ]
 }

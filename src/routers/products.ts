@@ -11,38 +11,57 @@ import { logger } from '../log';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  let products = await getAllProducts();
-  res.render('products', { products });
-});
+router.get(
+  '/',
+  [
+    check('flav')
+      .isLowercase()
+      .isWhitelisted(['sweet-hot', 'sweet-sour', 'refreshing']),
+    check('tags').isLowercase()
+  ],
+  async (req: express.Request, res: express.Response) => {
+    const orderData = matchedData(req);
+    orderData.tags = (orderData.tags || '')
+      .trim()
+      .split(/\s*\,\s*/g)
+      .filter((x: string) => x);
+
+    console.log(JSON.stringify(orderData));
+
+    let products = await getAllProducts(orderData.tags);
+    res.render('products', { products });
+  }
+);
 
 router.put(
   '/:id',
   [
-    check('sweet')
+    check('metadata.flavor.sweet')
       .exists()
       .isNumeric()
       .toInt(),
-    check('salty')
+    check('metadata.flavor.salty')
       .exists()
       .isNumeric()
       .toInt(),
-    check('spicy')
+    check('metadata.flavor.spicy')
       .exists()
       .isNumeric()
       .toInt(),
-    check('sour')
+    check('metadata.flavor.sour')
       .exists()
       .isNumeric()
       .toInt(),
-    check('bitter')
+    check('metadata.flavor.bitter')
       .exists()
       .isNumeric()
-      .toInt()
+      .toInt(),
+    check('tags').exists()
   ],
   async (req: express.Request, res: express.Response) => {
     const orderData = matchedData(req);
-    await updateProduct(req.param('id'), orderData);
+    // orderData.tags = orderData.tags.filter((x: any) => x);
+    await updateProduct(req.params.id, orderData);
     res.json({ ok: 'ok' });
   }
 );
