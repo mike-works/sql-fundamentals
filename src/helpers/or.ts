@@ -1,5 +1,6 @@
-import { jsonize } from '../utils';
+import { logger } from '../log';
 
 export default function or(a: string, b: string) {
-  return typeof a !== 'undefined' ? a : b;
+  let result = typeof a !== 'undefined' ? a : b;
+  return result;
 }

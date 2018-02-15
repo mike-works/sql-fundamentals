@@ -2,24 +2,27 @@
   <h1>All Products</h1>
   <div class="mui-row">
     <div class="mui-col-sm-4">
-      <div class="mui-panel">
+      <div class="mui-panel product-sidebar">
+        {{#if (not (equal request.url "/products") ) }}
+          <a class='mui-btn mui-btn--accent' href="/products">&times; Clear Filter</a>
+        {{/if}}
         <h3>Inventory</h3>
         <p>
-          <a href="/products">All</a> |
-          <a href="/products/discontinued">Discontinued</a> |
-          <a href="/products/needs-reorder">Needs Reorder</a>
+          <a href="{{merge-qps request.url inventory=null}}">All</a> |
+          <a href="{{merge-qps request.url inventory='discontinued'}}">Discontinued</a> |
+          <a href="{{merge-qps request.url inventory='needs-reorder'}}">Needs Reorder</a>
         </p>
         <h3>Tags</h3>
-        <a href="{{merge-qps request.url tags=''}}">&times; Clear</a>
         <p>
-          <a href="{{merge-qps request.url tags='alcoholic'}}">Alcoholic</a> |
-          <a href="{{merge-qps request.url tags='refrigerated'}}">Refrigerated</a> |
-          <a href="{{merge-qps request.url tags='dry'}}">Dry</a> |
-          <a href="{{merge-qps request.url tags='canned'}}">Canned</a>
+        <a href="{{merge-qps request.url tags=''}}">None</a> |
+          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'alcoholic') ',')}}">Alcoholic</a> |
+          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'refrigerated') ',')}}">Refrigerated</a> |
+          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'dry') ',')}}">Dry</a> |
+          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'canned') ',')}}">Canned</a> |
         </p>
         <h3>Flavors</h3>
-        <a href="{{merge-qps request.url flav=''}}">&times; Clear</a>
         <p>
+          <a href="{{merge-qps request.url flav=''}}">All</a> |
           <a href="{{merge-qps request.url flav='sweet-hot'}}">Sweet &amp; Hot</a> |
           <a href="{{merge-qps request.url flav='refreshing'}}">Sour &amp; Bitter</a> |
           <a href="{{merge-qps request.url flav='sweet-sour'}}">Sweet &amp; Sour</a>

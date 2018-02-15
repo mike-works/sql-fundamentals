@@ -29,8 +29,8 @@ async function setupTemplating(app: express.Application) {
   );
   app.set('view engine', '.hbs');
   app.use((req, res, next) => {
-    let { url } = req;
-    res.locals.request = { url };
+    let { url, query } = req;
+    res.locals.request = { url, query };
     next();
   });
 }
@@ -40,7 +40,8 @@ function installMiddlewares(app: express.Application) {
     expressWinston.logger({
       // expressFormat: true,
       meta: false,
-      msg: '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
+      msg:
+        '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
       transports: [
         new winston.transports.Console({
           colorize: true
@@ -66,7 +67,9 @@ async function setupProdMiddleware(app: express.Application) {
   app.disable('x-powered-by');
 }
 
-export async function startExpressServer(): Promise<[express.Application, http.Server]> {
+export async function startExpressServer(): Promise<
+  [express.Application, http.Server]
+> {
   const app = express();
 
   // parse application/x-www-form-urlencoded
