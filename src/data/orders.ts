@@ -36,16 +36,9 @@ FROM "order"`);
 
 export async function getCustomerOrders(
   customerId: string,
-  opts: OrderCollectionOptions = DEFAULT_ORDER_COLLECTION_OPTIONS
+  opts: Partial<OrderCollectionOptions> = {}
 ) {
-  let options: OrderCollectionOptions = {
-    order: 'asc',
-    page: 1,
-    perPage: 20,
-    sort: 'shippeddate',
-    ...opts
-  };
-  return getAllOrders(options);
+  return getAllOrders(opts);
 }
 
 export async function getOrder(id: string | number): Promise<Order> {
