@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { slow, suite, test, timeout } from 'mocha-typescript';
+import { slow, suite, test, timeout, only } from 'mocha-typescript';
 import { getAllOrders } from '../src/data/orders';
 
 @suite('EX003: "All Orders List" Query - Pagination tests')
@@ -39,9 +39,9 @@ class AllOrdersPaginationTest {
 
   @test('If no perPage option is specified, page size is 25')
   public async pageOf25ByDefault() {
-    let firstPageResult = await getAllOrders();
-    assert.isArray(firstPageResult, 'Expected result to be an array');
-    assert.equal(firstPageResult.length, 20, 'Expected 20 orders in array');
+    let firstPg = await getAllOrders();
+    assert.isArray(firstPg, 'Expected result to be an array');
+    assert.equal(firstPg.length, 20, 'Expected 20 orders in array');
   }
 
   @test('If no page option is specified, first page is returned')
@@ -50,6 +50,7 @@ class AllOrdersPaginationTest {
     let firstPageResult = await getAllOrders({ page: 1 });
     assert.isArray(result, 'Expected result to be an array');
     assert.isArray(firstPageResult, 'Expected result to be an array');
+
     assert.deepEqual(
       result[0],
       firstPageResult[0],

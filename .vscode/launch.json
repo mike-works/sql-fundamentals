@@ -6,13 +6,16 @@
   "configurations": [
     {
       "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "port": 9229
+    },
+    {
+      "type": "node",
       "request": "launch",
       "name": "nodemon",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
-      "runtimeArgs": [
-        "-w", "src",
-        "-e", "ts"
-      ],
+      "runtimeArgs": ["-w", "src", "-e", "ts"],
       "sourceMaps": true,
       "smartStep": true,
       "preLaunchTask": "npm: build",
