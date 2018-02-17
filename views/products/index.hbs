@@ -15,10 +15,10 @@
         <h3>Tags</h3>
         <p>
         <a href="{{merge-qps request.url tags=''}}">None</a> |
-          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'alcoholic') ',')}}">Alcoholic</a> |
-          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'refrigerated') ',')}}">Refrigerated</a> |
-          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'dry') ',')}}">Dry</a> |
-          <a href="{{merge-qps request.url tags=(join (concat (split (or request.query.tags '') ',') 'canned') ',')}}">Canned</a> |
+          <a href="{{merge-qps request.url tags=(join (dedupe (concat (split (or request.query.tags '') ',') 'alcoholic') ) ',')}}">Alcoholic</a> |
+          <a href="{{merge-qps request.url tags=(join (dedupe (concat (split (or request.query.tags '') ',') 'refrigerated') ) ',')}}">Refrigerated</a> |
+          <a href="{{merge-qps request.url tags=(join (dedupe (concat (split (or request.query.tags '') ',') 'dry') ) ',')}}">Dry</a> |
+          <a href="{{merge-qps request.url tags=(join (dedupe (concat (split (or request.query.tags '') ',') 'canned') ) ',')}}">Canned</a> |
         </p>
         <h3>Flavors</h3>
         <p>
