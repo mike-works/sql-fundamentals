@@ -18,5 +18,18 @@
       "password": "thewindisblowing",
       "database": "nw_postgresql"
     }
+  ],
+  "sqltools.connections": [
+    {
+      "name": "Pg-Northwind",
+      "server": "127.0.0.1",
+      "dialect": "PostgreSQL",
+      "port": 5432,
+      "database": "nw_postgresql",
+      "username": "northwind_user",
+      "askForPassword": false,
+      "password": "thewindisblowing",
+      "connectionTimeout": 15
+    }
   ]
 }
