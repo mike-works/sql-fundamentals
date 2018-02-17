@@ -6,7 +6,14 @@ import { matchedData } from 'express-validator/filter';
 import { Request, Response } from 'express';
 import { getAllCustomers } from '../data/customers';
 import { getAllEmployees } from '../data/employees';
-import { createOrder, deleteOrder, getAllOrders, getOrder, updateOrder, getOrderWithDetails } from '../data/orders';
+import {
+  createOrder,
+  deleteOrder,
+  getAllOrders,
+  getOrder,
+  updateOrder,
+  getOrderWithDetails
+} from '../data/orders';
 import { getAllRegions } from '../data/regions';
 import { getAllShippers } from '../data/shippers';
 import { logger } from '../log';
@@ -14,29 +21,66 @@ import { getAllProducts } from '../data/products';
 import { mapValues } from 'lodash';
 
 const ORDER_VALIDATIONS = [
-  check('EmployeeId').exists().isNumeric().toInt(),
-  check('CustomerId').exists().isAlphanumeric().trim(),
-  check('ShipCity').exists().trim(),
-  check('ShipAddress').exists().trim(),
-  check('ShipName').exists().trim(),
-  check('ShipVia').exists().isNumeric().toInt(),
-  check('ShipRegion').exists().isNumeric().toInt(),
-  check('ShipCountry').exists().isAlphanumeric().trim(),
-  check('ShipPostalCode').exists().isAlphanumeric().trim(),
+  check('EmployeeId')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('CustomerId')
+    .exists()
+    .isAlphanumeric()
+    .trim(),
+  check('ShipCity')
+    .exists()
+    .trim(),
+  check('ShipAddress')
+    .exists()
+    .trim(),
+  check('ShipName')
+    .exists()
+    .trim(),
+  check('ShipVia')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('ShipRegion')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('ShipCountry')
+    .exists()
+    .isAlphanumeric()
+    .trim(),
+  check('ShipPostalCode')
+    .exists()
+    .isAlphanumeric()
+    .trim(),
   check('RequiredDate').exists(),
-  check('Freight').exists().isFloat().toFloat(),
-  check('details.Id').optional().custom((value: any[]) => value instanceof Array),
-  check('details.ProductId').optional().custom((value: any[]) => value instanceof Array),
-  check('details.Quantity').optional().custom((value: any[]) => value instanceof Array),
-  check('details.Discount').optional().custom((value: any[]) => value instanceof Array)
+  check('Freight')
+    .exists()
+    .isFloat()
+    .toFloat(),
+  check('details.Id')
+    .optional()
+    .custom((value: any[]) => value instanceof Array),
+  check('details.ProductId')
+    .optional()
+    .custom((value: any[]) => value instanceof Array),
+  check('details.Quantity')
+    .optional()
+    .custom((value: any[]) => value instanceof Array),
+  check('details.Discount')
+    .optional()
+    .custom((value: any[]) => value instanceof Array)
 ];
 
 const router = express.Router();
 
-function normalizeOrderDetails(raw: { [k: string]: any[] }): Array<Partial<OrderDetail>> {
+function normalizeOrderDetails(raw: {
+  [k: string]: any[];
+}): Array<Partial<OrderDetail>> {
   let keys = Object.keys(raw);
   let n = keys.reduce((ct, val) => Math.max(ct, raw[val].length), 0);
-  let details: Array<{[K in keyof OrderDetail]: any }> = [];
+  let details: Array<{ [K in keyof OrderDetail]: any }> = [];
   for (let i = 0; i < n; i++) {
     let o: { [k: string]: any } = {};
     for (let k in keys) {
@@ -54,30 +98,44 @@ function normalizeOrderDetails(raw: { [k: string]: any[] }): Array<Partial<Order
       productid: parseInt(id, 10),
       unitprice: parseFloat(price) * (1 - discount),
       quantity: parseInt(d.quantity as string, 10),
-      discount: discount,
+      discount
     };
   });
 }
 
-router.get('/', async (req, res) => {
-  let { page = 1, perPage, sort, order } = req.query;
-  let orders = await getAllOrders({ page, perPage, sort, order });
-  res.render('orders', { orders, page });
+router.get('/', async (req, res, next) => {
+  try {
+    let { page = 1, perPage, sort, order } = req.query;
+    let orders = await getAllOrders({ page, perPage, sort, order });
+    res.render('orders', { orders, page });
+  } catch (e) {
+    next();
+  }
 });
 
-router.get('/new', async (req, res) => {
-  let cp = getAllCustomers();
-  let ep = getAllEmployees();
-  let rp = getAllRegions();
-  let sp = getAllShippers();
-  let pp = getAllProducts();
-  let customers = await cp;
-  let employees = await ep;
-  let regions = await rp;
-  let shippers = await sp;
-  let products = await pp;
+router.get('/new', async (req, res, next) => {
+  try {
+    let cp = getAllCustomers();
+    let ep = getAllEmployees();
+    let rp = getAllRegions();
+    let sp = getAllShippers();
+    let pp = getAllProducts();
+    let customers = await cp;
+    let employees = await ep;
+    let regions = await rp;
+    let shippers = await sp;
+    let products = await pp;
 
-  res.render('orders/new', { customers, employees, regions, shippers, products });
+    res.render('orders/new', {
+      customers,
+      employees,
+      regions,
+      shippers,
+      products
+    });
+  } catch (e) {
+    next(e);
+  }
 });
 
 router.post('/', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
@@ -123,25 +181,41 @@ router.get('/:id', async (req, res) => {
   res.render('orders/show', { order, items });
 });
 
-router.get('/:id/edit', async (req, res) => {
-  let cp = getAllCustomers();
-  let ep = getAllEmployees();
-  let rp = getAllRegions();
-  let sp = getAllShippers();
-  let pp = getAllProducts();
-  let [order, details] = await getOrderWithDetails(req.param('id'));
-  let customers = await cp;
-  let employees = await ep;
-  let regions = await rp;
-  let shippers = await sp;
-  let products = await pp;
-  res.render('orders/edit', { order, details, customers, employees, regions, shippers, products });
+router.get('/:id/edit', async (req, res, next) => {
+  try {
+    let cp = getAllCustomers();
+    let ep = getAllEmployees();
+    let rp = getAllRegions();
+    let sp = getAllShippers();
+    let pp = getAllProducts();
+    let [order, details] = await getOrderWithDetails(req.param('id'));
+    let customers = await cp;
+    let employees = await ep;
+    let regions = await rp;
+    let shippers = await sp;
+    let products = await pp;
+    res.render('orders/edit', {
+      order,
+      details,
+      customers,
+      employees,
+      regions,
+      shippers,
+      products
+    });
+  } catch (e) {
+    next(e);
+  }
 });
 
-router.delete('/:id', async (req, res) => {
-  await deleteOrder(req.param('id'));
-  res.status(204);
-  res.json({ status: 'ok' });
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await deleteOrder(req.param('id'));
+    res.status(204);
+    res.json({ status: 'ok' });
+  } catch (e) {
+    next(e);
+  }
 });
 
 export default router;

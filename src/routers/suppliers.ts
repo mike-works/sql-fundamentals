@@ -4,14 +4,22 @@ import { logger } from '../log';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  let suppliers = await getAllSuppliers();
-  res.render('suppliers', { suppliers });
+router.get('/', async (req, res, next) => {
+  try {
+    let suppliers = await getAllSuppliers();
+    res.render('suppliers', { suppliers });
+  } catch (e) {
+    next(e);
+  }
 });
 
-router.get('/:id', async (req, res) => {
-  let supplier = await getSupplier(req.param('id'));
-  res.render('suppliers/show', { supplier });
+router.get('/:id', async (req, res, next) => {
+  try {
+    let supplier = await getSupplier(req.param('id'));
+    res.render('suppliers/show', { supplier });
+  } catch (e) {
+    next(e);
+  }
 });
 
 export default router;

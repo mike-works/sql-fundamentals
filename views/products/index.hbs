@@ -55,7 +55,7 @@
                   <b>Reorder Level: </b> {{p.reorderlevel}}
                 </p>
               </div>
-              <div class="mui-col-sm-6 mui-col-md-4" style='text-align: center'>
+              <div class="mui-col-sm-6 mui-col-md-4" >
                 <span class='mui--pull-right'>
                   {{#if p.discontinued}}
                   <span class="mui-badge mui--bg-color-red">DISCONTINUED</span>
@@ -67,30 +67,32 @@
                   </span>
                   {{/if}}
                 </span>
-                <form class="flavor-profile" action="/products/{{p.id}}">
-                  <div class='flavor-slider'>
+                <form class="mui-form flavor-profile" action="/products/{{p.id}}">
+                  <div class='mui-textfield flavor-slider'>
                     <label for="spicy">Spicy</label>
                     <input type="range" name="spicy" value="{{p.metadata.flavor.spicy}}" min=-1 max=5 />
                   </div>
-                  <div class='flavor-slider'>
+                  <div class='mui-textfield flavor-slider'>
                     <label for="sour">Sour</label>
                     <input type="range" name="sour" value="{{p.metadata.flavor.sour}}" min=-1 max=5 />
                   </div>
-                  <div class='flavor-slider'>
+                  <div class='mui-textfield flavor-slider'>
                     <label for="sweet">Sweet</label>
                     <input type="range" name="sweet" value="{{p.metadata.flavor.sweet}}" min=-1 max=5 />
                   </div>
-                  <div class='flavor-slider'>
+                  <div class='mui-textfield flavor-slider'>
                     <label for="bitter">Bitter</label>
                     <input type="range" name="bitter" value="{{p.metadata.flavor.bitter}}" min=-1 max=5 />
                   </div>
-                  <div class='flavor-slider'>
+                  <div class='mui-textfield flavor-slider'>
                     <label for="salty">Salty</label>
                     <input type="range" name="salty" value="{{p.metadata.flavor.salty}}" min=-1 max=5 />
                   </div>
-                  <div >
+                  <div class='mui-textfield tags-field'>
                     <label for="tags">Tags</label>
-                    <input type="text" name="tags" value="{{to-csv p.tags}}"/>
+                    <div class='tags-container'>
+                      <input type="text" name="tags" class='tags-input' value="{{to-csv p.tags}}" />
+                    </div>
                   </div>
                   
                   <button class='save-button mui--hide mui-btn mui-btn--accent'>Save</button>
@@ -128,33 +130,66 @@
         metadata: { flavor: values },
         tags
       })
-    }).then(function() {
-      saveButton.classList.add('mui--hide');
-      saveButton.disabled = false;
-    })
+    }).then((resp) => {
+      if (resp.ok) {
+        saveButton.classList.add('mui--hide');
+        saveButton.disabled = false;
+      } else {
+        return resp.text().then(errorMessage => {
+          throw new Error('SERVER ERROR\nmessage: ' + errorMessage.toString());
+        });
+      }
+    }).catch((err) => {
+      if (err instanceof Error) throw err;
+      else throw new Error(err);
+    });
   }
 
-  function revealSaveButton(evt) {
-    evt.target.parentElement.parentElement.querySelector('button.save-button').classList.remove('mui--hide');
+  function findParent(e, fn) {
+    let p = e;
+    do {
+      p = p.parentElement;
+    } while (p !== null && !fn(p));
+    return p;
   }
 
-  document.querySelectorAll('form.flavor-profile').forEach((form) => {
-    if (form.attachEvent) {
-      form.attachEvent('submit', updateFlavorAndTags);
-    } else {
-      form.addEventListener('submit', updateFlavorAndTags);
-    }
-  });
-  document.querySelectorAll('form.flavor-profile input').forEach((input) => {
-    let eventName = null;
-    switch (input.type) {
-      case 'range': eventName = 'change'; break;
-      case 'text':  eventName = 'input'; break;
-    }
-    if (input.attachEvent) {
-      input.attachEvent(eventName, revealSaveButton);
-    } else {
-      input.addEventListener(eventName, revealSaveButton);
-    }
-  });
+  function revealSaveButton(evt, form = findParent(evt.target, p => p.tagName === 'FORM' && p.classList.contains('flavor-profile'))) {
+    form.querySelector('button.save-button').classList.remove('mui--hide');
+  }
+  window.addEventListener('load', () => {
+
+    document.querySelectorAll('form.flavor-profile').forEach((form) => {
+      if (form.attachEvent) {
+        form.attachEvent('submit', updateFlavorAndTags);
+      } else {
+        form.addEventListener('submit', updateFlavorAndTags);
+      }
+    });
+    document.querySelectorAll('form.flavor-profile input').forEach((input) => {
+      let eventName = null;
+      switch (input.type) {
+        case 'range': eventName = 'change'; break;
+        case 'text': eventName = 'input'; break;
+      }
+      if (input.attachEvent) {
+        input.attachEvent(eventName, revealSaveButton);
+      } else {
+        input.addEventListener(eventName, revealSaveButton);
+      }
+    });
+    $('.tags-input').selectize({
+      delimiter: ',',
+      plugins: ['restore_on_backspace', 'remove_button'],
+      persist: false,
+      create: function (input) {
+        return {
+          value: input,
+          text: input
+        }
+      },
+      onChange() {
+        revealSaveButton(null, this.$input.closest('form.flavor-profile')[0]);
+      }
+    });
+  })
 </script>

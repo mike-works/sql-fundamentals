@@ -53,11 +53,19 @@ router.put(
       .toInt(),
     check('tags').exists()
   ],
-  async (req: express.Request, res: express.Response) => {
+  async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
     const orderData = matchedData(req);
-    // orderData.tags = orderData.tags.filter((x: any) => x);
-    await updateProduct(req.params.id, orderData);
-    res.json({ ok: 'ok' });
+    try {
+      await updateProduct(req.params.id, orderData);
+      res.json({ ok: 'ok' });
+    } catch (e) {
+      res.status(500);
+      res.send(e.toString());
+    }
   }
 );
 

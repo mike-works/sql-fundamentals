@@ -127,7 +127,7 @@ table .actions {
   left: -20px; */
 }
 
-.flavor-profile {
+/* .flavor-profile {
   padding-top: 20px;
 }
 
@@ -144,6 +144,43 @@ table .actions {
   display: inline-block;
   vertical-align: top;
   margin-top: 5px;
+} */
+
+.flavor-profile .flavor-slider {
+  padding-top: 0;
+  margin-bottom: 5px;
+}
+
+.flavor-profile .flavor-slider input {
+  border: none;
+  margin-left: 42px;
+  display: block;
+  width: calc(100% - 45px);
+}
+.flavor-profile .flavor-slider label {
+  float: left;
+  width: 40px;
+  line-height: 32px;
+}
+
+.tags-container {
+  border-bottom: 1px solid #aaa;
+  padding: 0;
+  min-height: 32px;
+}
+
+.tags-container .selectize-input {
+  border: none;
+  box-shadow: none;
+}
+
+.tags-container input.tags-input {
+  border: none;
+  display: none;
+}
+
+.mui-textfield.tags-field {
+  margin-top: 10px;
 }
 
 input[type='range'] {
