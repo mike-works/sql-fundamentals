@@ -1,4 +1,5 @@
 import { getDb } from '../db/utils';
+import { logger } from '../log';
 import { sql } from '../sql-string';
 
 export interface ProductFlavorFilter {
@@ -27,11 +28,25 @@ const ALL_PRODUCT_COLUMNS = [
   'supplierid',
   'unitprice',
   'unitsinstock',
-  'unitsonorder'
+  'unitsonorder',
+  'metadata',
+  'tags'
 ];
 
-function whereClauseForFilter(filter: ProductCollectionFilter) {
+function selectClauseForCollectionFilter(filter: ProductCollectionFilter) {
+  if (!filter.flavor || filter.flavor.length === 0) {
+    return '';
+  }
+  return filter.flavor.map(f => {
+    return sql`cast(((metadata #> '{flavor}') ->> '${
+      f.flavorName
+    }') as int) as ${f.flavorName}`;
+  });
+}
+
+function whereClauseForCollectionFilter(filter: ProductCollectionFilter) {
   const expressions: string[] = [];
+
   if (filter.inventory) {
     switch (filter.inventory) {
       case 'discontinued':
@@ -43,6 +58,22 @@ function whereClauseForFilter(filter: ProductCollectionFilter) {
         break;
     }
   }
+  let { requiredTags: tags } = filter;
+  if (tags && tags.length > 0) {
+    let tagsExp =
+      tags.length > 0 ? sql`p.tags && '{${tags.join(', ')}}'::text[]` : '';
+    expressions.push(tagsExp);
+  }
+  if (filter.flavor && filter.flavor.length >= 0) {
+    logger.warn('flavor=', filter.flavor);
+    expressions.push(
+      ...filter.flavor.map(f => {
+        return `${f.flavorName} ${f.type === 'greater-than' ? '>' : '<'} ${
+          f.level
+        }`;
+      })
+    );
+  }
   if (expressions.length === 0) {
     return '';
   }
@@ -50,15 +81,18 @@ function whereClauseForFilter(filter: ProductCollectionFilter) {
 }
 
 function allProductsBaseQuery(opts: ProductCollectionOptions = {}) {
-  const wh = opts.filter ? whereClauseForFilter(opts.filter) : '';
-  return sql`SELECT ${ALL_PRODUCT_COLUMNS.map(c => `p.${c}`).join(',')},
-  c.categoryname, s.companyname as suppliername
-FROM Product as p
+  const wh = opts.filter ? whereClauseForCollectionFilter(opts.filter) : '';
+  const s = opts.filter ? selectClauseForCollectionFilter(opts.filter) : '';
+  return sql`SELECT p.*, c.categoryname, s.companyname as suppliername from (SELECT ${ALL_PRODUCT_COLUMNS.join(
+    ','
+  )}
+  ${s ? `, ${s}` : ''}
+FROM Product as pt) as p
 INNER JOIN Supplier as s
   ON p.supplierid=s.id
 INNER JOIN Category as c
   ON p.categoryid=c.id
-${wh}`;
+  ${wh}`;
 }
 
 export async function getAllProducts(
@@ -83,7 +117,16 @@ export async function updateProduct(
   id: number | string,
   data: Partial<Product>
 ): Promise<Product> {
-  throw new Error('Not yet implemented');
+  const db = await getDb();
+  return await db.get(
+    sql`UPDATE Product
+    SET metadata=$2, tags=($3)
+  WHERE id = $1
+  `,
+    id,
+    JSON.stringify(data.metadata),
+    data.tags
+  );
 }
 
 export async function createProduct(

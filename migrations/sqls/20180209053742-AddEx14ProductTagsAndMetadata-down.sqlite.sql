@@ -1,0 +1,3 @@
+ALTER TABLE Product
+DROP COLUMN metadata,
+DROP COLUMN tags
