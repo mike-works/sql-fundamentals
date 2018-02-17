@@ -1,3 +1,9 @@
+import chalk from 'chalk';
+import { highlight } from 'cli-highlight';
+import { logger } from '../log';
+import { Arr as JSONArray } from 'json-typescript';
+import * as sqlFormatter from 'sql-formatter';
+
 // tslint:disable:max-classes-per-file
 export interface SQLStatement {
   get<T = any>(...params: any[]): Promise<T>;
@@ -30,4 +36,43 @@ export abstract class SQLDatabase<S extends SQLStatement> {
   public abstract getAllTriggers(): Promise<string[]>;
   public abstract getAllTableNames(): Promise<string[]>;
   public abstract getAllViews(): Promise<string[]>;
+
+  protected colorizeQuery(query: string) {
+    return highlight(sqlFormatter.format(query), {
+      language: 'sql',
+      ignoreIllegals: true
+    });
+  }
+  protected logQuery(
+    query: string,
+    params: JSONArray,
+    [begin, end]: [number, number]
+  ) {
+    logger.info(
+      [
+        this.colorizeQuery(query) +
+          ` (${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`,
+        `${chalk.grey('PARAMS:')} ${JSON.stringify(params)}`
+      ].join('\n')
+    );
+  }
+  protected async measure<T>(
+    query: string,
+    params: JSONArray,
+    fn: () => Promise<T>
+  ): Promise<T> {
+    let [, begin] = process.hrtime();
+    try {
+      let result = await fn();
+      if (process.env.NODE_ENV !== 'test') {
+        let [, end] = process.hrtime();
+        this.logQuery(query, params, [begin, end]);
+      }
+      return result;
+    } catch (e) {
+      logger.error(`Problem running query
+${this.colorizeQuery(query)}`);
+      throw e;
+    }
+  }
 }

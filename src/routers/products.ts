@@ -1,5 +1,9 @@
 import * as express from 'express';
-import { getAllProducts, updateProduct } from '../data/products';
+import {
+  getAllProducts,
+  updateProduct,
+  ProductFlavorFilter
+} from '../data/products';
 import { matchedData } from 'express-validator/filter';
 import { check } from 'express-validator/check';
 import { logger } from '../log';
@@ -9,9 +13,8 @@ const router = express.Router();
 router.get(
   '/',
   [
-    check('flav')
-      .isLowercase()
-      .isWhitelisted(['sweet-hot', 'sweet-sour', 'refreshing']),
+    check('flav').isLowercase(),
+    check('inventory').isLowercase(),
     check('tags').isLowercase()
   ],
   async (req: express.Request, res: express.Response) => {
@@ -22,8 +25,52 @@ router.get(
       .filter((x: string) => x);
 
     console.log(JSON.stringify(orderData));
-
-    let products = await getAllProducts(orderData.tags);
+    let flavorFilter: ProductFlavorFilter[] = [];
+    switch (orderData.flav) {
+      case 'sweet-hot':
+        flavorFilter.push({
+          flavorName: 'spicy',
+          type: 'greater-than',
+          level: 1
+        });
+        flavorFilter.push({
+          flavorName: 'sweet',
+          type: 'greater-than',
+          level: 1
+        });
+        break;
+      case 'refreshing':
+        flavorFilter.push({
+          flavorName: 'bitter',
+          type: 'greater-than',
+          level: 1
+        });
+        flavorFilter.push({
+          flavorName: 'sour',
+          type: 'greater-than',
+          level: 1
+        });
+        break;
+      case 'sweet-sour':
+        flavorFilter.push({
+          flavorName: 'sour',
+          type: 'greater-than',
+          level: 1
+        });
+        flavorFilter.push({
+          flavorName: 'sweet',
+          type: 'greater-than',
+          level: 1
+        });
+        break;
+    }
+    let products = await getAllProducts({
+      filter: {
+        requiredTags: orderData.tags,
+        inventory: orderData.inventory,
+        flavor: flavorFilter
+      }
+    });
     res.render('products', { products });
   }
 );

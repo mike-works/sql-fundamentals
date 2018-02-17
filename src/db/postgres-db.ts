@@ -104,69 +104,29 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     query: string,
     ...params: any[]
   ): Promise<{ lastID: number | string }> {
-    let [, begin] = process.hrtime();
-    if (query.toLowerCase().indexOf('insert into ') >= 0) {
-      query = `${query} RETURNING id`;
-    }
-    if (process.env.NODE_ENV !== 'test') {
-      let [, end] = process.hrtime();
-      logger.info(
-        [
-          `
-${chalk.magentaBright('>>')} ${highlight(query.trim(), {
-            language: 'sql',
-            ignoreIllegals: true
-          })}`,
-          `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
-        ].join(' ')
-      );
-    }
-    let res = await this.client.query(query, params);
-    let lastID = null;
-    if (res.rows && res.rows.length > 0) {
-      lastID = res.rows[0].id;
-    }
-    return { lastID };
+    return this.measure(query, params, async () => {
+      if (query.toLowerCase().indexOf('insert into ') >= 0) {
+        query = `${query} RETURNING id`;
+      }
+      let res = await this.client.query(query, params);
+      let lastID = null;
+      if (res.rows && res.rows.length > 0) {
+        lastID = res.rows[0].id;
+      }
+      return { lastID };
+    });
   }
   public async get<T>(query: string, ...params: any[]): Promise<T> {
-    let [, begin] = process.hrtime();
-    let r = await this.client
-      .query(query, params)
-      .then(result => result.rows[0]);
-    if (process.env.NODE_ENV !== 'test') {
-      let [, end] = process.hrtime();
-      logger.info(
-        [
-          `
-${chalk.magentaBright('>>')} ${highlight(query.trim(), {
-            language: 'sql',
-            ignoreIllegals: true
-          })}`,
-          `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
-        ].join(' ')
-      );
-    }
-    return r;
+    return this.measure(query, params, async () => {
+      return await this.client
+        .query(query, params)
+        .then(result => result.rows[0]);
+    });
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
-    let [, begin] = process.hrtime();
-    let rows = await this.client
-      .query(query, params)
-      .then(result => result.rows);
-    if (process.env.NODE_ENV !== 'test') {
-      let [, end] = process.hrtime();
-      logger.info(
-        [
-          `
-${chalk.magentaBright('>>')} ${highlight(query.trim(), {
-            language: 'sql',
-            ignoreIllegals: true
-          })}`,
-          `(${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`
-        ].join(' ')
-      );
-    }
-    return rows;
+    return this.measure(query, params, async () => {
+      return await this.client.query(query, params).then(result => result.rows);
+    });
   }
   public prepare(
     name: string,
