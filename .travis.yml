@@ -6,6 +6,7 @@ services:
 sudo: required
 
 addons:
+  postgresql: "9.4"
   apt:
     sources:
       - heroku
