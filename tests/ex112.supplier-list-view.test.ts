@@ -7,7 +7,7 @@ import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
 
-@suite('EX12: "Supplier List View" - View Test')
+@suite('EX112: "Supplier List View" - View Test')
 class SupplierListViewTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'
