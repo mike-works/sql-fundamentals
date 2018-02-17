@@ -7,26 +7,24 @@ else
 fi  
 echo "Git Branch: $git_branch"
 
-case $git_branch in
-master)
-  filter="EX000"
-  ;;
-solutions-fundamentals)
-  filter="EX0"
-  ;;
-solutions-pro)
-  filter="EX"
-  break
-  ;;
-*)
-  if [ $1 ]
-  then
-    filter=$1
-  else
-    filter='EX000'
-  fi
-  ;;
-esac
+
+if [ $1 ]
+then
+  filter=$1
+else
+  case $git_branch in
+  master)
+    filter="EX000"
+    ;;
+  solutions-fundamentals)
+    filter="EX0"
+    ;;
+  solutions-pro)
+    filter="EX"
+    break
+    ;;
+  esac
+fi
 echo "Test Filter: $filter"
 
 if [ \( $git_branch = *'solution'* \) ] &&  [ \( $filter = 'EX000' \) ]
