@@ -87,6 +87,9 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
         PostgresDB
       >(pgdb);
       return pgdb;
+    } catch (e) {
+      logger.error(`ERROR during posgres setup\n${e}`);
+      throw e;
     } finally {
       client.release();
     }
