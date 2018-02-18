@@ -7,14 +7,14 @@ export function assertMigrationCount(
   sqlsCount = migrationCount * 2
 ) {
   assert.ok(
-    fs.existsSync(path.join(__dirname, '..', 'migrations')),
+    fs.existsSync(path.join(__dirname, '..', '..', 'migrations')),
     './migrations folder exists'
   );
   let migrationsFiles = fs.readdirSync(
-    path.join(__dirname, '..', 'migrations')
+    path.join(__dirname, '..', '..', 'migrations')
   );
   assert.ok(
-    fs.existsSync(path.join(__dirname, '..', 'migrations', 'sqls')),
+    fs.existsSync(path.join(__dirname, '..', '..', 'migrations', 'sqls')),
     './sqls folder exists'
   );
   assert.includeDeepMembers(
@@ -28,7 +28,7 @@ export function assertMigrationCount(
     `There are at least ${migrationCount} things in the ./migrations folder`
   );
   let migrationsSqlsFiles = fs.readdirSync(
-    path.join(__dirname, '..', 'migrations', 'sqls')
+    path.join(__dirname, '..', '..', 'migrations', 'sqls')
   );
   assert.isAtLeast(
     migrationsSqlsFiles.length,

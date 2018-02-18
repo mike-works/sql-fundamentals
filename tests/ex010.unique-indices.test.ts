@@ -7,7 +7,7 @@ import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
-import { assertIndexExists } from './helpers/table';
+import { assertIndicesExist } from './helpers/table';
 
 @suite('EX0010: "Unique Index" - Column constraints test')
 class OrderDetailUniqueIndexTest {
@@ -20,7 +20,7 @@ class OrderDetailUniqueIndexTest {
 
   @test('orderdetailuniqueproduct index exists')
   public async indexExists() {
-    assertIndexExists(await getDb(), 'orderdetail', [
+    assertIndicesExist(await getDb(), 'orderdetail', [
       'orderdetailuniqueproduct'
     ]);
   }
