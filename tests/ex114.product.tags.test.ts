@@ -7,7 +7,7 @@ import { getAllProducts } from '../src/data/products';
 class ProductTagsTest {
   @test('getAllProducts results include a tags column')
   public async tagsColumnExists() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let results = await getAllProducts();
     assert.containsAllKeys(results[0], ['tags']);
   }

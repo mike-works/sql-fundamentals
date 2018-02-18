@@ -20,7 +20,7 @@ function determineDbType(): DbType {
   }
 }
 
-export async function getDb(name: string): Promise<SQLDatabase<SQLStatement>> {
+export async function getDb(): Promise<SQLDatabase<SQLStatement>> {
   if (DB_TYPE === DbType.Postgres) {
     // tslint:disable-next-line:variable-name
     const PostgresDB = require('./postgres-db').default;

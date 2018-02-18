@@ -53,7 +53,7 @@ class TransactionsTableTest {
 
   @test('Transactions table exists')
   public async transactionsExists() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let allTables = await db.getAllTableNames();
     assert.includeMembers(
       allTables.map(t => t.toLowerCase()),
@@ -64,7 +64,7 @@ class TransactionsTableTest {
 
   @test('Inserting a new transaction completes successfully')
   public async insertTransaction() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let beforeTransactions = await db.all(sql`SELECT * from "transaction"`);
     let transaction = await db.get(
       sql`INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
@@ -81,7 +81,7 @@ class TransactionsTableTest {
 
   @test('Inserting a new transaction fails if OrderId is invalid')
   public async invalidOrder() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let errors: string[] = [];
     try {
       let transaction = await db.run(

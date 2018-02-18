@@ -5,7 +5,7 @@ import { getAllEmployees, getEmployee } from '../src/data/employees';
 import { getAllOrders, getOrder } from '../src/data/orders';
 import { getAllProducts, getProduct } from '../src/data/products';
 import { getAllSuppliers, getSupplier } from '../src/data/suppliers';
-import { validateRecordColumns } from './test-helpers';
+import { validateRecordColumns } from './helpers/columns';
 
 const REQUIRED_EMPLOYEE_LIST_COLS = ['id', 'firstname', 'lastname'];
 const REQUIRED_PRODUCT_LIST_COLS = ['id', 'supplierid', 'productname'];

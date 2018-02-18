@@ -22,14 +22,14 @@ const ALL_PRODUCT_COLUMNS = ['*'];
 export async function getAllProducts(
   opts: Partial<ProductCollectionOptions> = {}
 ): Promise<Product[]> {
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
 FROM Product`);
 }
 
 export async function getProduct(id: number | string): Promise<Product> {
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.get(
     sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}

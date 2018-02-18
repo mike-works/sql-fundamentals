@@ -28,7 +28,7 @@ export async function getAllOrders(
     ...opts
   };
 
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
 FROM "order"`);
@@ -42,7 +42,7 @@ export async function getCustomerOrders(
 }
 
 export async function getOrder(id: string | number): Promise<Order> {
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.get(
     sql`
 SELECT *
@@ -55,7 +55,7 @@ WHERE id = $1`,
 export async function getOrderDetails(
   id: string | number
 ): Promise<OrderDetail[]> {
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.all(
     sql`
 SELECT *, unitprice * quantity as price

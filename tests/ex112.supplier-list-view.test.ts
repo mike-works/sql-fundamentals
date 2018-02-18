@@ -53,7 +53,7 @@ class SupplierListViewTest {
 
   @test('supplierlist_v view exists')
   public async viewExists() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let allViews = await db.getAllViews();
     assert.includeMembers(
       allViews.map(s => s.toLowerCase()),
@@ -64,7 +64,7 @@ class SupplierListViewTest {
 
   @test('Querying the view yields expected results')
   public async viewResults() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let result = await db.get(sql`SELECT * from SupplierList_V`);
     assert.ok(result, 'Results of query are truthy');
     assert.includeMembers(

@@ -53,7 +53,7 @@ class OrderDetailUniqueIndexTest {
 
   @test('orderdetailuniqueproduct index exists')
   public async indexExists() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let indexInfo = await db.getIndicesForTable('orderdetail');
     assert.includeMembers(
       indexInfo.map(s => s.toLowerCase()),

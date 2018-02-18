@@ -71,7 +71,7 @@ class MigrationIndicesTest {
     'OrderDetail table now has indices orderdetailproductid and orderdetailorderid'
   )
   public async orderDetailIndicesPresent() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let indexInfo = await db.getIndicesForTable('orderdetail');
     assert.includeMembers(
       indexInfo.map(s => s.toLowerCase()),
@@ -82,7 +82,7 @@ class MigrationIndicesTest {
 
   @test('Order table now has indices ordercustomerid and OrderEmployeeId')
   public async orderIndicesPresent() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let indexInfo = await db.getIndicesForTable('order');
 
     assert.includeMembers(
@@ -94,7 +94,7 @@ class MigrationIndicesTest {
 
   @test('Product table now has index productsupplierid')
   public async productIndicesPresent() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let indexInfo = await db.getIndicesForTable('product');
 
     assert.includeMembers(
@@ -106,7 +106,7 @@ class MigrationIndicesTest {
 
   @test('Employee table now has index employeereportsto')
   public async employeeIndicesPresent() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let indexInfo = await db.getIndicesForTable('employee');
 
     assert.includeMembers(

@@ -10,14 +10,14 @@ interface CustomerCollectionOptions {
 export async function getAllCustomers(
   options: CustomerCollectionOptions = {}
 ): Promise<Customer[]> {
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
 FROM Customer`);
 }
 
 export async function getCustomer(id: string | number): Promise<Customer> {
-  const db = await getDb('dev');
+  const db = await getDb();
   return await db.get(
     sql`
 SELECT *

@@ -53,7 +53,7 @@ class TransactionsTriggerTest {
 
   @test('ordertransaction trigger exists')
   public async triggerExists() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let allTriggers = await db.getAllTriggers();
     assert.includeMembers(
       allTriggers.map(s => s.toLowerCase()),
@@ -64,7 +64,7 @@ class TransactionsTriggerTest {
 
   @test("Inserting a new transaction results in an order's OrderDate being set")
   public async insertTransaction() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let { id } = await createOrder(VALID_ORDER_DATA);
     if (typeof id === 'undefined') {
       throw new Error('createOrder() failed to return an id');

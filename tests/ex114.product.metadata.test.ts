@@ -7,7 +7,7 @@ import { getAllProducts } from '../src/data/products';
 class ProductMetadataJsonTest {
   @test('getAllProducts results include a metadata column')
   public async metadataColumnExists() {
-    let db = await getDb('dev');
+    let db = await getDb();
     let results = await getAllProducts();
     assert.containsAllKeys(results[0], ['metadata']);
   }
