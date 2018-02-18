@@ -7,6 +7,7 @@ import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
+import { assertViewsExist } from './helpers/table';
 
 @suite('EX112: "Supplier List View" - View Test')
 class SupplierListViewTest {
@@ -17,13 +18,7 @@ class SupplierListViewTest {
 
   @test('supplierlist_v view exists')
   public async viewExists() {
-    let db = await getDb();
-    let allViews = await db.getAllViews();
-    assert.includeMembers(
-      allViews.map(s => s.toLowerCase()),
-      ['supplierlist_v'],
-      'supplierlist_v view is found'
-    );
+    assertViewsExist(await getDb(), ['supplierlist_v']);
   }
 
   @test('Querying the view yields expected results')

@@ -7,6 +7,7 @@ import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
+import { assertTriggersExist } from './helpers/table';
 
 @suite('EX111: "Transaction Trigger" - AFTER INSERT trigger test')
 class TransactionsTriggerTest {
@@ -17,13 +18,7 @@ class TransactionsTriggerTest {
 
   @test('ordertransaction trigger exists')
   public async triggerExists() {
-    let db = await getDb();
-    let allTriggers = await db.getAllTriggers();
-    assert.includeMembers(
-      allTriggers.map(s => s.toLowerCase()),
-      ['ordertransaction'],
-      'ordertransaction trigger is found'
-    );
+    assertTriggersExist(await getDb(), ['ordertransaction']);
   }
 
   @test("Inserting a new transaction results in an order's OrderDate being set")

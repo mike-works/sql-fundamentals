@@ -6,6 +6,8 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder } from '../src/data/orders';
+import { assertMigrationCount } from './helpers/migrations';
+import { assertIndexExists } from './helpers/table';
 
 @suite('EX0010: "Unique Index" - Column constraints test')
 class OrderDetailUniqueIndexTest {
@@ -13,53 +15,14 @@ class OrderDetailUniqueIndexTest {
     'migrationExists() new .sql file based migration exists in the ./migrations folder'
   )
   public async migrationExists() {
-    let migrationsFiles = fs.readdirSync(
-      path.join(__dirname, '..', 'migrations')
-    );
-    assert.isAtLeast(
-      migrationsFiles.length,
-      5,
-      'There are at least five things in the ./migrations folder'
-    );
-    let migrationsSqlsFiles = fs.readdirSync(
-      path.join(__dirname, '..', 'migrations', 'sqls')
-    );
-    assert.isAtLeast(
-      migrationsSqlsFiles.length,
-      8,
-      'There are at least eight things in the ./migrations/sqls folder'
-    );
-    let downMigrationCount = 0;
-    let upMigrationCount = 0;
-    migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('-down')) {
-        downMigrationCount++;
-      }
-      if (fileName.includes('-up')) {
-        upMigrationCount++;
-      }
-    });
-    assert.isAtLeast(
-      downMigrationCount,
-      4,
-      'There are at least three down migrations'
-    );
-    assert.isAtLeast(
-      upMigrationCount,
-      4,
-      'There are at least three up migrations'
-    );
+    assertMigrationCount(5);
   }
 
   @test('orderdetailuniqueproduct index exists')
   public async indexExists() {
-    let db = await getDb();
-    let indexInfo = await db.getIndicesForTable('orderdetail');
-    assert.includeMembers(
-      indexInfo.map(s => s.toLowerCase()),
-      ['orderdetailuniqueproduct'],
-      'orderdetailuniqueproduct index was found'
-    );
+    assertIndexExists(await getDb(), 'orderdetail', [
+      'orderdetailuniqueproduct'
+    ]);
   }
 
   @test(

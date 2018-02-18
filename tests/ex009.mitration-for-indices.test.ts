@@ -3,6 +3,7 @@ import { suite, test, only } from 'mocha-typescript';
 import { assertMigrationCount } from './helpers/migrations';
 import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
+import { assertIndicesExist } from './helpers/table';
 
 @suite('EX009: "Create indices to boost query performance" - Migration test')
 class MigrationIndicesTest {
@@ -15,48 +16,27 @@ class MigrationIndicesTest {
     'OrderDetail table now has indices orderdetailproductid and orderdetailorderid'
   )
   public async orderDetailIndicesPresent() {
-    let db = await getDb();
-    let indexInfo = await db.getIndicesForTable('orderdetail');
-    assert.includeMembers(
-      indexInfo.map(s => s.toLowerCase()),
-      ['orderdetailproductid', 'orderdetailorderid'],
-      'orderdetailproductid and orderdetailorderid are found'
-    );
+    assertIndicesExist(await getDb(), 'orderdetail', [
+      'orderdetailproductid',
+      'orderdetailorderid'
+    ]);
   }
 
   @test('Order table now has indices ordercustomerid and OrderEmployeeId')
   public async orderIndicesPresent() {
-    let db = await getDb();
-    let indexInfo = await db.getIndicesForTable('order');
-
-    assert.includeMembers(
-      indexInfo.map(s => s.toLowerCase()),
-      ['orderemployeeid', 'ordercustomerid'],
-      'ordercustomerid and orderemployeeid are found'
-    );
+    assertIndicesExist(await getDb(), 'order', [
+      'orderemployeeid',
+      'ordercustomerid'
+    ]);
   }
 
   @test('Product table now has index productsupplierid')
   public async productIndicesPresent() {
-    let db = await getDb();
-    let indexInfo = await db.getIndicesForTable('product');
-
-    assert.includeMembers(
-      indexInfo.map(s => s.toLowerCase()),
-      ['productsupplierid'],
-      'productsupplierid is found'
-    );
+    assertIndicesExist(await getDb(), 'product', ['productsupplierid']);
   }
 
   @test('Employee table now has index employeereportsto')
   public async employeeIndicesPresent() {
-    let db = await getDb();
-    let indexInfo = await db.getIndicesForTable('employee');
-
-    assert.includeMembers(
-      indexInfo.map(s => s.toLowerCase()),
-      ['employeereportsto'],
-      'employeereportsto is found'
-    );
+    assertIndicesExist(await getDb(), 'employee', ['employeereportsto']);
   }
 }

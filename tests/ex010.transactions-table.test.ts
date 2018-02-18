@@ -7,6 +7,7 @@ import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
+import { assertTableExists } from './helpers/table';
 
 @suite('EX0010: "Transactions Table" - Column constraints test')
 class TransactionsTableTest {
@@ -17,13 +18,7 @@ class TransactionsTableTest {
 
   @test('Transactions table exists')
   public async transactionsExists() {
-    let db = await getDb();
-    let allTables = await db.getAllTableNames();
-    assert.includeMembers(
-      allTables.map(t => t.toLowerCase()),
-      ['transaction'],
-      'Transaction table is found'
-    );
+    await assertTableExists(await getDb(), 'transaction');
   }
 
   @test('Inserting a new transaction completes successfully')

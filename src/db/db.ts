@@ -9,7 +9,7 @@ export interface SQLStatement {
   get<T = any>(...params: any[]): Promise<T>;
   all<T = any>(...params: any[]): Promise<T[]>;
 }
-export abstract class SQLDatabase<S extends SQLStatement> {
+export abstract class SQLDatabase<S extends SQLStatement = any> {
   // tslint:disable-next-line:no-empty
   public static async setup(): Promise<SQLDatabase<any>> {
     return Promise.reject('Not yet implemented');
@@ -51,7 +51,7 @@ export abstract class SQLDatabase<S extends SQLStatement> {
     logger.info(
       [
         this.colorizeQuery(query) +
-          ` (${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`,
+        ` (${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`,
         `${chalk.grey('PARAMS:')} ${JSON.stringify(params)}`
       ].join('\n')
     );
