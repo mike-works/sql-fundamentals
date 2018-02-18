@@ -51,7 +51,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
     logger.info(
       [
         this.colorizeQuery(query) +
-        ` (${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`,
+          ` (${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`,
         `${chalk.grey('PARAMS:')} ${JSON.stringify(params)}`
       ].join('\n')
     );
@@ -71,7 +71,9 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
       return result;
     } catch (e) {
       logger.error(`Problem running query
-${this.colorizeQuery(query)}`);
+${this.colorizeQuery(query)}
+${chalk.yellow('PARAMS:')} ${JSON.stringify(params)}
+${chalk.red('ERROR:')} ${e.toString()}`);
       throw e;
     }
   }
