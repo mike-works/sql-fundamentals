@@ -104,10 +104,15 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     query: string,
     ...params: any[]
   ): Promise<{ lastID: number | string }> {
+    if (
+      query
+        .toLowerCase()
+        .trim()
+        .indexOf('insert into ') >= 0
+    ) {
+      query = `${query} RETURNING id`;
+    }
     return this.measure(query, params, async () => {
-      if (query.toLowerCase().indexOf('insert into ') >= 0) {
-        query = `${query} RETURNING id`;
-      }
       let res = await this.client.query(query, params);
       let lastID = null;
       if (res.rows && res.rows.length > 0) {

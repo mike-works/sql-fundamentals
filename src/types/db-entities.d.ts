@@ -77,7 +77,7 @@ interface Product extends DBRecord {
   productname: string;
   supplierid: DBRecordReference;
   categoryid: DBRecordReference;
-  quantityperunit: number;
+  quantityperunit: string;
   unitprice: number;
   unitsinstock: number;
   unitsonorder: number;
