@@ -6,49 +6,13 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder } from '../src/data/orders';
+import { assertMigrationCount } from './helpers/migrations';
 
 @suite('EX0010: "Transactions Table" - Column constraints test')
 class TransactionsTableTest {
-  @test(
-    'migrationExists() new .sql file based migration exists in the ./migrations folder'
-  )
+  @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    let migrationsFiles = fs.readdirSync(
-      path.join(__dirname, '..', 'migrations')
-    );
-    assert.isAtLeast(
-      migrationsFiles.length,
-      5,
-      'There are at least five things in the ./migrations folder'
-    );
-    let migrationsSqlsFiles = fs.readdirSync(
-      path.join(__dirname, '..', 'migrations', 'sqls')
-    );
-    assert.isAtLeast(
-      migrationsSqlsFiles.length,
-      8,
-      'There are at least eight things in the ./migrations/sqls folder'
-    );
-    let downMigrationCount = 0;
-    let upMigrationCount = 0;
-    migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('-down')) {
-        downMigrationCount++;
-      }
-      if (fileName.includes('-up')) {
-        upMigrationCount++;
-      }
-    });
-    assert.isAtLeast(
-      downMigrationCount,
-      4,
-      'There are at least three down migrations'
-    );
-    assert.isAtLeast(
-      upMigrationCount,
-      4,
-      'There are at least three up migrations'
-    );
+    assertMigrationCount(5);
   }
 
   @test('Transactions table exists')

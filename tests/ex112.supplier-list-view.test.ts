@@ -6,49 +6,13 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { VALID_ORDER_DATA } from './ex006.create-order.test';
 import { createOrder, getOrder } from '../src/data/orders';
+import { assertMigrationCount } from './helpers/migrations';
 
 @suite('EX112: "Supplier List View" - View Test')
 class SupplierListViewTest {
-  @test(
-    'migrationExists() new .sql file based migration exists in the ./migrations folder'
-  )
+  @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    let migrationsFiles = fs.readdirSync(
-      path.join(__dirname, '..', 'migrations')
-    );
-    assert.isAtLeast(
-      migrationsFiles.length,
-      7,
-      'There are at least seven things in the ./migrations folder'
-    );
-    let migrationsSqlsFiles = fs.readdirSync(
-      path.join(__dirname, '..', 'migrations', 'sqls')
-    );
-    assert.isAtLeast(
-      migrationsSqlsFiles.length,
-      12,
-      'There are at least twelve things in the ./migrations/sqls folder'
-    );
-    let downMigrationCount = 0;
-    let upMigrationCount = 0;
-    migrationsSqlsFiles.forEach(fileName => {
-      if (fileName.includes('-down')) {
-        downMigrationCount++;
-      }
-      if (fileName.includes('-up')) {
-        upMigrationCount++;
-      }
-    });
-    assert.isAtLeast(
-      downMigrationCount,
-      5,
-      'There are at least three down migrations'
-    );
-    assert.isAtLeast(
-      upMigrationCount,
-      5,
-      'There are at least three up migrations'
-    );
+    assertMigrationCount(7);
   }
 
   @test('supplierlist_v view exists')
