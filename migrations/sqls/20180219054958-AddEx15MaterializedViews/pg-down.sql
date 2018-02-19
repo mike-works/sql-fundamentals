@@ -1,0 +1,5 @@
+-- Put your PostgreSQL "down" migration here
+DROP MATERIALIZED VIEW IF EXISTS MV_CustomerLeaderboard;
+DROP MATERIALIZED VIEW IF EXISTS MV_EmployeeLeaderboard;
+DROP MATERIALIZED VIEW IF EXISTS MV_ProductLeaderboard;
+DROP MATERIALIZED VIEW IF EXISTS MV_RecentOrders;
