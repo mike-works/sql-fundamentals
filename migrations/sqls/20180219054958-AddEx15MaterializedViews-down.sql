@@ -1,0 +1,4 @@
+DROP MATERIALIZED VIEW IF EXISTS "customer_leaderboard";
+DROP MATERIALIZED VIEW IF EXISTS "employee_leaderboard";
+DROP MATERIALIZED VIEW IF EXISTS "product_leaderboard";
+DROP MATERIALIZED VIEW IF EXISTS "recent_orders";
