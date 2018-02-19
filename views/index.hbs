@@ -1,3 +1,85 @@
-<div class="mui-container">
-  <h1>DASHBOARD GOES HERE</h1>
+<div class="mui-container dashboard">
+  <div class="mui-row">
+    <div class="mui-col-lg-4 mui-col-md-6">
+      <div class="mui-panel dashboard-panel">
+          <h3 class='mui-panel__title'>🏁 Employee Leaderboard</h3>
+          <table class='mui-table leaderboard-table'>
+            <thead>
+              <th>Name</th>
+              <th>Amount</th>
+            </thead>
+            <tbody>
+              {{#each employeeLeaderboard as |e|}}
+                <tr>
+                  <td>{{e.name}}</td>
+                  <td>{{format-money e.amount}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="mui-col-lg-4 mui-col-md-6">
+      <div class="mui-panel dashboard-panel">
+        <h3 class='mui-panel__title'>🛒 Customer Leaderboard</h3>
+        <table class='mui-table leaderboard-table'>
+          <thead>
+            <th>Name</th>
+            <th>Amount</th>
+          </thead>
+          <tbody>
+            {{#each customerLeaderboard as |c|}}
+            <tr>
+              <td>{{c.name}}</td>
+              <td>{{format-money c.amount}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mui-col-lg-4 mui-col-md-6">
+      <div class="mui-panel dashboard-panel">
+        <h3 class='mui-panel__title'>🌮 Product Leaderboard</h3>
+        <table class='mui-table leaderboard-table'>
+          <thead>
+            <th>Name</th>
+            <th>Amount</th>
+          </thead>
+          <tbody>
+            {{#each productLeaderboard as |p|}}
+            <tr>
+              <td>{{p.name}}</td>
+              <td>{{format-money p.amount}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mui-col-lg-4 mui-col-md-6">
+      <div class="mui-panel dashboard-panel">
+        <h3 class='mui-panel__title'>📦 Reorder List</h3>
+        <table class="mui-table">
+          <thead>
+            <th>Name</th>
+            <th>Quantity In Stock</th>
+          </thead>
+          <tbody>
+            {{#each reorderList as |p|}}
+              <tr>
+                <td>{{p.name}}</td>
+                <td>
+                  {{p.unitsinstock}}
+                  {{#if p.unitsonorder}}
+                    (+ {{p.unitsonorder}} on order)
+                  {{/if}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

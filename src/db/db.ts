@@ -9,6 +9,7 @@ export interface SQLStatement {
   get<T = any>(...params: any[]): Promise<T>;
   all<T = any>(...params: any[]): Promise<T[]>;
 }
+
 export abstract class SQLDatabase<S extends SQLStatement = any> {
   // tslint:disable-next-line:no-empty
   public static async setup(): Promise<SQLDatabase<any>> {
@@ -43,15 +44,20 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
       ignoreIllegals: true
     });
   }
+
   protected logQuery(
     query: string,
     params: JSONArray,
     [begin, end]: [number, number]
   ) {
+    let t = end - begin;
+    let timestring =
+      t < 1000000
+        ? chalk.yellow(`${(t / 1000000).toPrecision(4)}ms`)
+        : chalk.bgRed.white(`${(t / 1000000).toPrecision(4)}ms`);
     logger.info(
       [
-        this.colorizeQuery(query) +
-          ` (${chalk.yellow(`${((end - begin) / 1000000).toPrecision(2)}ms`)})`,
+        this.colorizeQuery(query) + ` (${timestring})`,
         `${chalk.grey('PARAMS:')} ${JSON.stringify(params)}`
       ].join('\n')
     );

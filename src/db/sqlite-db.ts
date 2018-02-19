@@ -81,16 +81,17 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     if (process.env.NODE_ENV !== 'test') {
       // tslint:disable-next-line:no-shadowed-variable
       this.db.on('profile', (sql: string, time: number) => {
-        logger.info(
-          [
-            `
-${chalk.magentaBright('>>')} ${highlight(sql.trim(), {
-              language: 'sql',
-              ignoreIllegals: true
-            })}`,
-            `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`
-          ].join(' ')
-        );
+        this.logQuery(sql, [], [0, time * 1000000]);
+        //         logger.info(
+        //           [
+        //             `
+        // ${chalk.magentaBright('>>')} ${highlight(sql.trim(), {
+        //               language: 'sql',
+        //               ignoreIllegals: true
+        //             })}`,
+        //             `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`
+        //           ].join(' ')
+        // );
       });
     }
   }

@@ -127,24 +127,10 @@ table .actions {
   left: -20px; */
 }
 
-/* .flavor-profile {
-  padding-top: 20px;
+.dashboard .dashboard-panel {
+  height: 330px;
+  overflow-y: scroll;
 }
-
-.flavor-profile > div > input {
-  width: 100px;
-}
-
-.flavor-profile > div > input[type='text'] {
-  width: 90px;
-}
-
-.flavor-profile > div > label {
-  margin-right: 10px;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 5px;
-} */
 
 .flavor-profile .flavor-slider {
   padding-top: 0;
@@ -181,6 +167,17 @@ table .actions {
 
 .mui-textfield.tags-field {
   margin-top: 10px;
+}
+
+.leaderboard-table tbody tr:first-child {
+  background-color: gold;
+}
+.leaderboard-table tbody tr:nth-child(2) {
+  background-color: silver;
+}
+.leaderboard-table tbody tr:nth-child(3) {
+  background-color: #cd7f32;
+  color: white;
 }
 
 input[type='range'] {
