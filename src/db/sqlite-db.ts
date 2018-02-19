@@ -138,4 +138,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
       sql`SELECT name FROM sqlite_master WHERE type='table';`
     )).map((i: any) => i.name as string);
   }
+  public async getAllMaterializedViews(): Promise<string[]> {
+    throw new Error('Materialized views are not supported in sqlite');
+  }
 }

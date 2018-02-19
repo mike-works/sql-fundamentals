@@ -37,6 +37,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
   public abstract getAllTriggers(): Promise<string[]>;
   public abstract getAllTableNames(): Promise<string[]>;
   public abstract getAllViews(): Promise<string[]>;
+  public abstract getAllMaterializedViews(): Promise<string[]>;
 
   protected colorizeQuery(query: string) {
     return highlight(sqlFormatter.format(query), {

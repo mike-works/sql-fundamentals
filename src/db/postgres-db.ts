@@ -155,6 +155,11 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       (result: any) => result.name as string
     );
   }
+  public async getAllMaterializedViews(): Promise<string[]> {
+    return (await this.all(
+      sql`SELECT oid::regclass::text FROM pg_class WHERE  relkind = 'm'`
+    )).map((result: any) => result.oid as string);
+  }
   public async getAllViews(): Promise<string[]> {
     return (await this.all(
       sql`select viewname as name from pg_catalog.pg_views;`
