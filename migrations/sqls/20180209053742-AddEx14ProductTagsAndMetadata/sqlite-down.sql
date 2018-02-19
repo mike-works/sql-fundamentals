@@ -1,4 +1,5 @@
 -- Put your SQLite "down" migration here
-ALTER TABLE Product
-  DROP COLUMN metadata,
-  DROP COLUMN tags;
+-- ALTER TABLE Product
+--   DROP COLUMN metadata;
+-- ALTER TABLE Product
+--   DROP COLUMN tags;
