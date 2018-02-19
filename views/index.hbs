@@ -59,6 +59,27 @@
     </div>
     <div class="mui-col-lg-4 mui-col-md-6">
       <div class="mui-panel dashboard-panel">
+        <h3 class='mui-panel__title'>⏱ Recent Orders</h3>
+        <table class='mui-table '>
+          <thead>
+            <th>Customer</th>
+            <th>Employee</th>
+            <th>Amount</th>
+          </thead>
+          <tbody>
+            {{#each recentOrders as |o|}}
+            <tr>
+              <td>{{o.customer}}</td>
+              <td>{{o.employee}}</td>
+              <td>{{format-money o.subtotal}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mui-col-lg-4 mui-col-md-6">
+      <div class="mui-panel dashboard-panel">
         <h3 class='mui-panel__title'>📦 Reorder List</h3>
         <table class="mui-table">
           <thead>

@@ -8,7 +8,8 @@ import {
   getEmployeeSalesLeaderboard,
   getReorderList,
   getCustomerSalesLeaderboard,
-  getProductSalesLeaderboard
+  getProductSalesLeaderboard,
+  getRecentOrders
 } from '../data/dashboard';
 
 const router = express.Router();
@@ -19,15 +20,18 @@ router.get('/', async (req, res, next) => {
     let pCustomerLeader = getCustomerSalesLeaderboard();
     let pProductLeader = getProductSalesLeaderboard();
     let pReorderList = getReorderList();
+    let pRecentOrders = getRecentOrders();
     let reorderList = await pReorderList;
     let employeeLeaderboard = await pSalesLeader;
     let customerLeaderboard = await pCustomerLeader;
     let productLeaderboard = await pProductLeader;
+    let recentOrders = await pRecentOrders;
     res.render('index', {
       employeeLeaderboard,
       customerLeaderboard,
       productLeaderboard,
-      reorderList
+      reorderList,
+      recentOrders
     });
   } catch (e) {
     throw e;

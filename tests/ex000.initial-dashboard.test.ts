@@ -5,7 +5,8 @@ import {
   getProductSalesLeaderboard,
   getEmployeeSalesLeaderboard,
   getCustomerSalesLeaderboard,
-  getReorderList
+  getReorderList,
+  getRecentOrders
 } from '../src/data/dashboard';
 
 @suite('EX000: Initial Dashboard Queries')
@@ -40,7 +41,7 @@ class InitialDashboardQueriesTest {
     );
   }
 
-  @test('Employee leaderboard query')
+  @test('Customer leaderboard query')
   public async customerLeaderboardTest() {
     let result = await getCustomerSalesLeaderboard();
     assert.isArray(result, 'Expected result to be an array');
@@ -71,6 +72,21 @@ class InitialDashboardQueriesTest {
       },
       result[0],
       ['name', 'reorderlevel', 'unitsinstock', 'unitsonorder']
+    );
+  }
+
+  @test('Recent Orders')
+  public async recentOrdersTest() {
+    let result = await getRecentOrders();
+    assert.isArray(result, 'Expected result to be an array');
+    assert.equal(result.length, 5, 'Expected 5 orders');
+    validateRecordColumns(
+      {
+        recordType: 'recent-orders',
+        functionName: 'getRecentOrders'
+      },
+      result[0],
+      ['customer', 'subtotal', 'employee']
     );
   }
 }

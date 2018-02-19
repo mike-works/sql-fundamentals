@@ -72,7 +72,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
       let result = await fn();
       if (process.env.NODE_ENV !== 'test') {
         let [, end] = process.hrtime();
-        this.logQuery(query, params, [begin, end]);
+        this.logQuery(query, params, [end, begin]);
       }
       return result;
     } catch (e) {
