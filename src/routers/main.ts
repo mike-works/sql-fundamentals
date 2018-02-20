@@ -3,6 +3,7 @@ import customerRouter from './customers';
 import employeeRouter from './employees';
 import orderRouter from './orders';
 import supplierRouter from './suppliers';
+import searchRouter from './search';
 import productRouter from './products';
 import {
   getEmployeeSalesLeaderboard,
@@ -43,5 +44,6 @@ router.use('/customers', customerRouter);
 router.use('/suppliers', supplierRouter);
 router.use('/orders', orderRouter);
 router.use('/products', productRouter);
+router.use('/search', searchRouter);
 
 export default router;

@@ -7,6 +7,7 @@ import { PORT } from './constants';
 import * as bodyParser from 'body-parser';
 import { loadHandlebarsHelpers } from './load-helpers';
 import { logger } from './log';
+import * as serverTiming from 'server-timing';
 import router from './routers/main';
 
 async function startListening(app: express.Express): Promise<http.Server> {
@@ -52,6 +53,7 @@ function installMiddlewares(app: express.Application) {
       }
     })
   );
+  app.use(serverTiming());
 }
 
 async function setupRouting(app: express.Application) {

@@ -105,11 +105,21 @@ function normalizeOrderDetails(raw: {
 
 router.get('/', async (req, res, next) => {
   try {
-    let { page = 1, perPage, sort, order } = req.query;
-    let orders = await getAllOrders({ page, perPage, sort, order });
+    let { page = 1, perPage = 20 } = req.query;
+    let opts: { [k: string]: number | string } = {
+      page: req.query.page || 1,
+      perPage: req.query.perPage || 20
+    };
+    if (typeof req.query.sort === 'string' && req.query.sort !== '') {
+      opts.sort = req.query.sort;
+    }
+    if (typeof req.query.order === 'string' && req.query.order !== '') {
+      opts.order = req.query.order;
+    }
+    let orders = await getAllOrders(opts);
     res.render('orders', { orders, page });
   } catch (e) {
-    next();
+    next(e);
   }
 });
 

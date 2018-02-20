@@ -99,6 +99,29 @@ a.mui-btn.disabled {
   background: navy;
 }
 
+.main-nav .nav .nav-item button {
+  display: inline-block;
+  text-transform: uppercase;
+  line-height: 64px;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.main-nav .nav .nav-item a,
+.main-nav .nav .nav-item button {
+  color: white;
+  transition: color 0.2s ease-in-out;
+}
+
+.main-nav.search-mode .nav .nav-item a {
+  color: #55b;
+}
+.main-nav.search-mode .nav .nav-item button {
+  color: yellow;
+}
+
 .table-col-sort a.sort-button {
   color: grey;
 }
@@ -178,6 +201,50 @@ table .actions {
 .leaderboard-table tbody tr:nth-child(3) {
   background-color: #cd7f32;
   color: white;
+}
+
+.main-nav {
+  transition-property: 'background', 'margin-bottom', 'color';
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  margin-bottom: 0;
+}
+.main-nav.search-mode {
+  background: navy;
+  color: #aaa;
+  margin-bottom: 60px;
+}
+.main-nav .search-box {
+  transform: translateY(-500px);
+  opacity: 0;
+  height: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  background: navy;
+}
+.main-nav.search-mode .search-box {
+  transform: translateY(0);
+  opacity: 1;
+}
+.main-nav .search-box .search-input-container {
+  border-left: 10px solid navy;
+  border-right: 10px solid navy;
+  border-bottom: 10px solid navy;
+  background: #222299;
+}
+.main-nav .search-box .search-input-container .search-input {
+  color: white;
+  border-bottom-color: #aaa;
+}
+.main-nav .search-box .search-input-container .mui-textfield label {
+  padding-top: 5px;
+  color: #aaa;
+}
+.main-nav .search-box .search-input-container .mui-textfield {
+  background: transparent;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  padding-top: 20px;
 }
 
 input[type='range'] {

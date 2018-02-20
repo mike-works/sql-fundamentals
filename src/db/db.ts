@@ -10,6 +10,16 @@ export interface SQLStatement {
   all<T = any>(...params: any[]): Promise<T[]>;
 }
 
+function timeVal(ms: number) {
+  if (ms < 1) {
+    return `${(ms * 1000).toPrecision(4)}μs`;
+  } else if (ms < 1000) {
+    return `${ms.toPrecision(4)}ms`;
+  } else {
+    return `${(ms / 1000).toPrecision(4)}s`;
+  }
+}
+
 export abstract class SQLDatabase<S extends SQLStatement = any> {
   // tslint:disable-next-line:no-empty
   public static async setup(): Promise<SQLDatabase<any>> {
@@ -46,34 +56,35 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
     });
   }
 
-  protected logQuery(
-    query: string,
-    params: JSONArray,
-    [begin, end]: [number, number]
-  ) {
-    let t = end - begin;
+  protected logQuery(query: string, params: JSONArray, t: number) {
     let timestring =
-      t < 1000000
-        ? chalk.yellow(`${(t / 1000000).toPrecision(4)}ms`)
-        : chalk.bgRed.white(`${(t / 1000000).toPrecision(4)}ms`);
+      t < 5
+        ? chalk.bgGreenBright.black(timeVal(t))
+        : t < 100
+          ? chalk.bgYellowBright.black(timeVal(t))
+          : chalk.bgRedBright.white(timeVal(t));
     logger.info(
       [
         this.colorizeQuery(query) + ` (${timestring})`,
         `${chalk.grey('PARAMS:')} ${JSON.stringify(params)}`
       ].join('\n')
     );
+    return t;
   }
   protected async measure<T>(
     query: string,
     params: JSONArray,
     fn: () => Promise<T>
   ): Promise<T> {
-    let [, begin] = process.hrtime();
+    let begin = process.hrtime();
     try {
       let result = await fn();
+      let t = -1;
       if (process.env.NODE_ENV !== 'test') {
-        let [, end] = process.hrtime();
-        this.logQuery(query, params, [end, begin]);
+        let end = process.hrtime();
+        let diff = [end[0] - begin[0], end[1] - begin[1]];
+        t = diff[0] * 1000 + diff[1] / 1000000;
+        this.logQuery(query, params, t);
       }
       return result;
     } catch (e) {

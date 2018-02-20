@@ -20,8 +20,7 @@
     "db:setup:pg": "SCRIPTY_SILENT=true scripty",
     "db:setup:sqlite": "SCRIPTY_SILENT=true scripty",
     "db:migrate:pg": "scripty",
-    "db:migrate:heroku:pg":
-      "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
+    "db:migrate:heroku:pg": "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
     "db:migrate:sqlite": "scripty",
     "db:migrate:create": "SCRIPTY_SILENT=true scripty"
   },
@@ -40,6 +39,7 @@
     "lodash": "~4.17.4",
     "moment": "^2.20.1",
     "scripty": "^1.7.2",
+    "server-timing": "^1.1.2",
     "sql-formatter": "^2.1.2",
     "sqlite": "^2.9.1",
     "sqlite3": "^3.1.13",
