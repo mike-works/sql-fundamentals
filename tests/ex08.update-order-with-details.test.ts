@@ -9,7 +9,7 @@ import {
   deleteOrder,
   getOrderDetails
 } from '../src/data/orders';
-import { VALID_ORDER_DATA } from '../tests/ex006.create-order.test';
+import { VALID_ORDER_DATA } from '../tests/ex06.create-order.test';
 import { merge } from 'lodash';
 
 @suite(

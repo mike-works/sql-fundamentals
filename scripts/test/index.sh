@@ -14,10 +14,10 @@ then
 else
   case $git_branch in
   master)
-    filter="EX000"
+    filter="EX00"
     ;;
   solutions-fundamentals)
-    filter="EX0"
+    filter="EX[10|09|08|07|06|05|04|03|02|01|00]"
     ;;
   solutions-pro)
     filter="EX"
