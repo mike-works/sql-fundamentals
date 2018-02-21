@@ -106,10 +106,12 @@
 </div>
 
 <script type='text/javascript'>
-  var ws = new WebSocket('ws://localhost:40510');
+  var HOST = location.origin.replace(/^http/, 'ws');
+
+  var ws = new WebSocket(HOST);
   // event emmited when connected
   ws.onopen = function () {
-    console.log('websocket is connected ...')
+    console.log('websocket is connected on ' + HOST  + ' ...')
     // sending a send event to websocket server
     ws.send('connected')
   }
