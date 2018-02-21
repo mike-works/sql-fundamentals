@@ -1,8 +1,8 @@
 import { Server } from 'http';
 import { Value as JSONValue } from 'json-typescript';
 import * as WS from 'ws';
+import { logger } from './log';
 
-const WS_PORT = 40510;
 const WS_HEARTBEAT_PULSE = 2000;
 
 interface WebSocket extends WS {
@@ -34,9 +34,9 @@ class WebSocketManager {
   public close() {
     clearInterval(this.heartbeatInterval);
     this.wss.clients.forEach(client => {
-      // if (client.readyState === WS.OPEN) {
-      client.close();
-      // }
+      if (client.readyState === WS.OPEN) {
+        client.close();
+      }
     });
     this.wss.close();
   }
@@ -49,17 +49,16 @@ class WebSocketManager {
   }
 
   protected onConnect(ws: WebSocket) {
-    console.log('connect');
     this.connectedSockets.push(ws);
     ws.isAlive = true;
     ws.on('pong', heartbeat);
     ws.on('message', this.onMessagereceived.bind(this));
     ws.on('error', (err: Error) => {
-      console.error('WS ERROR', err.message);
+      logger.error('WS ERROR', err.message);
     });
   }
   protected onMessagereceived(message: WS.Data) {
-    console.log('received: %s', message);
+    logger.info('received: %s', message);
   }
 
   private onHeartbeat() {

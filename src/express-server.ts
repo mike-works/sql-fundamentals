@@ -96,7 +96,7 @@ export async function startExpressServer(): Promise<
   }
 
   await setupTemplating(app);
-  await installMiddlewares(app);
+  installMiddlewares(app);
 
   await setupRouting(app);
 

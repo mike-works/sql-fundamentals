@@ -24,7 +24,6 @@ router.get(
       .split(/\s*\,\s*/g)
       .filter((x: string) => x);
 
-    console.log(JSON.stringify(orderData));
     let flavorFilter: ProductFlavorFilter[] = [];
     switch (orderData.flav) {
       case 'sweet-hot':
