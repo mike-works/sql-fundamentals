@@ -16,7 +16,7 @@ else
     filter="EX00"
     ;;
   solutions-fundamentals)
-    filter="EX0[0-9]\|10"
+    filter="EX0[0-9]|10"
     ;;
   solutions-pro)
     filter="EX"
@@ -29,8 +29,8 @@ echo "Test Filter: $filter"
 if [ \( $git_branch = *'solution'* \) ] &&  [ \( $filter = 'EX000' \) ]
 then
   echo "Solutions branch with no filter"
-  NODE_ENV=test ./node_modules/.bin/mocha $2 $3
+  NODE_ENV=test ./node_modules/.bin/mocha $1 $2 $3
 else
-  echo "Applying Test Filter: $filter $2"
+  echo "Applying Test Filter: $filter"
   NODE_ENV=test ./node_modules/.bin/mocha --grep $filter $2 $3
 fi
