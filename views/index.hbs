@@ -104,3 +104,23 @@
     </div>
   </div>
 </div>
+
+<script type='text/javascript'>
+  var ws = new WebSocket('ws://localhost:40510');
+  // event emmited when connected
+  ws.onopen = function () {
+    console.log('websocket is connected ...')
+    // sending a send event to websocket server
+    ws.send('connected')
+  }
+  // event emmited when receiving message 
+  ws.onmessage = function (ev) {
+    if (ev.data === 'refresh') {
+      setTimeout(() => {
+        window.location.href = window.location.href;
+      }, 100);
+    } else {
+      console.log(ev);
+    }
+  }
+</script>

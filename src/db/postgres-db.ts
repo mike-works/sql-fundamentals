@@ -6,6 +6,8 @@ import { SQLDatabase, SQLStatement } from './db';
 import { setupPreparedStatements } from './prepared';
 import { highlight } from 'cli-highlight';
 import * as dbConfig from '../../database.json';
+import * as debounce from 'debounce';
+import { setupPubSub } from './postgres-pubsub';
 
 class PostgresStatement implements SQLStatement {
   protected name: string;
@@ -86,6 +88,10 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
         PostgresStatement,
         PostgresDB
       >(pgdb);
+      if (!this.pubSubSupport) {
+        this.pubSubSupport = setupPubSub(pool);
+        await this.pubSubSupport;
+      }
       return pgdb;
     } catch (e) {
       logger.error(`ERROR during posgres setup\n${e}`);
@@ -94,7 +100,9 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       client.release();
     }
   }
+  private static pubSubSupport: Promise<any>;
   private client: pg.Client;
+
   protected constructor(client: pg.Client) {
     super();
     this.client = client;
@@ -143,10 +151,10 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     );
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
-    return (await this.all(
-      sql`select indexname as name
-    from pg_indexes where tablename = \'${tableName}\'`
-    )).map((result: any) => result.name as string);
+    return (await this.all(sql`select indexname as name
+    from pg_indexes where tablename = \'${tableName}\'`)).map(
+      (result: any) => result.name as string
+    );
   }
   public async getAllTriggers(): Promise<string[]> {
     return (await this
@@ -166,11 +174,11 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     )).map((result: any) => result.name as string);
   }
   public async getAllTableNames(): Promise<string[]> {
-    return (await this.all(
-      sql`SELECT table_name as name
+    return (await this.all(sql`SELECT table_name as name
       FROM information_schema.tables
      WHERE table_schema='public'
-       AND table_type='BASE TABLE';`
-    )).map((result: any) => result.name as string);
+       AND table_type='BASE TABLE';`)).map(
+      (result: any) => result.name as string
+    );
   }
 }

@@ -10,6 +10,7 @@ import { logger } from './log';
 import * as serverTiming from 'server-timing';
 import TimingManager from './timing';
 import router from './routers/main';
+import './ws';
 
 async function startListening(app: express.Express): Promise<http.Server> {
   return new Promise<http.Server>((res, rej) => {
