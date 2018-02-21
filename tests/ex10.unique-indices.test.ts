@@ -9,7 +9,7 @@ import { createOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertIndicesExist } from './helpers/table';
 
-@suite('EX0010: "Unique Index" - Column constraints test')
+@suite('EX10: "Unique Index" - Column constraints test')
 class OrderDetailUniqueIndexTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'

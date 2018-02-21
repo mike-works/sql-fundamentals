@@ -9,7 +9,7 @@ import { createOrder, getOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertTriggersExist } from './helpers/table';
 
-@suite('EX111: "Transaction Trigger" - AFTER INSERT trigger test')
+@suite('EX11: "Transaction Trigger" - AFTER INSERT trigger test')
 class TransactionsTriggerTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {

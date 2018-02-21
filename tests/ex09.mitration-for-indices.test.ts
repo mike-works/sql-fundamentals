@@ -5,7 +5,7 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { assertIndicesExist } from './helpers/table';
 
-@suite('EX009: "Create indices to boost query performance" - Migration test')
+@suite('EX09: "Create indices to boost query performance" - Migration test')
 class MigrationIndicesTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {

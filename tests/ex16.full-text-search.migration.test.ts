@@ -4,7 +4,7 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { assertMigrationCount } from './helpers/migrations';
 
-@suite('EX116: "Full Text Search" - Migration test')
+@suite('EX16: "Full Text Search" - Migration test')
 class FullTextSearchMigrationTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'

@@ -4,7 +4,7 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { assertMigrationCount } from './helpers/migrations';
 
-@suite('EX115: "Materialized Views" - Migration test')
+@suite('EX15: "Materialized Views" - Migration test')
 class MaterializeViewsTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'

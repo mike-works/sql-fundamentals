@@ -19,7 +19,7 @@ const REQUIRED_ORDER_COLS = ['id', 'customerid', 'employeeid'];
 const REQUIRED_SUPPLIER_COLS = ['id', 'companyname', 'contactname'];
 const REQUIRED_CUSTOMER_COLS = REQUIRED_SUPPLIER_COLS;
 
-@suite('EX000: Initial DB queries')
+@suite('EX00: Initial DB queries')
 class InitialListQueriesTest {
   @test('Get all employees')
   public async allEmployees() {

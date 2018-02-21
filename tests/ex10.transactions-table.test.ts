@@ -9,7 +9,7 @@ import { createOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertTableExists } from './helpers/table';
 
-@suite('EX0010: "Transactions Table" - Column constraints test')
+@suite('EX10: "Transactions Table" - Column constraints test')
 class TransactionsTableTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {

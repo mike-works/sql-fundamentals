@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { suite, test, only } from 'mocha-typescript';
 import { getDb } from '../src/db/utils';
 
-@suite('EX113: "Get Order" - Prepared Statement Test')
+@suite('EX13: "Get Order" - Prepared Statement Test')
 class OrdersPreparedStatementTest {
   @test('db.statements.getOrder prepared statement exists')
   public async statementExists() {

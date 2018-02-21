@@ -3,7 +3,7 @@ import { sortBy } from 'lodash';
 import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllOrders } from '../src/data/orders';
 
-@suite('EX003: "All Orders List" Query - Sort tests')
+@suite('EX03: "All Orders List" Query - Sort tests')
 class AllOrdersSortTest {
   @test('By default, order list is sorted ascending by id')
   public async orderListDefaults() {

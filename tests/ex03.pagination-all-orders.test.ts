@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { slow, suite, test, timeout, only } from 'mocha-typescript';
 import { getAllOrders } from '../src/data/orders';
 
-@suite('EX003: "All Orders List" Query - Pagination tests')
+@suite('EX03: "All Orders List" Query - Pagination tests')
 class AllOrdersPaginationTest {
   @test('First item is the same, regardless of page size')
   public async firstPage() {

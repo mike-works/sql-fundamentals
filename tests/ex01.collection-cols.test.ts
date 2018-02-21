@@ -44,7 +44,7 @@ const REQUIRED_PRODUCT_LIST_COLS = [
 ];
 const FORBIDDEN_PRODUCT_LIST_COLS: string[] = [];
 
-@suite('EX001: Collection Queries - Ask for specific columns')
+@suite('EX01: Collection Queries - Ask for specific columns')
 class EmployeeDataTest {
   @test('All employees')
   public async allEmployees() {

@@ -5,7 +5,7 @@ import { sql } from '../src/sql-string';
 import { getSearchResults } from '../src/data/search';
 import { assertMigrationCount } from './helpers/migrations';
 
-@suite('EX116: "Full Text Search" - Global Search Tests')
+@suite('EX16: "Full Text Search" - Global Search Tests')
 class FullTextSearchTest {
   @test("getSearchResults('german')")
   public async germanResults() {

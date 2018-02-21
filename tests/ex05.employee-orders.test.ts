@@ -5,7 +5,7 @@ import { getAllEmployees } from '../src/data/employees';
 import { getAllOrders } from '../src/data/orders';
 import { logger } from '../src/log';
 
-@suite('EX005: "Employee Order Count" - Aggregate Function Tests')
+@suite('EX05: "Employee Order Count" - Aggregate Function Tests')
 class EmployeeOrderCountTest {
   @test('getAllEmployees() results must now include OrderCount')
   public async orderCountIsPresent() {

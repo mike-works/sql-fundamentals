@@ -6,7 +6,7 @@ import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 import { assertMigrationCount } from './helpers/migrations';
 
-@suite('EX114: "JSON & Array Columns" - Migration test')
+@suite('EX14: "JSON & Array Columns" - Migration test')
 class MigrationIndicesTest {
   @test(
     'migrationExists() new .sql file based migration exists in the ./migrations folder'

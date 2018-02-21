@@ -11,7 +11,7 @@ import {
 import { sql } from '../src/sql-string';
 import { difference } from 'lodash';
 
-@suite('EX114: "Product Tags" - Array column test')
+@suite('EX14: "Product Tags" - Array column test')
 class ProductTagsTest {
   // prettier-ignore
   protected productId!: string | number;

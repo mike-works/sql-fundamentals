@@ -4,7 +4,7 @@ import { slow, suite, test, timeout } from 'mocha-typescript';
 import { getAllProducts } from '../src/data/products';
 import { logger } from '../src/log';
 
-@suite('EX004: "Products List" Query - Join tests')
+@suite('EX04: "Products List" Query - Join tests')
 class ProductsListJoinTest {
   @test(
     'getAllProducts() results must now include categoryname and suppliername columns'

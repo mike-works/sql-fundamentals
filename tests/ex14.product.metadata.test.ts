@@ -10,7 +10,7 @@ import {
   updateProduct
 } from '../src/data/products';
 
-@suite('EX114: "Product Metadata" - JSONB column test')
+@suite('EX14: "Product Metadata" - JSONB column test')
 class ProductMetadataJsonTest {
   // prettier-ignore
   protected productId!: string | number;

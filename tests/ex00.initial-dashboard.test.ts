@@ -9,7 +9,7 @@ import {
   getRecentOrders
 } from '../src/data/dashboard';
 
-@suite('EX000: Initial Dashboard Queries', slow(10000), timeout(20000))
+@suite('EX00: Initial Dashboard Queries', slow(10000), timeout(20000))
 class InitialDashboardQueriesTest {
   @test('Product leaderboard query')
   public async productLeaderboardTest() {

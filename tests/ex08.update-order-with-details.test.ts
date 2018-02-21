@@ -13,7 +13,7 @@ import { VALID_ORDER_DATA } from '../tests/ex006.create-order.test';
 import { merge } from 'lodash';
 
 @suite(
-  'EX008: "Update an Order with OrderDetail items" - Update / Transaction test'
+  'EX08: "Update an Order with OrderDetail items" - Update / Transaction test'
 )
 class UpdateOrderWithDetailsTest {
   @test(

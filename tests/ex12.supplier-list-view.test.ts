@@ -9,7 +9,7 @@ import { createOrder, getOrder } from '../src/data/orders';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertViewsExist } from './helpers/table';
 
-@suite('EX112: "Supplier List View" - View Test')
+@suite('EX12: "Supplier List View" - View Test')
 class SupplierListViewTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {

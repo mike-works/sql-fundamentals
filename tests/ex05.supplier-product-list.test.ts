@@ -5,7 +5,7 @@ import { getAllProducts } from '../src/data/products';
 import { getAllSuppliers } from '../src/data/suppliers';
 import { logger } from '../src/log';
 
-@suite('EX005: "Supplier Product List" - Aggregate Function Tests')
+@suite('EX05: "Supplier Product List" - Aggregate Function Tests')
 class SupplierProductListTest {
   @test('getAllSuppliers() results must now include productlist')
   public async productListIsPresent() {

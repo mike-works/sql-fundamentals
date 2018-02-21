@@ -3,7 +3,7 @@ import { suite, test } from 'mocha-typescript';
 import { createOrder, getAllOrders, deleteOrder } from '../src/data/orders';
 import { VALID_ORDER_DATA } from '../tests/ex006.create-order.test';
 
-@suite('EX006: "Delete an Order" - Record deletion test')
+@suite('EX06: "Delete an Order" - Record deletion test')
 class DeleteOrderTest {
   @test(
     'deleteOrder() for a newly-created order, completes without throwing an error'

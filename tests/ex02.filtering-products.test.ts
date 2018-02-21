@@ -21,7 +21,7 @@ function assertProductCols(item: any) {
   );
 }
 
-@suite('EX002: Filtering Products')
+@suite('EX02: Filtering Products')
 class EmployeeDataTest {
   @test('getAllProducts() (no filter) still works as expected')
   public async allProducts() {
