@@ -16,4 +16,4 @@ function exerciseFilter() {
 }
 
 filter=$(exerciseFilter $1)
-npm run test --- EX00[$filter]:
+npm run test --- EX0[$filter]:
