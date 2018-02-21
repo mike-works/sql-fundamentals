@@ -17,7 +17,7 @@ else
     filter="EX00"
     ;;
   solutions-fundamentals)
-    filter="EX[10|09|08|07|06|05|04|03|02|01|00]"
+    filter="EX0[0-9]\|10"
     ;;
   solutions-pro)
     filter="EX"
