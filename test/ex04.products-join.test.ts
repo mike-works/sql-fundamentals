@@ -1,9 +1,9 @@
 import { assert } from 'chai';
-import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getAllProducts } from '../src/data/products';
-import { logger } from '../src/log';
+
+import './helpers/global-hooks';
 
 @suite('EX04: "Products List" Query - Join tests')
 class ProductsListJoinTest {

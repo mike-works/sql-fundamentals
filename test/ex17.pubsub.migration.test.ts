@@ -1,11 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import * as fs from 'fs';
-import * as path from 'path';
+
 import { getDb } from '../src/db/utils';
-import { sql } from '../src/sql-string';
-import ws from '../src/ws';
+
+import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 
 @suite('EX17: "PubSub" - Migration test')

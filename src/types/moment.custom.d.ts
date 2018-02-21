@@ -277,7 +277,7 @@ declare module 'moment' {
       __momentBuiltinFormatBrand: any;
     }
 
-    type MomentFormatSpecification = string | MomentBuiltinFormat | (string | MomentBuiltinFormat)[];
+    type MomentFormatSpecification = string | MomentBuiltinFormat | Array<string | MomentBuiltinFormat>;
 
     namespace unitOfTime {
       type Base =
@@ -424,7 +424,7 @@ declare module 'moment' {
       to: MomentInput;
     }
 
-    type MomentInput = Moment | Date | string | number | (number | string)[] | MomentInputObject | void; // null | undefined
+    type MomentInput = Moment | Date | string | number | Array<number | string> | MomentInputObject | void; // null | undefined
     type DurationInputArg1 = Duration | number | string | FromTo | DurationInputObject | void; // null | undefined
     type DurationInputArg2 = unitOfTime.DurationConstructor;
     type LocaleSpecifier = string | Moment | Duration | string[] | boolean;

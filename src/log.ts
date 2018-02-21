@@ -1,5 +1,4 @@
 import * as winston from 'winston';
-import { LoggerOptions } from 'winston';
 
 type LoggerMethod = (msg: string, ...meta: any[]) => Logger;
 

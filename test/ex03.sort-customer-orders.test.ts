@@ -1,9 +1,10 @@
 import { assert } from 'chai';
 import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getCustomerOrders } from '../src/data/orders';
-import { logger } from '../src/log';
+
+import './helpers/global-hooks';
 
 @suite('EX03: "Customer Orders List" Query - Sort tests')
 class CustomerOrdersSortTest {

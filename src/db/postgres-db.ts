@@ -1,13 +1,13 @@
 import chalk from 'chalk';
 import * as pg from 'pg';
+
+import * as dbConfig from '../../database.json';
 import { logger } from '../log';
 import { sql } from '../sql-string';
+
 import { SQLDatabase, SQLStatement } from './db';
-import { setupPreparedStatements } from './prepared';
-import { highlight } from 'cli-highlight';
-import * as dbConfig from '../../database.json';
-import * as debounce from 'debounce';
 import { setupPubSub } from './postgres-pubsub';
+import { setupPreparedStatements } from './prepared';
 
 class PostgresStatement implements SQLStatement {
   protected name: string;

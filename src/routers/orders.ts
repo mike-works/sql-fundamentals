@@ -1,24 +1,20 @@
 import * as express from 'express';
-import * as moment from 'moment';
+import { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator/check';
 import { matchedData } from 'express-validator/filter';
 
-import { Request, Response } from 'express';
 import { getAllCustomers } from '../data/customers';
 import { getAllEmployees } from '../data/employees';
 import {
   createOrder,
   deleteOrder,
   getAllOrders,
-  getOrder,
-  updateOrder,
-  getOrderWithDetails
+  getOrderWithDetails,
+  updateOrder
 } from '../data/orders';
+import { getAllProducts } from '../data/products';
 import { getAllRegions } from '../data/regions';
 import { getAllShippers } from '../data/shippers';
-import { logger } from '../log';
-import { getAllProducts } from '../data/products';
-import { mapValues } from 'lodash';
 
 const ORDER_VALIDATIONS = [
   check('employeeid')

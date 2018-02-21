@@ -1,12 +1,11 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import * as fs from 'fs';
-import * as path from 'path';
-import { getDb } from '../src/db/utils';
-import { sql } from '../src/sql-string';
-import { VALID_ORDER_DATA } from './ex06.create-order.test';
+
 import { createOrder } from '../src/data/orders';
+import { getDb } from '../src/db/utils';
+
+import { VALID_ORDER_DATA } from './ex06.create-order.test';
+import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertIndicesExist } from './helpers/table';
 

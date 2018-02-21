@@ -1,9 +1,9 @@
-import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
+
+import { getDb } from '../src/db/utils';
+
 import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
-import { getDb } from '../src/db/utils';
-import { sql } from '../src/sql-string';
 import { assertIndicesExist } from './helpers/table';
 
 @suite('EX09: "Create indices to boost query performance" - Migration test')

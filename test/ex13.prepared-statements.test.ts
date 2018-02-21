@@ -1,7 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getDb } from '../src/db/utils';
+
+import './helpers/global-hooks';
 
 @suite('EX13: "Get Order" - Prepared Statement Test')
 class OrdersPreparedStatementTest {

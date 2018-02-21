@@ -1,4 +1,4 @@
-import { Response, RequestHandler } from 'express';
+import { RequestHandler, Response } from 'express';
 
 // declare module 'express' {
 //   export interface Response {

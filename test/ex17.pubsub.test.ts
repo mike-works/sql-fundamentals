@@ -1,10 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import * as fs from 'fs';
-import * as path from 'path';
+
 import { getDb } from '../src/db/utils';
-import { sql } from '../src/sql-string';
+
+import './helpers/global-hooks';
 
 @suite('EX17: "PubSub" - Edit order test')
 class PubSubTest {

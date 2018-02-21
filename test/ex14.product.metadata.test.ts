@@ -1,15 +1,17 @@
 import { assert } from 'chai';
-import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
 import { difference } from 'lodash';
-import { getDb } from '../src/db/utils';
+import { suite } from 'mocha-typescript';
+
 import {
-  getAllProducts,
   createProduct,
   deleteProduct,
+  getAllProducts,
   getProduct,
   updateProduct
 } from '../src/data/products';
+import { getDb } from '../src/db/utils';
+
+import './helpers/global-hooks';
 
 @suite('EX14: "Product Metadata" - JSONB column test')
 class ProductMetadataJsonTest {

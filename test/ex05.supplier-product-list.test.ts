@@ -1,10 +1,10 @@
 import { assert } from 'chai';
-import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getAllProducts } from '../src/data/products';
 import { getAllSuppliers } from '../src/data/suppliers';
-import { logger } from '../src/log';
+
+import './helpers/global-hooks';
 
 @suite('EX05: "Supplier Product List" - Aggregate Function Tests')
 class SupplierProductListTest {

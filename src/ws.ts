@@ -1,7 +1,6 @@
-import * as WS from 'ws';
-import { Value as JSONValue } from 'json-typescript';
-import { logger } from './log';
 import { Server } from 'http';
+import { Value as JSONValue } from 'json-typescript';
+import * as WS from 'ws';
 
 const WS_PORT = 40510;
 const WS_HEARTBEAT_PULSE = 2000;

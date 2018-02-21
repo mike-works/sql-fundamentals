@@ -1,7 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getAllOrders } from '../src/data/orders';
+
+import './helpers/global-hooks';
 
 @suite('EX03: "All Orders List" Query - Pagination tests')
 class AllOrdersPaginationTest {

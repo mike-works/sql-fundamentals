@@ -1,6 +1,6 @@
 import * as express from 'express';
+
 import { getSearchResults } from '../data/search';
-import { logger } from '../log';
 
 const router = express.Router();
 

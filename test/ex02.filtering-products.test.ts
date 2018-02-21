@@ -1,7 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getAllProducts } from '../src/data/products';
+
+import './helpers/global-hooks';
 
 function assertProductCols(item: any) {
   assert.containsAllKeys(

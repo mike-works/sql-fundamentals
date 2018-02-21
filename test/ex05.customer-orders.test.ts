@@ -1,10 +1,10 @@
 import { assert } from 'chai';
-import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getAllCustomers } from '../src/data/customers';
 import { getAllOrders } from '../src/data/orders';
-import { logger } from '../src/log';
+
+import './helpers/global-hooks';
 
 @suite('EX05: "Customer Order Count" - Aggregate Function Tests')
 class CustomerOrderCountTest {

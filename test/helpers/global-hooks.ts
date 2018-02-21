@@ -1,5 +1,5 @@
-import ws from '../../src/ws';
 import { getDb } from '../../src/db/utils';
+import ws from '../../src/ws';
 
 after(() => {
   return getDb().then(db => {

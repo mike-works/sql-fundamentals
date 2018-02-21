@@ -1,9 +1,9 @@
 import { assert } from 'chai';
-import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import { logger } from '../src/log';
+
 import { createOrder, getAllOrders } from '../src/data/orders';
+
+import './helpers/global-hooks';
 
 export const VALID_ORDER_DATA: Partial<Order> = {
   employeeid: 4,

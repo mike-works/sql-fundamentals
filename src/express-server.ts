@@ -1,15 +1,16 @@
+import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as exphbs from 'express-handlebars';
 import * as expressWinston from 'express-winston';
 import * as http from 'http';
+import * as serverTiming from 'server-timing';
 import * as winston from 'winston';
+
 import { PORT } from './constants';
-import * as bodyParser from 'body-parser';
 import { loadHandlebarsHelpers } from './load-helpers';
 import { logger } from './log';
-import * as serverTiming from 'server-timing';
-import TimingManager from './timing';
 import router from './routers/main';
+import TimingManager from './timing';
 import { setup as setupWebsocketServer } from './ws';
 
 async function startListening(app: express.Express): Promise<http.Server> {

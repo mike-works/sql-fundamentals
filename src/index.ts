@@ -1,6 +1,4 @@
-import chalk from 'chalk';
-import { existsSync } from 'fs';
-import * as path from 'path';
+
 // import { initializeDb } from './db/setup';
 import { startExpressServer } from './express-server';
 

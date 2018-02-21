@@ -1,16 +1,17 @@
 import { assert } from 'chai';
-import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import { getDb } from '../src/db/utils';
+import { difference } from 'lodash';
+import { suite } from 'mocha-typescript';
+
 import {
-  getAllProducts,
   createProduct,
   deleteProduct,
+  getAllProducts,
   getProduct,
   updateProduct
 } from '../src/data/products';
-import { sql } from '../src/sql-string';
-import { difference } from 'lodash';
+import { getDb } from '../src/db/utils';
+
+import './helpers/global-hooks';
 
 @suite('EX14: "Product Tags" - Array column test')
 class ProductTagsTest {

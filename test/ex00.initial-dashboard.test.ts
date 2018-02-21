@@ -1,14 +1,16 @@
 import { assert } from 'chai';
-import { slow, suite, test, timeout, only } from 'mocha-typescript';
-import './helpers/global-hooks';
-import { validateRecordColumns } from './helpers/columns';
+import { slow, suite, test, timeout } from 'mocha-typescript';
+
 import {
-  getProductSalesLeaderboard,
-  getEmployeeSalesLeaderboard,
   getCustomerSalesLeaderboard,
-  getReorderList,
-  getRecentOrders
+  getEmployeeSalesLeaderboard,
+  getProductSalesLeaderboard,
+  getRecentOrders,
+  getReorderList
 } from '../src/data/dashboard';
+
+import { validateRecordColumns } from './helpers/columns';
+import './helpers/global-hooks';
 
 @suite('EX00: Initial Dashboard Queries', slow(10000), timeout(20000))
 class InitialDashboardQueriesTest {

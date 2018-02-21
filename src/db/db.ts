@@ -1,8 +1,9 @@
 import chalk from 'chalk';
 import { highlight } from 'cli-highlight';
-import { logger } from '../log';
 import { Arr as JSONArray } from 'json-typescript';
 import * as sqlFormatter from 'sql-formatter';
+
+import { logger } from '../log';
 import TimingManager from '../timing';
 
 // tslint:disable:max-classes-per-file

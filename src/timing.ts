@@ -1,4 +1,3 @@
-import { Response } from 'express';
 class TimingManager {
   public static reset(response: any) {
     this.tm = new TimingManager(response);

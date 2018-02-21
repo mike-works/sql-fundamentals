@@ -1,17 +1,19 @@
 import * as express from 'express';
+
+import {
+  getCustomerSalesLeaderboard,
+  getEmployeeSalesLeaderboard,
+  getProductSalesLeaderboard,
+  getRecentOrders,
+  getReorderList
+} from '../data/dashboard';
+
 import customerRouter from './customers';
 import employeeRouter from './employees';
 import orderRouter from './orders';
-import supplierRouter from './suppliers';
-import searchRouter from './search';
 import productRouter from './products';
-import {
-  getEmployeeSalesLeaderboard,
-  getReorderList,
-  getCustomerSalesLeaderboard,
-  getProductSalesLeaderboard,
-  getRecentOrders
-} from '../data/dashboard';
+import searchRouter from './search';
+import supplierRouter from './suppliers';
 
 const router = express.Router();
 

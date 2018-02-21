@@ -2,13 +2,14 @@ import chalk from 'chalk';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as sqlite from 'sqlite';
-import { logger } from '../log';
-import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
-import { sql } from '../sql-string';
-import { setupPreparedStatements } from './prepared';
-import { SQLDatabase } from './db';
-import { highlight } from 'cli-highlight';
+
 import * as dbConfig from '../../database.json';
+import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
+import { logger } from '../log';
+import { sql } from '../sql-string';
+
+import { SQLDatabase } from './db';
+import { setupPreparedStatements } from './prepared';
 
 async function fileExists(pth: string) {
   return new Promise(resolve => {

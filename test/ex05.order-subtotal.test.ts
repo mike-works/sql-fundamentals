@@ -1,9 +1,9 @@
 import { assert } from 'chai';
-import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getOrder, getOrderWithDetails } from '../src/data/orders';
-import { logger } from '../src/log';
+
+import './helpers/global-hooks';
 
 @suite('EX05: "Order Subtotal" - Aggregate Function Tests')
 class OrderSubtotalTest {

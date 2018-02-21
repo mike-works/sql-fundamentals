@@ -1,10 +1,12 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
+
 import { getAllEmployees } from '../src/data/employees';
 import { getAllOrders } from '../src/data/orders';
 import { getAllProducts } from '../src/data/products';
+
 import { validateRecordColumns } from './helpers/columns';
+import './helpers/global-hooks';
 
 const REQUIRED_EMPLOYEE_LIST_COLS = [
   'id',

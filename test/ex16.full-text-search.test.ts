@@ -1,10 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import { getDb } from '../src/db/utils';
-import { sql } from '../src/sql-string';
+
 import { getSearchResults } from '../src/data/search';
-import { assertMigrationCount } from './helpers/migrations';
+
+import './helpers/global-hooks';
 
 @suite('EX16: "Full Text Search" - Global Search Tests')
 class FullTextSearchTest {

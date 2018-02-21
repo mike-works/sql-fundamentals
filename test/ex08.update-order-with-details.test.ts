@@ -1,17 +1,15 @@
 import { assert } from 'chai';
-import { orderBy } from 'lodash';
 import { suite, test } from 'mocha-typescript';
-import './helpers/global-hooks';
-import { logger } from '../src/log';
+
 import {
-  updateOrder,
   createOrder,
   getOrder,
-  deleteOrder,
-  getOrderDetails
+  getOrderDetails,
+  updateOrder
 } from '../src/data/orders';
+
 import { VALID_ORDER_DATA } from './ex06.create-order.test';
-import { merge } from 'lodash';
+import './helpers/global-hooks';
 
 @suite(
   'EX08: "Update an Order with OrderDetail items" - Update / Transaction test'
