@@ -19,9 +19,9 @@ function heartbeat(this: WebSocket) {
 class WebSocketManager {
   private wss: WS.Server;
   private heartbeatInterval: number;
+  private connectedSockets: WebSocket[] = [];
   public constructor() {
     this.wss = new WS.Server({ port: WS_PORT });
-    logger.info(`Websocket Serving on ws://localhost:${WS_PORT}`);
     this.wss.on('connection', this.onConnect.bind(this));
     this.heartbeatInterval = setInterval(
       this.onHeartbeat.bind(this),
@@ -30,6 +30,15 @@ class WebSocketManager {
   }
   public refreshAllClients() {
     this.broadcast('refresh');
+  }
+  public close() {
+    clearInterval(this.heartbeatInterval);
+    this.wss.clients.forEach(client => {
+      // if (client.readyState === WS.OPEN) {
+      client.close();
+      // }
+    });
+    this.wss.close();
   }
   protected broadcast(message: JSONValue) {
     this.wss.clients.forEach(client => {
@@ -41,6 +50,7 @@ class WebSocketManager {
 
   protected onConnect(ws: WebSocket) {
     console.log('connect');
+    this.connectedSockets.push(ws);
     ws.isAlive = true;
     ws.on('pong', heartbeat);
     ws.on('message', this.onMessagereceived.bind(this));

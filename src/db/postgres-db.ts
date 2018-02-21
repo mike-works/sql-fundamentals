@@ -89,8 +89,7 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
         PostgresDB
       >(pgdb);
       if (!this.pubSubSupport) {
-        this.pubSubSupport = setupPubSub(pool);
-        await this.pubSubSupport;
+        this.pubSubSupport = await setupPubSub(pool);
       }
       return pgdb;
     } catch (e) {
@@ -100,14 +99,18 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       client.release();
     }
   }
-  private static pubSubSupport: Promise<any>;
+  private static pubSubSupport: pg.Client;
   private client: pg.Client;
 
   protected constructor(client: pg.Client) {
     super();
     this.client = client;
   }
-
+  // tslint:disable-next-line:no-empty
+  public async shutdown(): Promise<void> {
+    PostgresDB.pubSubSupport.release();
+    await pool.end();
+  }
   public async run(
     query: string,
     ...params: any[]
@@ -172,6 +175,15 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     return (await this.all(
       sql`select viewname as name from pg_catalog.pg_views;`
     )).map((result: any) => result.name as string);
+  }
+  public async getAllFunctions(): Promise<string[]> {
+    return (await this.all(sql`SELECT routines.routine_name as name
+FROM information_schema.routines
+    LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name
+WHERE routines.specific_schema='public'
+ORDER BY routines.routine_name, parameters.ordinal_position;`)).map(
+      (result: any) => result.name as string
+    );
   }
   public async getAllTableNames(): Promise<string[]> {
     return (await this.all(sql`SELECT table_name as name

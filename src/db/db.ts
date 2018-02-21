@@ -32,6 +32,8 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
   protected constructor() {
     this.statements = {};
   }
+  // tslint:disable-next-line:no-empty
+  public async shutdown(): Promise<void> {}
   public abstract run(
     sql: string,
     ...params: any[]
@@ -46,6 +48,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
 
   public abstract getIndicesForTable(tableName: string): Promise<string[]>;
   public abstract getAllTriggers(): Promise<string[]>;
+  public abstract getAllFunctions(): Promise<string[]>;
   public abstract getAllTableNames(): Promise<string[]>;
   public abstract getAllViews(): Promise<string[]>;
   public abstract getAllMaterializedViews(): Promise<string[]>;

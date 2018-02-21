@@ -52,9 +52,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     }
 
     dbPromises[name] = sqlite
-      .open(pathToDb, {
-        verbose: true
-      })
+      .open(pathToDb, { verbose: true })
       .then(sqliteDb => {
         let db = new SQLiteDB(sqliteDb);
         return db
@@ -77,7 +75,9 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     super();
     this.db = db;
   }
-
+  public async shutdown(): Promise<void> {
+    await this.db.close();
+  }
   public async run(
     query: string,
     ...params: any[]
@@ -128,5 +128,8 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   }
   public async getAllMaterializedViews(): Promise<string[]> {
     throw new Error('Materialized views are not supported in sqlite');
+  }
+  public async getAllFunctions(): Promise<string[]> {
+    throw new Error('Custom functions are not supported in sqlite');
   }
 }

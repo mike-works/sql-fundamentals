@@ -6,9 +6,7 @@ import { assertMigrationCount } from './helpers/migrations';
 
 @suite('EX16: "Full Text Search" - Migration test')
 class FullTextSearchMigrationTest {
-  @test(
-    'migrationExists() new .sql file based migration exists in the ./migrations folder'
-  )
+  @test('New .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
     assertMigrationCount(10);
   }
