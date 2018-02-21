@@ -8,14 +8,7 @@
     "trailing-comma": false,
     "max-line-length": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": [
-      true,
-      {
-        "import-sources-order": "lowercase-last",
-        "named-imports-order": "lowercase-first",
-        "grouped-imports": true
-      }
-    ],
+    "ordered-imports": false,
     "quotemark": false,
     "arrow-parens": [false],
     "variable-name": [

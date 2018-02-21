@@ -30,5 +30,7 @@ export default function linkTo(this: any, opts?: Handlebars.HelperOptions) {
   if (active) {
     classNames.push('active');
   }
-  return new Handlebars.SafeString(`<a class='${classNames.join(' ')}' href='${href}'>${opts.fn(this)}</a>`);
+  return new Handlebars.SafeString(
+    `<a class='${classNames.join(' ')}' href='${href}'>${opts.fn(this)}</a>`
+  );
 }

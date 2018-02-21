@@ -1,10 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import {
-  createOrder,
-  getOrderDetails
-} from '../src/data/orders';
+import { createOrder, getOrderDetails } from '../src/data/orders';
 
 import { VALID_ORDER_DATA } from './ex06.create-order.test';
 import './helpers/global-hooks';

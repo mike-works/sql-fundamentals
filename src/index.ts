@@ -1,4 +1,3 @@
-
 // import { initializeDb } from './db/setup';
 import { startExpressServer } from './express-server';
 
