@@ -9,6 +9,7 @@ import {
   getRecentOrders
 } from '../src/data/dashboard';
 
+@slow(10000)
 @suite('EX000: Initial Dashboard Queries')
 class InitialDashboardQueriesTest {
   @test('Product leaderboard query')
