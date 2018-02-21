@@ -87,11 +87,13 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
       if (process.env.NODE_ENV !== 'test') {
         this.logQuery(query, params, t);
       }
-      TimingManager.current.addTime(
-        'db',
-        t,
-        query.trim().replace(/[\(\)\n\;]+/g, '')
-      );
+      if (TimingManager.current) {
+        TimingManager.current.addTime(
+          'db',
+          t,
+          query.trim().replace(/[\(\)\n\;]+/g, '')
+        );
+      }
       return result;
     } catch (e) {
       logger.error(`Problem running query
