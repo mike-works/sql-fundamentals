@@ -1,6 +1,7 @@
 import * as WS from 'ws';
 import { Value as JSONValue } from 'json-typescript';
 import { logger } from './log';
+import { Server } from 'http';
 
 const WS_PORT = 40510;
 const WS_HEARTBEAT_PULSE = 2000;
@@ -20,8 +21,8 @@ class WebSocketManager {
   private wss: WS.Server;
   private heartbeatInterval: number;
   private connectedSockets: WebSocket[] = [];
-  public constructor() {
-    this.wss = new WS.Server({ port: WS_PORT });
+  public constructor(server: Server) {
+    this.wss = new WS.Server({ server });
     this.wss.on('connection', this.onConnect.bind(this));
     this.heartbeatInterval = setInterval(
       this.onHeartbeat.bind(this),
@@ -76,5 +77,8 @@ class WebSocketManager {
     });
   }
 }
-let wsm = new WebSocketManager();
-export default wsm;
+let wsm: WebSocketManager;
+export function setup(server: Server) {
+  wsm = new WebSocketManager(server);
+}
+export default () => wsm;

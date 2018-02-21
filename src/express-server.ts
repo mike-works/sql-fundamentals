@@ -10,7 +10,7 @@ import { logger } from './log';
 import * as serverTiming from 'server-timing';
 import TimingManager from './timing';
 import router from './routers/main';
-import './ws';
+import { setup as setupWebsocketServer } from './ws';
 
 async function startListening(app: express.Express): Promise<http.Server> {
   return new Promise<http.Server>((res, rej) => {
@@ -18,6 +18,7 @@ async function startListening(app: express.Express): Promise<http.Server> {
       logger.info(`Server listening on http://localhost:${PORT}`);
       res(server);
     });
+    setupWebsocketServer(server);
   });
 }
 
