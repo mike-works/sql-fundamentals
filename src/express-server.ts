@@ -8,6 +8,7 @@ import * as bodyParser from 'body-parser';
 import { loadHandlebarsHelpers } from './load-helpers';
 import { logger } from './log';
 import * as serverTiming from 'server-timing';
+import TimingManager from './timing';
 import router from './routers/main';
 
 async function startListening(app: express.Express): Promise<http.Server> {
@@ -37,6 +38,11 @@ async function setupTemplating(app: express.Application) {
 }
 
 function installMiddlewares(app: express.Application) {
+  app.use(serverTiming());
+  app.use((req, res, next) => {
+    TimingManager.reset(res);
+    next();
+  });
   app.use(
     expressWinston.logger({
       // expressFormat: true,
@@ -53,11 +59,11 @@ function installMiddlewares(app: express.Application) {
       }
     })
   );
-  app.use(serverTiming());
 }
 
 async function setupRouting(app: express.Application) {
   app.use(router);
+
   app.use('/static', express.static('public'));
 }
 
@@ -88,6 +94,7 @@ export async function startExpressServer(): Promise<
 
   await setupTemplating(app);
   await installMiddlewares(app);
+
   await setupRouting(app);
 
   const server = await startListening(app);

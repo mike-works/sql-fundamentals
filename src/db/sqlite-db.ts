@@ -29,8 +29,6 @@ const copyFile = (src: string, dst: string) =>
 
 const dbPromises: { [k: string]: Promise<SQLiteDB> } = {};
 
-// const dbPath = (name: string) => path.join(PROJECT_ROOT, `${name}.sqlite`);
-
 export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   public static async setup(): Promise<SQLiteDB> {
     let name = (dbConfig as any).sqlite.filename;

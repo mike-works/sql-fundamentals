@@ -3,6 +3,7 @@ import { highlight } from 'cli-highlight';
 import { logger } from '../log';
 import { Arr as JSONArray } from 'json-typescript';
 import * as sqlFormatter from 'sql-formatter';
+import TimingManager from '../timing';
 
 // tslint:disable:max-classes-per-file
 export interface SQLStatement {
@@ -80,12 +81,17 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
     try {
       let result = await fn();
       let t = -1;
+      let end = process.hrtime();
+      let diff = [end[0] - begin[0], end[1] - begin[1]];
+      t = diff[0] * 1000 + diff[1] / 1000000;
       if (process.env.NODE_ENV !== 'test') {
-        let end = process.hrtime();
-        let diff = [end[0] - begin[0], end[1] - begin[1]];
-        t = diff[0] * 1000 + diff[1] / 1000000;
         this.logQuery(query, params, t);
       }
+      TimingManager.current.addTime(
+        'db',
+        t,
+        query.trim().replace(/[\(\)\n\;]+/g, '')
+      );
       return result;
     } catch (e) {
       logger.error(`Problem running query
