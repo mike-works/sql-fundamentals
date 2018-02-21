@@ -76,26 +76,26 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   protected constructor(db: sqlite.Database) {
     super();
     this.db = db;
-    if (process.env.NODE_ENV !== 'test') {
-      // tslint:disable-next-line:no-shadowed-variable
-      this.db.on('profile', (sql: string, time: number) => {
-        this.logQuery(sql, [], time);
-      });
-    }
   }
 
   public async run(
     query: string,
     ...params: any[]
   ): Promise<{ lastID: number | string }> {
-    let s = await this.db.run(query, ...params);
-    return { lastID: s.lastID };
+    return this.measure(query, params, async () => {
+      let s = await this.db.run(query, ...params);
+      return { lastID: s.lastID };
+    });
   }
   public get<T>(query: string, ...params: any[]): Promise<T> {
-    return this.db.get<T>(query, ...params);
+    return this.measure(query, params, async () => {
+      return this.db.get<T>(query, ...params);
+    });
   }
   public all<T>(query: string, ...params: any[]): Promise<T[]> {
-    return this.db.all<T>(query, ...params);
+    return this.measure(query, params, async () => {
+      return await this.db.all<T>(query, ...params);
+    });
   }
   public async prepare(
     name: string,
