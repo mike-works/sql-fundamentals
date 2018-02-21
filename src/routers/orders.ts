@@ -21,54 +21,53 @@ import { getAllProducts } from '../data/products';
 import { mapValues } from 'lodash';
 
 const ORDER_VALIDATIONS = [
-  check('EmployeeId')
+  check('employeeid')
     .exists()
     .isNumeric()
     .toInt(),
-  check('CustomerId')
+  check('customerid')
     .exists()
     .isAlphanumeric()
     .trim(),
-  check('ShipCity')
+  check('shipcity')
     .exists()
     .trim(),
-  check('ShipAddress')
+  check('shipaddress')
     .exists()
     .trim(),
-  check('ShipName')
+  check('shipname')
     .exists()
     .trim(),
-  check('ShipVia')
+  check('shipvia')
     .exists()
     .isNumeric()
     .toInt(),
-  check('ShipRegion')
+  check('shipregion')
     .exists()
     .isNumeric()
     .toInt(),
-  check('ShipCountry')
+  check('shipcountry')
+    .exists()
+    .trim(),
+  check('shippostalcode')
     .exists()
     .isAlphanumeric()
     .trim(),
-  check('ShipPostalCode')
-    .exists()
-    .isAlphanumeric()
-    .trim(),
-  check('RequiredDate').exists(),
-  check('Freight')
+  check('requireddate').exists(),
+  check('freight')
     .exists()
     .isFloat()
     .toFloat(),
-  check('details.Id')
+  check('details.id')
     .optional()
     .custom((value: any[]) => value instanceof Array),
-  check('details.ProductId')
+  check('details.productid')
     .optional()
     .custom((value: any[]) => value instanceof Array),
-  check('details.Quantity')
+  check('details.quantity')
     .optional()
     .custom((value: any[]) => value instanceof Array),
-  check('details.Discount')
+  check('details.discount')
     .optional()
     .custom((value: any[]) => value instanceof Array)
 ];
