@@ -12,7 +12,6 @@ class TimingManager {
     this.response = response;
   }
   public addTime(name: string, time: number, description: string) {
-    console.log('addTime(', name, ', ', time, ', ', description, ');');
     (this.response as any).setMetric(name, time, description);
   }
 }
