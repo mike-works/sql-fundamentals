@@ -9,9 +9,8 @@ import {
   getRecentOrders
 } from '../src/data/dashboard';
 
-@suite('EX000: Initial Dashboard Queries')
+@suite('EX000: Initial Dashboard Queries', slow(10000), timeout(20000))
 class InitialDashboardQueriesTest {
-  @slow(10000)
   @test('Product leaderboard query')
   public async productLeaderboardTest() {
     let result = await getProductSalesLeaderboard();
@@ -26,7 +25,6 @@ class InitialDashboardQueriesTest {
       ['name', 'amount']
     );
   }
-  @slow(10000)
   @test('Employee leaderboard query')
   public async employeeLeaderboardTest() {
     let result = await getEmployeeSalesLeaderboard();
@@ -41,7 +39,6 @@ class InitialDashboardQueriesTest {
       ['name', 'amount']
     );
   }
-  @slow(10000)
   @test('Customer leaderboard query')
   public async customerLeaderboardTest() {
     let result = await getCustomerSalesLeaderboard();
@@ -56,7 +53,6 @@ class InitialDashboardQueriesTest {
       ['name', 'amount']
     );
   }
-  @slow(10000)
   @test('Reorder list')
   public async reorderListTest() {
     let result = await getReorderList();
@@ -75,7 +71,6 @@ class InitialDashboardQueriesTest {
       ['name', 'reorderlevel', 'unitsinstock', 'unitsonorder']
     );
   }
-  @slow(10000)
   @test('Recent Orders')
   public async recentOrdersTest() {
     let result = await getRecentOrders();
