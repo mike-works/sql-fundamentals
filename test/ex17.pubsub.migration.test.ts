@@ -1,8 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { getDb } from '../src/db/utils';
+import { getDb, DbType } from '../src/db/utils';
 
+import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 
@@ -13,7 +14,8 @@ class MigrationTest {
     assertMigrationCount(10);
   }
 
-  @test('Function table_update_notify is found')
+  @test('[POSTGRES ONLY] Function table_update_notify is found')
+  @onlyForDatabaseTypes(DbType.Postgres)
   public async productIndicesPresent() {
     let db = await getDb();
     let indexInfo = await db.getAllFunctions();

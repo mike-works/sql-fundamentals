@@ -1,13 +1,15 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { getDb } from '../src/db/utils';
+import { getDb, DbType } from '../src/db/utils';
 
+import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 
 @suite('EX17: "PubSub" - Edit order test')
 class PubSubTest {
-  @test('Creating an order results in a refreshAll')
+  @test('[POSTGRES ONLY] Creating an order results in a refreshAll')
+  @onlyForDatabaseTypes(DbType.Postgres)
   public async productIndicesPresent() {
     let db = await getDb();
     let indexInfo = await db.getAllFunctions();
