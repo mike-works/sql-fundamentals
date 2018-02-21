@@ -1,0 +1,5 @@
+--ui mocha-typescript
+--require ts-node/register
+--require source-map-support/register
+--watch-extensions js,ts,json
+**/*.test.ts

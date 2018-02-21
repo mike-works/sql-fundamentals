@@ -17,6 +17,8 @@
     "heroku-postbuild": "scripty",
     "test": "SCRIPTY_SILENT=true scripty",
     "test:ex": "SCRIPTY_SILENT=true scripty",
+    "test:ex:watch": "SCRIPTY_SILENT=true scripty",
+    "test:watch": "SCRIPTY_SILENT=true scripty",
     "build": "SCRIPTY_SILENT=true scripty",
     "db:setup:pg": "SCRIPTY_SILENT=true scripty",
     "db:setup:sqlite": "SCRIPTY_SILENT=true scripty",

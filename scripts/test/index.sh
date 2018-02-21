@@ -7,7 +7,6 @@ else
 fi  
 echo "Git Branch: $git_branch"
 
-
 if [ $1 ]
 then
   filter=$1
@@ -30,8 +29,8 @@ echo "Test Filter: $filter"
 if [ \( $git_branch = *'solution'* \) ] &&  [ \( $filter = 'EX000' \) ]
 then
   echo "Solutions branch with no filter"
-  NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register ./tests/*.test.ts $2 $3
+  NODE_ENV=test ./node_modules/.bin/mocha $2 $3
 else
-  echo "Applying Test Filter: $filter"
-  NODE_ENV=test ./node_modules/.bin/mocha --grep $filter --require ts-node/register ./tests/*.test.ts $2 $3
+  echo "Applying Test Filter: $filter $2"
+  NODE_ENV=test ./node_modules/.bin/mocha --grep $filter $2 $3
 fi
