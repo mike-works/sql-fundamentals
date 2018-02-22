@@ -1,1 +1,1 @@
-web: npm run bump
+web: npm start
