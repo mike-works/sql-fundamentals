@@ -40,9 +40,32 @@ This app is not in a good state at the beginning of the workshop. Features are m
 
 # Deploy this app on heroku
 
-If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) database locally, you can deploy this app onto heroku and use their free (up to 10k records) hosted PostgreSQL service.
+If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) database locally, you can deploy this app onto heroku and use their $7/month hosted PostgreSQL service.
 
+### Step 1
+
+Click this button to deploy the app to heroku. Because the database is large (about 700K rows) it cannot be run with their free database option.
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+### Step 2
+
+Populate the database with data. This can be done one of two ways
+
+#### If you have a local database already setup and running
+
+Use the heroku toolbelt posgtres push utility (recommended)
+
+```sh
+heroku pg:push nw_postgresql DATABASE_URL --app replace-this-with-your-heroku-app-name
+```
+
+#### If you don't have a local database to push
+
+Use the `psql` command line utility to run the huge PostgreSQL setup script. This will take at least several minutes.
+
+```sh
+heroku run "psql \$DATABASE_URL?ssl=true < northwind.sql -q" --app sql456
+```
 
 # Build Status
 
