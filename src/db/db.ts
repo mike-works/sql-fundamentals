@@ -92,11 +92,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
         this.logQuery(query, params, t);
       }
       if (TimingManager.current) {
-        TimingManager.current.addTime(
-          'db',
-          t,
-          query.trim().replace(/[\(\)\n\;]+/g, '')
-        );
+        TimingManager.current.addTime('db', t, 'Database');
       }
       return result;
     } catch (e) {
