@@ -1,7 +1,7 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-interface ProductFlavorFilter {
+export interface ProductFlavorFilter {
   flavorName: string;
   level: number;
   type: 'less-than' | 'greater-than';

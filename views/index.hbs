@@ -104,3 +104,25 @@
     </div>
   </div>
 </div>
+
+<script type='text/javascript'>
+  var HOST = location.origin.replace(/^http/, 'ws');
+
+  var ws = new WebSocket(HOST);
+  // event emmited when connected
+  ws.onopen = function () {
+    console.log('websocket is connected on ' + HOST  + ' ...')
+    // sending a send event to websocket server
+    ws.send('connected')
+  }
+  // event emmited when receiving message 
+  ws.onmessage = function (ev) {
+    if (ev.data === 'refresh') {
+      setTimeout(() => {
+        window.location.href = window.location.href;
+      }, 100);
+    } else {
+      console.log(ev);
+    }
+  }
+</script>

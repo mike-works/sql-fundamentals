@@ -1,2 +1,4 @@
 #!/usr/bin/env sh
-npm run build
+echo "BEGINNING POSTBUILD"
+npm run db:migrate:pg --- up
+echo "FINISHED POSTBUILD"

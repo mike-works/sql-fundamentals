@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import { join } from 'path';
+
 import { PROJECT_ROOT } from './constants';
-import { logger } from './log';
 
 async function readdir(name: string): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {

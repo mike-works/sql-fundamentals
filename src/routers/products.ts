@@ -1,12 +1,12 @@
 import * as express from 'express';
+import { check } from 'express-validator/check';
+import { matchedData } from 'express-validator/filter';
+
 import {
   getAllProducts,
   updateProduct,
   ProductFlavorFilter
 } from '../data/products';
-import { matchedData } from 'express-validator/filter';
-import { check } from 'express-validator/check';
-import { logger } from '../log';
 
 const router = express.Router();
 
@@ -24,7 +24,6 @@ router.get(
       .split(/\s*\,\s*/g)
       .filter((x: string) => x);
 
-    console.log(JSON.stringify(orderData));
     let flavorFilter: ProductFlavorFilter[] = [];
     switch (orderData.flav) {
       case 'sweet-hot':

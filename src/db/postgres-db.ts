@@ -1,11 +1,13 @@
 import chalk from 'chalk';
 import * as pg from 'pg';
+
+import * as dbConfig from '../../database.json';
 import { logger } from '../log';
 import { sql } from '../sql-string';
+
 import { SQLDatabase, SQLStatement } from './db';
+import { setupPubSub } from './postgres-pubsub';
 import { setupPreparedStatements } from './prepared';
-import { highlight } from 'cli-highlight';
-import * as dbConfig from '../../database.json';
 
 class PostgresStatement implements SQLStatement {
   protected name: string;
@@ -86,6 +88,9 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
         PostgresStatement,
         PostgresDB
       >(pgdb);
+      if (!this.pubSubSupport) {
+        this.pubSubSupport = await setupPubSub(pool);
+      }
       return pgdb;
     } catch (e) {
       logger.error(`ERROR during posgres setup\n${e}`);
@@ -94,12 +99,18 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       client.release();
     }
   }
+  private static pubSubSupport: pg.Client;
   private client: pg.Client;
+
   protected constructor(client: pg.Client) {
     super();
     this.client = client;
   }
-
+  // tslint:disable-next-line:no-empty
+  public async shutdown(): Promise<void> {
+    PostgresDB.pubSubSupport.release();
+    await pool.end();
+  }
   public async run(
     query: string,
     ...params: any[]
@@ -143,10 +154,10 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     );
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
-    return (await this.all(
-      sql`select indexname as name
-    from pg_indexes where tablename = \'${tableName}\'`
-    )).map((result: any) => result.name as string);
+    return (await this.all(sql`select indexname as name
+    from pg_indexes where tablename = \'${tableName}\'`)).map(
+      (result: any) => result.name as string
+    );
   }
   public async getAllTriggers(): Promise<string[]> {
     return (await this
@@ -165,12 +176,21 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
       sql`select viewname as name from pg_catalog.pg_views;`
     )).map((result: any) => result.name as string);
   }
+  public async getAllFunctions(): Promise<string[]> {
+    return (await this.all(sql`SELECT routines.routine_name as name
+FROM information_schema.routines
+    LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name
+WHERE routines.specific_schema='public'
+ORDER BY routines.routine_name, parameters.ordinal_position;`)).map(
+      (result: any) => result.name as string
+    );
+  }
   public async getAllTableNames(): Promise<string[]> {
-    return (await this.all(
-      sql`SELECT table_name as name
+    return (await this.all(sql`SELECT table_name as name
       FROM information_schema.tables
      WHERE table_schema='public'
-       AND table_type='BASE TABLE';`
-    )).map((result: any) => result.name as string);
+       AND table_type='BASE TABLE';`)).map(
+      (result: any) => result.name as string
+    );
   }
 }

@@ -2,13 +2,19 @@
   "extends": "tslint:recommended",
   "rules": {
     "no-unused-variable": [true],
-    "no-console": false,
+    "no-console": true,
     "semicolon": [true, "always"],
     "interface-name": false,
     "trailing-comma": false,
     "max-line-length": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first"
+      }
+    ],
     "quotemark": false,
     "arrow-parens": [false],
     "variable-name": [
@@ -17,6 +23,7 @@
       "check-format",
       "allow-leading-underscore"
     ],
+    "await-promise": true,
     "prefer-const": [false]
   }
 }

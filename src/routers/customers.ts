@@ -1,7 +1,7 @@
 import * as express from 'express';
+
 import { getAllCustomers, getCustomer } from '../data/customers';
 import { getCustomerOrders } from '../data/orders';
-import { logger } from '../log';
 
 const router = express.Router();
 

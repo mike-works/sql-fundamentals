@@ -1,6 +1,9 @@
-<div class="mui-appbar">
+<div class="mui-appbar main-nav">
   <div class="mui-container">
     <ul class="nav">
+      <li class='nav-item'>
+        {{#link-to classNames='mui--appbar-height' href="/"}} Dashboard {{/link-to}}
+      </li>
       <li class='nav-item'>
         {{#link-to classNames='mui--appbar-height'
                    href="/employees"}}
@@ -31,6 +34,19 @@
           Products
         {{/link-to}}
       </li>
+      <li class='nav-item'>
+        <button class='mui--appbar-height global-search'>Search</button>
+      </li>
     </ul>
+  </div>
+  <div class="search-box">
+    <div class="mui-container">
+      <form action='/search' class="search-input-container mui-form">
+        <div class="mui-textfield mui-textfield--float-label">
+          <input type='search' name='s' class='search-input' type="text">
+          <label for="s">Search</label>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

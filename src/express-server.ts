@@ -1,13 +1,17 @@
+import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as exphbs from 'express-handlebars';
 import * as expressWinston from 'express-winston';
 import * as http from 'http';
+import * as serverTiming from 'server-timing';
 import * as winston from 'winston';
+
 import { PORT } from './constants';
-import * as bodyParser from 'body-parser';
 import { loadHandlebarsHelpers } from './load-helpers';
 import { logger } from './log';
 import router from './routers/main';
+import TimingManager from './timing';
+import { setup as setupWebsocketServer } from './ws';
 
 async function startListening(app: express.Express): Promise<http.Server> {
   return new Promise<http.Server>((res, rej) => {
@@ -15,6 +19,7 @@ async function startListening(app: express.Express): Promise<http.Server> {
       logger.info(`Server listening on http://localhost:${PORT}`);
       res(server);
     });
+    setupWebsocketServer(server);
   });
 }
 
@@ -36,6 +41,11 @@ async function setupTemplating(app: express.Application) {
 }
 
 function installMiddlewares(app: express.Application) {
+  app.use(serverTiming());
+  app.use((req, res, next) => {
+    TimingManager.reset(res);
+    next();
+  });
   app.use(
     expressWinston.logger({
       // expressFormat: true,
@@ -56,6 +66,7 @@ function installMiddlewares(app: express.Application) {
 
 async function setupRouting(app: express.Application) {
   app.use(router);
+
   app.use('/static', express.static('public'));
 }
 
@@ -85,7 +96,8 @@ export async function startExpressServer(): Promise<
   }
 
   await setupTemplating(app);
-  await installMiddlewares(app);
+  installMiddlewares(app);
+
   await setupRouting(app);
 
   const server = await startListening(app);

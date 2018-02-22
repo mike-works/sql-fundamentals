@@ -1,5 +1,5 @@
-import { sql } from '../sql-string';
 import { SQLDatabase, SQLStatement } from 'src/db/db';
+
 import { logger } from '../log';
 
 enum DbType {

@@ -2,13 +2,14 @@ import chalk from 'chalk';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as sqlite from 'sqlite';
-import { logger } from '../log';
-import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
-import { sql } from '../sql-string';
-import { setupPreparedStatements } from './prepared';
-import { SQLDatabase } from './db';
-import { highlight } from 'cli-highlight';
+
 import * as dbConfig from '../../database.json';
+import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
+import { logger } from '../log';
+import { sql } from '../sql-string';
+
+import { SQLDatabase } from './db';
+import { setupPreparedStatements } from './prepared';
 
 async function fileExists(pth: string) {
   return new Promise(resolve => {
@@ -28,8 +29,6 @@ const copyFile = (src: string, dst: string) =>
   });
 
 const dbPromises: { [k: string]: Promise<SQLiteDB> } = {};
-
-// const dbPath = (name: string) => path.join(PROJECT_ROOT, `${name}.sqlite`);
 
 export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   public static async setup(): Promise<SQLiteDB> {
@@ -54,9 +53,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     }
 
     dbPromises[name] = sqlite
-      .open(pathToDb, {
-        verbose: true
-      })
+      .open(pathToDb, { verbose: true })
       .then(sqliteDb => {
         let db = new SQLiteDB(sqliteDb);
         return db
@@ -78,36 +75,28 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   protected constructor(db: sqlite.Database) {
     super();
     this.db = db;
-    if (process.env.NODE_ENV !== 'test') {
-      // tslint:disable-next-line:no-shadowed-variable
-      this.db.on('profile', (sql: string, time: number) => {
-        this.logQuery(sql, [], [0, time * 1000000]);
-        //         logger.info(
-        //           [
-        //             `
-        // ${chalk.magentaBright('>>')} ${highlight(sql.trim(), {
-        //               language: 'sql',
-        //               ignoreIllegals: true
-        //             })}`,
-        //             `(${chalk.yellow(`${time.toPrecision(2)}ms`)})`
-        //           ].join(' ')
-        // );
-      });
-    }
   }
-
+  public async shutdown(): Promise<void> {
+    await this.db.close();
+  }
   public async run(
     query: string,
     ...params: any[]
   ): Promise<{ lastID: number | string }> {
-    let s = await this.db.run(query, ...params);
-    return { lastID: s.lastID };
+    return this.measure(query, params, async () => {
+      let s = await this.db.run(query, ...params);
+      return { lastID: s.lastID };
+    });
   }
   public get<T>(query: string, ...params: any[]): Promise<T> {
-    return this.db.get<T>(query, ...params);
+    return this.measure(query, params, async () => {
+      return this.db.get<T>(query, ...params);
+    });
   }
   public all<T>(query: string, ...params: any[]): Promise<T[]> {
-    return this.db.all<T>(query, ...params);
+    return this.measure(query, params, async () => {
+      return await this.db.all<T>(query, ...params);
+    });
   }
   public async prepare(
     name: string,
@@ -140,5 +129,8 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
   }
   public async getAllMaterializedViews(): Promise<string[]> {
     throw new Error('Materialized views are not supported in sqlite');
+  }
+  public async getAllFunctions(): Promise<string[]> {
+    throw new Error('Custom functions are not supported in sqlite');
   }
 }

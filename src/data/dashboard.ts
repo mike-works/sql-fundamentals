@@ -3,7 +3,7 @@ import { sql } from '../sql-string';
 
 export async function getEmployeeSalesLeaderboard() {
   let db = await getDb();
-  return await db.all(sql`SELECT (e.firstname || ' ' || e.lastname) as name, sum((od.unitprice * od.quantity))as amount FROM 
+  return await db.all(sql`SELECT (e.firstname || ' ' || e.lastname) as name, sum((od.unitprice * od.quantity))as amount FROM
   Employee as e INNER JOIN "order" as o
   ON o.employeeid = e.id
   INNER JOIN OrderDetail as od

@@ -38,11 +38,111 @@ Here's what it looks like (and [here](https://damp-oasis-38940.herokuapp.com/) i
 
 This app is not in a good state at the beginning of the workshop. Features are missing, there are major performances, and quite a few database-related bugs. We'll fix all these problems and learn as we go!
 
+# Setup Instructions
+
+## Clone this project
+
+In your terminal, run
+
+```sh
+git clone https://github.com/mike-works/sql-fundamentals sql
+cd sql
+```
+
+## Database Setup
+
+This project is used for two workshops. [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) may be completed using either SQLite or PostgreSQL, and [Professional SQL](https://mike.works/course/professional-sql-c9c7184) requires PostgreSQL.
+
+To set up the database software, please check out these guides
+
+* [Installing SQLite 3](./SQLITE_SETUP.md)
+* [Installing Postgres 10](./POSTGRES_SETUP.md)
+
+## Install dependencies
+
+If you only intend to complete the [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) workshop (exercises 1-10), you can run
+
+```sh
+npm install --no-optional
+```
+
+If you wish to proceed beyond exercise 10 for the [Professional SQL](https://mike.works/course/professional-sql-c9c7184) course, please include optional dependencies
+
+```sh
+npm install
+```
+
+## Seed Data
+
+If you're using the _SQLite_ database, the `./master.sqlite` file already contains the data we'll be working with. Please run
+
+```sh
+npm run db:setup:sqlite
+```
+
+If you're using the _PostgreSQL_ database, the `./northwind.sql` script contains the necessary commands for setting up the equivalent data. Please run
+
+```sh
+npm run db:setup:pg
+```
+
+## Run the tests
+
+There's an initial set of tests that ensure the app is correctly setup for the beginning of the course. You should be able to run this command and see them all passing
+
+```sh
+# Test against SQLite
+npm run test:ex 0
+# Test against PostgreSQL
+DB_TYPE=pg npm run test:ex 0
+```
+
+Or, if you wish to have the app watch the source code for changes, and re-run the tests on each save...
+
+```sh
+# Test against SQLite
+npm run test:ex:watch 0
+# Test against PostgreSQL
+DB_TYPE=pg npm run test:ex:watch 0
+```
+
+## Start the app
+
+```sh
+# Run w/ SQLite
+npm run watch
+# Run w/ PostgreSQL
+DB_TYPE=pg npm run watch
+```
+
 # Deploy this app on heroku
 
-If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) database locally, you can deploy this app onto heroku and use their free (up to 10k records) hosted PostgreSQL service.
+If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) database locally, you can deploy this app onto heroku and use their $7/month hosted PostgreSQL service.
 
+### Step 1
+
+Click this button to deploy the app to heroku. Because the database is large (about 700K rows) it cannot be run with their free database option.
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+### Step 2
+
+Populate the database with data. This can be done one of two ways
+
+#### If you have a local database already setup and running
+
+Use the heroku toolbelt posgtres push utility (recommended)
+
+```sh
+heroku pg:push nw_postgresql DATABASE_URL --app replace-this-with-your-heroku-app-name
+```
+
+#### If you don't have a local database to push
+
+Use the `psql` command line utility to run the huge PostgreSQL setup script. This will take at least several minutes.
+
+```sh
+heroku run "psql \$DATABASE_URL?ssl=true < northwind.sql -q" --app sql456
+```
 
 # Build Status
 

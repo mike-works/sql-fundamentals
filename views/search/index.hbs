@@ -1,0 +1,16 @@
+<div class="mui-container">
+  <div class="mui-row">
+    <div class="mui-col-sm-12">
+      <h1>Search Results</h1>
+    </div>
+  </div>
+  <div class="mui-col-sm-12">
+    <ul>
+      {{#each results as |r|}}
+      <li>
+        {{#link-to href=(entity-url r.entity r.id) }} {{r.name}} {{/link-to}}
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

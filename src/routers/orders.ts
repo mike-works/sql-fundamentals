@@ -1,74 +1,69 @@
 import * as express from 'express';
-import * as moment from 'moment';
+import { Request, Response } from 'express';
 import { check, validationResult } from 'express-validator/check';
 import { matchedData } from 'express-validator/filter';
 
-import { Request, Response } from 'express';
 import { getAllCustomers } from '../data/customers';
 import { getAllEmployees } from '../data/employees';
 import {
   createOrder,
   deleteOrder,
   getAllOrders,
-  getOrder,
-  updateOrder,
-  getOrderWithDetails
+  getOrderWithDetails,
+  updateOrder
 } from '../data/orders';
+import { getAllProducts } from '../data/products';
 import { getAllRegions } from '../data/regions';
 import { getAllShippers } from '../data/shippers';
-import { logger } from '../log';
-import { getAllProducts } from '../data/products';
-import { mapValues } from 'lodash';
 
 const ORDER_VALIDATIONS = [
-  check('EmployeeId')
+  check('employeeid')
     .exists()
     .isNumeric()
     .toInt(),
-  check('CustomerId')
+  check('customerid')
     .exists()
     .isAlphanumeric()
     .trim(),
-  check('ShipCity')
+  check('shipcity')
     .exists()
     .trim(),
-  check('ShipAddress')
+  check('shipaddress')
     .exists()
     .trim(),
-  check('ShipName')
+  check('shipname')
     .exists()
     .trim(),
-  check('ShipVia')
+  check('shipvia')
     .exists()
     .isNumeric()
     .toInt(),
-  check('ShipRegion')
+  check('shipregion')
     .exists()
     .isNumeric()
     .toInt(),
-  check('ShipCountry')
+  check('shipcountry')
+    .exists()
+    .trim(),
+  check('shippostalcode')
     .exists()
     .isAlphanumeric()
     .trim(),
-  check('ShipPostalCode')
-    .exists()
-    .isAlphanumeric()
-    .trim(),
-  check('RequiredDate').exists(),
-  check('Freight')
+  check('requireddate').exists(),
+  check('freight')
     .exists()
     .isFloat()
     .toFloat(),
-  check('details.Id')
+  check('details.id')
     .optional()
     .custom((value: any[]) => value instanceof Array),
-  check('details.ProductId')
+  check('details.productid')
     .optional()
     .custom((value: any[]) => value instanceof Array),
-  check('details.Quantity')
+  check('details.quantity')
     .optional()
     .custom((value: any[]) => value instanceof Array),
-  check('details.Discount')
+  check('details.discount')
     .optional()
     .custom((value: any[]) => value instanceof Array)
 ];
@@ -105,11 +100,21 @@ function normalizeOrderDetails(raw: {
 
 router.get('/', async (req, res, next) => {
   try {
-    let { page = 1, perPage, sort, order } = req.query;
-    let orders = await getAllOrders({ page, perPage, sort, order });
+    let { page = 1, perPage = 20 } = req.query;
+    let opts: { [k: string]: number | string } = {
+      page: req.query.page || 1,
+      perPage: req.query.perPage || 20
+    };
+    if (typeof req.query.sort === 'string' && req.query.sort !== '') {
+      opts.sort = req.query.sort;
+    }
+    if (typeof req.query.order === 'string' && req.query.order !== '') {
+      opts.order = req.query.order;
+    }
+    let orders = await getAllOrders(opts);
     res.render('orders', { orders, page });
   } catch (e) {
-    next();
+    next(e);
   }
 });
 
