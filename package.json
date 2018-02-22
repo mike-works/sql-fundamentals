@@ -15,7 +15,6 @@
     "watch": "SCRIPTY_SILENT=true scripty",
     "watch:debug": "SCRIPTY_SILENT=true scripty",
     "heroku-postbuild": "scripty",
-    "postdeploy": "npm run build",
     "test": "SCRIPTY_SILENT=true scripty",
     "test:ex": "SCRIPTY_SILENT=true scripty",
     "test:ex:watch": "SCRIPTY_SILENT=true scripty",
