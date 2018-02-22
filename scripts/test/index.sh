@@ -22,6 +22,10 @@ else
     filter="EX"
     break
     ;;
+  *)
+    filter="EX00"
+    break
+    ;;
   esac
 fi
 echo "Test Filter: $filter"
