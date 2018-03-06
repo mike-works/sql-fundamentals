@@ -48,7 +48,7 @@
     "sqlite": "^2.9.1",
     "sqlite3": "^3.1.13",
     "winston": "^2.3.7",
-    "ws": "^4.0.0"
+    "ws": "^5.0.0"
   },
   "optionalDependencies": {
     "db-migrate-pg": "^0.3.0",
