@@ -41,6 +41,7 @@ install:
 before_script:
   -  echo "[mysqld]" > $HOME/.my.cnf
   -  echo "lower-case-table-names = 1" >> $HOME/.my.cnf
+  - mysql_config_editor set --login-path=client --host=localhost --user=root
   - ./scripts/ci/setup-db.sh
 
 script:
