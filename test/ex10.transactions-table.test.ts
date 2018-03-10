@@ -8,28 +8,28 @@ import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertTableExists } from './helpers/table';
 
-@suite('EX10: "Transactions Table" - Column constraints test')
+@suite('EX10: "CustomerOrderTransaction Table" - Column constraints test')
 class TransactionsTableTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
     assertMigrationCount(5, 1);
   }
 
-  @test('Transactions table exists')
+  @test('CustomerOrderTransaction table exists')
   public async transactionsExists() {
-    await assertTableExists(await getDb(), 'transaction');
+    await assertTableExists(await getDb(), 'customerordertransaction');
   }
 
   @test('Inserting a new transaction completes successfully')
   public async insertTransaction() {
     let db = await getDb();
-    let beforeTransactions = await db.all(sql`SELECT * from "transaction"`);
+    let beforeTransactions = await db.all(sql`SELECT * from CustomerOrderTransaction`);
     let transaction = await db.get(
-      sql`INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
+      sql`INSERT INTO CustomerOrderTransaction (auth, orderid) VALUES ($1, $2)`,
       'lk1hdklh12ld',
       10264
     );
-    let afterTransactions = await db.all(sql`SELECT * from "transaction"`);
+    let afterTransactions = await db.all(sql`SELECT * from CustomerOrderTransaction`);
     assert.equal(
       beforeTransactions.length + 1,
       afterTransactions.length,
@@ -44,7 +44,7 @@ class TransactionsTableTest {
     try {
       let transaction = await db.run(
         sql`
-    INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
+    INSERT INTO CustomerOrderTransaction(auth, orderid) VALUES ($1, $2)`,
         'lk1hdklh12ld',
         191927158
       );
