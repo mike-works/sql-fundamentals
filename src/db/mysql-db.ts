@@ -126,15 +126,17 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     });
   }
   public async get<T>(query: string, ...params: any[]): Promise<T> {
-    return this.measure(query, params, async () => {
+    let q = this.normalizeQuery(query);
+    return this.measure(q, params, async () => {
       return await this.connection
-        .query(this.normalizeQuery(query), params)
+        .query(q, params)
         .then(([result, _]) => (result as T[])[0]);
     });
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
-    return this.measure(this.normalizeQuery(query), params, async () => {
-      return await this.connection.query(query, params).then(([result, _]) => result as T[]);
+    let q = this.normalizeQuery(query);
+    return this.measure(q, params, async () => {
+      return await this.connection.query(q, params).then(([result, _]) => result as T[]);
     });
   }
   public prepare(
