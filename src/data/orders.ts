@@ -13,12 +13,12 @@ interface OrderCollectionOptions {
 
 const DEFAULT_ORDER_COLLECTION_OPTIONS: Readonly<
   OrderCollectionOptions
-> = Object.freeze({
-  order: 'asc',
-  page: 1,
-  perPage: 20,
-  sort: 'id'
-} as OrderCollectionOptions);
+  > = Object.freeze({
+    order: 'asc',
+    page: 1,
+    perPage: 20,
+    sort: 'id'
+  } as OrderCollectionOptions);
 
 export async function getAllOrders(
   opts: Partial<OrderCollectionOptions> = {}
@@ -31,7 +31,7 @@ export async function getAllOrders(
   const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM "order"`);
+FROM CustomerOrder`);
 }
 
 export async function getCustomerOrders(
@@ -46,7 +46,7 @@ export async function getOrder(id: string | number): Promise<Order> {
   return await db.get(
     sql`
 SELECT *
-FROM "order"
+FROM CustomerOrder
 WHERE id = $1`,
     id
   );

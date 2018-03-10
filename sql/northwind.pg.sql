@@ -61,7 +61,7 @@ CREATE TABLE employeeterritory (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE "order" (
+CREATE TABLE customerorder (
     "id" serial NOT NULL,
     customerid varchar(8000),
     employeeid int4 NOT NULL,

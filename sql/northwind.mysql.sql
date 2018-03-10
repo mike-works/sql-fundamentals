@@ -53,7 +53,7 @@ CREATE TABLE employeeterritory (
     territoryid varchar(255)
 );
 
-CREATE TABLE `order` (
+CREATE TABLE customerorder (
     id integer PRIMARY KEY AUTO_INCREMENT,
     customerid varchar(255),
     employeeid integer NOT NULL,
