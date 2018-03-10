@@ -36,7 +36,7 @@ matrix:
     env: DB_TYPE=sqlite
 
 install:
-- if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
+- if [ "$DB_TYPE" == "sqlite" ]; then npm install --no-shrinkwrap  --no-optional; else npm install --no-shrinkwrap; fi
 
 before_script:
   - heroku pg:info --app damp-oasis-38940
