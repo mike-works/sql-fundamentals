@@ -18,6 +18,7 @@
     "user": "northwind_user",
     "password": "theWindi$bl0wing",
     "host": "localhost",
-    "database": "northwind"
+    "database": "northwind",
+    "multiple-statements": true
   }
 }

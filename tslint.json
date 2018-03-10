@@ -1,9 +1,12 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "no-unused-variable": [true],
+    "no-unused-variable": [
+      true
+    ],
     "no-console": true,
-    "semicolon": [true, "always"],
+    "semicolon": false,
+    "space-before-function-paren": false,
     "interface-name": false,
     "trailing-comma": false,
     "max-line-length": false,
@@ -16,7 +19,9 @@
       }
     ],
     "quotemark": false,
-    "arrow-parens": [false],
+    "arrow-parens": [
+      false
+    ],
     "variable-name": [
       true,
       "ban-keywords",
@@ -24,6 +29,8 @@
       "allow-leading-underscore"
     ],
     "await-promise": true,
-    "prefer-const": [false]
+    "prefer-const": [
+      false
+    ]
   }
 }
