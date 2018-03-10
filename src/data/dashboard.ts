@@ -47,7 +47,7 @@ export async function getRecentOrders() {
   INNER JOIN OrderDetail AS od ON od.orderid = o.id
   INNER JOIN Employee AS e on o.employeeid = e.id
   INNER JOIN Customer AS c on o.customerid = c.id
-  WHERE o.orderdate > 0
+  WHERE o.orderdate IS NOT NULL
   GROUP BY o.id, e.firstname, e.lastname, c.companyname
   ORDER BY o.orderdate DESC
   LIMIT 5`);
