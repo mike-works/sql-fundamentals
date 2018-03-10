@@ -39,7 +39,8 @@ install:
 - if [ "$DB_TYPE" == "sqlite" ]; then npm install --no-shrinkwrap  --no-optional; else npm install --no-shrinkwrap; fi
 
 before_script:
-  - heroku pg:info --app damp-oasis-38940
+  -  echo "[mysqld]" > $HOME/.my.cnf
+  -  echo "lower-case-table-names = 1" >> $HOME/.my.cnf
   - ./scripts/ci/setup-db.sh
 
 script:
