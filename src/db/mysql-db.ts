@@ -160,7 +160,9 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     throw new Error('getAllFunctions() not yet implemented');
   }
   public async getAllTableNames(): Promise<string[]> {
-    throw new Error('getAllTableNames() not yet implemented');
+    return (await this.all(sql`SELECT TABLE_NAME AS name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'northwind'`)).map(
+      (result: any) => result.name as string
+    );
   }
 
   private normalizeQuery(str: string): string {
