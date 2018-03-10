@@ -108,19 +108,13 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     query: string,
     ...params: any[]
   ): Promise<{ lastID: number | string }> {
-    if (
-      query
-        .toLowerCase()
-        .trim()
-        .indexOf('insert into ') >= 0
-    ) {
-      query = `${query} RETURNING id`;
-    }
-    return this.measure(this.normalizeQuery(query), params, async () => {
-      let [res, _] = await this.connection.query(query, params);
+    let q = this.normalizeQuery(query);
+
+    return this.measure(q, params, async () => {
+      let [res, _] = await this.connection.query(q, params);
       let lastID = null;
-      if (res && (res as any[]).length > 0) {
-        lastID = (res as any[])[0].id;
+      if (res && typeof (res as any).insertId !== 'undefined') {
+        lastID = (res as any).insertId;
       }
       return { lastID };
     });
