@@ -10,7 +10,7 @@ import { assertIndicesExist } from './helpers/table';
 class MigrationIndicesTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(4);
+    assertMigrationCount(4, 1);
   }
 
   @test(

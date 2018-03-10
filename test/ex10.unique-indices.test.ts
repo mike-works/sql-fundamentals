@@ -15,7 +15,7 @@ class OrderDetailUniqueIndexTest {
     'migrationExists() new .sql file based migration exists in the ./migrations folder'
   )
   public async migrationExists() {
-    assertMigrationCount(5);
+    assertMigrationCount(5, 1);
   }
 
   @test('orderdetailuniqueproduct index exists')

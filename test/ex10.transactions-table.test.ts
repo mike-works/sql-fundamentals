@@ -12,7 +12,7 @@ import { assertTableExists } from './helpers/table';
 class TransactionsTableTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(5);
+    assertMigrationCount(5, 1);
   }
 
   @test('Transactions table exists')
