@@ -17,7 +17,7 @@ class MigrationIndicesTest {
     'OrderDetail table now has indices orderdetailproductid and orderdetailorderid'
   )
   public async orderDetailIndicesPresent() {
-    assertIndicesExist(await getDb(), 'orderdetail', [
+    assertIndicesExist(await getDb(), 'OrderDetail', [
       'orderdetailproductid',
       'orderdetailorderid'
     ]);
@@ -25,7 +25,7 @@ class MigrationIndicesTest {
 
   @test('Order table now has indices ordercustomerid and OrderEmployeeId')
   public async orderIndicesPresent() {
-    assertIndicesExist(await getDb(), 'order', [
+    assertIndicesExist(await getDb(), 'CustomerOrder', [
       'orderemployeeid',
       'ordercustomerid'
     ]);
@@ -33,11 +33,11 @@ class MigrationIndicesTest {
 
   @test('Product table now has index productsupplierid')
   public async productIndicesPresent() {
-    assertIndicesExist(await getDb(), 'product', ['productsupplierid']);
+    assertIndicesExist(await getDb(), 'Product', ['productsupplierid']);
   }
 
   @test('Employee table now has index employeereportsto')
   public async employeeIndicesPresent() {
-    assertIndicesExist(await getDb(), 'employee', ['employeereportsto']);
+    assertIndicesExist(await getDb(), 'Employee', ['employeereportsto']);
   }
 }

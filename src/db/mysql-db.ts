@@ -143,44 +143,24 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     );
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
-    return (await this.all(sql`select indexname as name
-    from pg_indexes where tablename = \'${tableName}\'`)).map(
-      (result: any) => result.name as string
-      );
+    return (await this.all(sql`SHOW INDEX FROM ${tableName}`)).map(
+      (result: any) => result.Key_name as string
+    );
   }
   public async getAllTriggers(): Promise<string[]> {
-    return (await this
-      .all(sql`select tgname as name from pg_trigger,pg_proc where
-    pg_proc.oid=pg_trigger.tgfoid AND tgisinternal = false`)).map(
-      (result: any) => result.name as string
-      );
+    throw new Error('getAllTriggers() not yet implemented');
   }
   public async getAllMaterializedViews(): Promise<string[]> {
-    return (await this.all(
-      sql`SELECT oid::regclass::text FROM pg_class WHERE  relkind = 'm'`
-    )).map((result: any) => result.oid as string);
+    throw new Error('getAllMaterializedViews() not yet implemented');
   }
   public async getAllViews(): Promise<string[]> {
-    return (await this.all(
-      sql`select viewname as name from pg_catalog.pg_views;`
-    )).map((result: any) => result.name as string);
+    throw new Error('getAllViews() not yet implemented');
   }
   public async getAllFunctions(): Promise<string[]> {
-    return (await this.all(sql`SELECT routines.routine_name as name
-FROM information_schema.routines
-    LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name
-WHERE routines.specific_schema='public'
-ORDER BY routines.routine_name, parameters.ordinal_position;`)).map(
-      (result: any) => result.name as string
-      );
+    throw new Error('getAllFunctions() not yet implemented');
   }
   public async getAllTableNames(): Promise<string[]> {
-    return (await this.all(sql`SELECT table_name as name
-      FROM information_schema.tables
-     WHERE table_schema='public'
-       AND table_type='BASE TABLE';`)).map(
-      (result: any) => result.name as string
-      );
+    throw new Error('getAllTableNames() not yet implemented');
   }
 
   private normalizeQuery(str: string): string {
