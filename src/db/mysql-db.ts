@@ -116,7 +116,7 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     ) {
       query = `${query} RETURNING id`;
     }
-    return this.measure(query, params, async () => {
+    return this.measure(this.normalizeQuery(query), params, async () => {
       let [res, _] = await this.connection.query(query, params);
       let lastID = null;
       if (res && (res as any[]).length > 0) {
@@ -128,12 +128,12 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
   public async get<T>(query: string, ...params: any[]): Promise<T> {
     return this.measure(query, params, async () => {
       return await this.connection
-        .query(query, params)
+        .query(this.normalizeQuery(query), params)
         .then(([result, _]) => (result as T[])[0]);
     });
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
-    return this.measure(query, params, async () => {
+    return this.measure(this.normalizeQuery(query), params, async () => {
       return await this.connection.query(query, params).then(([result, _]) => result as T[]);
     });
   }
@@ -185,5 +185,9 @@ ORDER BY routines.routine_name, parameters.ordinal_position;`)).map(
        AND table_type='BASE TABLE';`)).map(
       (result: any) => result.name as string
       );
+  }
+
+  private normalizeQuery(str: string): string {
+    return str.replace(/\$\s*[0-9]+/g, '?');
   }
 }
