@@ -1,11 +1,11 @@
-CREATE TABLE category (
+CREATE TABLE Category (
     "id" serial NOT NULL,
     categoryname varchar(8000),
     description varchar(8000),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE customer (
+CREATE TABLE Customer (
     "id" varchar(8000) NOT NULL,
     companyname varchar(8000),
     contactname varchar(8000),
@@ -20,19 +20,19 @@ CREATE TABLE customer (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE customercustomerdemo (
+CREATE TABLE CustomerCustomerDemo (
     "id" varchar(8000) NOT NULL,
     customertypeid varchar(8000),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE customerdemographic (
+CREATE TABLE CustomerDemographic (
     "id" varchar(8000) NOT NULL,
     customerdesc varchar(8000),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE employee (
+CREATE TABLE Employee (
     "id" serial NOT NULL,
     lastname varchar(8000),
     firstname varchar(8000),
@@ -54,14 +54,14 @@ CREATE TABLE employee (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE employeeterritory (
+CREATE TABLE EmployeeTerritory (
     "id" varchar(8000) NOT NULL,
     employeeid int4 NOT NULL,
     territoryid varchar(8000),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE customerorder (
+CREATE TABLE CustomerOrder (
     "id" serial NOT NULL,
     customerid varchar(8000),
     employeeid int4 NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE customerorder (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE orderdetail (
+CREATE TABLE OrderDetail (
     "id" varchar(8000) NOT NULL,
     orderid int4 NOT NULL,
     productid int4 NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE orderdetail (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE product (
+CREATE TABLE Product (
     "id" serial NOT NULL,
     productname varchar(8000),
     supplierid int4 NOT NULL,
@@ -103,20 +103,20 @@ CREATE TABLE product (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE region (
+CREATE TABLE Region (
     "id" serial NOT NULL,
     regiondescription varchar(8000),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE shipper (
+CREATE TABLE Shipper (
     "id" serial NOT NULL,
     companyname varchar(8000),
     phone varchar(8000),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE supplier (
+CREATE TABLE Supplier (
     "id" serial NOT NULL,
     companyname varchar(8000),
     contactname varchar(8000),
