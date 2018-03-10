@@ -4,7 +4,7 @@ import { sql } from '../sql-string';
 export async function getEmployeeSalesLeaderboard() {
   let db = await getDb();
   return await db.all(sql`SELECT (e.firstname || ' ' || e.lastname) as name, sum((od.unitprice * od.quantity))as amount FROM
-  Employee as e INNER JOIN "order" as o
+  Employee as e INNER JOIN CustomerOrder as o
   ON o.employeeid = e.id
   INNER JOIN OrderDetail as od
   ON o.id = od.orderid
@@ -17,7 +17,7 @@ export async function getEmployeeSalesLeaderboard() {
 export async function getCustomerSalesLeaderboard() {
   let db = await getDb();
   return await db.all(sql`SELECT c.companyname as name, sum((od.unitprice * od.quantity))as amount FROM
-  Customer as c INNER JOIN "order" as o
+  Customer as c INNER JOIN CustomerOrder as o
   ON o.customerid = c.id
   INNER JOIN OrderDetail as od
   ON o.id = od.orderid
@@ -32,7 +32,7 @@ export async function getProductSalesLeaderboard() {
   return await db.all(sql`SELECT p.productname as name, sum(od.unitprice * od.quantity) as amount
 FROM
   OrderDetail AS od
-  INNER JOIN "order" AS o ON od.orderid = o.id
+  INNER JOIN CustomerOrder AS o ON od.orderid = o.id
   INNER JOIN Product AS p ON od.productid = p.id
 GROUP BY p.id
 ORDER BY amount DESC
@@ -43,11 +43,11 @@ export async function getRecentOrders() {
   let db = await getDb();
   return await db.all(sql`
   SELECT o.id, (e.firstname || ' ' || e.lastname) as employee, c.companyname as customer, o.orderdate, sum(od.unitprice * od.quantity) as subtotal FROM
-  "order" as o
+  CustomerOrder as o
   INNER JOIN OrderDetail AS od ON od.orderid = o.id
   INNER JOIN Employee AS e on o.employeeid = e.id
   INNER JOIN Customer AS c on o.customerid = c.id
-  WHERE o.orderdate NOTNULL
+  WHERE o.orderdate IS NOT NULL
   GROUP BY o.id, e.firstname, e.lastname, c.companyname
   ORDER BY o.orderdate DESC
   LIMIT 5`);

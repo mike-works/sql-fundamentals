@@ -11,5 +11,13 @@
     "host": "localhost",
     "database": "nw_postgresql",
     "schema": "public"
+  },
+  "mysql": {
+    "driver": "mysql",
+    "port": 3306,
+    "user": "northwind_user",
+    "password": "theWindi$bl0wing",
+    "host": "localhost",
+    "database": "northwind"
   }
 }

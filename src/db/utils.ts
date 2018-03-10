@@ -4,6 +4,7 @@ import { logger } from '../log';
 
 enum DbType {
   Postgres,
+  MySQL,
   SQLite
 }
 
@@ -14,6 +15,9 @@ function determineDbType(): DbType {
     case 'pg':
       logger.info('Database Type: PostgreSQL');
       return DbType.Postgres;
+    case 'mysql':
+      logger.info('Database Type: MySQL');
+      return DbType.MySQL;
     default:
       logger.info('Database Type: SQLite');
       return DbType.SQLite;
@@ -25,6 +29,9 @@ export async function getDb(): Promise<SQLDatabase<SQLStatement>> {
     // tslint:disable-next-line:variable-name
     const PostgresDB = require('./postgres-db').default;
     return await PostgresDB.setup();
+  } else if (DB_TYPE === DbType.MySQL) {
+    const MySQLDB = require('./mysql-db').default;
+    return await MySQLDB.setup();
   } else {
     // tslint:disable-next-line:variable-name
     const SQLiteDB = require('./sqlite-db').default;

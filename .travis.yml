@@ -2,6 +2,7 @@ language: node_js
 
 services:
   - postgresql
+  - mysql
 
 sudo: required
 
@@ -16,6 +17,12 @@ addons:
 matrix:
   include:
   - node_js: '6'
+    env: DB_TYPE=mysql
+  - node_js: '8'
+    env: DB_TYPE=mysql
+  - node_js: 'stable'
+    env: DB_TYPE=mysql
+  - node_js: '6'
     env: DB_TYPE=pg
   - node_js: '8'
     env: DB_TYPE=pg
@@ -28,11 +35,16 @@ matrix:
   - node_js: 'stable'
     env: DB_TYPE=sqlite
 
+before_install:
+  - echo "[mysqld]" > $HOME/.my.cnf
+  - echo "lower-case-table-names = 1" >> $HOME/.my.cnf
+  - mysql_config_editor set --login-path=client --host=localhost --user=root
+  - sudo service mysql restart
+
 install:
-- if [ "$DB_TYPE" == "pg" ]; then npm install --no-shrinkwrap; else npm install --no-shrinkwrap --no-optional; fi
+- if [ "$DB_TYPE" == "sqlite" ]; then npm install --no-shrinkwrap  --no-optional; else npm install --no-shrinkwrap; fi
 
 before_script:
-  - heroku pg:info --app damp-oasis-38940
   - ./scripts/ci/setup-db.sh
 
 script:
