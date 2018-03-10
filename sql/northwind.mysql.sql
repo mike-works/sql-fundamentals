@@ -1,10 +1,10 @@
-CREATE TABLE category (
+CREATE TABLE Category (
     id integer PRIMARY KEY AUTO_INCREMENT,
     categoryname varchar(8000),
     description varchar(8000)
 );
 
-CREATE TABLE customer (
+CREATE TABLE Customer (
     id varchar(8) PRIMARY KEY,
     companyname varchar(255),
     contactname varchar(255),
@@ -18,17 +18,17 @@ CREATE TABLE customer (
     fax varchar(255)
 );
 
-CREATE TABLE customercustomerdemo (
+CREATE TABLE CustomerCustomerDemo (
     id varchar(255) PRIMARY KEY,
     customertypeid varchar(255)
 );
 
-CREATE TABLE customerdemographic (
+CREATE TABLE CustomerDemographic (
     id varchar(255) PRIMARY KEY,
     customerdesc varchar(255)
 );
 
-CREATE TABLE employee (
+CREATE TABLE Employee (
     id integer PRIMARY KEY AUTO_INCREMENT,
     lastname varchar(255),
     firstname varchar(255),
@@ -47,13 +47,13 @@ CREATE TABLE employee (
     reportsto integer
 );
 
-CREATE TABLE employeeterritory (
+CREATE TABLE EmployeeTerritory (
     id varchar(255) PRIMARY KEY,
     employeeid integer NOT NULL,
     territoryid varchar(255)
 );
 
-CREATE TABLE customerorder (
+CREATE TABLE CustomerOrder (
     id integer PRIMARY KEY AUTO_INCREMENT,
     customerid varchar(255),
     employeeid integer NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE customerorder (
     shipcountry varchar(255)
 );
 
-CREATE TABLE orderdetail (
+CREATE TABLE OrderDetail (
     id varchar(255) PRIMARY KEY,
     orderid integer NOT NULL,
     productid integer NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE orderdetail (
     discount real NOT NULL
 );
 
-CREATE TABLE product (
+CREATE TABLE Product (
     id integer PRIMARY KEY AUTO_INCREMENT,
     productname varchar(255),
     supplierid integer NOT NULL,
@@ -92,18 +92,18 @@ CREATE TABLE product (
     discontinued integer NOT NULL
 );
 
-CREATE TABLE region (
+CREATE TABLE Region (
     id integer PRIMARY KEY AUTO_INCREMENT,
     regiondescription varchar(255)
 );
 
-CREATE TABLE shipper (
+CREATE TABLE Shipper (
     id integer PRIMARY KEY AUTO_INCREMENT,
     companyname varchar(255),
     phone varchar(255)
 );
 
-CREATE TABLE supplier (
+CREATE TABLE Supplier (
     id integer PRIMARY KEY AUTO_INCREMENT,
     companyname varchar(255),
     contactname varchar(255),
