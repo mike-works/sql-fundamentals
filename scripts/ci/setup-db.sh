@@ -6,7 +6,7 @@ then
     npm run db:setup:pg
     npm run db:migrate:pg --- up
     exit 0
-  else if [[ $DB_TYPE == "mysql" ]]
+  elif [[ $DB_TYPE == "mysql" ]]
   then
     npm run db:setup:mysql
     npm run db:migrate:mysql --- up
