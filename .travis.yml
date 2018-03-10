@@ -2,6 +2,7 @@ language: node_js
 
 services:
   - postgresql
+  - mysql
 
 sudo: required
 
@@ -15,6 +16,12 @@ addons:
 
 matrix:
   include:
+  - node_js: '6'
+    env: DB_TYPE=mysql
+  - node_js: '8'
+    env: DB_TYPE=mysql
+  - node_js: 'stable'
+    env: DB_TYPE=mysql
   - node_js: '6'
     env: DB_TYPE=pg
   - node_js: '8'
