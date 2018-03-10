@@ -21,11 +21,12 @@
     "test:watch": "SCRIPTY_SILENT=true scripty",
     "build": "SCRIPTY_SILENT=true scripty",
     "db:setup:pg": "SCRIPTY_SILENT=true scripty",
+    "db:setup:mysql": "SCRIPTY_SILENT=true scripty",
     "db:setup:sqlite": "SCRIPTY_SILENT=true scripty",
     "db:migrate:pg": "scripty",
-    "db:migrate:heroku:pg":
-      "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
+    "db:migrate:mysql": "scripty",
     "db:migrate:sqlite": "scripty",
+    "db:migrate:heroku:pg": "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
     "db:migrate:create": "SCRIPTY_SILENT=true scripty"
   },
   "dependencies": {
@@ -51,7 +52,9 @@
     "ws": "^4.0.0"
   },
   "optionalDependencies": {
+    "db-migrate-mysql": "^1.1.10",
     "db-migrate-pg": "^0.3.0",
+    "mysql2": "^1.5.2",
     "pg": "^7.4.1"
   },
   "devDependencies": {
@@ -64,6 +67,7 @@
     "@types/handlebars": "^4.0.36",
     "@types/lodash": "^4.14.98",
     "@types/mocha": "^2.2.47",
+    "@types/mysql2": "github:types/mysql2",
     "@types/node": "^9.4.0",
     "@types/pg": "^7.4.1",
     "@types/sqlite3": "^3.1.1",

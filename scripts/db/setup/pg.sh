@@ -11,8 +11,10 @@ createdb nw_postgresql
 echo "\033[1;33m - Ensuring plpgsql extension is installed\033[0m"
 psql nw_postgresql -c "CREATE EXTENSION IF NOT EXISTS plpgsql" 
 
-echo "\033[1;33m - Importing data from northwind.sql (this may take a while)\033[0m"
-psql nw_postgresql < ./northwind.sql -q 
+echo "\033[1;33m - Setting up schema from ./sql/northwind.pg.sql \033[0m"
+psql nw_postgresql < ./sql/northwind.pg.sql -q 
+echo "\033[1;33m - Importing data from ./sql/northwind_data.sql (this may take a while)\033[0m"
+psql nw_postgresql < ./sql/northwind_data.sql -q 
 
 echo "\033[1;33m - Creating user: northwind_user\033[0m"
 psql template1 -c "create user northwind_user;"

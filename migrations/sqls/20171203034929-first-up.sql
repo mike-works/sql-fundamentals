@@ -1,4 +1,4 @@
--- CREATE TABLE Test (
---   id   INTEGER PRIMARY KEY,
---   name TEXT    NOT NULL
--- );
+CREATE TABLE NewTable (
+  id   INTEGER PRIMARY KEY,
+  name TEXT    NOT NULL
+);
