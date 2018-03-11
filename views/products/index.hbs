@@ -36,11 +36,16 @@
           <div class='mui-panel {{#if p.discontinued}}fade-out{{/if}}' href="/products/{{p.id}}">
             <div class="mui-row">
               <div class="mui-col-sm-6 mui-col-md-8">
+                {{#link-to href=(concat '/products/' p.id) }}
                 <h3 class='mui-panel__title mui--pull-left' style='margin-right: 10px'>
                   {{p.productname}}
                 </h3>
+                {{/link-to}}
                 <p style='line-height: 3rem'>
                   {{p.quantityperunit}}
+                </p>
+                <p>
+                  <b>Unit Price:</b> ${{p.unitprice}}
                 </p>
                 <p>
                   <b>Supplier:</b> {{#link-to href=(concat '/suppliers/' p.supplierid)}} {{p.supplierid}} {{/link-to}}
@@ -51,7 +56,8 @@
                 <p>
                   <b>Inventory:</b>
                   {{p.unitsinstock}} in stock and {{p.unitsonorder}} on order.
-                  <br>
+                </p>
+                <p>
                   <b>Reorder Level: </b> {{p.reorderlevel}}
                 </p>
               </div>

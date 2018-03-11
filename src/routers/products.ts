@@ -4,6 +4,8 @@ import { matchedData } from 'express-validator/filter';
 
 import {
   getAllProducts,
+  getProduct,
+  getProductPricingHistory,
   updateProduct,
   ProductFlavorFilter
 } from '../data/products';
@@ -73,6 +75,14 @@ router.get(
     res.render('products', { products });
   }
 );
+
+router.get('/:id', async (req: express.Request, res: express.Response) => {
+  let prProduct = getProduct(req.params.id);
+  let prPricing = getProductPricingHistory(req.params.id);
+  let product = await prProduct;
+  let pricingHistory = await prPricing;
+  res.render('products/show', { product, pricingHistory });
+});
 
 router.put(
   '/:id',

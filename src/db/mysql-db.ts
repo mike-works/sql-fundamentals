@@ -39,7 +39,7 @@ class MySQLStatement implements SQLStatement {
 }
 
 // tslint:disable-next-line:only-arrow-functions
-const pool: mysql2.Pool = (function () {
+const pool: mysql2.Pool = (function() {
   const {
     mysql: { database, host, port, schema, user, password }
   } = dbConfig as any;
@@ -80,7 +80,7 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
       mysqldb.statements = await setupPreparedStatements<
         MySQLStatement,
         MySQLDB
-        >(mysqldb);
+      >(mysqldb);
       // if (!this.pubSubSupport) {
       //   this.pubSubSupport = await setupPubSub(pool);
       // }
@@ -124,13 +124,15 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     return this.measure(q, params, async () => {
       return await this.connection
         .query(q, params)
-        .then(([result, _]) => (result as T[])[0]);
+        .then(([result, _]: [any, never]) => (result as T[])[0]);
     });
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
     let q = this.normalizeQuery(query);
     return this.measure(q, params, async () => {
-      return await this.connection.query(q, params).then(([result, _]) => result as T[]);
+      return await this.connection
+        .query(q, params)
+        .then(([result, _]: [any, never]) => result as T[]);
     });
   }
   public prepare(
@@ -160,9 +162,9 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     throw new Error('getAllFunctions() not yet implemented');
   }
   public async getAllTableNames(): Promise<string[]> {
-    return (await this.all(sql`SELECT TABLE_NAME AS name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'northwind'`)).map(
-      (result: any) => result.name as string
-    );
+    return (await this.all(
+      sql`SELECT TABLE_NAME AS name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'northwind'`
+    )).map((result: any) => result.name as string);
   }
 
   private normalizeQuery(str: string): string {

@@ -1,0 +1,86 @@
+<div class="mui-container">
+  <div class='mui-panel {{#if product.discontinued}}fade-out{{/if}}' href="/products/{{product.id}}">
+    <div class="mui-row">
+      <div class="mui-col-sm-6 mui-col-md-8">
+        {{#link-to href=(concat '/products/' product.id) }}
+        <h3 class='mui-panel__title mui--pull-left' style='margin-right: 10px'>
+          {{product.productname}}
+        </h3>
+        {{/link-to}}
+        <p style='line-height: 3rem'>
+          {{product.quantityperunit}}
+        </p>
+        <p>
+          <b>Unit Price:</b> ${{product.unitprice}}
+        </p>
+        <p>
+          <b>Supplier:</b> {{#link-to href=(concat '/suppliers/' product.supplierid)}} {{product.suppliername}} {{/link-to}}
+        </p>
+        <p>
+          <b>Category:</b> {{product.categoryname}}
+        </p>
+        <p>
+          <b>Inventory:</b>
+          {{product.unitsinstock}} in stock and {{product.unitsonorder}} on order.
+        </p>
+        <p>
+          <b>Reorder Level: </b> {{product.reorderlevel}}
+        </p>
+      </div>
+      <div class="mui-col-sm-6 mui-col-md-4">
+        <span class='mui--pull-right'>
+          {{#if product.discontinued}}
+          <span class="mui-badge mui--bg-color-red">DISCONTINUED</span>
+          {{else}}
+          <span>
+            {{#if (less-than (add product.unitsinstock product.unitsonorder) product.reorderlevel)}}
+            <span class="mui-badge mui--bg-color-indigo">REORDER</span>
+            {{/if}}
+          </span>
+          {{/if}}
+        </span>
+        <form class="mui-form flavor-profile" action="/products/{{product.id}}">
+          <div class='mui-textfield flavor-slider'>
+            <label for="spicy">Spicy</label>
+            <input type="range" name="spicy" value="{{product.metadata.flavor.spicy}}" min=-1 max=5 />
+          </div>
+          <div class='mui-textfield flavor-slider'>
+            <label for="sour">Sour</label>
+            <input type="range" name="sour" value="{{product.metadata.flavor.sour}}" min=-1 max=5 />
+          </div>
+          <div class='mui-textfield flavor-slider'>
+            <label for="sweet">Sweet</label>
+            <input type="range" name="sweet" value="{{product.metadata.flavor.sweet}}" min=-1 max=5 />
+          </div>
+          <div class='mui-textfield flavor-slider'>
+            <label for="bitter">Bitter</label>
+            <input type="range" name="bitter" value="{{product.metadata.flavor.bitter}}" min=-1 max=5 />
+          </div>
+          <div class='mui-textfield flavor-slider'>
+            <label for="salty">Salty</label>
+            <input type="range" name="salty" value="{{product.metadata.flavor.salty}}" min=-1 max=5 />
+          </div>
+          <div class='mui-textfield tags-field'>
+            <label for="tags">Tags</label>
+            <div class='tags-container'>
+              <input type="text" name="tags" class='tags-input' value="{{to-csv product.tags}}" />
+            </div>
+          </div>
+
+          <button class='save-button mui--hide mui-btn mui-btn--accent'>Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="mui-panel">
+    <h3>Pricing History</h3>
+    <ul>
+      {{#each pricingHistory as |ph|}}
+        <li>
+          <b>FROM</b> {{format-money ph.fromprice}} 
+          <b>TO</b> {{format-money ph.toprice}}
+          <b>ON</b> {{ph.changedate}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
