@@ -154,14 +154,14 @@ export default class PostgresDB extends SQLDatabase<PostgresStatement> {
     );
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
-    return (await this.all(sql`select indexname as name
-    from pg_indexes where tablename = \'${tableName}\'`)).map(
+    return (await this.all(sql`SELECT indexname AS name
+    FROM pg_indexes WHERE tablename = \'${tableName.toLowerCase()}\'`)).map(
       (result: any) => result.name as string
     );
   }
   public async getAllTriggers(): Promise<string[]> {
     return (await this
-      .all(sql`select tgname as name from pg_trigger,pg_proc where
+      .all(sql`SELECT tgname AS name FROM pg_trigger,pg_proc WHERE
     pg_proc.oid=pg_trigger.tgfoid AND tgisinternal = false`)).map(
       (result: any) => result.name as string
     );
