@@ -19,6 +19,6 @@
     "password": "theWindi$bl0wing",
     "host": "localhost",
     "database": "northwind",
-    "multiple-statements": true
+    "multipleStatements": true
   }
 }
