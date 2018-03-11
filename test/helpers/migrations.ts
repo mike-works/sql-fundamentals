@@ -4,7 +4,7 @@ import * as path from 'path';
 
 export function assertMigrationCount(
   migrationCount: number,
-  sqlsCount = migrationCount * 2
+  sqlsCount = migrationCount
 ) {
   assert.ok(
     fs.existsSync(path.join(__dirname, '..', '..', 'migrations')),
@@ -19,7 +19,7 @@ export function assertMigrationCount(
   );
   assert.includeDeepMembers(
     migrationsFiles,
-    ['sqls', '20171203034929-first.js'],
+    ['sqls', '20171203034929-first.ts'],
     './migrations folder contains sqls folder and first migration'
   );
   assert.isAtLeast(
@@ -45,14 +45,4 @@ export function assertMigrationCount(
       upMigrationCount++;
     }
   });
-  assert.isAtLeast(
-    downMigrationCount,
-    sqlsCount / 2,
-    `There are at least ${sqlsCount / 2} down migrations`
-  );
-  assert.isAtLeast(
-    upMigrationCount,
-    sqlsCount / 2,
-    `There are at least ${sqlsCount / 2} up migrations`
-  );
 }
