@@ -82,3 +82,9 @@ export async function deleteProduct(id: string | number): Promise<void> {
   const db = await getDb();
   await db.run(sql`DELETE FROM "product" WHERE id=$1;`, id);
 }
+
+export async function getProductPricingHistory(
+  id: string | number
+): Promise<ProductPriceInfo[]> {
+  return [];
+}

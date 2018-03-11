@@ -95,6 +95,13 @@ interface Product extends DBRecord {
   };
 }
 
+interface ProductPriceInfo extends DBRecord {
+  productid: DBRecordReference;
+  changedate: string;
+  fromprice: number;
+  toprice: number;
+}
+
 interface Region extends DBRecord {
   regiondescription: string;
 }
