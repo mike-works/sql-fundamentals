@@ -39,7 +39,7 @@ export async function assertViewsExist(db: SQLDatabase, viewNames: string[]) {
   let allViews = await db.getAllViews();
   assert.includeMembers(
     allViews.map(s => s.toLowerCase()),
-    viewNames,
+    viewNames.map(s => s.toLowerCase()),
     `${viewNames.join(', ')} view(s) found`
   );
 }

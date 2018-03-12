@@ -1,8 +1,9 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { getDb } from '../src/db/utils';
+import { getDb, DbType } from '../src/db/utils';
 
+import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 
@@ -12,20 +13,36 @@ class MaterializeViewsTest {
     'migrationExists() new .sql file based migration exists in the ./migrations folder'
   )
   public async migrationExists() {
-    assertMigrationCount(9);
+    assertMigrationCount(8);
   }
 
   @test(
-    'Materialized views [customer_leaderboard, employee_leaderboard, product_leaderboard, recent_orders] are found'
+    '[MYSQL and POSTGRES ONLY] Materialized views [MV_CustomerLeaderboard, MV_EmployeeLeaderboard, MV_ProductLeaderboard, MV_RecentOrders] are found'
   )
-  public async productIndicesPresent() {
+  @onlyForDatabaseTypes(DbType.MySQL, DbType.Postgres)
+  public async materializedViewsPresent() {
     let db = await getDb();
     let mvNames = await db.getAllMaterializedViews();
     assert.includeMembers(mvNames.map(s => s.toLowerCase()), [
-      'customer_leaderboard',
-      'employee_leaderboard',
-      'product_leaderboard',
-      'recent_orders'
+      'MV_CustomerLeaderboard',
+      'MV_EmployeeLeaderboard',
+      'MV_ProductLeaderboard',
+      'MV_RecentOrders'
+    ]);
+  }
+
+  @test(
+    '[SQLITE ONLY] Views [V_CustomerLeaderboard, V_EmployeeLeaderboard, V_ProductLeaderboard, V_RecentOrders] are found'
+  )
+  @onlyForDatabaseTypes(DbType.SQLite)
+  public async viewsPresent() {
+    let db = await getDb();
+    let mvNames = await db.getAllViews();
+    assert.includeMembers(mvNames.map(s => s.toLowerCase()), [
+      'v_customerleaderboard',
+      'v_employeeleaderboard',
+      'v_productleaderboard',
+      'v_recentorders'
     ]);
   }
 }
