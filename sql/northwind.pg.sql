@@ -132,3 +132,5 @@ CREATE TABLE Supplier (
     PRIMARY KEY ("id")
 );
 
+
+ALTER SEQUENCE product_id_seq RESTART WITH 80;

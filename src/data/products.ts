@@ -63,8 +63,8 @@ export async function createProduct(
   let db = await getDb();
   let result = await db.run(
     sql`
-INSERT INTO Product (id,productname, supplierid, categoryid, quantityperunit, unitprice, unitsinstock, unitsonorder, reorderlevel, discontinued)
-VALUES (nextval('product_id_seq'), $1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+INSERT INTO Product (productname, supplierid, categoryid, quantityperunit, unitprice, unitsinstock, unitsonorder, reorderlevel, discontinued)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
     p.productname,
     p.supplierid,
     p.categoryid,
@@ -80,7 +80,7 @@ VALUES (nextval('product_id_seq'), $1, $2, $3, $4, $5, $6, $7, $8, $9)`,
 
 export async function deleteProduct(id: string | number): Promise<void> {
   const db = await getDb();
-  await db.run(sql`DELETE FROM "product" WHERE id=$1;`, id);
+  await db.run(sql`DELETE FROM Product WHERE id=$1;`, id);
 }
 
 export async function getProductPricingHistory(

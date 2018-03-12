@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { createOrder, getOrder } from '../src/data/orders';
+import { createProduct, deleteProduct } from '../src/data/products';
 import { getDb } from '../src/db/utils';
 import { sql } from '../src/sql-string';
 
@@ -10,37 +10,42 @@ import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 import { assertTriggersExist } from './helpers/table';
 
-@suite('EX11: "Transaction Trigger" - AFTER INSERT trigger test')
+@suite('EX11: "Pricing History Trigger" - AFTER INSERT trigger test')
 class TransactionsTriggerTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(6);
+    assertMigrationCount(5);
   }
 
-  @test('ordertransaction trigger exists')
+  @test('ProductPricingUpdate and ProductPricingInsert triggers exist')
   public async triggerExists() {
-    assertTriggersExist(await getDb(), ['ordertransaction']);
+    await assertTriggersExist(await getDb(), [
+      'ProductPricingUpdate',
+      'ProductPricingInsert'
+    ]);
   }
 
-  @test("Inserting a new transaction results in an order's OrderDate being set")
-  public async insertTransaction() {
+  @test(
+    'Creating a new product results in a new ProductPricingInfo row being created'
+  )
+  public async pricingChangeTest() {
     let db = await getDb();
-    let { id } = await createOrder(VALID_ORDER_DATA);
+    let p: Partial<Product> = {
+      unitprice: 3.45,
+      quantityperunit: '12 cans per case',
+      discontinued: 0,
+      unitsinstock: 30,
+      unitsonorder: 40,
+      reorderlevel: 20,
+      categoryid: 1,
+      supplierid: 1,
+      productname: 'Magic Beans'
+    };
+    let { id } = await createProduct(p as any);
     if (typeof id === 'undefined') {
-      throw new Error('createOrder() failed to return an id');
+      throw new Error('createProduct() failed to return an id');
     }
-    let order = await getOrder(id);
-    if (typeof order.id === 'undefined') {
-      assert.ok(false, 'newly created order Id is not truthy');
-      return;
-    }
-    assert.notOk(order.orderdate, 'OrderDate is not yet set');
-    let transaction = await db.get(
-      sql`INSERT INTO "transaction" ("authorization", orderid) VALUES ($1, $2)`,
-      'lk1hdklh12ld',
-      order.id
-    );
-    order = await getOrder(order.id);
-    assert.ok(order.orderdate, 'OrderDate is set');
+
+    await deleteProduct(id);
   }
 }

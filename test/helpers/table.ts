@@ -30,7 +30,7 @@ export async function assertTriggersExist(
   let allTriggers = await db.getAllTriggers();
   assert.includeMembers(
     allTriggers.map(s => s.toLowerCase()),
-    triggerNames,
+    triggerNames.map(s => s.toLowerCase()),
     `${triggerNames.join(', ')} trigger(s) found`
   );
 }

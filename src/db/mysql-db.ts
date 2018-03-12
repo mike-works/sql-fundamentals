@@ -150,7 +150,9 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     );
   }
   public async getAllTriggers(): Promise<string[]> {
-    throw new Error('getAllTriggers() not yet implemented');
+    return (await this.all(sql`SHOW TRIGGERS`)).map(
+      (result: any) => result.Trigger as string
+    );
   }
   public async getAllMaterializedViews(): Promise<string[]> {
     throw new Error('getAllMaterializedViews() not yet implemented');
