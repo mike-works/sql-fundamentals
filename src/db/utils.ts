@@ -8,7 +8,7 @@ enum DbType {
   SQLite
 }
 
-const DB_TYPE: DbType = determineDbType();
+export const DB_TYPE: DbType = determineDbType();
 
 function determineDbType(): DbType {
   switch ((process.env.DB_TYPE || '').trim().toLowerCase()) {
