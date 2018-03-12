@@ -1,8 +1,11 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { getDb } from '../src/db/utils';
+import { getDb, DbType } from '../src/db/utils';
 
+import { getProduct } from '../src/data/products';
+import { sql } from '../src/sql-string';
+import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 
@@ -16,9 +19,10 @@ class MigrationIndicesTest {
   }
 
   @test(
-    'Product table now has indices product_tags, product_spicy, product_salty, product_sour, product_sweet, product_bitter'
+    '[POSTGRES ONLY] Product table now has indices product_tags, product_spicy, product_salty, product_sour, product_sweet, product_bitter'
   )
-  public async productIndicesPresent() {
+  @onlyForDatabaseTypes(DbType.Postgres)
+  public async postgresProductIndicesPresent() {
     let db = await getDb();
     let indexInfo = await db.getIndicesForTable('product');
     assert.includeMembers(indexInfo.map(s => s.toLowerCase()), [
@@ -29,5 +33,17 @@ class MigrationIndicesTest {
       'product_sweet',
       'product_bitter'
     ]);
+  }
+
+  @test('[MYSQL ONLY] Generated columns for flavors are found on product table')
+  @onlyForDatabaseTypes(DbType.MySQL)
+  public async mySQLGeneratedColumnsPresent() {
+    let db = await getDb();
+    let p = await db.get(sql`SELECT * from Product WHERE id=1`);
+    assert.containsAllKeys(
+      p,
+      ['spicy', 'sweet', 'sour', 'salty', 'bitter'],
+      'salty, sweet, sour, spicy and bitter columns are present on Product table'
+    );
   }
 }

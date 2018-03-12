@@ -94,7 +94,7 @@ class ProductTagsTest {
     );
     assert.ok(
       difference(allResults, filteredResults).every(
-        p => p.tags.indexOf('foo') < 0
+        p => (p.tags || []).indexOf('foo') < 0
       ),
       'All results excluded by tag filter are missing tag'
     );

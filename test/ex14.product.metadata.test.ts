@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { difference } from 'lodash';
+import { difference, differenceWith } from 'lodash';
 import { suite } from 'mocha-typescript';
 
 import {
@@ -105,13 +105,26 @@ class ProductMetadataJsonTest {
     );
     assert.ok(
       sweetSourResults.every(
-        p => p.metadata.flavor.sweet > 2 && p.metadata.flavor.sour > 2
+        p =>
+          p &&
+          p.metadata &&
+          p.metadata.flavor &&
+          p.metadata.flavor.sweet > 2 &&
+          p.metadata.flavor.sour > 2
       ),
       'All results from sweet-sour filter have sweet > 2 and sour > 2'
     );
     assert.ok(
-      difference(allResults, sweetSourResults).every(
-        p => p.metadata.flavor.sweet <= 2 || p.metadata.flavor.sour <= 2
+      differenceWith(
+        allResults,
+        sweetSourResults,
+        (a: any, b: any) => a.id === b.id
+      ).every(
+        p =>
+          !p ||
+          !p.metadata ||
+          !p.metadata.flavor ||
+          (p.metadata.flavor.sweet <= 2 || p.metadata.flavor.sour <= 2)
       ),
       'All results excluded by sweet-sour filter have sweet <= 2 OR sour <= 2'
     );
@@ -119,6 +132,13 @@ class ProductMetadataJsonTest {
 
   @test('getAllProducts with flavor filter: sweet>2 spicy>2')
   public async sweetHotFilter() {
+    await updateProduct(1, {
+      metadata: {
+        flavor: { sweet: 5, sour: 5, bitter: 5, salty: 5, spicy: 5 }
+      },
+      tags: []
+    });
+
     let allResults = await getAllProducts();
     let sweetHotResults = await getAllProducts({
       filter: {
@@ -128,6 +148,11 @@ class ProductMetadataJsonTest {
         ]
       }
     });
+    assert.isAbove(
+      sweetHotResults.length,
+      0,
+      'Nonzezro number of sweetHotResults'
+    );
     assert.isBelow(
       sweetHotResults.length,
       allResults.length,
@@ -135,13 +160,24 @@ class ProductMetadataJsonTest {
     );
     assert.ok(
       sweetHotResults.every(
-        p => p.metadata.flavor.sweet > 2 && p.metadata.flavor.spicy > 2
+        p =>
+          p.metadata &&
+          p.metadata.flavor &&
+          p.metadata.flavor.sweet > 2 &&
+          p.metadata.flavor.spicy > 2
       ),
       'All results from sweet-hot filter have sweet > 2 and spicy > 2'
     );
     assert.ok(
-      difference(allResults, sweetHotResults).every(
-        p => p.metadata.flavor.sweet <= 2 || p.metadata.flavor.spicy <= 2
+      differenceWith(
+        allResults,
+        sweetHotResults,
+        (a: any, b: any) => a.id === b.id
+      ).every(
+        p =>
+          !p.metadata ||
+          p.metadata.flavor.sweet <= 2 ||
+          p.metadata.flavor.spicy <= 2
       ),
       'All results excluded by sweet-hot filter have sweet <= 2 OR spicy <= 2'
     );
