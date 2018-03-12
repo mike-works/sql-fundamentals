@@ -10,7 +10,7 @@ import { assertMigrationCount } from './helpers/migrations';
 class FullTextSearchMigrationTest {
   @test('New .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(10);
+    assertMigrationCount(9);
   }
 
   @test(
