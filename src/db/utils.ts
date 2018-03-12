@@ -2,7 +2,7 @@ import { SQLDatabase, SQLStatement } from 'src/db/db';
 
 import { logger } from '../log';
 
-enum DbType {
+export enum DbType {
   Postgres,
   MySQL,
   SQLite
