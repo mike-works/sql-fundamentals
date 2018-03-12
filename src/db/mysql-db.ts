@@ -28,13 +28,13 @@ class MySQLStatement implements SQLStatement {
   }
   public async get<T>(...params: any[]): Promise<T> {
     let statement = await this.statement;
-    let res = await statement.execute(params);
-    return res.rows[0];
+    let [rows, _] = await statement.execute(params);
+    return rows[0];
   }
   public async all<T>(...params: any[]): Promise<T[]> {
     let statement = await this.statement;
-    let res = await statement.execute(params);
-    return res.rows;
+    let [rows, _] = await statement.execute(params);
+    return rows;
   }
 }
 
@@ -140,8 +140,9 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     query: string,
     ...params: any[]
   ): Promise<MySQLStatement> {
+    let q = this.normalizeQuery(query);
     return Promise.resolve(
-      new MySQLStatement(name, query, params, this.connection)
+      new MySQLStatement(name, q, params, this.connection)
     );
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {

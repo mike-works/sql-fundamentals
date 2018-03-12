@@ -30,6 +30,7 @@ export async function getDb(): Promise<SQLDatabase<SQLStatement>> {
     const PostgresDB = require('./postgres-db').default;
     return await PostgresDB.setup();
   } else if (DB_TYPE === DbType.MySQL) {
+    // tslint:disable-next-line:variable-name
     const MySQLDB = require('./mysql-db').default;
     return await MySQLDB.setup();
   } else {
@@ -37,4 +38,10 @@ export async function getDb(): Promise<SQLDatabase<SQLStatement>> {
     const SQLiteDB = require('./sqlite-db').default;
     return await SQLiteDB.setup();
   }
+}
+
+export async function timeout(n: number) {
+  return new Promise(resolve => {
+    setTimeout(resolve, n);
+  });
 }

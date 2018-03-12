@@ -10,6 +10,7 @@ import { sql } from '../sql-string';
 
 import { SQLDatabase } from './db';
 import { setupPreparedStatements } from './prepared';
+import { timeout } from './utils';
 
 async function fileExists(pth: string) {
   return new Promise(resolve => {
@@ -76,8 +77,22 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
     super();
     this.db = db;
   }
-  public async shutdown(): Promise<void> {
-    await this.db.close();
+  public async shutdown(attemptNumber: number = 0): Promise<void> {
+    // try {
+    //   await this.db.close();
+    // } catch (e) {
+    //   if (attemptNumber < 6) {
+    //     logger.error(
+    //       `Could not close SQLite database. (Try ${attemptNumber}) Retrying in a moment...\n${e}`
+    //     );
+    //     await timeout(1000);
+    //     await this.shutdown(attemptNumber + 1);
+    //   } else {
+    //     logger.error(
+    //       `Could not close SQLite database. (Try ${attemptNumber}) Crashing...\n${e}`
+    //     );
+    //   }
+    // }
   }
   public async run(
     query: string,
