@@ -12,7 +12,7 @@ class MigrationIndicesTest {
     'migrationExists() new .sql file based migration exists in the ./migrations folder'
   )
   public async migrationExists() {
-    assertMigrationCount(8);
+    assertMigrationCount(7);
   }
 
   @test(
