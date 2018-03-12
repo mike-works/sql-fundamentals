@@ -24,10 +24,10 @@ class MaterializeViewsTest {
     let db = await getDb();
     let mvNames = await db.getAllMaterializedViews();
     assert.includeMembers(mvNames.map(s => s.toLowerCase()), [
-      'MV_CustomerLeaderboard',
-      'MV_EmployeeLeaderboard',
-      'MV_ProductLeaderboard',
-      'MV_RecentOrders'
+      'mv_customerleaderboard',
+      'mv_employeeleaderboard',
+      'mv_productleaderboard',
+      'mv_recentorders'
     ]);
   }
 
