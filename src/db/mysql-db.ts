@@ -158,7 +158,9 @@ export default class MySQLDB extends SQLDatabase<MySQLStatement> {
     throw new Error('getAllMaterializedViews() not yet implemented');
   }
   public async getAllViews(): Promise<string[]> {
-    throw new Error('getAllViews() not yet implemented');
+    return (await this.all(
+      sql`SHOW FULL TABLES IN northwind WHERE TABLE_TYPE LIKE 'VIEW'`
+    )).map((result: any) => result.Tables_in_northwind as string);
   }
   public async getAllFunctions(): Promise<string[]> {
     throw new Error('getAllFunctions() not yet implemented');
