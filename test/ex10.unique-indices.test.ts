@@ -20,7 +20,7 @@ class OrderDetailUniqueIndexTest {
 
   @test('orderdetailuniqueproduct index exists')
   public async indexExists() {
-    assertIndicesExist(await getDb(), 'orderdetail', [
+    await assertIndicesExist(await getDb(), 'OrderDetail', [
       'orderdetailuniqueproduct'
     ]);
   }
