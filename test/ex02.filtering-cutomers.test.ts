@@ -26,7 +26,8 @@ class EmployeeDataTest {
   public async filteredCustomers1() {
     let result = await getAllCustomers({ filter: 'fre' });
     assert.isArray(result, 'Expected result to be an array');
-    assert.isAtMost(result.length, 3, 'Expected 3 or fewer customers in array');
+    assert.isAtLeast(result.length, 3, 'Expected 3 or more customers in array');
+    assert.isAtMost(result.length, 5, 'Expected 5 or fewer customers in array');
     validateRecordColumns(
       {
         recordType: 'customer',
