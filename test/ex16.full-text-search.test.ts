@@ -3,6 +3,8 @@ import { suite, test } from 'mocha-typescript';
 
 import { getSearchResults } from '../src/data/search';
 
+import { DbType } from '../src/db/utils';
+import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 
 @suite('EX16: "Full Text Search" - Global Search Tests')
@@ -61,7 +63,8 @@ class FullTextSearchTest {
     );
   }
 
-  @test("getSearchResults('dry')")
+  @test("[POSTGRES ONLY] getSearchResults('dry')")
+  @onlyForDatabaseTypes(DbType.Postgres)
   public async dryResults() {
     let dryResults = await getSearchResults('dry');
     assert.equal(dryResults.length, 2, 'Expected 2 search results');
@@ -97,9 +100,9 @@ class FullTextSearchTest {
   @test("getSearchResults('deli')")
   public async deliResults() {
     let deliResults = await getSearchResults('deli');
-    assert.equal(deliResults.length, 5, 'Expected 5 search results');
-    assert.sameMembers(
-      deliResults.map(r => r.name),
+    assert.isAbove(deliResults.length, 4, 'Expected 5+ search results');
+    assert.includeMembers(
+      deliResults.map(r => r.name).sort(),
       [
         'New Orleans Cajun Delights',
         'Old World Delicatessen',

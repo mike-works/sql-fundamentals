@@ -1,11 +1,11 @@
 ALTER DATABASE northwind
     DEFAULT CHARACTER SET utf8
-    DEFAULT COLLATE utf8_bin;
+    DEFAULT COLLATE utf8_unicode_ci;
 
 CREATE TABLE Category (
     id integer PRIMARY KEY AUTO_INCREMENT,
-    categoryname varchar(8000),
-    description varchar(8000)
+    categoryname varchar(255),
+    description varchar(255)
 );
 
 CREATE TABLE Customer (
