@@ -9,9 +9,10 @@ import {
   getProduct,
   updateProduct
 } from '../src/data/products';
-import { getDb } from '../src/db/utils';
+import { getDb, DbType } from '../src/db/utils';
 
 import './helpers/global-hooks';
+import { onlyForDatabaseTypes } from './helpers/decorators';
 
 @suite('EX14: "Product Metadata" - JSONB column test')
 class ProductMetadataJsonTest {
@@ -46,11 +47,20 @@ class ProductMetadataJsonTest {
     assert.containsAllKeys(results[0], ['metadata']);
   }
 
-  @test('metadata column is of type object')
+  @test('[POSTGRES ONLY] metadata column is of type object')
+  @onlyForDatabaseTypes(DbType.Postgres)
   public async metadataIsObject() {
     let db = await getDb();
     let results = await getAllProducts();
     assert.isObject(results[0].metadata);
+  }
+
+  @test('[MYSQL and SQLite ONLY] metadata column is of type null or object')
+  @onlyForDatabaseTypes(DbType.MySQL, DbType.SQLite)
+  public async metadataIsNullOrObject() {
+    let db = await getDb();
+    let results = await getAllProducts();
+    assert.ok(['null', 'object'].indexOf(typeof results[0].metadata) >= 0);
   }
 
   @test(
