@@ -17,9 +17,9 @@ class MaterializeViewsTest {
   }
 
   @test(
-    '[MYSQL and POSTGRES ONLY] Materialized views [MV_CustomerLeaderboard, MV_EmployeeLeaderboard, MV_ProductLeaderboard, MV_RecentOrders] are found'
+    '[POSTGRES ONLY] Materialized views [MV_CustomerLeaderboard, MV_EmployeeLeaderboard, MV_ProductLeaderboard, MV_RecentOrders] are found'
   )
-  @onlyForDatabaseTypes(DbType.MySQL, DbType.Postgres)
+  @onlyForDatabaseTypes(DbType.Postgres)
   public async materializedViewsPresent() {
     let db = await getDb();
     let mvNames = await db.getAllMaterializedViews();
@@ -32,9 +32,9 @@ class MaterializeViewsTest {
   }
 
   @test(
-    '[SQLITE ONLY] Views [V_CustomerLeaderboard, V_EmployeeLeaderboard, V_ProductLeaderboard, V_RecentOrders] are found'
+    '[MYSQL and SQLITE ONLY] Views [V_CustomerLeaderboard, V_EmployeeLeaderboard, V_ProductLeaderboard, V_RecentOrders] are found'
   )
-  @onlyForDatabaseTypes(DbType.SQLite)
+  @onlyForDatabaseTypes(DbType.MySQL, DbType.SQLite)
   public async viewsPresent() {
     let db = await getDb();
     let mvNames = await db.getAllViews();
