@@ -11,8 +11,11 @@ addons:
   apt:
     sources:
       - heroku
+      - mysql-5.7-trusty
     packages:
       - heroku-toolbelt
+      - mysql-server
+      - mysql-client
 
 matrix:
   include:
