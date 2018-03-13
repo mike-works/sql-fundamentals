@@ -39,6 +39,8 @@ matrix:
     env: DB_TYPE=sqlite
 
 before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade
   - echo "[mysqld]" > $HOME/.my.cnf
   - echo "lower-case-table-names = 1" >> $HOME/.my.cnf
   - mysql_config_editor set --login-path=client --host=localhost --user=root
