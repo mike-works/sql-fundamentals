@@ -1,11 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { colorizeQuery } from './db/db';
 
 const MIGRATION_PATH = path.join(__dirname, '..', 'migrations');
 
 export interface Migration {
   _meta: {
-    version: number
+    version: number;
   };
   setup(options: any, seedLink: any): void;
   up(db: any): void;
@@ -23,7 +24,6 @@ function getDbType(db: any) {
 }
 
 export function sqlFileMigration(name: string): Migration {
-
   let dbm;
   let type;
   let seed;
@@ -38,45 +38,70 @@ export function sqlFileMigration(name: string): Migration {
     type = dbm.dataType;
     seed = seedLink;
     Promise = options.Promise;
-  };
+  }
 
   function up(db: any) {
     let dbType = getDbType(db);
-    let filePath = path.join(MIGRATION_PATH, 'sqls', `${name}/${dbType}-up.sql`);
+    let filePath = path.join(
+      MIGRATION_PATH,
+      'sqls',
+      `${name}/${dbType}-up.sql`
+    );
     return new Promise((resolve, reject) => {
-      fs.readFile(filePath, {
-        encoding: 'utf-8'
-      }, (err, data) => {
-        if (err) { return reject(err); }
-        // tslint:disable-next-line:no-console
-        console.log('received data: ' + data);
-
-        resolve(data);
-      });
-    })
-      .then((data) => {
-        return db.runSql(data);
-      });
-  };
+      fs.readFile(
+        filePath,
+        {
+          encoding: 'utf-8'
+        },
+        (err, data) => {
+          if (err) {
+            return reject(err);
+          }
+          // tslint:disable-next-line:no-console
+          console.log(
+            `Running UP migration: ${name}\n──────────────────────────────────────────────────────\n${colorizeQuery(
+              data
+            )}\n──────────────────────────────────────────────────────`
+          );
+          resolve(data);
+        }
+      );
+    }).then(data => {
+      return db.runSql(data);
+    });
+  }
 
   function down(db: any) {
     let dbType = getDbType(db);
-    let filePath = path.join(MIGRATION_PATH, 'sqls', `${name}/${dbType}-down.sql`);
+    let filePath = path.join(
+      MIGRATION_PATH,
+      'sqls',
+      `${name}/${dbType}-down.sql`
+    );
     return new Promise((resolve, reject) => {
-      fs.readFile(filePath, {
-        encoding: 'utf-8'
-      }, (err, data) => {
-        if (err) { return reject(err); }
-        // tslint:disable-next-line:no-console
-        console.log('received data: ' + data);
+      fs.readFile(
+        filePath,
+        {
+          encoding: 'utf-8'
+        },
+        (err, data) => {
+          if (err) {
+            return reject(err);
+          }
+          // tslint:disable-next-line:no-console
+          console.log(
+            `Running DOWN migration: ${name}\n──────────────────────────────────────────────────────\n${colorizeQuery(
+              data
+            )}\n──────────────────────────────────────────────────────`
+          );
 
-        resolve(data);
-      });
-    })
-      .then((data) => {
-        return db.runSql(data);
-      });
-  };
+          resolve(data);
+        }
+      );
+    }).then(data => {
+      return db.runSql(data);
+    });
+  }
 
   const _meta = {
     version: 1

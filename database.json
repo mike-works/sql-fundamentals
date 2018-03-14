@@ -7,9 +7,9 @@
     "driver": "pg",
     "port": 5432,
     "user": "northwind_user",
-    "password": "thewindisblowing",
+    "password": "theWindi$bl0wing",
     "host": "localhost",
-    "database": "nw_postgresql",
+    "database": "northwind",
     "schema": "public"
   },
   "mysql": {

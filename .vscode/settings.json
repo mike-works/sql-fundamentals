@@ -1,5 +1,4 @@
 {
-  "eslint.enable": false,
   "search.exclude": {
     "**/dist": true,
     "**/node_modules": true,
@@ -9,26 +8,27 @@
   "[handlebars]": {
     "editor.formatOnSave": false
   },
-  "database.connections": [
-    {
-      "type": "postgres",
-      "name": "northwind_user@localhost:5432 (postgres)",
-      "host": "localhost:5432",
-      "user": "northwind_user",
-      "password": "thewindisblowing",
-      "database": "nw_postgresql"
-    }
-  ],
   "sqltools.connections": [
     {
-      "name": "Pg-Northwind",
+      "name": "PG:Northwind",
       "server": "127.0.0.1",
       "dialect": "PostgreSQL",
       "port": 5432,
-      "database": "nw_postgresql",
+      "database": "northwind",
       "username": "northwind_user",
       "askForPassword": false,
-      "password": "thewindisblowing",
+      "password": "theWindi$bl0wing",
+      "connectionTimeout": 15
+    },
+    {
+      "name": "MySQL:Northwind",
+      "server": "127.0.0.1",
+      "dialect": "MySQL",
+      "port": 3306,
+      "database": "northwind",
+      "username": "northwind_user",
+      "askForPassword": false,
+      "password": "theWindi$bl0wing",
       "connectionTimeout": 15
     }
   ]

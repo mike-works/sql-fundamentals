@@ -133,7 +133,7 @@ Populate the database with data. This can be done one of two ways
 Use the heroku toolbelt posgtres push utility (recommended)
 
 ```sh
-heroku pg:push nw_postgresql DATABASE_URL --app replace-this-with-your-heroku-app-name
+heroku pg:push northwind DATABASE_URL --app replace-this-with-your-heroku-app-name
 ```
 
 #### If you don't have a local database to push

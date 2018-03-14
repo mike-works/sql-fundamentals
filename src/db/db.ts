@@ -22,6 +22,13 @@ function timeVal(ms: number) {
   }
 }
 
+export function colorizeQuery(query: string) {
+  return highlight(sqlFormatter.format(query), {
+    language: 'sql',
+    ignoreIllegals: true
+  });
+}
+
 export abstract class SQLDatabase<S extends SQLStatement = any> {
   // tslint:disable-next-line:no-empty
   public static async setup(): Promise<SQLDatabase<any>> {
@@ -54,13 +61,6 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
   public abstract getAllViews(): Promise<string[]>;
   public abstract getAllMaterializedViews(): Promise<string[]>;
 
-  protected colorizeQuery(query: string) {
-    return highlight(sqlFormatter.format(query), {
-      language: 'sql',
-      ignoreIllegals: true
-    });
-  }
-
   protected logQuery(query: string, params: JSONArray, t: number) {
     let timestring =
       t < 5
@@ -70,7 +70,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
           : chalk.bgRedBright.white(timeVal(t));
     logger.info(
       [
-        this.colorizeQuery(query) + ` (${timestring})`,
+        colorizeQuery(query) + ` (${timestring})`,
         `${chalk.grey('PARAMS:')} ${JSON.stringify(params)}`
       ].join('\n')
     );
@@ -97,7 +97,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
       return result;
     } catch (e) {
       logger.error(`Problem running query
-${this.colorizeQuery(query)}
+${colorizeQuery(query)}
 ${chalk.yellow('PARAMS:')} ${JSON.stringify(params)}
 ${chalk.red('ERROR:')} ${e.toString()}`);
       throw e;
