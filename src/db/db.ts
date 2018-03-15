@@ -29,13 +29,13 @@ export function colorizeQuery(query: string) {
   });
 }
 
-export abstract class SQLDatabase<S extends SQLStatement = any> {
+export abstract class SQLDatabase {
   // tslint:disable-next-line:no-empty
-  public static async setup(): Promise<SQLDatabase<any>> {
+  public static async setup(): Promise<SQLDatabase> {
     return Promise.reject('Not yet implemented');
   }
   public statements: {
-    [key: string]: S;
+    [key: string]: SQLStatement;
   };
   protected constructor() {
     this.statements = {};
@@ -52,7 +52,7 @@ export abstract class SQLDatabase<S extends SQLStatement = any> {
     name: string,
     sql: string,
     ...params: any[]
-  ): Promise<S>;
+  ): Promise<SQLStatement>;
 
   public abstract getIndicesForTable(tableName: string): Promise<string[]>;
   public abstract getAllTriggers(): Promise<string[]>;

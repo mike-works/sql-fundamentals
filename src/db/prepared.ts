@@ -1,8 +1,17 @@
 import { SQLDatabase, SQLStatement } from './db';
 
-export async function setupPreparedStatements<
-  S extends SQLStatement,
-  D extends SQLDatabase<S>
->(db: D): Promise<{ [k: string]: S }> {
+interface PreparedStatementMap {
+  [k: string]: SQLStatement;
+}
+
+/**
+ * Initialize client-side prepared statements as part
+ * of creating a new database connection
+ * @param db A PostgreSQL, SQLite or MySQL Database connection
+ * @returns {Promise<PreparedStatementMap>}
+ */
+export async function setupPreparedStatements(
+  db: SQLDatabase
+): Promise<PreparedStatementMap> {
   return {};
 }

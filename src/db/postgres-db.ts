@@ -77,17 +77,14 @@ pool.on('error', (err, client) => {
 });
 
 // tslint:disable-next-line:max-classes-per-file
-export default class PostgresDB extends SQLDatabase<PostgresStatement> {
+export default class PostgresDB extends SQLDatabase {
   public static async setup(): Promise<PostgresDB> {
     const client = await pool.connect();
     try {
       let pgdb = new this(client);
       // let data = await pgdb.get(sql`SELECT table_name FROM information_schema.tables WHERE table_schema='public'`);
       // console.log('DATA: ', data);
-      pgdb.statements = await setupPreparedStatements<
-        PostgresStatement,
-        PostgresDB
-      >(pgdb);
+      pgdb.statements = await setupPreparedStatements(pgdb);
       if (!this.pubSubSupport) {
         this.pubSubSupport = await setupPubSub(pool);
       }

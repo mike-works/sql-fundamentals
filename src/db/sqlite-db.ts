@@ -31,7 +31,7 @@ const copyFile = (src: string, dst: string) =>
 
 const dbPromises: { [k: string]: Promise<SQLiteDB> } = {};
 
-export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
+export default class SQLiteDB extends SQLDatabase {
   public static async setup(): Promise<SQLiteDB> {
     let name = (dbConfig as any).sqlite.filename;
     if (dbPromises[name]) {
@@ -60,10 +60,7 @@ export default class SQLiteDB extends SQLDatabase<sqlite.Statement> {
         return db
           .get(sql`PRAGMA foreign_keys = ON`)
           .then(() => {
-            return setupPreparedStatements<
-              sqlite.Statement,
-              SQLDatabase<sqlite.Statement>
-            >(db);
+            return setupPreparedStatements(db);
           })
           .then(statements => {
             db.statements = statements;

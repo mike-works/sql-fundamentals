@@ -70,17 +70,14 @@ const pool: mysql2.Pool = (function() {
 });
 
 // tslint:disable-next-line:max-classes-per-file
-export default class MySQLDB extends SQLDatabase<MySQLStatement> {
+export default class MySQLDB extends SQLDatabase {
   public static async setup(): Promise<MySQLDB> {
     const client = await pool.getConnection();
     try {
       let mysqldb = new this(client);
       // let data = await mysqldb.get(sql`SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`);
       // console.log('DATA: ', data);
-      mysqldb.statements = await setupPreparedStatements<
-        MySQLStatement,
-        MySQLDB
-      >(mysqldb);
+      mysqldb.statements = await setupPreparedStatements(mysqldb);
       // if (!this.pubSubSupport) {
       //   this.pubSubSupport = await setupPubSub(pool);
       // }
