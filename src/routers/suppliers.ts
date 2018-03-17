@@ -4,6 +4,9 @@ import { getAllSuppliers, getSupplier } from '../data/suppliers';
 
 const router = express.Router();
 
+/**
+ * Handle the HTTP request for the list of all Suppliers
+ */
 router.get('/', async (req, res, next) => {
   try {
     let suppliers = await getAllSuppliers();
@@ -13,6 +16,9 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+/**
+ * Handle the HTTP request for an individual Supplier
+ */
 router.get('/:id', async (req, res, next) => {
   try {
     let supplier = await getSupplier(req.param('id'));

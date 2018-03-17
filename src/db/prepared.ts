@@ -1,7 +1,7 @@
-import { SQLDatabase, SQLStatement } from './db';
+import { SQLDatabase, SQLPreparedStatement } from './db';
 
 interface PreparedStatementMap {
-  [k: string]: SQLStatement;
+  [k: string]: SQLPreparedStatement;
 }
 
 /**
@@ -10,8 +10,17 @@ interface PreparedStatementMap {
  * @param db A PostgreSQL, SQLite or MySQL Database connection
  * @returns {Promise<PreparedStatementMap>}
  */
-export async function setupPreparedStatements(
-  db: SQLDatabase
-): Promise<PreparedStatementMap> {
+export async function setupPreparedStatements(db: SQLDatabase): Promise<PreparedStatementMap> {
+  /**
+   * Replace the body of this function with something that returns
+   * an object whose keys are strings and values are prepared statements
+   *
+   * @example
+   *
+   *    return {
+   *      getOrder: <a prepared statement>
+   *    }
+   *
+   */
   return {};
 }

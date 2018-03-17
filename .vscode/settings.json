@@ -5,6 +5,9 @@
     "**/bower_components": true
   },
   "editor.formatOnSave": true,
+  "files.associations": {
+    "*.sql": "sql"
+  },
   "[handlebars]": {
     "editor.formatOnSave": false
   },

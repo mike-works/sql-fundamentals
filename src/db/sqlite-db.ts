@@ -4,13 +4,15 @@ import * as path from 'path';
 import * as sqlite from 'sqlite';
 
 import * as dbConfig from '../../database.json';
-import { MASTER_DB_FILE, PROJECT_ROOT } from '../constants';
+import { PROJECT_ROOT } from '../constants';
 import { logger } from '../log';
 import { sql } from '../sql-string';
 
 import { SQLDatabase } from './db';
 import { setupPreparedStatements } from './prepared';
 import { timeout } from './utils';
+
+const MASTER_DB_FILE = path.join(PROJECT_ROOT, dbConfig.sqlite.filename);
 
 async function fileExists(pth: string) {
   return new Promise(resolve => {
@@ -33,7 +35,7 @@ const dbPromises: { [k: string]: Promise<SQLiteDB> } = {};
 
 export default class SQLiteDB extends SQLDatabase {
   public static async setup(): Promise<SQLiteDB> {
-    let name = (dbConfig as any).sqlite.filename;
+    let name = dbConfig.sqlite.filename;
     if (dbPromises[name]) {
       return dbPromises[name];
     }
@@ -47,26 +49,22 @@ export default class SQLiteDB extends SQLDatabase {
       }
     } else {
       if (process.env.NODE_ENV !== 'test') {
-        logger.info(
-          chalk.yellow(`Reading from SQLite database at ${pathToDb}`)
-        );
+        logger.info(chalk.yellow(`Reading from SQLite database at ${pathToDb}`));
       }
     }
 
-    dbPromises[name] = sqlite
-      .open(pathToDb, { verbose: true })
-      .then(sqliteDb => {
-        let db = new SQLiteDB(sqliteDb);
-        return db
-          .get(sql`PRAGMA foreign_keys = ON`)
-          .then(() => {
-            return setupPreparedStatements(db);
-          })
-          .then(statements => {
-            db.statements = statements;
-            return db;
-          });
-      });
+    dbPromises[name] = sqlite.open(pathToDb, { verbose: true }).then(sqliteDb => {
+      let db = new SQLiteDB(sqliteDb);
+      return db
+        .get(sql`PRAGMA foreign_keys = ON`)
+        .then(() => {
+          return setupPreparedStatements(db);
+        })
+        .then(statements => {
+          db.statements = statements;
+          return db;
+        });
+    });
     return dbPromises[name];
   }
   private db: sqlite.Database;
@@ -91,13 +89,10 @@ export default class SQLiteDB extends SQLDatabase {
     //   }
     // }
   }
-  public async run(
-    query: string,
-    ...params: any[]
-  ): Promise<{ lastID: number | string }> {
+  public async run(query: string, ...params: any[]): Promise<{ lastID: string } | void> {
     return this.measure(query, params, async () => {
       let s = await this.db.run(query, ...params);
-      return { lastID: s.lastID };
+      return { lastID: `${s.lastID}` };
     });
   }
   public get<T>(query: string, ...params: any[]): Promise<T> {
@@ -110,34 +105,28 @@ export default class SQLiteDB extends SQLDatabase {
       return await this.db.all<T>(query, ...params);
     });
   }
-  public async prepare(
-    name: string,
-    query: string,
-    ...params: any[]
-  ): Promise<sqlite.Statement> {
+  public async prepare(name: string, query: string, ...params: any[]): Promise<sqlite.Statement> {
     let s = await this.db.prepare(query, ...params);
     this.statements[name] = s;
     return s;
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
-    return (await this.all(sql`PRAGMA index_list("${tableName}")`)).map(
-      (i: any) => i.name
-    );
+    return (await this.all(sql`PRAGMA index_list("${tableName}")`)).map((i: any) => i.name);
   }
   public async getAllTriggers(): Promise<string[]> {
-    return (await this.all(
-      sql`select * from sqlite_master where type = 'trigger';`
-    )).map((i: any) => i.name as string);
+    return (await this.all(sql`select * from sqlite_master where type = 'trigger';`)).map(
+      (i: any) => i.name as string
+    );
   }
   public async getAllViews(): Promise<string[]> {
-    return (await this.all(
-      sql`select * from sqlite_master where type = 'view';`
-    )).map((i: any) => i.name as string);
+    return (await this.all(sql`select * from sqlite_master where type = 'view';`)).map(
+      (i: any) => i.name as string
+    );
   }
   public async getAllTableNames(): Promise<string[]> {
-    return (await this.all(
-      sql`SELECT name FROM sqlite_master WHERE type='table';`
-    )).map((i: any) => i.name as string);
+    return (await this.all(sql`SELECT name FROM sqlite_master WHERE type='table';`)).map(
+      (i: any) => i.name as string
+    );
   }
   public async getAllMaterializedViews(): Promise<string[]> {
     throw new Error('Materialized views are not supported in sqlite');

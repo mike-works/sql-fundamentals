@@ -12,70 +12,78 @@ import {
 
 const router = express.Router();
 
-router.get(
-  '/',
-  [
-    check('flav').isLowercase(),
-    check('inventory').isLowercase(),
-    check('tags').isLowercase()
-  ],
-  async (req: express.Request, res: express.Response) => {
-    const orderData = matchedData(req);
-    orderData.tags = (orderData.tags || '')
-      .trim()
-      .split(/\s*\,\s*/g)
-      .filter((x: string) => x);
+const ALL_PRODUCTS_VALIDATORS = [
+  check('flav').isWhitelisted(['sweet-hot', 'refreshing', 'sweet-sour']),
+  check('inventory').isLowercase(),
+  check('tags').isLowercase()
+];
 
-    let flavorFilter: ProductFlavorFilter[] = [];
-    switch (orderData.flav) {
-      case 'sweet-hot':
-        flavorFilter.push({
-          flavorName: 'spicy',
-          type: 'greater-than',
-          level: 1
-        });
-        flavorFilter.push({
-          flavorName: 'sweet',
-          type: 'greater-than',
-          level: 1
-        });
-        break;
-      case 'refreshing':
-        flavorFilter.push({
-          flavorName: 'bitter',
-          type: 'greater-than',
-          level: 1
-        });
-        flavorFilter.push({
-          flavorName: 'sour',
-          type: 'greater-than',
-          level: 1
-        });
-        break;
-      case 'sweet-sour':
-        flavorFilter.push({
-          flavorName: 'sour',
-          type: 'greater-than',
-          level: 1
-        });
-        flavorFilter.push({
-          flavorName: 'sweet',
-          type: 'greater-than',
-          level: 1
-        });
-        break;
-    }
-    let products = await getAllProducts({
-      filter: {
-        requiredTags: orderData.tags,
-        inventory: orderData.inventory,
-        flavor: flavorFilter
-      }
-    });
-    res.render('products', { products });
+const UPDATE_PRODUCT_VALIDATORS = [
+  check('metadata.flavor.sweet')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('metadata.flavor.salty')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('metadata.flavor.spicy')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('metadata.flavor.sour')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('metadata.flavor.bitter')
+    .exists()
+    .isNumeric()
+    .toInt(),
+  check('tags').exists()
+];
+
+function buildFlavorFilters(flav: string): ProductFlavorFilter[] {
+  let flavorFilter: ProductFlavorFilter[] = [];
+  switch (flav) {
+    case 'sweet-hot':
+      flavorFilter.push({ flavorName: 'spicy', type: 'greater-than', level: 1 });
+      flavorFilter.push({ flavorName: 'sweet', type: 'greater-than', level: 1 });
+      break;
+    case 'refreshing':
+      flavorFilter.push({ flavorName: 'bitter', type: 'greater-than', level: 1 });
+      flavorFilter.push({ flavorName: 'sour', type: 'greater-than', level: 1 });
+      break;
+    case 'sweet-sour':
+      flavorFilter.push({ flavorName: 'sour', type: 'greater-than', level: 1 });
+      flavorFilter.push({ flavorName: 'sweet', type: 'greater-than', level: 1 });
+      break;
   }
-);
+  return flavorFilter;
+}
 
+/**
+ * Handle the HTTP request for rendering the list of all Products
+ */
+router.get('/', ALL_PRODUCTS_VALIDATORS, async (req: express.Request, res: express.Response) => {
+  const orderData = matchedData(req);
+  orderData.tags = (orderData.tags || '')
+    .trim()
+    .split(/\s*\,\s*/g)
+    .filter((x: string) => x);
+
+  let products = await getAllProducts({
+    filter: {
+      requiredTags: orderData.tags,
+      inventory: orderData.inventory,
+      flavor: buildFlavorFilters(orderData.flav)
+    }
+  });
+  res.render('products', { products });
+});
+
+/**
+ * Handle the HTTP request for rendering an individual Product's details
+ */
 router.get('/:id', async (req: express.Request, res: express.Response) => {
   let prProduct = getProduct(req.params.id);
   let prPricing = getProductPricingHistory(req.params.id);
@@ -84,36 +92,13 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
   res.render('products/show', { product, pricingHistory });
 });
 
+/**
+ * Handle the HTTP request for updating an individual Product
+ */
 router.put(
   '/:id',
-  [
-    check('metadata.flavor.sweet')
-      .exists()
-      .isNumeric()
-      .toInt(),
-    check('metadata.flavor.salty')
-      .exists()
-      .isNumeric()
-      .toInt(),
-    check('metadata.flavor.spicy')
-      .exists()
-      .isNumeric()
-      .toInt(),
-    check('metadata.flavor.sour')
-      .exists()
-      .isNumeric()
-      .toInt(),
-    check('metadata.flavor.bitter')
-      .exists()
-      .isNumeric()
-      .toInt(),
-    check('tags').exists()
-  ],
-  async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
+  UPDATE_PRODUCT_VALIDATORS,
+  async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const orderData = matchedData(req);
     try {
       await updateProduct(req.params.id, orderData);

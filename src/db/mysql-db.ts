@@ -5,21 +5,16 @@ import * as dbConfig from '../../database.json';
 import { logger } from '../log';
 import { sql } from '../sql-string';
 
-import { SQLDatabase, SQLStatement } from './db';
+import { SQLDatabase, SQLPreparedStatement } from './db';
 import { setupPreparedStatements } from './prepared';
 
-class MySQLStatement implements SQLStatement {
+class MySQLPreparedStatement implements SQLPreparedStatement {
   protected name: string;
   protected text: string;
   protected values: any[];
   protected conn: mysql2.Connection;
   protected statement: Promise<any>;
-  public constructor(
-    name: string,
-    text: string,
-    values: any[],
-    conn: mysql2.Connection
-  ) {
+  public constructor(name: string, text: string, values: any[], conn: mysql2.Connection) {
     this.name = name;
     this.text = text;
     this.values = values;
@@ -40,9 +35,7 @@ class MySQLStatement implements SQLStatement {
 
 // tslint:disable-next-line:only-arrow-functions
 const pool: mysql2.Pool = (function() {
-  const {
-    mysql: { database, host, port, schema, user, password }
-  } = dbConfig as any;
+  const { database, host, port, user, password } = dbConfig.mysql;
   let p: mysql2.Pool = mysql2.createPool({
     connectionLimit: 10,
     host,
@@ -101,46 +94,32 @@ export default class MySQLDB extends SQLDatabase {
     // PostgresDB.pubSubSupport.release();
     await pool.end();
   }
-  public async run(
-    query: string,
-    ...params: any[]
-  ): Promise<{ lastID: number | string }> {
+  public async run(query: string, ...params: any[]): Promise<{ lastID: string } | void> {
     let q = this.normalizeQuery(query);
 
     return this.measure(q, params, async () => {
       let [res, _] = await this.connection.query(q, params);
-      let lastID = null;
       if (res && typeof (res as any).insertId !== 'undefined') {
-        lastID = (res as any).insertId;
+        let lastID = (res as any).insertId;
+        return { lastID };
       }
-      return { lastID };
     });
   }
   public async get<T>(query: string, ...params: any[]): Promise<T> {
     let q = this.normalizeQuery(query);
     return this.measure(q, params, async () => {
-      return await this.connection
-        .query(q, params)
-        .then(([result, _]: [any, never]) => (result as T[])[0]);
+      return await this.connection.query(q, params).then(([result, _]) => (result as T[])[0]);
     });
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
     let q = this.normalizeQuery(query);
     return this.measure(q, params, async () => {
-      return await this.connection
-        .query(q, params)
-        .then(([result, _]: [any, never]) => result as T[]);
+      return await this.connection.query(q, params).then(([result, _]) => result as T[]);
     });
   }
-  public prepare(
-    name: string,
-    query: string,
-    ...params: any[]
-  ): Promise<MySQLStatement> {
+  public prepare(name: string, query: string, ...params: any[]): Promise<MySQLPreparedStatement> {
     let q = this.normalizeQuery(query);
-    return Promise.resolve(
-      new MySQLStatement(name, q, params, this.connection)
-    );
+    return Promise.resolve(new MySQLPreparedStatement(name, q, params, this.connection));
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
     return (await this.all(sql`SHOW INDEX FROM ${tableName}`)).map(
@@ -148,17 +127,15 @@ export default class MySQLDB extends SQLDatabase {
     );
   }
   public async getAllTriggers(): Promise<string[]> {
-    return (await this.all(sql`SHOW TRIGGERS`)).map(
-      (result: any) => result.Trigger as string
-    );
+    return (await this.all(sql`SHOW TRIGGERS`)).map((result: any) => result.Trigger as string);
   }
   public async getAllMaterializedViews(): Promise<string[]> {
     throw new Error('getAllMaterializedViews() not yet implemented');
   }
   public async getAllViews(): Promise<string[]> {
-    return (await this.all(
-      sql`SHOW FULL TABLES IN northwind WHERE TABLE_TYPE LIKE 'VIEW'`
-    )).map((result: any) => result.Tables_in_northwind as string);
+    return (await this.all(sql`SHOW FULL TABLES IN northwind WHERE TABLE_TYPE LIKE 'VIEW'`)).map(
+      (result: any) => result.Tables_in_northwind as string
+    );
   }
   public async getAllFunctions(): Promise<string[]> {
     throw new Error('getAllFunctions() not yet implemented');

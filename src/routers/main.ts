@@ -17,13 +17,18 @@ import supplierRouter from './suppliers';
 
 const router = express.Router();
 
+/**
+ * Handle the HTTP request for the dashboard page
+ */
 router.get('/', async (req, res, next) => {
   try {
+    // Make sure we kick off all our async things ASAP and in parallel
     let pSalesLeader = getEmployeeSalesLeaderboard();
     let pCustomerLeader = getCustomerSalesLeaderboard();
     let pProductLeader = getProductSalesLeaderboard();
     let pReorderList = getReorderList();
     let pRecentOrders = getRecentOrders();
+    // Wait for them all to resolve
     let reorderList = await pReorderList;
     let employeeLeaderboard = await pSalesLeader;
     let customerLeaderboard = await pCustomerLeader;

@@ -4,9 +4,13 @@ import { getSearchResults } from '../data/search';
 
 const router = express.Router();
 
+/**
+ * Handle the HTTP request for a list of search results
+ */
 router.get('/', async (req, res, next) => {
   try {
-    let results = await getSearchResults(req.param('s').toLowerCase());
+    let term = req.param('s').toLowerCase();
+    let results = await getSearchResults(term); // * get the data
     res.render('search', { results });
   } catch (e) {
     next(e);

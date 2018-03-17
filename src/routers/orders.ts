@@ -16,7 +16,14 @@ import { getAllProducts } from '../data/products';
 import { getAllRegions } from '../data/regions';
 import { getAllShippers } from '../data/shippers';
 
-const ORDER_VALIDATIONS = [
+const router = express.Router();
+
+/**
+ * A set of validations to apply for the "create order" (POST /order) request.
+ * These ensure that informative error messages are generated in the event that
+ * any required properties are missing, they're of the wrong types, etc...
+ */
+const CREATE_ORDER_VALIDATIONS = [
   check('employeeid')
     .exists()
     .isNumeric()
@@ -68,11 +75,19 @@ const ORDER_VALIDATIONS = [
     .custom((value: any[]) => value instanceof Array)
 ];
 
-const router = express.Router();
+function normalizeOrderDetail(detail: { [K in keyof OrderDetail]: any }): Partial<OrderDetail> {
+  let [id, price] = detail.productid.split(';');
+  let discount = parseFloat(detail.discount);
+  return {
+    id: detail.id,
+    productid: parseInt(id, 10),
+    unitprice: parseFloat(price) * (1 - discount),
+    quantity: parseInt(detail.quantity, 10),
+    discount
+  };
+}
 
-function normalizeOrderDetails(raw: {
-  [k: string]: any[];
-}): Array<Partial<OrderDetail>> {
+function normalizeOrderDetails(raw: { [k: string]: any[] }): Array<Partial<OrderDetail>> {
   let keys = Object.keys(raw);
   let n = keys.reduce((ct, val) => Math.max(ct, raw[val].length), 0);
   let details: Array<{ [K in keyof OrderDetail]: any }> = [];
@@ -85,19 +100,12 @@ function normalizeOrderDetails(raw: {
     }
     details.push(o as any);
   }
-  return details.map(d => {
-    let [id, price] = d.productid.split(';');
-    let discount = parseFloat(d.discount as string);
-    return {
-      id: d.id,
-      productid: parseInt(id, 10),
-      unitprice: parseFloat(price) * (1 - discount),
-      quantity: parseInt(d.quantity as string, 10),
-      discount
-    };
-  });
+  return details.map(normalizeOrderDetail);
 }
 
+/**
+ * Handle the HTTP request for a list of all CustomerOrder records
+ */
 router.get('/', async (req, res, next) => {
   try {
     let { page = 1, perPage = 20 } = req.query;
@@ -111,39 +119,42 @@ router.get('/', async (req, res, next) => {
     if (typeof req.query.order === 'string' && req.query.order !== '') {
       opts.order = req.query.order;
     }
-    let orders = await getAllOrders(opts);
+    let orders = await getAllOrders(opts); // * get the data
     res.render('orders', { orders, page });
   } catch (e) {
     next(e);
   }
 });
 
+/**
+ * Handle the HTTP request for rendering the "create new order" page
+ */
 router.get('/new', async (req, res, next) => {
   try {
-    let cp = getAllCustomers();
+    // Kick off all the async things ASAP and in parallel
+    let cp = getAllCustomers(); // * get the data
     let ep = getAllEmployees();
     let rp = getAllRegions();
     let sp = getAllShippers();
     let pp = getAllProducts();
+    // Wait for everything to finish
     let customers = await cp;
     let employees = await ep;
     let regions = await rp;
     let shippers = await sp;
     let products = await pp;
 
-    res.render('orders/new', {
-      customers,
-      employees,
-      regions,
-      shippers,
-      products
-    });
+    res.render('orders/new', { customers, employees, regions, shippers, products });
   } catch (e) {
     next(e);
   }
 });
 
-router.post('/', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
+/**
+ * Handle the HTTP request for creation of a new CustomerOrder record
+ * NOTE: This should render a JSON response
+ */
+router.post('/', CREATE_ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.mapped() });
@@ -154,7 +165,7 @@ router.post('/', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   let detailsObj = orderData.details || {};
   let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
   try {
-    let order = await createOrder(orderData, details);
+    let order = await createOrder(orderData, details); // * get the data
     res.redirect(`orders/${order.id}`);
   } catch (e) {
     res.status(500);
@@ -162,7 +173,10 @@ router.post('/', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   }
 });
 
-router.post('/:id', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
+/**
+ * Handle the HTTP request for updating an existing CustomerOrder record
+ */
+router.post('/:id', CREATE_ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.mapped() });
@@ -173,7 +187,7 @@ router.post('/:id', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   let detailsObj = orderData.details || {};
   let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
   try {
-    let order = await updateOrder(req.params.id, orderData as any, details);
+    let order = await updateOrder(req.params.id, orderData as any, details); // * update the data
     res.redirect(`/orders/${order.id}`);
   } catch (e) {
     res.status(500);
@@ -181,11 +195,17 @@ router.post('/:id', ORDER_VALIDATIONS, async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * Handle the HTTP request for rendering an individual order page
+ */
 router.get('/:id', async (req, res) => {
-  let [order, items] = await getOrderWithDetails(req.param('id'));
+  let [order, items] = await getOrderWithDetails(req.param('id')); // * update the data
   res.render('orders/show', { order, items });
 });
 
+/**
+ * Handle the HTTP request for rendering the "edit order" page
+ */
 router.get('/:id/edit', async (req, res, next) => {
   try {
     let cp = getAllCustomers();
@@ -213,9 +233,12 @@ router.get('/:id/edit', async (req, res, next) => {
   }
 });
 
+/**
+ * Handle the HTTP request for deleting an order
+ */
 router.delete('/:id', async (req, res, next) => {
   try {
-    await deleteOrder(req.param('id'));
+    await deleteOrder(req.param('id')); // * delete the order
     res.status(204);
     res.json({ status: 'ok' });
   } catch (e) {

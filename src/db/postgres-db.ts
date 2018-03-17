@@ -5,21 +5,16 @@ import * as dbConfig from '../../database.json';
 import { logger } from '../log';
 import { sql } from '../sql-string';
 
-import { SQLDatabase, SQLStatement } from './db';
+import { SQLDatabase, SQLPreparedStatement } from './db';
 import { setupPubSub } from './postgres-pubsub';
 import { setupPreparedStatements } from './prepared';
 
-class PostgresStatement implements SQLStatement {
+class PostgresPreparedStatement implements SQLPreparedStatement {
   protected name: string;
   protected text: string;
   protected values: any[];
   protected client: pg.Client;
-  public constructor(
-    name: string,
-    text: string,
-    values: any[],
-    client: pg.Client
-  ) {
+  public constructor(name: string, text: string, values: any[], client: pg.Client) {
     this.client = client;
     this.name = name;
     this.text = text;
@@ -45,9 +40,7 @@ class PostgresStatement implements SQLStatement {
 
 // tslint:disable-next-line:only-arrow-functions
 const pool: pg.Pool = (function() {
-  const {
-    pg: { database, host, port, schema, user, password }
-  } = dbConfig as any;
+  const { database, host, port, schema, user, password } = dbConfig.pg;
   let p = new pg.Pool(
     process.env.DATABASE_URL
       ? { connectionString: process.env.DATABASE_URL }
@@ -108,10 +101,7 @@ export default class PostgresDB extends SQLDatabase {
     PostgresDB.pubSubSupport.release();
     await pool.end();
   }
-  public async run(
-    query: string,
-    ...params: any[]
-  ): Promise<{ lastID: number | string }> {
+  public async run(query: string, ...params: any[]): Promise<{ lastID: string } | void> {
     if (
       query
         .toLowerCase()
@@ -122,18 +112,16 @@ export default class PostgresDB extends SQLDatabase {
     }
     return this.measure(query, params, async () => {
       let res = await this.client.query(query, params);
-      let lastID = null;
       if (res.rows && res.rows.length > 0) {
+        let lastID = null;
         lastID = res.rows[0].id;
+        return { lastID };
       }
-      return { lastID };
     });
   }
   public async get<T>(query: string, ...params: any[]): Promise<T> {
     return this.measure(query, params, async () => {
-      return await this.client
-        .query(query, params)
-        .then(result => result.rows[0]);
+      return await this.client.query(query, params).then(result => result.rows[0]);
     });
   }
   public async all<T>(query: string, ...params: any[]): Promise<T[]> {
@@ -145,10 +133,8 @@ export default class PostgresDB extends SQLDatabase {
     name: string,
     query: string,
     ...params: any[]
-  ): Promise<PostgresStatement> {
-    return Promise.resolve(
-      new PostgresStatement(name, query, params, this.client)
-    );
+  ): Promise<PostgresPreparedStatement> {
+    return Promise.resolve(new PostgresPreparedStatement(name, query, params, this.client));
   }
   public async getIndicesForTable(tableName: string): Promise<string[]> {
     return (await this.all(sql`SELECT indexname AS name
@@ -157,21 +143,20 @@ export default class PostgresDB extends SQLDatabase {
     );
   }
   public async getAllTriggers(): Promise<string[]> {
-    return (await this
-      .all(sql`SELECT tgname AS name FROM pg_trigger,pg_proc WHERE
+    return (await this.all(sql`SELECT tgname AS name FROM pg_trigger,pg_proc WHERE
     pg_proc.oid=pg_trigger.tgfoid AND tgisinternal = false`)).map(
       (result: any) => result.name as string
     );
   }
   public async getAllMaterializedViews(): Promise<string[]> {
-    return (await this.all(
-      sql`SELECT oid::regclass::text FROM pg_class WHERE  relkind = 'm'`
-    )).map((result: any) => result.oid as string);
+    return (await this.all(sql`SELECT oid::regclass::text FROM pg_class WHERE  relkind = 'm'`)).map(
+      (result: any) => result.oid as string
+    );
   }
   public async getAllViews(): Promise<string[]> {
-    return (await this.all(
-      sql`select viewname as name from pg_catalog.pg_views;`
-    )).map((result: any) => result.name as string);
+    return (await this.all(sql`select viewname as name from pg_catalog.pg_views;`)).map(
+      (result: any) => result.name as string
+    );
   }
   public async getAllFunctions(): Promise<string[]> {
     return (await this.all(sql`SELECT routines.routine_name as name
@@ -186,8 +171,6 @@ ORDER BY routines.routine_name, parameters.ordinal_position;`)).map(
     return (await this.all(sql`SELECT table_name as name
       FROM information_schema.tables
      WHERE table_schema='public'
-       AND table_type='BASE TABLE';`)).map(
-      (result: any) => result.name as string
-    );
+       AND table_type='BASE TABLE';`)).map((result: any) => result.name as string);
   }
 }
