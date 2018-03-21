@@ -6,9 +6,21 @@
   },
   "editor.formatOnSave": true,
   "files.associations": {
+    "pg*.sql": "pgsql",
     "*.sql": "sql"
   },
+  "vsicons.projectDetection.autoReload": true,
+  "vsicons.associations.files": [
+    {
+      "icon": "sql",
+      "extensions": ["sql"],
+      "format": "svg"
+    }
+  ],
   "[handlebars]": {
+    "editor.formatOnSave": false
+  },
+  "[sql]": {
     "editor.formatOnSave": false
   },
   "sqltools.connections": [
