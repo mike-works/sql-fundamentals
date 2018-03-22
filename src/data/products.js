@@ -24,7 +24,7 @@ import { sql } from '../sql-string';
 
 /**
  * @typedef ProductCollectionOptions
- * @property {ProductCollectionFilter} filter filtering options, which can be used to select a subset of Products
+ * @property {Partial<ProductCollectionFilter>} filter filtering options, which can be used to select a subset of Products
  * @description Options that may be used to customize queries for collections of Products
  */
 

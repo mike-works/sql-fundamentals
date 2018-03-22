@@ -1,7 +1,5 @@
-type DBRecordReference = number | string;
-
 interface DBRecord {
-  id: DBRecordReference;
+  id: number | string;
 }
 
 interface Category extends DBRecord {
@@ -44,13 +42,13 @@ interface Employee extends DBRecord {
 }
 
 interface EmployeeTerritory extends DBRecord {
-  employeeid: DBRecordReference;
-  territoryid: DBRecordReference;
+  employeeid: number | string;
+  territoryid: number | string;
 }
 
 interface Order extends DBRecord {
-  customerid: DBRecordReference;
-  employeeid: DBRecordReference;
+  customerid: number | string;
+  employeeid: number | string;
   freight: number;
   orderdate: string;
   requireddate: string;
@@ -60,14 +58,14 @@ interface Order extends DBRecord {
   shipname: string;
   shippeddate: string;
   shippostalcode: string;
-  shipregion: string;
+  shipregion: number | string;
   shipvia: number;
   subtotalprice: number;
 }
 
 interface OrderDetail extends DBRecord {
-  orderid: DBRecordReference;
-  productid: DBRecordReference;
+  orderid: number | string;
+  productid: number | string;
   unitprice: number;
   quantity: number;
   discount: number;
@@ -75,8 +73,8 @@ interface OrderDetail extends DBRecord {
 
 interface Product extends DBRecord {
   productname: string;
-  supplierid: DBRecordReference;
-  categoryid: DBRecordReference;
+  supplierid: number | string;
+  categoryid: number | string;
   quantityperunit: string;
   unitprice: number;
   unitsinstock: number;
@@ -96,7 +94,7 @@ interface Product extends DBRecord {
 }
 
 interface ProductPriceInfo extends DBRecord {
-  productid: DBRecordReference;
+  productid: number | string;
   changedate: string;
   fromprice: number;
   toprice: number;
@@ -118,5 +116,5 @@ interface Supplier extends Customer {
 
 interface Territory extends DBRecord {
   territorydescription: string;
-  regionid: DBRecordReference;
+  regionid: number | string;
 }
