@@ -5,6 +5,8 @@
     "inlineSourceMap": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
     "outDir": "dist",
     "baseUrl": ".",
     "strict": true

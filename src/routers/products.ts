@@ -2,12 +2,28 @@ import * as express from 'express';
 import { check } from 'express-validator/check';
 import { matchedData } from 'express-validator/filter';
 
+type ProductFlavorName = 'sweet' | 'spicy' | 'sour' | 'salty' | 'bitter';
+
+interface ProductFlavorFilter {
+  flavorName: ProductFlavorName;
+  level: 1 | 2 | 3 | 4 | 5;
+  type: 'less-than' | 'greater-than';
+}
+
+/**
+ *  Filtering options that may be used to customize the query for selecting a collection of Products
+ */
+interface ProductCollectionFilter {
+  inventory: 'needs-reorder' | 'discontinued';
+  requiredTags: string[];
+  flavor: ProductFlavorFilter[];
+}
+
 import {
   getAllProducts,
   getProduct,
   getProductPricingHistory,
-  updateProduct,
-  ProductFlavorFilter
+  updateProduct
 } from '../data/products';
 
 const router = express.Router();

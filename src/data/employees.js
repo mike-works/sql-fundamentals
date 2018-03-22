@@ -8,8 +8,9 @@ const ALL_EMPLOYEES_COLUMNS = ['*'];
 
 /**
  * Retrieve a collection of all Employee records in the database
+ * @returns {Promise<Employee[]>} the employees
  */
-export async function getAllEmployees(): Promise<Employee[]> {
+export async function getAllEmployees() {
   const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_EMPLOYEES_COLUMNS.join(',')}
@@ -18,9 +19,10 @@ FROM Employee`);
 
 /**
  * Retrieve an Employee by id from the database
- * @param id Employee ID
+ * @param {string | number} id Employee ID
+ * @returns {Promise<Employee>} the employee
  */
-export async function getEmployee(id: string | number): Promise<Employee> {
+export async function getEmployee(id) {
   const db = await getDb();
   return await db.get(
     sql`

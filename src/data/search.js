@@ -1,17 +1,19 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-interface SearchResult {
-  entity: string;
-  name: string;
-  id: string | number;
-}
+/**
+ * @typedef SearchResult
+ * @property {string} entity
+ * @property {string} name
+ * @property {string|number} id
+ */
 
 /**
  * Retrieve a list of search results from the database
- * @param term search term
+ * @param {string} term search term
+ * @returns {Promise<SearchResult[]>} search results
  */
-export async function getSearchResults(term: string): Promise<SearchResult[]> {
+export async function getSearchResults(term) {
   let db = await getDb();
   return db.all(
     sql`

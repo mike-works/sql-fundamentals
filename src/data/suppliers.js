@@ -8,8 +8,9 @@ const ALL_SUPPLIERS_COLUMNS = ['*'];
 
 /**
  * Retrieve a collection of all Supplier records from the database
+ * @return {Promise<Supplier[]>}
  */
-export async function getAllSuppliers(): Promise<Supplier[]> {
+export async function getAllSuppliers() {
   const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_SUPPLIERS_COLUMNS.join(',')}
@@ -18,9 +19,10 @@ FROM Supplier`);
 
 /**
  * Retrieve an individual Supplier record from the database, by id
- * @param id Supplier id
+ * @param {string|number} id Supplier id
+ * @return {Promise<Supplier>} the supplier
  */
-export async function getSupplier(id: string | number): Promise<Supplier> {
+export async function getSupplier(id) {
   const db = await getDb();
   return await db.get(
     sql`

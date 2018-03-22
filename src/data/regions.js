@@ -8,8 +8,9 @@ const ALL_REGIONS_COLUMNS = ['id', 'regiondescription'];
 
 /**
  * Retrieve a collection of all Regions from the database
+ * @returns {Promise<Region[]>} the regions
  */
-export async function getAllRegions(): Promise<Region[]> {
+export async function getAllRegions() {
   const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_REGIONS_COLUMNS.map(c => `r.${c}`).join(',')}
