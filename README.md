@@ -49,41 +49,97 @@ git clone https://github.com/mike-works/sql-fundamentals sql
 cd sql
 ```
 
-## Database Setup
+## Database Software Setup
 
-This project is used for two workshops. [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) may be completed using either SQLite or PostgreSQL, and [Professional SQL](https://mike.works/course/professional-sql-c9c7184) requires PostgreSQL.
+This project is used for two workshops. [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) may be completed using either [SQLite](https://www.sqlite.org/index.html), [MySQL](https://www.mysql.com/) or [PostgreSQL](https://www.postgresql.org/), and [Professional SQL](https://mike.works/course/professional-sql-c9c7184) requires either MySQL or PostgreSQL.
 
 To set up the database software, please check out these guides
 
 * [Installing SQLite 3](./SQLITE_SETUP.md)
 * [Installing Postgres 10](./POSTGRES_SETUP.md)
+* [Installing MySQL 5.7](./MYSQL_SETUP.md)
 
-## Install dependencies
+## Install node dependencies
 
-If you only intend to complete the [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) workshop (exercises 1-10), you can run
+If you only intend to complete the [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) workshop (exercises 1-10), and wish to ONLY use SQLite, you can run
 
 ```sh
 npm install --no-optional
 ```
 
-If you wish to proceed beyond exercise 10 for the [Professional SQL](https://mike.works/course/professional-sql-c9c7184) course, please include optional dependencies
+If you wish to use MySQL or PostgreSQL, or proceed beyond exercise 10 for the [Professional SQL](https://mike.works/course/professional-sql-c9c7184) course, please include optional dependencies
 
 ```sh
 npm install
 ```
 
-## Seed Data
+## Database Initialization
 
-If you're using the _SQLite_ database, the `./master.sqlite` file already contains the data we'll be working with. Please run
+#### SQLite
+
+The `./master.sqlite` file already contains the data we'll be working with, but we'll want to create a copy called `./dev.sqlite` in case we mess up and have to reset to a known good state. To create this working copy, please run
 
 ```sh
 npm run db:setup:sqlite
 ```
 
-If you're using the _PostgreSQL_ database, the `./northwind.sql` script contains the necessary commands for setting up the equivalent data. Please run
+<details>
+  <summary>What does this do?</summary>
+  Ultimately, the command runs <a href="./scripts/db/setup/sqlite.sh">this script</a>
+</details>
+
+Validate that your SQLite database works by running
+
+```sh
+sqlite3 dev.sqlite "SELECT count(id) FROM Employee"
+#> 9
+```
+
+#### PostgreSQL
+
+The `./sql/northwind.pg.sql` script contains the necessary commands for setting up the PostgreSQL schema, and the `./sql/northwind_data.sql` file will fill the database with data. The database setup that includes database creation, running these scripts, and setting appropriate permissions can be run by executing this command
 
 ```sh
 npm run db:setup:pg
+```
+
+<details>
+  <summary>What does this do?</summary>
+  Ultimately, the command runs <a href="./scripts/db/setup/pg.sh">this script</a>
+</details>
+
+Validate that your PostgreSQL database works by running
+
+```sh
+psql northwind -c "SELECT count(id) FROM Employee"
+#>  count
+#> -------
+#>      9
+#> (1 row)
+```
+
+#### MySQL
+
+The `./sql/northwind.mysql.sql` script contains the necessary commands for setting up the MySQL schema, and the `./sql/northwind_data.sql` file will fill the database with data. The database setup that includes database creation, running these scripts, and setting appropriate permissions can be run by executing this command
+
+```sh
+npm run db:setup:mysql
+```
+
+<details>
+  <summary>What does this do?</summary>
+  Ultimately, the command runs <a href="./scripts/db/setup/mysql.sh">this script</a>
+</details>
+
+Validate that your MySQL database works by running
+
+```sh
+mysql -D northwind -e "SELECT count(id) FROM Employee"
+#> +-----------+
+#> | count(id) |
+#> +-----------+
+#> |         9 |
+#> +-----------+
 ```
 
 ## Run the tests
@@ -92,32 +148,80 @@ There's an initial set of tests that ensure the app is correctly setup for the b
 
 ```sh
 # Test against SQLite
-npm run test:ex 0
+npm run test --- EX00
 # Test against PostgreSQL
-DB_TYPE=pg npm run test:ex 0
+DB_TYPE=pg npm run test --- EX00
 ```
 
-Or, if you wish to have the app watch the source code for changes, and re-run the tests on each save...
+# Commands & Scripts
+
+## Starting the app
+
+The app can be built and started up by running
 
 ```sh
-# Test against SQLite
-npm run test:ex:watch 0
-# Test against PostgreSQL
-DB_TYPE=pg npm run test:ex:watch 0
-```
-
-## Start the app
-
-```sh
-# Run w/ SQLite
 npm run watch
-# Run w/ PostgreSQL
-DB_TYPE=pg npm run watch
 ```
 
-# Deploy this app on heroku
+This will shutdown, rebuild and restart the app whenever source files are changed. If you want to start the app so that a debugger may be connected, run
 
-If you don't want to set up your own [PostgreSQL](https://www.postgresql.org) database locally, you can deploy this app onto heroku and use their $7/month hosted PostgreSQL service.
+```sh
+npm run watch:debug
+```
+
+## Running Tests
+
+You may run a subset of test suites whotes names match a string by running
+
+```sh
+npm run test --- <string>
+```
+
+or if you wish for the tests to re-run on code changes
+
+```sh
+npm run test:watch --- <string>
+```
+
+and if you want to connect a debugger...
+
+```sh
+npm run test --- EX00 --inspect-brk
+```
+
+Additionally, you can run tests for a particular exercise, and all exercises before it. This is useful when trying to ensure that an exercise can be completed without breaking previous work.
+
+```sh
+npm run test:ex 4 # run tests up through exercise 4
+```
+
+or, if you want to re-run tests on code changes
+
+```sh
+npm run test:ex:watch 4
+```
+
+## Choosing a database
+
+This project is designed to work with three databases: SQLite (default), PostgreSQL and MySQL. The database that's used is determined by the `DB_TYPE` environment variable
+
+| DB_TYPE value | Database   |
+| ------------- | ---------- |
+| `pg`          | PostgreSQL |
+| `mysql`       | MySQL      |
+| anything else | SQLite     |
+
+This environment variable can be used when running or testing the app. For example
+
+```sh
+DB_TYPE=mysql npm run watch # Run the app using MySQL, and rebuild whenever source code changes
+
+DB_TYPE=pg npm run test:ex 9 # Run tests up to and including exercise 9 using PostgreSQL
+```
+
+# How To Deploy on Heroku
+
+If for some reason, you cannot set up your own local database software, you can deploy this app onto heroku and use their $7/month hosted [PostgreSQL](https://www.postgresql.org) service.
 
 ### Step 1
 
@@ -130,7 +234,7 @@ Populate the database with data. This can be done one of two ways
 
 #### If you have a local database already setup and running
 
-Use the heroku toolbelt posgtres push utility (recommended)
+Use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) posgtres push utility (recommended)
 
 ```sh
 heroku pg:push northwind DATABASE_URL --app replace-this-with-your-heroku-app-name
