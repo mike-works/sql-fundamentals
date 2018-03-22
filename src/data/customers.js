@@ -21,10 +21,17 @@ const ALL_CUSTOMERS_COLUMNS = ['id', 'contactname', 'companyname'];
  * @returns {Promise<Customer[]>} A collection of customers
  */
 export async function getAllCustomers(options = {}) {
+  let nameFilter = options.filter;
+  let whereClause = '';
+  if (nameFilter) {
+    whereClause = `WHERE (lower(companyName) LIKE '%${nameFilter}%') OR (lower(contactName) LIKE '%${nameFilter}%')`;
+  }
+
   const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
-FROM Customer`);
+FROM Customer
+${whereClause}`);
 }
 
 /**

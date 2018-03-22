@@ -39,10 +39,21 @@ const ALL_PRODUCT_COLUMNS = ['*'];
  * @returns {Promise<Product[]>} the products
  */
 export async function getAllProducts(opts = {}) {
+  let inventoryFilter = opts.filter ? opts.filter.inventory : '';
+  let whereClause = '';
+  if (inventoryFilter === 'needs-reorder') {
+    /*
+    We need to reorder when (Product.unitsinstock + Product.unitsonorder) < Product.reorderlevel
+    */
+    whereClause = sql`WHERE (unitsinstock + unitsonorder) < reorderlevel`;
+  } else if (inventoryFilter === 'discontinued') {
+    whereClause = sql`WHERE discontinued = 1`;
+  }
   const db = await getDb();
   return await db.all(sql`
 SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product`);
+FROM Product
+${whereClause}`);
 }
 
 /**
