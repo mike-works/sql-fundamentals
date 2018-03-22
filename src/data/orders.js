@@ -34,6 +34,36 @@ const DEFAULT_ORDER_COLLECTION_OPTIONS = Object.freeze(
 );
 
 /**
+ * @param {Partial<OrderCollectionOptions>} opts Options for customizing the query
+ * @param {string} whereClause
+ * @returns {Promise<Order[]>} the orders
+ */
+async function getAllOrdersBase(opts, whereClause) {
+  // Combine the options passed into the function with the defaults
+  let options = { ...DEFAULT_ORDER_COLLECTION_OPTIONS, ...opts };
+  let { page, perPage, sort, order } = options;
+  let offsetClause = '';
+  if (typeof page !== 'undefined' && typeof perPage !== 'undefined') {
+    offsetClause = sql`LIMIT ${perPage} OFFSET ${(page - 1) * perPage}`;
+  }
+  if (!opts.sort) {
+    opts.sort = 'shippeddate';
+    opts.order = 'asc';
+  }
+  let orderClause = '';
+  if (typeof sort !== 'undefined' && typeof order !== 'undefined') {
+    orderClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+  }
+  // SOLUTION FOR EXERCISE 1 GOES HERE //
+  const db = await getDb();
+  return await db.all(sql`
+SELECT ${ALL_ORDERS_COLUMNS.join(',')}
+FROM CustomerOrder
+${orderClause}
+${offsetClause}`);
+}
+
+/**
  * Retrieve a collection of "all orders" from the database.
  * NOTE: This table has tens of thousands of records, so we'll probably have to apply
  *    some strategy for viewing only a part of the collection at any given time
@@ -41,18 +71,7 @@ const DEFAULT_ORDER_COLLECTION_OPTIONS = Object.freeze(
  * @returns {Promise<Order[]>} the orders
  */
 export async function getAllOrders(opts = {}) {
-  // Combine the options passed into the function with the defaults
-
-  /** @type {OrderCollectionOptions} */
-  let options = {
-    ...DEFAULT_ORDER_COLLECTION_OPTIONS,
-    ...opts
-  };
-
-  const db = await getDb();
-  return await db.all(sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder`);
+  return getAllOrdersBase(opts, '');
 }
 
 /**
@@ -61,8 +80,11 @@ FROM CustomerOrder`);
  * @param {Partial<OrderCollectionOptions>} opts Options for customizing the query
  */
 export async function getCustomerOrders(customerId, opts = {}) {
-  // ! This is going to retrieve ALL ORDERS, not just the ones that belong to a particular customer. We'll need to fix this
-  return getAllOrders(opts);
+  if (!opts.sort) {
+    opts.sort = 'shippeddate';
+    opts.order = 'asc';
+  }
+  return getAllOrdersBase(opts, ``);
 }
 
 /**
