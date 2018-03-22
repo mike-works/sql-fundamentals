@@ -4,7 +4,15 @@ import { sql } from '../sql-string';
 /**
  * Columns to select for the `getAllEmployees` query
  */
-const ALL_EMPLOYEES_COLUMNS = ['*'];
+const ALL_EMPLOYEES_COLUMNS = [
+  'id',
+  'reportsto',
+  'firstname',
+  'lastname',
+  'region',
+  'hiredate',
+  'title'
+];
 
 /**
  * Retrieve a collection of all Employee records in the database
