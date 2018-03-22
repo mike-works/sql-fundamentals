@@ -219,6 +219,29 @@ DB_TYPE=mysql npm run watch # Run the app using MySQL, and rebuild whenever sour
 DB_TYPE=pg npm run test:ex 9 # Run tests up to and including exercise 9 using PostgreSQL
 ```
 
+# Recommended Tools
+
+The following tools are recommended for this course. Depending on which database(s) you choose to use for the course, please download the appropriate tools by following their respective installation instructions.
+
+* _All Databases_
+
+  * [Visual Studio Code](https://code.visualstudio.com) - A fantastic code editor that we'll be using for its static analysis features and a few SQL-specific extensions
+  * VS Code Extensions
+    * [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) - to hilight urgent comments more prominently
+    * [SQL Tools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) - to connect to databases and run queries right from within our code editor
+    * [vscode-sql-template-literal](https://marketplace.visualstudio.com/items?itemName=forbeslindesay.vscode-sql-template-literal) - for syntax hilighting of tagged template literals in our JavaScript code.
+    * [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint) - type-checking and other static analysis on our code
+
+* _MySQL_
+  * [Sequel Pro](https://www.sequelpro.com/) (OS X only)
+  * [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) (OS X, Windows, Linux)
+  * [VSCode MySQL Syntax](https://marketplace.visualstudio.com/items?itemName=jakebathman.mysql-syntax) - syntax hilighting for MySQL-specific syntax
+* _PostgreSQL_
+  * [pgAdmin](https://www.pgadmin.org/download/) (OS X, Windows, Linux)
+  * [vscode-postgresql](https://marketplace.visualstudio.com/items?itemName=JPTarquino.postgresql) - for autocomplete and syntax hilighting of Postgres-specific SQL
+* _SQLite_
+  * [DB Browser for SQLite](http://sqlitebrowser.org/) (OS X, Windows, Linux)
+
 # How To Deploy on Heroku
 
 If for some reason, you cannot set up your own local database software, you can deploy this app onto heroku and use their $7/month hosted [PostgreSQL](https://www.postgresql.org) service.
