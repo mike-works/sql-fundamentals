@@ -10,12 +10,10 @@ import { assertIndicesExist } from './helpers/table';
 class MigrationIndicesTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(4, 1);
+    assertMigrationCount(3, 2);
   }
 
-  @test(
-    'OrderDetail table now has indices orderdetailproductid and orderdetailorderid'
-  )
+  @test('OrderDetail table now has indices orderdetailproductid and orderdetailorderid')
   public async orderDetailIndicesPresent() {
     await assertIndicesExist(await getDb(), 'OrderDetail', [
       'orderdetailproductid',

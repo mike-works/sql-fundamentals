@@ -9,7 +9,8 @@
     "checkJs": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false
   },
   "include": ["src/**/*.ts"]
 }

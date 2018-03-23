@@ -109,7 +109,7 @@ export async function deleteProduct(id) {
 
 /**
  * Get a Product's history of pricing changes
- * @param {string | number} id Product id
+ * @param {string} id Product id
  * @returns {Promise<ProductPriceInfo[]>} Pricing history info
  */
 export async function getProductPricingHistory(id) {

@@ -104,7 +104,7 @@ export async function getOrderWithDetails(id) {
 /**
  * Create a new CustomerOrder record
  * @param {Pick<Order, 'employeeid' | 'customerid' | 'shipcity' | 'shipaddress' | 'shipname' | 'shipvia' | 'shipregion' | 'shipcountry' | 'shippostalcode' | 'requireddate' | 'freight'>} order data for the new CustomerOrder
- * @param {Array<Pick<OrderDetail, 'productid' | 'quantity' | 'discount'>>} details data for any OrderDetail records to associate with this new CustomerOrder
+ * @param {Array<Pick<OrderDetail, 'productid' | 'quantity' | 'unitprice' | 'discount'>>} details data for any OrderDetail records to associate with this new CustomerOrder
  * @returns {Promise<Order>} the newly created order
  */
 export async function createOrder(order, details = []) {
@@ -124,7 +124,7 @@ export async function deleteOrder(id) {
  * Update a CustomerOrder, and its associated OrderDetail records
  * @param {string | number} id CustomerOrder id
  * @param {Pick<Order, 'employeeid' | 'customerid' | 'shipcity' | 'shipaddress' | 'shipname' | 'shipvia' | 'shipregion' | 'shipcountry' | 'shippostalcode' | 'requireddate' | 'freight'>} data data for the new CustomerOrder
- * @param {Array<Pick<OrderDetail, 'id' | 'productid' | 'quantity' | 'discount'>>} details data for any OrderDetail records to associate with this new CustomerOrder
+ * @param {Array<Pick<OrderDetail, 'id' | 'productid' | 'quantity' | 'unitprice' | 'discount'>>} details data for any OrderDetail records to associate with this new CustomerOrder
  * @returns {Promise<Partial<Order>>} the order
  */
 export async function updateOrder(id, data, details = []) {
