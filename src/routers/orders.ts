@@ -75,7 +75,9 @@ const CREATE_ORDER_VALIDATIONS = [
     .custom((value: any[]) => value instanceof Array)
 ];
 
-function normalizeOrderDetail(detail: { [K in keyof OrderDetail]: any }): Partial<OrderDetail> {
+function normalizeOrderDetail(
+  detail: { [K in keyof OrderDetail]: any }
+): Pick<OrderDetail, 'id' | 'productid' | 'quantity' | 'unitprice' | 'discount'> {
   let [id, price] = detail.productid.split(';');
   let discount = parseFloat(detail.discount);
   return {
@@ -87,7 +89,9 @@ function normalizeOrderDetail(detail: { [K in keyof OrderDetail]: any }): Partia
   };
 }
 
-function normalizeOrderDetails(raw: { [k: string]: any[] }): Array<Partial<OrderDetail>> {
+function normalizeOrderDetails(raw: {
+  [k: string]: any[];
+}): Array<Pick<OrderDetail, 'id' | 'productid' | 'quantity' | 'unitprice' | 'discount'>> {
   let keys = Object.keys(raw);
   let n = keys.reduce((ct, val) => Math.max(ct, raw[val].length), 0);
   let details: Array<{ [K in keyof OrderDetail]: any }> = [];
@@ -161,9 +165,11 @@ router.post('/', CREATE_ORDER_VALIDATIONS, async (req: Request, res: Response) =
   }
 
   // matchedData returns only the subset of data validated by the middleware
-  const orderData = matchedData(req);
+  const orderData = matchedData(req) as any;
   let detailsObj = orderData.details || {};
-  let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
+  let details: Array<
+    Pick<OrderDetail, 'productid' | 'quantity' | 'unitprice' | 'discount'>
+  > = normalizeOrderDetails(detailsObj);
   try {
     let order = await createOrder(orderData, details); // * get the data
     res.redirect(`orders/${order.id}`);
@@ -185,7 +191,9 @@ router.post('/:id', CREATE_ORDER_VALIDATIONS, async (req: Request, res: Response
   // matchedData returns only the subset of data validated by the middleware
   const orderData = matchedData(req);
   let detailsObj = orderData.details || {};
-  let details: Array<Partial<OrderDetail>> = normalizeOrderDetails(detailsObj);
+  let details: Array<
+    Pick<OrderDetail, 'id' | 'productid' | 'quantity' | 'unitprice' | 'discount'>
+  > = normalizeOrderDetails(detailsObj);
   try {
     let order = await updateOrder(req.params.id, orderData as any, details); // * update the data
     res.redirect(`/orders/${order.id}`);

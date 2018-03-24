@@ -115,6 +115,9 @@ export default class PostgresDB extends SQLDatabase {
       if (res.rows && res.rows.length > 0) {
         let lastID = null;
         lastID = res.rows[0].id;
+        if (lastID === null) {
+          throw new Error('Did not return a lastID');
+        }
         return { lastID };
       }
     });

@@ -4,6 +4,7 @@
     "**/node_modules": true,
     "**/bower_components": true
   },
+  "search.useIgnoreFiles": true,
   "javascript.implicitProjectConfig.checkJs": true,
   "editor.formatOnSave": true,
   "files.associations": {
