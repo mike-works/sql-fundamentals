@@ -52,13 +52,28 @@ async function getAllOrdersBase(opts, whereClause) {
   }
   let orderClause = '';
   if (typeof sort !== 'undefined' && typeof order !== 'undefined') {
-    orderClause = sql`ORDER BY ${sort} ${order.toUpperCase()}`;
+    orderClause = sql`ORDER BY o.${sort} ${order.toUpperCase()}`;
   }
   // SOLUTION FOR EXERCISE 1 GOES HERE //
   const db = await getDb();
+  /*
+  SELECT o.id,
+         o.customerid,
+         o.amount,
+         c.name
+FROM CustomerOrder AS o
+INNER JOIN Customer AS c
+    ON o.customerid = c.id
+   */
   return await db.all(sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder
+SELECT ${ALL_ORDERS_COLUMNS.map(col => `o.${col}`).join(
+    ','
+  )}, c.companyname, e.firstname, e.lastname
+FROM CustomerOrder AS o
+INNER JOIN Customer AS c 
+  ON o.customerid = c.id
+INNER JOIN Employee AS e
+  ON o.employeeid = e.id
 ${orderClause}
 ${offsetClause}`);
 }
@@ -82,7 +97,7 @@ export async function getAllOrders(opts = {}) {
 export async function getCustomerOrders(customerId, opts = {}) {
   if (!opts.sort) {
     opts.sort = 'shippeddate';
-    opts.order = 'asc';
+    opts.order = 'desc';
   }
   return getAllOrdersBase(opts, ``);
 }
@@ -96,9 +111,13 @@ export async function getOrder(id) {
   const db = await getDb();
   return await db.get(
     sql`
-SELECT *
-FROM CustomerOrder
-WHERE id = $1`,
+SELECT *, c.companyname, (e.firstname || ' '  || e.lastname) as employeename
+FROM CustomerOrder AS co
+INNER JOIN Customer AS c
+    ON co.customerid = c.id
+INNER JOIN Employee AS e
+    ON co.employeeid = e.id
+WHERE co.id = $1`,
     id
   );
 }
@@ -112,9 +131,11 @@ export async function getOrderDetails(id) {
   const db = await getDb();
   return await db.all(
     sql`
-SELECT *, unitprice * quantity as price
-FROM OrderDetail
-WHERE orderid = $1`,
+SELECT od.*, od.unitprice * od.quantity as price, p.productname
+FROM OrderDetail AS od
+LEFT JOIN Product AS p
+  ON od.productid = p.id
+WHERE od.orderid = $1`,
     id
   );
 }

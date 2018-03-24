@@ -51,8 +51,14 @@ export async function getAllProducts(opts = {}) {
   }
   const db = await getDb();
   return await db.all(sql`
-SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product
+SELECT ${ALL_PRODUCT_COLUMNS.map(x => `p.${x}`).join(
+    ','
+  )}, s.companyname as suppliername, cat.categoryname
+FROM Product AS p
+LEFT JOIN Supplier AS s
+  ON p.supplierid = s.id
+LEFT JOIN Category AS cat
+  ON p.categoryid = cat.id
 ${whereClause}`);
 }
 
