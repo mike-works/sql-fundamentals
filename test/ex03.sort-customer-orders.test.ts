@@ -16,9 +16,7 @@ class CustomerOrdersSortTest {
     assert.deepEqual(firstPageResult, sortedById);
   }
 
-  @test(
-    'using order="desc" (and specifying no column to sort on) sorts decending by shippeddate'
-  )
+  @test('using order="desc" (and specifying no column to sort on) sorts decending by shippeddate')
   public async orderListDesc() {
     let firstPageResult = await getCustomerOrders('ANTON', {
       perPage: 3,
