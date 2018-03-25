@@ -18,7 +18,7 @@ interface Customer extends DBRecord {
   country: string;
   phone: string;
   fax: string;
-  ordercount: number;
+  numorders: number;
 }
 
 interface Employee extends DBRecord {
@@ -38,7 +38,7 @@ interface Employee extends DBRecord {
   notes: string;
   reportsto: number;
   photopath: string;
-  ordercount: number;
+  numorders: number;
 }
 
 interface EmployeeTerritory extends DBRecord {

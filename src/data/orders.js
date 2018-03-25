@@ -111,13 +111,16 @@ export async function getOrder(id) {
   const db = await getDb();
   return await db.get(
     sql`
-SELECT *, c.companyname, (e.firstname || ' '  || e.lastname) as employeename
+SELECT *, c.companyname, (e.firstname || ' '  || e.lastname) as employeename, sum(od.unitprice * od.quantity) AS subtotalprice
 FROM CustomerOrder AS co
 INNER JOIN Customer AS c
     ON co.customerid = c.id
 INNER JOIN Employee AS e
     ON co.employeeid = e.id
-WHERE co.id = $1`,
+INNER JOIN OrderDetail AS od
+    ON co.id = od.orderid
+WHERE co.id = $1
+GROUP BY co.id`,
     id
   );
 }

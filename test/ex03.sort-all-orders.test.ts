@@ -15,9 +15,7 @@ class AllOrdersSortTest {
     assert.deepEqual(firstPageResult, sortedById);
   }
 
-  @test(
-    'using order="desc" (and specifying no column to sort on) sorts decending by id'
-  )
+  @test('using order="desc" (and specifying no column to sort on) sorts decending by id')
   public async orderListDesc() {
     let firstPageResult = await getAllOrders({ perPage: 3, order: 'desc' });
     let sortedById = sortBy(firstPageResult, o => {

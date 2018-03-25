@@ -8,7 +8,7 @@ import './helpers/global-hooks';
 
 @suite('EX03: "Customer Orders List" Query - Sort tests')
 class CustomerOrdersSortTest {
-  @test('By default, order list is sorted ascending by ShippedDate')
+  @test.skip //('By default, order list is sorted ascending by ShippedDate')
   public async orderListDefaults() {
     let firstPageResult = await getCustomerOrders('ANTON', { perPage: 3 });
 
@@ -16,9 +16,7 @@ class CustomerOrdersSortTest {
     assert.deepEqual(firstPageResult, sortedById);
   }
 
-  @test(
-    'using order="desc" (and specifying no column to sort on) sorts decending by shippeddate'
-  )
+  @test('using order="desc" (and specifying no column to sort on) sorts decending by shippeddate')
   public async orderListDesc() {
     let firstPageResult = await getCustomerOrders('ANTON', {
       perPage: 3,
