@@ -10,10 +10,10 @@
       <div class="mui-panel">
 
         <b>Ordered for customer: </b>
-        <span class="customer">{{order.customerid}}</span>
+        <span class="customer">{{or order.customername order.customerid}}</span>
         <br>
         <b>Placed by employee: </b>
-        <span class="employee">{{order.employeeid}}</span>
+        <span class="employee">{{or order.employeename order.employeeid}}</span>
         <br>
         <br>
         <b>Placed on:</b>
@@ -33,7 +33,7 @@
           <b>Ship To: </b>
           <br>
           <br>
-          <span class="customer">{{order.customerid}}</span>
+          <span class="customer">{{or order.customername order.customerid}}</span>
           <br>ATTN:
           <span class="ship-name">{{order.shipname}}</span>
           <br>
@@ -58,7 +58,7 @@
             {{#each items as |item|}}
             <tr>
               <td class='id-col'>{{item.id}}</td>
-              <td class='id-col'>{{item.productid}}</td>
+              <td class='id-col'>{{or item.productname item.productid}}</td>
               <td class='money-col'>
                 {{format-money item.unitprice}} {{#if item.discount}}
                 <span class="mui-badge mui--pull-left">-{{format-percent item.discount}}</span>
