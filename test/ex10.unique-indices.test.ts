@@ -11,23 +11,17 @@ import { assertIndicesExist } from './helpers/table';
 
 @suite('EX10: "Unique Index" - Column constraints test')
 class OrderDetailUniqueIndexTest {
-  @test(
-    'migrationExists() new .sql file based migration exists in the ./migrations folder'
-  )
+  @test('migrationExists() new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(5, 1);
+    assertMigrationCount(4, 3);
   }
 
   @test('orderdetailuniqueproduct index exists')
   public async indexExists() {
-    await assertIndicesExist(await getDb(), 'OrderDetail', [
-      'orderdetailuniqueproduct'
-    ]);
+    await assertIndicesExist(await getDb(), 'OrderDetail', ['orderdetailuniqueproduct']);
   }
 
-  @test(
-    'Attempting to add two OrderDetail items to the same order with the same product fails'
-  )
+  @test('Attempting to add two OrderDetail items to the same order with the same product fails')
   public async duplicateCheck() {
     let errors: string[] = [];
     try {

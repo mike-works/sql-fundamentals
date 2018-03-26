@@ -12,7 +12,7 @@ import { assertTableExists } from './helpers/table';
 class TransactionsTableTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(5, 1);
+    assertMigrationCount(4, 3);
   }
 
   @test('CustomerOrderTransaction table exists')
@@ -48,10 +48,7 @@ class TransactionsTableTest {
         'lk1hdklh12ld',
         191927158
       );
-      assert.ok(
-        false,
-        'Should have encountered a foreign key constraint error'
-      );
+      assert.ok(false, 'Should have encountered a foreign key constraint error');
     } catch (e) {
       errors.push(e.toString());
     }
