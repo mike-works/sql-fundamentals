@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { suite, test } from 'mocha-typescript';
 
-import { createOrder, getOrderDetails } from '../src/data/orders';
+import { createOrder, getOrderDetails, getAllOrders } from '../src/data/orders';
 
 import { VALID_ORDER_DATA } from './ex06.create-order.test';
 import './helpers/global-hooks';
@@ -33,6 +33,28 @@ class CreateOrderWithDetailsTest {
       orderDetails.length,
       1,
       'Total number of Orders increases as a result of creating an order'
+    );
+  }
+
+  @test('createOrder() results in the order details being created')
+  public async createOrderWithInvalidData() {
+    let errors: string[] = [];
+    const originalNumOrders = (await getAllOrders({ perPage: 999999 })).length;
+    try {
+      let { id } = await createOrder(VALID_ORDER_DATA, [{} as any]);
+    } catch (e) {
+      errors.push(e);
+    }
+    const numOrders = (await getAllOrders({ perPage: 999999 })).length;
+    assert.equal(
+      errors.length,
+      1,
+      'One error was thrown when trying to createRecord with invalid data'
+    );
+    assert.equal(
+      numOrders,
+      originalNumOrders,
+      'CustomerOrder insertion rolls back if any OrderDetail insertion fails'
     );
   }
 }

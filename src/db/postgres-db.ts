@@ -102,13 +102,13 @@ export default class PostgresDB extends SQLDatabase {
     await pool.end();
   }
   public async run(query: string, ...params: any[]): Promise<{ lastID: string } | void> {
-    if (
-      query
-        .toLowerCase()
-        .trim()
-        .indexOf('insert into ') >= 0
-    ) {
-      query = `${query} RETURNING id`;
+    let q = query.toLowerCase().trim();
+    if (q.indexOf('insert into ') >= 0) {
+      if (q[q.length - 1] === ';') {
+        query = `${query.substr(0, query.length - 1)} RETURNING id;`;
+      } else {
+        query = `${query} RETURNING id;`;
+      }
     }
     return this.measure(query, params, async () => {
       let res = await this.client.query(query, params);
