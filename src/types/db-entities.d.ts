@@ -60,7 +60,7 @@ interface Order extends DBRecord {
   shippostalcode: string;
   shipregion: number | string;
   shipvia: number;
-  subtotalprice: number;
+  subtotal: number;
 }
 
 interface OrderDetail extends DBRecord {
