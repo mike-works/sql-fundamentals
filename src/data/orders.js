@@ -105,7 +105,7 @@ export async function getOrderWithDetails(id) {
  * Create a new CustomerOrder record
  * @param {Pick<Order, 'employeeid' | 'customerid' | 'shipcity' | 'shipaddress' | 'shipname' | 'shipvia' | 'shipregion' | 'shipcountry' | 'shippostalcode' | 'requireddate' | 'freight'>} order data for the new CustomerOrder
  * @param {Array<Pick<OrderDetail, 'productid' | 'quantity' | 'unitprice' | 'discount'>>} details data for any OrderDetail records to associate with this new CustomerOrder
- * @returns {Promise<Order>} the newly created order
+ * @returns {Promise<{id: number}>} the newly created order
  */
 export async function createOrder(order, details = []) {
   return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
