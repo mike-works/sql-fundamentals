@@ -114,7 +114,7 @@ export async function createOrder(order, details = []) {
 /**
  * Delete a CustomerOrder from the database
  * @param {string | number} id CustomerOrder id
- * @returns {Promise<void>}
+ * @returns {Promise<any>}
  */
 export async function deleteOrder(id) {
   return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
