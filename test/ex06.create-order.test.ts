@@ -75,19 +75,21 @@ class CreateOrderTest {
   )
   public async createOrderWithItems() {
     let db = await getDb();
-    let { count: originalNumOrderDetails } = await db.get(
-      'SELECT count(id) as count FROM OrderDetail'
-    );
+    let { count } = await db.get('SELECT count(id) as count FROM OrderDetail');
+    let originalNumOrderDetails = parseInt(count, 10);
+    assert.isAbove(originalNumOrderDetails, 0, 'Nonzero number of OrderDetail records');
+
     let { id } = await createOrder(VALID_ORDER_DATA, [
       { productid: 17, unitprice: 4.11, quantity: 4, discount: 0 },
       { productid: 11, unitprice: 3.37, quantity: 1, discount: 0.1 }
     ]);
     let result = await db.get('SELECT count(id) AS count FROM OrderDetail');
-    let { count: numOrderDetails } = result;
+    count = result.count;
+    let numOrderDetails = parseInt(count, 10);
     assert.isAbove(numOrderDetails, 0, 'Nonzero number of OrderDetail records');
     assert.equal(
-      parseInt(numOrderDetails, 10),
-      parseInt(originalNumOrderDetails, 10) + 2,
+      numOrderDetails,
+      originalNumOrderDetails + 2,
       'Total number of orders increases as a result of creating an order'
     );
     await deleteOrder(id);
