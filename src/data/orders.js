@@ -59,15 +59,20 @@ getCustomerOrders('ALFKI', { page: 5, perPage: 10 });
   let sortClause = '';
   if (options.sort && options.order) {
     // ORDER BY customerid DESC
-    sortClause = sql`ORDER BY ${options.sort} ${options.order.toUpperCase()}`;
+    sortClause = sql`ORDER BY co.${options.sort} ${options.order.toUpperCase()}`;
   }
   let paginationClause = '';
   if (typeof options.page !== 'undefined' && options.perPage) {
     paginationClause = sql`LIMIT ${options.perPage} OFFSET ${(options.page - 1) * options.perPage}`;
   }
   return await db.all(sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
-FROM CustomerOrder ${whereClause}
+SELECT ${ALL_ORDERS_COLUMNS.map(x => `co.${x}`).join(',')},
+  c.companyname AS customername,
+  e.lastname AS employeename
+FROM CustomerOrder AS co
+LEFT JOIN Customer AS c ON co.customerid = c.id
+LEFT JOIN Employee AS e ON co.employeeid = e.id
+${whereClause}
 ${sortClause}
 ${paginationClause}`);
 }
@@ -92,9 +97,13 @@ export async function getOrder(id) {
   const db = await getDb();
   return await db.get(
     sql`
-SELECT *
-FROM CustomerOrder
-WHERE id = $1`,
+SELECT co.*,
+  c.companyname AS customername,
+  e.lastname AS employeename
+FROM CustomerOrder AS co
+LEFT JOIN Customer AS c ON co.customerid = c.id
+LEFT JOIN Employee AS e ON co.employeeid = e.id
+WHERE co.id = $1`,
     id
   );
 }
@@ -108,9 +117,10 @@ export async function getOrderDetails(id) {
   const db = await getDb();
   return await db.all(
     sql`
-SELECT *, unitprice * quantity as price
-FROM OrderDetail
-WHERE orderid = $1`,
+SELECT od.*, od.unitprice * od.quantity as price, p.productname
+FROM OrderDetail AS od
+LEFT JOIN Product AS p ON od.productid = p.id
+WHERE od.orderid = $1`,
     id
   );
 }

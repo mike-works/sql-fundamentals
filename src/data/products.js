@@ -49,17 +49,24 @@ getAllProducts({ filter: { inventory: 'needs-reorder' } });
   if (opts.filter && opts.filter.inventory) {
     switch (opts.filter.inventory) {
       case 'discontinued':
-        whereClause = sql`WHERE discontinued = 1`;
+        whereClause = sql`WHERE p.discontinued = 1`;
         break;
       case 'needs-reorder':
-        whereClause = sql`WHERE discontinued = 0 AND
-                              ((unitsinstock + unitsonorder) < reorderlevel)`;
+        whereClause = sql`WHERE p.discontinued = 0 AND
+                              ((p.unitsinstock + p.unitsonorder) < p.reorderlevel)`;
         break;
     }
   }
   return await db.all(sql`
-SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
-FROM Product ${whereClause}`);
+SELECT ${ALL_PRODUCT_COLUMNS.map(x => `p.${x}`).join(',')},
+  s.contactname AS suppliername,
+  c.categoryname
+FROM Product AS p
+LEFT JOIN Supplier AS s
+  ON p.supplierid = s.id
+LEFT JOIN Category AS c
+  ON p.categoryid = c.id
+${whereClause}`);
 }
 
 /**
