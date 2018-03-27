@@ -235,5 +235,72 @@ WHERE id = $1`,
  * @returns {Promise<Partial<Order>>} the order
  */
 export async function updateOrder(id, data, details = []) {
-  return Promise.reject('Orders#updateOrder() NOT YET IMPLEMENTED');
+  const db = await getDb();
+  /*
+  employeeid: 3,
+  customerid: 'ALFKI',
+  shipcity: 'Minneapolis, MN',
+  shipaddress: '60 South 6th St Suite 3625',
+  shipname: 'Frontend Masters',
+  shipvia: 1,
+  shipregion: 1,
+  shipcountry: 'USA',
+  shippostalcode: '455402',
+  requireddate: '2018-03-22T23:38:08.410Z',
+  freight
+  */
+  await db.run('BEGIN;');
+  try {
+    let result = await db.run(
+      sql`UPDATE CustomerOrder
+      SET employeeid = $1,
+          customerid = $2,
+          shipcity = $3,
+          shipaddress = $4,
+          shipname = $5,
+          shipvia = $6,
+          shipregion = $7,
+          shipcountry = $8,
+          shippostalcode = $9,
+          requireddate = $10,
+          freight = $11
+      WHERE id = $12`,
+      data.employeeid,
+      data.customerid,
+      data.shipcity,
+      data.shipaddress,
+      data.shipname,
+      data.shipvia,
+      data.shipregion,
+      data.shipcountry,
+      data.shippostalcode,
+      data.requireddate,
+      data.freight,
+      id
+    );
+    let ct = 1;
+    let orderId = id;
+    await Promise.all(
+      details.map(detail => {
+        return db.run(
+          sql`UPDATE OrderDetail
+          SET unitprice = $1,
+              quantity = $2,
+              discount = $3,
+              productid = $4
+          WHERE id = $5`,
+          detail.unitprice,
+          detail.quantity,
+          detail.discount,
+          detail.productid,
+          detail.id
+        );
+      })
+    );
+    await db.run('COMMIT;');
+    return { id: orderId };
+  } catch (e) {
+    await db.run('ROLLBACK;');
+    throw e;
+  }
 }
