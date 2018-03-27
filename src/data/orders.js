@@ -146,7 +146,64 @@ export async function getOrderWithDetails(id) {
  * @returns {Promise<{id: string}>} the newly created order
  */
 export async function createOrder(order, details = []) {
-  return Promise.reject('Orders#createOrder() NOT YET IMPLEMENTED');
+  const db = await getDb();
+  /*
+  employeeid: 3,
+  customerid: 'ALFKI',
+  shipcity: 'Minneapolis, MN',
+  shipaddress: '60 South 6th St Suite 3625',
+  shipname: 'Frontend Masters',
+  shipvia: 1,
+  shipregion: 1,
+  shipcountry: 'USA',
+  shippostalcode: '455402',
+  requireddate: '2018-03-22T23:38:08.410Z',
+  freight
+  */
+  let result = await db.run(
+    sql`INSERT INTO CustomerOrder(
+employeeid,
+customerid,
+shipcity,
+shipaddress,
+shipname,
+shipvia,
+shipregion,
+shipcountry,
+shippostalcode,
+requireddate,
+freight) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+    order.employeeid,
+    order.customerid,
+    order.shipcity,
+    order.shipaddress,
+    order.shipname,
+    order.shipvia,
+    order.shipregion,
+    order.shipcountry,
+    order.shippostalcode,
+    order.requireddate,
+    order.freight
+  );
+  if (!result || typeof result.lastID === 'undefined')
+    throw new Error('Order insertion did not return an id!');
+  let ct = 1;
+  let orderId = result.lastID;
+  await Promise.all(
+    details.map(detail => {
+      return db.run(
+        sql`INSERT INTO OrderDetail(id, orderid, unitprice, quantity, discount, productid)
+  VALUES ($1, $2, $3, $4, $5, $6)`,
+        `${orderId}/${ct++}`,
+        orderId,
+        detail.unitprice,
+        detail.quantity,
+        detail.discount,
+        detail.productid
+      );
+    })
+  );
+  return { id: result.lastID };
 }
 
 /**
@@ -155,7 +212,12 @@ export async function createOrder(order, details = []) {
  * @returns {Promise<any>}
  */
 export async function deleteOrder(id) {
-  return Promise.reject('Orders#deleteOrder() NOT YET IMPLEMENTED');
+  const db = await getDb();
+  return await db.run(
+    sql`DELETE FROM CustomerOrder
+WHERE id = $1`,
+    id
+  );
 }
 
 /**
