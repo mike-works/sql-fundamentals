@@ -12,7 +12,7 @@ echo "\033[1;33m - Creating northwind database\033[0m"
 mysqladmin -f create 'northwind';
 
 echo "\033[1;33m - Granting all northwind database permissions to northwind_user\033[0m"
-mysql -uroot -f -e "GRANT ALL PRIVILEGES ON northwind.* TO 'northwind_user'@'localhost';FLUSH PRIVILEGES;";
+mysql -u root -f -e "GRANT ALL PRIVILEGES ON northwind.* TO 'northwind_user'@'localhost';FLUSH PRIVILEGES;";
 
 echo "\033[1;33m - Setting up schema from ./sql/northwind.mysql.sql \033[0m"
 mysql -f -D northwind < ./sql/northwind.mysql.sql
