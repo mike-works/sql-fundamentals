@@ -6,7 +6,7 @@ import { getDb } from '../src/db/utils';
 import './helpers/global-hooks';
 import { assertMigrationCount } from './helpers/migrations';
 
-@suite('EX17: "PubSub" - Migration test')
+@suite('EX18: "PubSub" - Migration test')
 class MigrationTest {
   @test('New .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
@@ -17,8 +17,6 @@ class MigrationTest {
   public async productIndicesPresent() {
     let db = await getDb();
     let indexInfo = await db.getAllFunctions();
-    assert.includeMembers(indexInfo.map(s => s.toLowerCase()), [
-      'table_update_notify'
-    ]);
+    assert.includeMembers(indexInfo.map(s => s.toLowerCase()), ['table_update_notify']);
   }
 }

@@ -11,10 +11,10 @@ import {
 } from '../src/data/products';
 import { getDb, DbType } from '../src/db/utils';
 
-import './helpers/global-hooks';
 import { onlyForDatabaseTypes } from './helpers/decorators';
+import './helpers/global-hooks';
 
-@suite('EX14: "Product Metadata" - JSONB column test')
+@suite('EX16: "Product Metadata" - JSONB column test')
 class ProductMetadataJsonTest {
   // prettier-ignore
   protected productId!: string | number;
@@ -48,7 +48,7 @@ class ProductMetadataJsonTest {
   }
 
   @test('[POSTGRES ONLY] metadata column is of type object')
-  @onlyForDatabaseTypes(DbType.Postgres)
+  @onlyForDatabaseTypes(DbType.PostgreSQL)
   public async metadataIsObject() {
     let db = await getDb();
     let results = await getAllProducts();
@@ -69,10 +69,7 @@ class ProductMetadataJsonTest {
   public async newProductsStartEmpty() {
     assert.ok(this.productId, 'ID for new product is ok');
     let prod = await getProduct(this.productId);
-    assert.ok(
-      prod,
-      "newly created product's id can be used to retreive it from the db"
-    );
+    assert.ok(prod, "newly created product's id can be used to retreive it from the db");
 
     assert.isObject(prod.metadata, 'metadata property is an object');
     assert.deepEqual(
@@ -125,11 +122,7 @@ class ProductMetadataJsonTest {
       'All results from sweet-sour filter have sweet > 2 and sour > 2'
     );
     assert.ok(
-      differenceWith(
-        allResults,
-        sweetSourResults,
-        (a: any, b: any) => a.id === b.id
-      ).every(
+      differenceWith(allResults, sweetSourResults, (a: any, b: any) => a.id === b.id).every(
         p =>
           !p ||
           !p.metadata ||
@@ -158,11 +151,7 @@ class ProductMetadataJsonTest {
         ]
       }
     });
-    assert.isAbove(
-      sweetHotResults.length,
-      0,
-      'Nonzezro number of sweetHotResults'
-    );
+    assert.isAbove(sweetHotResults.length, 0, 'Nonzezro number of sweetHotResults');
     assert.isBelow(
       sweetHotResults.length,
       allResults.length,
@@ -179,15 +168,8 @@ class ProductMetadataJsonTest {
       'All results from sweet-hot filter have sweet > 2 and spicy > 2'
     );
     assert.ok(
-      differenceWith(
-        allResults,
-        sweetHotResults,
-        (a: any, b: any) => a.id === b.id
-      ).every(
-        p =>
-          !p.metadata ||
-          p.metadata.flavor.sweet <= 2 ||
-          p.metadata.flavor.spicy <= 2
+      differenceWith(allResults, sweetHotResults, (a: any, b: any) => a.id === b.id).every(
+        p => !p.metadata || p.metadata.flavor.sweet <= 2 || p.metadata.flavor.spicy <= 2
       ),
       'All results excluded by sweet-hot filter have sweet <= 2 OR spicy <= 2'
     );

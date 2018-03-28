@@ -7,7 +7,7 @@ import { DbType } from '../src/db/utils';
 import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 
-@suite('EX16: "Full Text Search" - Global Search Tests')
+@suite('EX17: "Full Text Search" - Global Search Tests')
 class FullTextSearchTest {
   @test("getSearchResults('german')")
   public async germanResults() {

@@ -5,14 +5,12 @@ import { getDb } from '../src/db/utils';
 
 import './helpers/global-hooks';
 
-@suite('EX17: "PubSub" - Edit order test')
+@suite('EX18: "PubSub" - Edit order test')
 class PubSubTest {
   @test('Creating an order results in a refreshAll')
   public async productIndicesPresent() {
     let db = await getDb();
     let indexInfo = await db.getAllFunctions();
-    assert.includeMembers(indexInfo.map(s => s.toLowerCase()), [
-      'table_update_notify'
-    ]);
+    assert.includeMembers(indexInfo.map(s => s.toLowerCase()), ['table_update_notify']);
   }
 }
