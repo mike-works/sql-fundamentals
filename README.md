@@ -23,8 +23,13 @@
   </a>
 </p>
 <p align='center'>
-This is the example project used for the <a title="Mike.Works" href="https://mike.works">Mike.Works</a> <a title="SQL Fundamentals" href="https://mike.works/course/sql-fundamentals-ad811af">SQL Fundamentals</a> course.
+This is the example project used for the <a title="Mike.Works" href="https://mike.works">Mike.Works</a> <a title="SQL Fundamentals" href="https://mike.works/course/sql-fundamentals-ad811af">SQL Fundamentals</a> and <a title="Professional SQL" href="https://mike.works/course/professional-sql-c9c7184">Professional SQL</a> courses.
 </p>
+
+# Where are the slides?
+
+* [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) slides are [here](https://docs.mike.works/sql-slides)
+* [Professional SQL](https://mike.works/course/professional-sql-c9c7184) slides are [here](https://docs.mike.works/pro-sql-slides)
 
 # What are we building?
 
