@@ -9,6 +9,11 @@
   </a>
 </p>
 <p align='center'>
+  <a href="https://mike.works/course/professional-sql-c9c7184" target='_blank'>
+    <img height=150 src='https://user-images.githubusercontent.com/558005/38008070-40db7658-3212-11e8-879e-7efcf767777e.png' />
+  </a>
+</p>
+<p align='center'>
   <a href="https://travis-ci.org/mike-works/sql-fundamentals?branch=solutions-pro" title="Build Status">
     <img title="Build Status" src="https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions-pro"/>
   </a>
