@@ -1,4 +1,6 @@
 import { SQLDatabase, SQLPreparedStatement } from './db';
+import { sql } from '../sql-string';
+import { ORDER_COLUMNS } from '../data/orders';
 
 interface PreparedStatementMap {
   [k: string]: SQLPreparedStatement;
@@ -22,5 +24,24 @@ export async function setupPreparedStatements(db: SQLDatabase): Promise<Prepared
    *    }
    *
    */
-  return {};
+  const getOrderStatement = await db.prepare(
+    'getOrder',
+    sql`
+SELECT ${ORDER_COLUMNS.map(c => `o.${c}`).join(',')},
+  c.companyname as customername,
+  e.lastname as employeename,
+  sum(od.unitprice * od.quantity) as subtotal
+FROM CustomerOrder as o
+LEFT JOIN Customer as c
+  ON o.customerid = c.id
+LEFT JOIN Employee as e
+  ON o.employeeid = e.id
+LEFT JOIN OrderDetail as od
+  ON od.orderid=o.id
+WHERE o.id=$1
+GROUP BY o.id, c.companyname, e.firstname, e.lastname`
+  );
+  return {
+    getOrder: getOrderStatement
+  };
 }
