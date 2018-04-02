@@ -6,15 +6,7 @@ import { sql } from '../sql-string';
  */
 export async function getEmployeeSalesLeaderboard() {
   let db = await getDb();
-  return await db.all(sql`
-SELECT (e.firstname || ' ' || e.lastname) AS name, sum((od.unitprice * od.quantity))as amount
-FROM Employee AS e
-INNER JOIN CustomerOrder AS o
-    ON o.employeeid = e.id
-INNER JOIN OrderDetail AS od
-    ON o.id = od.orderid
-GROUP BY  e.id
-ORDER BY  amount DESC LIMIT 5`);
+  return await db.all(sql`SELECT * FROM MV_EmployeeLeaderboard;`);
 }
 
 /**
@@ -22,16 +14,7 @@ ORDER BY  amount DESC LIMIT 5`);
  */
 export async function getCustomerSalesLeaderboard() {
   let db = await getDb();
-  return await db.all(sql`
-SELECT c.companyname AS name,
-         sum((od.unitprice * od.quantity))as amount
-FROM Customer AS c
-INNER JOIN CustomerOrder AS o
-    ON o.customerid = c.id
-INNER JOIN OrderDetail AS od
-    ON o.id = od.orderid
-GROUP BY  c.id
-ORDER BY  amount DESC LIMIT 5`);
+  return await db.all(sql`SELECT * FROM MV_CustomerLeaderboard;`);
 }
 
 /**
@@ -39,16 +22,7 @@ ORDER BY  amount DESC LIMIT 5`);
  */
 export async function getProductSalesLeaderboard() {
   let db = await getDb();
-  return await db.all(sql`
-SELECT p.productname AS name,
-         sum(od.unitprice * od.quantity) AS amount
-FROM OrderDetail AS od
-INNER JOIN CustomerOrder AS o
-    ON od.orderid = o.id
-INNER JOIN Product AS p
-    ON od.productid = p.id
-GROUP BY  p.id
-ORDER BY  amount DESC LIMIT 5`);
+  return await db.all(sql`SELECT * FROM MV_ProductLeaderboard;`);
 }
 
 /**
@@ -56,19 +30,7 @@ ORDER BY  amount DESC LIMIT 5`);
  */
 export async function getRecentOrders() {
   let db = await getDb();
-  return await db.all(sql`
-SELECT o.id,
-         (e.firstname || ' ' || e.lastname) AS employee, c.companyname AS customer, o.orderdate, sum(od.unitprice * od.quantity) AS subtotal
-FROM CustomerOrder AS o
-INNER JOIN OrderDetail AS od
-    ON od.orderid = o.id
-INNER JOIN Employee AS e
-    ON o.employeeid = e.id
-INNER JOIN Customer AS c
-    ON o.customerid = c.id
-WHERE o.orderdate IS NOT NULL
-GROUP BY  o.id, e.firstname, e.lastname, c.companyname
-ORDER BY  o.orderdate DESC LIMIT 5`);
+  return await db.all(sql`SELECT * FROM MV_RecentOrders;`);
 }
 
 /**
