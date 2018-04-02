@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-function exerciseFilter() {
+exerciseFilter() {
   num=$1;
   str="EX";
   if [ $num -ge 10 ]
