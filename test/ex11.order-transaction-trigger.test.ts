@@ -14,20 +14,15 @@ import { assertTriggersExist } from './helpers/table';
 class TransactionsTriggerTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(5);
+    assertMigrationCount(4);
   }
 
   @test('ProductPricingUpdate and ProductPricingInsert triggers exist')
   public async triggerExists() {
-    await assertTriggersExist(await getDb(), [
-      'ProductPricingUpdate',
-      'ProductPricingInsert'
-    ]);
+    await assertTriggersExist(await getDb(), ['ProductPricingUpdate', 'ProductPricingInsert']);
   }
 
-  @test(
-    'Creating a new product results in a new ProductPricingInfo row being created'
-  )
+  @test('Creating a new product results in a new ProductPricingInfo row being created')
   public async pricingChangeTest() {
     let db = await getDb();
     let p: Partial<Product> = {
