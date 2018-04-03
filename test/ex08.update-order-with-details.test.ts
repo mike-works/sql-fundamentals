@@ -1,20 +1,14 @@
 import { assert } from 'chai';
-import { suite, test } from 'mocha-typescript';
+import { suite, test, timeout } from 'mocha-typescript';
 
-import {
-  createOrder,
-  getOrder,
-  getOrderDetails,
-  updateOrder
-} from '../src/data/orders';
+import { createOrder, getOrder, getOrderDetails, updateOrder } from '../src/data/orders';
 
 import { VALID_ORDER_DATA } from './ex06.create-order.test';
 import './helpers/global-hooks';
 
-@suite(
-  'EX08: "Update an Order with OrderDetail items" - Update / Transaction test'
-)
+@suite('EX08: "Update an Order with OrderDetail items" - Update / Transaction test')
 class UpdateOrderWithDetailsTest {
+  @timeout(10000)
   @test(
     'updateOrder() successfully updates the freight, shipname, requireddate, shipaddress properties'
   )
@@ -39,18 +33,10 @@ class UpdateOrderWithDetailsTest {
     let order = await getOrder(id);
     assert.equal(order.freight, 99, 'new value for freight is correct');
     assert.equal(order.shipname, 'Anyone', 'new value for shipname is correct');
-    assert.equal(
-      order.requireddate,
-      '2022-01-01',
-      'new value for requireddate is correct'
-    );
-    assert.equal(
-      order.shipaddress,
-      '123 Fake Street',
-      'new value for ShipAddress is correct'
-    );
+    assert.equal(order.requireddate, '2022-01-01', 'new value for requireddate is correct');
+    assert.equal(order.shipaddress, '123 Fake Street', 'new value for ShipAddress is correct');
   }
-
+  @timeout(10000)
   @test('updateOrder() results in the order details being updated')
   public async updateOrderUpdatesDetails() {
     let { id } = await createOrder(VALID_ORDER_DATA, [
@@ -73,10 +59,6 @@ class UpdateOrderWithDetailsTest {
       details
     );
     details = await getOrderDetails(id);
-    assert.equal(
-      details[0].discount,
-      0.5,
-      'new value for details[0].discount is correct'
-    );
+    assert.equal(details[0].discount, 0.5, 'new value for details[0].discount is correct');
   }
 }
