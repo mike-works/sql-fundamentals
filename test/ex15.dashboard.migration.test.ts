@@ -9,9 +9,7 @@ import { assertMigrationCount } from './helpers/migrations';
 
 @suite('EX15: "Materialized Views" - Migration test')
 class MaterializeViewsTest {
-  @test(
-    'migrationExists() new .sql file based migration exists in the ./migrations folder'
-  )
+  @test('migrationExists() new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
     assertMigrationCount(8);
   }
@@ -19,7 +17,7 @@ class MaterializeViewsTest {
   @test(
     '[POSTGRES ONLY] Materialized views [MV_CustomerLeaderboard, MV_EmployeeLeaderboard, MV_ProductLeaderboard, MV_RecentOrders] are found'
   )
-  @onlyForDatabaseTypes(DbType.Postgres)
+  @onlyForDatabaseTypes(DbType.PostgreSQL)
   public async materializedViewsPresent() {
     let db = await getDb();
     let mvNames = await db.getAllMaterializedViews();

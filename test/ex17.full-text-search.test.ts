@@ -64,7 +64,7 @@ class FullTextSearchTest {
   }
 
   @test("[POSTGRES ONLY] getSearchResults('dry')")
-  @onlyForDatabaseTypes(DbType.Postgres)
+  @onlyForDatabaseTypes(DbType.PostgreSQL)
   public async dryResults() {
     let dryResults = await getSearchResults('dry');
     assert.equal(dryResults.length, 2, 'Expected 2 search results');
