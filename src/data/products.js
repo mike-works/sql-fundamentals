@@ -34,39 +34,91 @@ import { sql } from '../sql-string';
 const ALL_PRODUCT_COLUMNS = ['*'];
 
 /**
+ * Build a query for a collection of Product records
+ *
+ * @param {Partial<ProductCollectionOptions>} opts options
+ * @returns {string}
+ */
+function allProductsBaseQuery(opts) {
+  const wh = opts.filter ? whereClauseForFilter(opts.filter) : '';
+  let otherCols = [];
+  // @ts-ignore
+  if (['mysql', 'pg'].indexOf(process.env.DB_TYPE) >= 0) {
+    otherCols.push('metadata');
+    otherCols.push('tags');
+  }
+  return sql`
+SELECT ${ALL_PRODUCT_COLUMNS.concat(otherCols)
+    .map(c => `p.${c}`)
+    .join(',')},
+  c.categoryname, s.companyname as suppliername 
+FROM Product as p
+INNER JOIN Supplier as s
+  ON p.supplierid=s.id
+INNER JOIN Category as c
+  ON p.categoryid=c.id
+${wh}`;
+}
+
+function whereClauseForFilter(filter) {
+  let expressions = [];
+  let { inventory, flavor, requiredTags: tags } = filter;
+
+  if (filter && inventory) {
+    switch (inventory) {
+      case 'discontinued':
+        expressions.push('p.discontinued = 1');
+        break;
+      case 'needs-reorder':
+        expressions.push('p.discontinued = 0');
+        expressions.push('((p.unitsinstock + p.unitsonorder) < p.reorderlevel)');
+        break;
+    }
+  }
+  if (process.env.DB_TYPE === 'pg') {
+    if (flavor && flavor.length > 0) {
+      expressions.push(
+        ...flavor.map(f => {
+          return `((metadata->'flavor')->>'${f.flavorName}')::int ${
+            f.type === 'less-than' ? '<' : '>'
+          } ${f.level}`;
+        })
+      );
+    }
+    if (tags && tags.length > 0) {
+      //    '{ one, two, three }'
+      expressions.push(`p.tags && '{${tags.join(', ')}}'::text[]`);
+    }
+  } else if (process.env.DB_TYPE === 'mysql') {
+    if (tags && tags.length > 0) {
+      let tagsExp = tags.length > 0 ? sql`p.tags && '{${tags.join(', ')}}'::text[]` : '';
+      expressions.push(
+        sql`JSON_CONTAINS(tags->'$[*]', cast('[${tags.map(t => `"${t}"`).join(', ')}]' as json))`
+      );
+    }
+    if (flavor && flavor.length > 0) {
+      expressions.push(
+        ...flavor.map(f => {
+          return `${f.flavorName} ${f.type === 'greater-than' ? '>' : '<'} ${f.level}`;
+        })
+      );
+    }
+  }
+  //
+  if (expressions.length === 0) {
+    return '';
+  }
+  return sql`WHERE ${expressions.join(' AND ')}`;
+}
+
+/**
  * Retrieve a collection of all Product records from the database
  * @param {Partial<ProductCollectionOptions>} opts options that may be used to customize the query
  * @returns {Promise<Product[]>} the products
  */
 export async function getAllProducts(opts = {}) {
-  /*
-  getAllProducts();
-  getAllProducts({ filter: { inventory: 'discontinued' } });
-getAllProducts({ filter: { inventory: 'needs-reorder' } });
-*/
   const db = await getDb();
-  let whereClause = '';
-  if (opts.filter && opts.filter.inventory) {
-    switch (opts.filter.inventory) {
-      case 'discontinued':
-        whereClause = sql`WHERE p.discontinued = 1`;
-        break;
-      case 'needs-reorder':
-        whereClause = sql`WHERE p.discontinued = 0 AND
-                              ((p.unitsinstock + p.unitsonorder) < p.reorderlevel)`;
-        break;
-    }
-  }
-  return await db.all(sql`
-SELECT ${ALL_PRODUCT_COLUMNS.map(x => `p.${x}`).join(',')},
-  s.contactname AS suppliername,
-  c.categoryname
-FROM Product AS p
-LEFT JOIN Supplier AS s
-  ON p.supplierid = s.id
-LEFT JOIN Category AS c
-  ON p.categoryid = c.id
-${whereClause}`);
+  return await db.all(allProductsBaseQuery(opts));
 }
 
 /**
@@ -91,7 +143,51 @@ WHERE id = $1`,
  * @returns {Promise<Product>} the product
  */
 export async function updateProduct(id, data) {
-  throw new Error('Not yet implemented');
+  switch (process.env.DB_TYPE) {
+    case 'mysql':
+      return await updateProductMySQL(id, data);
+    case 'pg':
+      return await updateProductPg(id, data);
+    default:
+      throw new Error('Not supported!');
+  }
+}
+/**
+ * @param {number | string} id Product id
+ * @param {Partial<Product>} data Product data
+ * @returns {Promise<Product>} the product
+ */
+async function updateProductPg(id, data) {
+  const db = await getDb();
+  await db.run(
+    sql` UPDATE PRODUCT
+  SET metadata=$1, tags=($2)
+  WHERE id=$3`,
+    JSON.stringify(data.metadata),
+    data.tags,
+    id
+  );
+  return await getProduct(id);
+}
+
+/**
+ * @param {number | string} id Product id
+ * @param {Partial<Product>} data Product data
+ * @returns {Promise<Product>} the product
+ */
+async function updateProductMySQL(id, data) {
+  const db = await getDb();
+  return await db.get(
+    sql`UPDATE Product
+    SET metadata=$1, tags=$2
+  WHERE id = $3
+  `,
+    JSON.stringify(
+      data.metadata || { flavor: { salty: -1, sweet: -1, sour: -1, spicy: -1, bitter: -1 } }
+    ),
+    JSON.stringify(data.tags || []),
+    id
+  );
 }
 
 /**
@@ -103,8 +199,8 @@ export async function createProduct(p) {
   let db = await getDb();
   let result = await db.run(
     sql`
-INSERT INTO Product (productname, supplierid, categoryid, quantityperunit, unitprice, unitsinstock, unitsonorder, reorderlevel, discontinued)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+INSERT INTO Product (productname, supplierid, categoryid, quantityperunit, unitprice, unitsinstock, unitsonorder, reorderlevel, discontinued, metadata, tags)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
     p.productname,
     p.supplierid,
     p.categoryid,
@@ -113,7 +209,9 @@ VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
     p.unitsinstock,
     p.unitsonorder,
     p.reorderlevel,
-    p.discontinued
+    p.discontinued,
+    JSON.stringify({ flavor: { salty: -1, sweet: -1, sour: -1, spicy: -1, bitter: -1 } }),
+    process.env.DB_TYPE === 'pg' ? [] : JSON.stringify([])
   );
   if (!result) {
     throw new Error('No "last inserted id" returned from SQL insertion!');
