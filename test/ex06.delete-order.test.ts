@@ -8,7 +8,6 @@ import './helpers/global-hooks';
 
 @suite('EX06: "Delete an Order" - Record deletion test')
 class DeleteOrderTest {
-  @timeout(10000)
   @test('deleteOrder() for a newly-created order, completes without throwing an error')
   public async deleteOrderFinishes() {
     let { id } = await createOrder(VALID_ORDER_DATA);
@@ -18,7 +17,6 @@ class DeleteOrderTest {
     await deleteOrder(id);
     assert.ok(true, "deleting an order that was just created doesn't throw errors");
   }
-  @timeout(10000)
   @test('deleteOrder() results in the total number of orders decreasing')
   public async deleteOrderRemovesRecords() {
     let { id } = await createOrder(VALID_ORDER_DATA);

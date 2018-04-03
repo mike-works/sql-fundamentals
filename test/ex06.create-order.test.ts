@@ -57,7 +57,6 @@ class CreateOrderTest {
       'returns a promise that resolves to something with a numeric id property, whose value is > 1'
     );
   }
-  @timeout(10000)
   @test('createOrder() results in the total number of orders increasing')
   public async createOrderAddsRecords() {
     let originalNumOrders = (await getAllOrders({ page: 1, perPage: 9999999 })).length;
@@ -70,7 +69,6 @@ class CreateOrderTest {
     );
     await deleteOrder(id);
   }
-  @timeout(10000)
   @test(
     'createOrder() with some OrderDetail items increases the total number of OrderDetail records'
   )

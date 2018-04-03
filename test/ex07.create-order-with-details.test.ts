@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { suite, test } from 'mocha-typescript';
+import { suite, test, timeout } from 'mocha-typescript';
 
 import { createOrder, getOrderDetails, getAllOrders } from '../src/data/orders';
 
@@ -35,8 +35,9 @@ class CreateOrderWithDetailsTest {
       'Total number of Orders increases as a result of creating an order'
     );
   }
-
-  @test('createOrder() results in the order details being created')
+  @test(
+    'createOrder() with invalid orderdetail data, does not result in the order details being created'
+  )
   public async createOrderWithInvalidData() {
     let errors: string[] = [];
     const originalNumOrders = (await getAllOrders({ perPage: 999999 })).length;

@@ -1,5 +1,6 @@
 --ui mocha-typescript
 --require ts-node/register
 --require source-map-support/register
+--timeout 60000
 --watch-extensions js,ts,json
 **/*.test.ts

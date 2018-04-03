@@ -8,7 +8,6 @@ import './helpers/global-hooks';
 
 @suite('EX08: "Update an Order with OrderDetail items" - Update / Transaction test')
 class UpdateOrderWithDetailsTest {
-  @timeout(10000)
   @test(
     'updateOrder() successfully updates the freight, shipname, requireddate, shipaddress properties'
   )
@@ -36,7 +35,6 @@ class UpdateOrderWithDetailsTest {
     assert.equal(order.requireddate, '2022-01-01', 'new value for requireddate is correct');
     assert.equal(order.shipaddress, '123 Fake Street', 'new value for ShipAddress is correct');
   }
-  @timeout(10000)
   @test('updateOrder() results in the order details being updated')
   public async updateOrderUpdatesDetails() {
     let { id } = await createOrder(VALID_ORDER_DATA, [
