@@ -17,18 +17,37 @@ export async function getSearchResults(term) {
   let db = await getDb();
   return db.all(
     sql`
-SELECT * FROM
-(SELECT 'product' AS entity, productname AS name, productname AS the_text, ('' || id) AS id FROM Product
-	UNION
-SELECT 'supplier' AS entity, companyname AS name, companyname AS the_text, ('' || id) AS id FROM Supplier
-	UNION
-SELECT 'customer' AS entity, companyname AS name, companyname AS the_text, ('' || id) AS id FROM Customer
- 	UNION
-SELECT 'category' AS entity, categoryname AS name, categoryname AS the_text, ('' || id) AS id FROM Category
- 	UNION
- SELECT 'employee' AS entity, (firstname || ' ' || lastname) AS name, (firstname || ' ' || lastname) AS the_text, ('' || id) AS id FROM Employee
-) AS a
-WHERE lower(a.the_text) LIKE $1`,
-    `%${term}%`
+(SELECT 
+	'product' AS entity,
+	productname AS name,
+	ts_rank_cd(Product.fts,query, 32) as rank,
+	('' || id) AS id
+FROM Product, to_tsquery($1) query
+WHERE fts @@ query
+ORDER BY rank DESC) UNION
+(SELECT 
+	'employee' AS entity,
+	(firstname || ' ' || lastname) AS name,
+	ts_rank_cd(Employee.fts,query, 32) as rank,
+	('' || id) AS id
+FROM Employee, to_tsquery($1) query
+WHERE fts @@ query
+ORDER BY rank DESC) UNION
+(SELECT 
+	'customer' AS entity,
+	contactname AS name,
+	ts_rank_cd(Customer.fts,query, 32) as rank,
+	('' || id) AS id
+FROM Customer, to_tsquery($1) query
+WHERE fts @@ query
+ORDER BY rank DESC) UNION (SELECT 
+	'supplier' AS entity,
+	companyname AS name,
+	ts_rank_cd(Supplier.fts,query, 32) as rank,
+	('' || id) AS id
+FROM Supplier, to_tsquery($1) query
+WHERE fts @@ query
+ORDER BY rank DESC)`,
+    `${term}:*`
   );
 }
