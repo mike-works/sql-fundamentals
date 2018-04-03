@@ -29,7 +29,7 @@ import {
 const router = express.Router();
 
 const ALL_PRODUCTS_VALIDATORS = [
-  check('flav').isWhitelisted(['sweet-hot', 'refreshing', 'sweet-sour']),
+  check('flav'),
   check('inventory').isLowercase(),
   check('tags').isLowercase()
 ];
