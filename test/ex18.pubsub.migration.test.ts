@@ -10,7 +10,7 @@ import { assertMigrationCount } from './helpers/migrations';
 class MigrationTest {
   @test('New .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(10);
+    assertMigrationCount(9);
   }
 
   @test('Function table_update_notify is found')
