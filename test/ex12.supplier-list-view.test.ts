@@ -12,7 +12,7 @@ import { assertViewsExist } from './helpers/table';
 class SupplierListViewTest {
   @test('new .sql file based migration exists in the ./migrations folder')
   public async migrationExists() {
-    assertMigrationCount(6);
+    assertMigrationCount(5);
   }
 
   @test('supplierlist_v view exists')
