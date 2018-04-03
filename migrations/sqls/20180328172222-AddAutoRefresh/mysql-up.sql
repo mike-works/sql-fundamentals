@@ -1,0 +1,1 @@
+-- Put your MySQL "up" migration here
