@@ -9,8 +9,9 @@ import {
   getProduct,
   updateProduct
 } from '../src/data/products';
-import { getDb } from '../src/db/utils';
+import { getDb, DbType } from '../src/db/utils';
 
+import { onlyForDatabaseTypes } from './helpers/decorators';
 import './helpers/global-hooks';
 
 @suite('EX16: "Product Tags" - Array column test')
@@ -47,6 +48,7 @@ class ProductTagsTest {
   }
 
   @test('tags column is of type array')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async tagsIsArray() {
     let db = await getDb();
     let results = await getAllProducts();
@@ -54,6 +56,7 @@ class ProductTagsTest {
   }
 
   @test('newly created products begin with an empty tags array')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async newProductsStartEmpty() {
     assert.ok(this.productId, 'ID for new product is ok');
     let prod = await getProduct(this.productId);
@@ -64,6 +67,7 @@ class ProductTagsTest {
   }
 
   @test('updating product tags persists successfully')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async tagUpdatesPersist() {
     await updateProduct(this.productId, { tags: ['foo', 'bar'] });
     let prod = await getProduct(this.productId);
@@ -73,6 +77,7 @@ class ProductTagsTest {
   }
 
   @test('getAllProducts with tag filter')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async tagFilter() {
     let allResults = await getAllProducts();
     let filteredResults = await getAllProducts({

@@ -66,6 +66,7 @@ class ProductMetadataJsonTest {
   @test(
     'newly created products begin with metadata { flavor: { salty: -1, sweet: -1, sour: -1, spicy: -1, bitter: -1} }'
   )
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async newProductsStartEmpty() {
     assert.ok(this.productId, 'ID for new product is ok');
     let prod = await getProduct(this.productId);
@@ -80,6 +81,7 @@ class ProductMetadataJsonTest {
   }
 
   @test('updating product metadata persists successfully')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async metadataUpdatesPersist() {
     await updateProduct(this.productId, {
       metadata: { flavor: { spicy: 2, sweet: 0, salty: 5, sour: 1, bitter: 3 } }
@@ -95,6 +97,7 @@ class ProductMetadataJsonTest {
   }
 
   @test('getAllProducts with flavor filter: sweet>2 sour>2')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async sweetSourFilter() {
     let allResults = await getAllProducts();
     let sweetSourResults = await getAllProducts({
@@ -134,6 +137,7 @@ class ProductMetadataJsonTest {
   }
 
   @test('getAllProducts with flavor filter: sweet>2 spicy>2')
+  @onlyForDatabaseTypes(DbType.PostgreSQL, DbType.MySQL)
   public async sweetHotFilter() {
     await updateProduct(1, {
       metadata: {
