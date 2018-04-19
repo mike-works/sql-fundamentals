@@ -14,6 +14,9 @@
   </a>
 </p>
 <p align='center'>
+  <a href="https://greenkeeper.io/" title="Dependencies">
+    <img title='GreenKeeper' src='https://badges.greenkeeper.io/mike-works/sql-fundamentals.svg'>
+  </a>
   <a href="https://travis-ci.org/mike-works/sql-fundamentals?branch=solutions-pro" title="Build Status">
     <img title="Build Status" src="https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions-pro"/>
   </a>
@@ -23,18 +26,14 @@
   <a href="https://docs.mike.works/sql-slides" title="Slides">
     <img title="Slides" src="https://img.shields.io/badge/mike.works-slides-blue.svg"/>
   </a>
-  <a title='GreenKeeper'>
-    <img title='GreenKeeper' src='https://badges.greenkeeper.io/mike-works/sql-fundamentals.svg'>
-  </a>
 </p>
 <p align='center'>
 This is the example project used for the <a title="Mike.Works" href="https://mike.works">Mike.Works</a> <a title="SQL Fundamentals" href="https://mike.works/course/sql-fundamentals-ad811af">SQL Fundamentals</a> and <a title="Professional SQL" href="https://mike.works/course/professional-sql-c9c7184">Professional SQL</a> courses.
 </p>
 
-# Where are the slides?
-
-* [SQL Fundamentals](https://mike.works/course/sql-fundamentals-ad811af) slides are [here](https://docs.mike.works/sql-slides)
-* [Professional SQL](https://mike.works/course/professional-sql-c9c7184) slides are [here](https://docs.mike.works/pro-sql-slides)
+# Course outline and slides
+ * [View course outline here](https://mike.works/course/sql-fundamentals-ad811af)
+ * [View slides here](https://docs.mike.works/sql-slides)
 
 # What are we building?
 
