@@ -52,9 +52,23 @@ export async function getAllProducts(opts = {}) {
     whereClause = 'WHERE Product.discontinued = 1';
   }
 
+  /**
+   * SELECT Product.*, s.companyname, c.categoryname FROM
+      Product
+    LEFT JOIN Supplier AS s
+      ON Product.supplierid = s.id
+    LEFT JOIN Category AS c
+      ON Product.categoryid = c.id
+   */
+
   return await db.all(sql`
-SELECT ${ALL_PRODUCT_COLUMNS.join(',')}
+SELECT ${ALL_PRODUCT_COLUMNS.map(c => `Product.${c}`).join(',')},
+  c.categoryname, s.companyname AS suppliername
 FROM Product
+LEFT JOIN Supplier AS s
+  ON Product.supplierid = s.id
+LEFT JOIN Category AS c
+  ON Product.categoryid = c.id
 ${whereClause}`);
 }
 
