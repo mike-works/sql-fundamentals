@@ -22,8 +22,11 @@ const ALL_CUSTOMERS_COLUMNS = ['*'];
  */
 export async function getAllCustomers(options = {}) {
   const db = await getDb();
+  let searchTerm = options.filter;
   return await db.all(sql`
-SELECT id,contactname,companyname FROM Customer`);
+SELECT id,contactname,companyname FROM Customer
+WHERE contactname like '%${searchTerm}%' OR
+      companyname like '%${searchTerm}%'`);
 }
 
 /**
