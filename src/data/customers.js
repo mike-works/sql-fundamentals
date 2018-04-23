@@ -23,8 +23,7 @@ const ALL_CUSTOMERS_COLUMNS = ['*'];
 export async function getAllCustomers(options = {}) {
   const db = await getDb();
   return await db.all(sql`
-SELECT ${ALL_CUSTOMERS_COLUMNS.join(',')}
-FROM Customer`);
+SELECT id,contactname,companyname FROM Customer`);
 }
 
 /**

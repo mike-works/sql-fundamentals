@@ -1,7 +1,14 @@
 import { getDb } from '../db/utils';
 import { sql } from '../sql-string';
 
-export const ALL_ORDERS_COLUMNS = ['*'];
+export const ALL_ORDERS_COLUMNS = [
+  'id',
+  'customerid',
+  'employeeid',
+  'shipcity',
+  'shipcountry',
+  'shippeddate'
+];
 export const ORDER_COLUMNS = ['*'];
 
 /**
@@ -44,7 +51,7 @@ export async function getAllOrders(opts = {}) {
 
   const db = await getDb();
   return await db.all(sql`
-SELECT ${ALL_ORDERS_COLUMNS.join(',')}
+SELECT ${ALL_ORDERS_COLUMNS.join(', ')}
 FROM CustomerOrder`);
 }
 
