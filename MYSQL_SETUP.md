@@ -14,7 +14,6 @@
 ## Windows
 
 1. Grab the [the appropriate windows installer](https://dev.mysql.com/downloads/windows/) and run it.
-2. Put the DLLs in your `C:\WINDOWS\system32` folder
 
 ## Linux
 
