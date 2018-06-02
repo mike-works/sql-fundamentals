@@ -72,7 +72,7 @@
     "@types/pg": "^7.4.1",
     "@types/sqlite3": "^3.1.1",
     "@types/winston": "^2.3.7",
-    "@types/ws": "^4.0.1",
+    "@types/ws": "^5.1.0",
     "chai": "^4.1.2",
     "db-migrate-plugin-typescript": "^2.0.0",
     "json-typescript": "^1.0.0",
