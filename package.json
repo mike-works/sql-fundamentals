@@ -7,7 +7,7 @@
   "author": "Mike North <michael.l.north@gmail.com> (https://mike.works)",
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">= 6"
+    "node": ">= 9.6.22"
   },
   "scripts": {
     "start": "scripty",
@@ -46,8 +46,8 @@
     "scripty": "^1.7.2",
     "server-timing": "^1.1.2",
     "sql-formatter": "^2.1.2",
-    "sqlite": "^2.9.1",
-    "sqlite3": "^3.1.13",
+    "sqlite": "^2.9.2",
+    "sqlite3": "^4.0.0",
     "winston": "^2.3.7",
     "ws": "^4.0.0"
   },
