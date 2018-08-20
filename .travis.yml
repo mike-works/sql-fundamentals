@@ -7,7 +7,7 @@ services:
 sudo: required
 
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
   apt:
     sources:
       - heroku
@@ -19,24 +19,24 @@ addons:
 
 matrix:
   include:
-  - node_js: '6'
-    env: DB_TYPE=mysql
-  - node_js: '8'
-    env: DB_TYPE=mysql
-  - node_js: 'stable'
-    env: DB_TYPE=mysql
-  - node_js: '6'
-    env: DB_TYPE=pg
-  - node_js: '8'
-    env: DB_TYPE=pg
-  - node_js: 'stable'
-    env: DB_TYPE=pg SHOULD_DEPLOY=true
-  - node_js: '6'
-    env: DB_TYPE=sqlite
-  - node_js: '8'
-    env: DB_TYPE=sqlite
-  - node_js: 'stable'
-    env: DB_TYPE=sqlite
+    - node_js: '6'
+      env: DB_TYPE=mysql
+    - node_js: '8'
+      env: DB_TYPE=mysql
+    - node_js: 'stable'
+      env: DB_TYPE=mysql
+    - node_js: '6'
+      env: DB_TYPE=pg
+    - node_js: '8'
+      env: DB_TYPE=pg
+    - node_js: 'stable'
+      env: DB_TYPE=pg SHOULD_DEPLOY=true
+    - node_js: '6'
+      env: DB_TYPE=sqlite
+    - node_js: '8'
+      env: DB_TYPE=sqlite
+    - node_js: 'stable'
+      env: DB_TYPE=sqlite
 
 before_install:
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
@@ -47,17 +47,17 @@ before_install:
   - sudo service mysql restart
 
 install:
-- if [ "$DB_TYPE" == "sqlite" ]; then npm install --no-shrinkwrap  --no-optional; else npm install --no-shrinkwrap; fi
+  - if [ "$DB_TYPE" == "sqlite" ]; then npm install --no-shrinkwrap  --no-optional; else npm install --no-shrinkwrap; fi
 
 before_script:
   - ./scripts/ci/setup-db.sh
 
 script:
-- export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
-- echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
-- echo "SHOULD_DEPLOY=$SHOULD_DEPLOY"
-- npm test
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+  - echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
+  - echo "SHOULD_DEPLOY=$SHOULD_DEPLOY"
+  - npm test
 
 deploy:
   skip_cleanup: true
@@ -69,3 +69,9 @@ deploy:
     repo: mike-works/sql-fundamentals
     branch: solutions-pro
     condition: $SHOULD_DEPLOY
+
+after_success:
+  - npm run travis-deploy-once "npm run semantic-release"
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

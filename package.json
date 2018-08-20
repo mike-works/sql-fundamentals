@@ -1,6 +1,6 @@
 {
-  "name": "mikeworks-sql",
-  "version": "0.0.0",
+  "name": "@mikeworks/sql-fundamentals",
+  "version": "0.0.0-development",
   "description": "Mike.Works SQL Fundamentals Course",
   "main": "index.js",
   "repository": "https://github.com/mike-works/sql-fundamentals.git",
@@ -27,19 +27,21 @@
     "db:migrate:mysql": "scripty",
     "db:migrate:sqlite": "scripty",
     "db:migrate:heroku:pg": "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
-    "db:migrate:create": "scripty"
+    "db:migrate:create": "scripty",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "accounting": "^0.4.1",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
     "cli-highlight": "^1.2.3",
-    "db-migrate": "^0.10.2",
+    "db-migrate": "^0.11.1",
     "db-migrate-sqlite3": "github:mike-north/db-migrate-sqlite",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "express-validator": "^5.0.0",
-    "express-winston": "^2.4.0",
+    "express-winston": "^2.6.0",
     "fs-extra": "^5.0.0",
     "lodash": "~4.17.4",
     "moment": "^2.20.1",
@@ -58,6 +60,7 @@
     "pg": "^7.4.1"
   },
   "devDependencies": {
+    "@mike-works/workshop-semantic-release-config": "^1.0.0",
     "@types/accounting": "^0.4.1",
     "@types/body-parser": "^1.17.0",
     "@types/chai": "^4.1.4",
@@ -78,8 +81,10 @@
     "json-typescript": "^1.0.0",
     "mocha": "^5.0.0",
     "mocha-typescript": "^1.1.12",
-    "nodemon": "^1.14.11",
+    "nodemon": "^1.18.3",
+    "semantic-release": "^15.9.9",
     "source-map-support": "^0.5.3",
+    "travis-deploy-once": "^5.0.2",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
     "typescript": "^2.6.1"
