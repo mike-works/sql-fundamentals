@@ -14,17 +14,12 @@
   </a>
 </p>
 <p align='center'>
-  <a href="https://greenkeeper.io/" title="Dependencies">
-    <img title='GreenKeeper' src='https://badges.greenkeeper.io/mike-works/sql-fundamentals.svg'>
-  </a>
+ 
   <a href="https://travis-ci.org/mike-works/sql-fundamentals?branch=solutions-pro" title="Build Status">
     <img title="Build Status" src="https://travis-ci.org/mike-works/sql-fundamentals.svg?branch=solutions-pro"/>
   </a>
-  <a href="https://mike.works/course/sql-fundamentals-ad811af" title="SQL Fundamentals">
-    <img title="Course Outline" src="https://img.shields.io/badge/mike.works-course%20outline-blue.svg"/>
-  </a>
-  <a href="https://docs.mike.works/sql-slides" title="Slides">
-    <img title="Slides" src="https://img.shields.io/badge/mike.works-slides-blue.svg"/>
+   <a href="https://github.com/mike-works/sql-fundamentals/releases" title="Version">
+    <img title="Version" src="https://img.shields.io/github/tag/mike-works/sql-fundamentals.svg" />
   </a>
 </p>
 <p align='center'>
@@ -32,8 +27,9 @@ This is the example project used for the <a title="Mike.Works" href="https://mik
 </p>
 
 # Course outline and slides
- * [View course outline here](https://mike.works/course/sql-fundamentals-ad811af)
- * [View slides here](https://docs.mike.works/sql-slides)
+
+- [View course outline here](https://mike.works/course/sql-fundamentals-ad811af)
+- [View slides here](https://docs.mike.works/sql-slides)
 
 # What are we building?
 
@@ -64,9 +60,9 @@ This project is used for two workshops. [SQL Fundamentals](https://mike.works/co
 
 To set up the database software, please check out these guides
 
-* [Installing SQLite 3](./SQLITE_SETUP.md)
-* [Installing Postgres 10](./POSTGRES_SETUP.md)
-* [Installing MySQL 5.7](./MYSQL_SETUP.md)
+- [Installing SQLite 3](./SQLITE_SETUP.md)
+- [Installing Postgres 10](./POSTGRES_SETUP.md)
+- [Installing MySQL 5.7](./MYSQL_SETUP.md)
 
 ## Install node dependencies
 
@@ -232,24 +228,24 @@ DB_TYPE=pg npm run test:ex 9 # Run tests up to and including exercise 9 using Po
 
 The following tools are recommended for this course. Depending on which database(s) you choose to use for the course, please download the appropriate tools by following their respective installation instructions.
 
-* _All Databases_
+- _All Databases_
 
-  * [Visual Studio Code](https://code.visualstudio.com) - A fantastic code editor that we'll be using for its static analysis features and a few SQL-specific extensions
-  * VS Code Extensions
-    * [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) - to hilight urgent comments more prominently
-    * [SQL Tools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) - to connect to databases and run queries right from within our code editor
-    * [vscode-sql-template-literal](https://marketplace.visualstudio.com/items?itemName=forbeslindesay.vscode-sql-template-literal) - for syntax hilighting of tagged template literals in our JavaScript code.
-    * [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint) - type-checking and other static analysis on our code
+  - [Visual Studio Code](https://code.visualstudio.com) - A fantastic code editor that we'll be using for its static analysis features and a few SQL-specific extensions
+  - VS Code Extensions
+    - [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) - to hilight urgent comments more prominently
+    - [SQL Tools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) - to connect to databases and run queries right from within our code editor
+    - [vscode-sql-template-literal](https://marketplace.visualstudio.com/items?itemName=forbeslindesay.vscode-sql-template-literal) - for syntax hilighting of tagged template literals in our JavaScript code.
+    - [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint) - type-checking and other static analysis on our code
 
-* _MySQL_
-  * [Sequel Pro](https://www.sequelpro.com/) (OS X only)
-  * [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) (OS X, Windows, Linux)
-  * [VSCode MySQL Syntax](https://marketplace.visualstudio.com/items?itemName=jakebathman.mysql-syntax) - syntax hilighting for MySQL-specific syntax
-* _PostgreSQL_
-  * [pgAdmin](https://www.pgadmin.org/download/) (OS X, Windows, Linux)
-  * [vscode-postgresql](https://marketplace.visualstudio.com/items?itemName=JPTarquino.postgresql) - for autocomplete and syntax hilighting of Postgres-specific SQL
-* _SQLite_
-  * [DB Browser for SQLite](http://sqlitebrowser.org/) (OS X, Windows, Linux)
+- _MySQL_
+  - [Sequel Pro](https://www.sequelpro.com/) (OS X only)
+  - [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) (OS X, Windows, Linux)
+  - [VSCode MySQL Syntax](https://marketplace.visualstudio.com/items?itemName=jakebathman.mysql-syntax) - syntax hilighting for MySQL-specific syntax
+- _PostgreSQL_
+  - [pgAdmin](https://www.pgadmin.org/download/) (OS X, Windows, Linux)
+  - [vscode-postgresql](https://marketplace.visualstudio.com/items?itemName=JPTarquino.postgresql) - for autocomplete and syntax hilighting of Postgres-specific SQL
+- _SQLite_
+  - [DB Browser for SQLite](http://sqlitebrowser.org/) (OS X, Windows, Linux)
 
 # How To Deploy on Heroku
 
@@ -299,19 +295,19 @@ understanding of how these licenses work:
 
 ### OK
 
-* Using everything in this project other than the exercises (or accompanying tests)
+- Using everything in this project other than the exercises (or accompanying tests)
   to build a project used for your own free or commercial training material
-* Copying code from build scripts, configuration files, tests and development
+- Copying code from build scripts, configuration files, tests and development
   harnesses that are not part of the exercises specifically, for your own projects
-* As an owner of an individual license, using code from tests, exercises, or
+- As an owner of an individual license, using code from tests, exercises, or
   exercise solutions for your own non-training-related project.
 
 ### NOT OK (without express written consent)
 
-* Using this project, or any subset of
+- Using this project, or any subset of
   exercises contained within this project to run your own workshops
-* Writing a book that uses the code for these exercises
-* Recording a screencast that contains one or more of this project's exercises
+- Writing a book that uses the code for these exercises
+- Recording a screencast that contains one or more of this project's exercises
 
 # Copyright
 
