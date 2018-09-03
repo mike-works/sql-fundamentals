@@ -57,7 +57,7 @@
     "db-migrate-mysql": "^1.1.10",
     "db-migrate-pg": "^0.3.0",
     "mysql2": "^1.5.2",
-    "pg": "^7.4.1"
+    "pg": "^7.4.3"
   },
   "devDependencies": {
     "@mike-works/workshop-semantic-release-config": "^1.0.0",
