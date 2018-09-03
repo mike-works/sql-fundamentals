@@ -35,7 +35,7 @@
     "accounting": "^0.4.1",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
-    "cli-highlight": "^1.2.3",
+    "cli-highlight": "^2.0.0",
     "db-migrate": "^0.11.1",
     "db-migrate-sqlite3": "github:mike-north/db-migrate-sqlite",
     "express": "^4.16.2",
