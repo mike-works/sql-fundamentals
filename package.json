@@ -82,7 +82,7 @@
     "mocha": "^5.0.0",
     "mocha-typescript": "^1.1.12",
     "nodemon": "^1.18.3",
-    "semantic-release": "^15.9.9",
+    "semantic-release": "^15.9.14",
     "source-map-support": "^0.5.3",
     "travis-deploy-once": "^5.0.2",
     "ts-node": "^5.0.0",
