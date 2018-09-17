@@ -56,7 +56,7 @@
   "optionalDependencies": {
     "db-migrate-mysql": "^1.1.10",
     "db-migrate-pg": "^0.3.0",
-    "mysql2": "^1.5.2",
+    "mysql2": "^1.6.1",
     "pg": "^7.4.3"
   },
   "devDependencies": {
