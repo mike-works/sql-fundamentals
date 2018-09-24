@@ -80,7 +80,7 @@
     "db-migrate-plugin-typescript": "^2.0.0",
     "json-typescript": "^1.0.1",
     "mocha": "^5.0.0",
-    "mocha-typescript": "^1.1.12",
+    "mocha-typescript": "^1.1.17",
     "nodemon": "^1.18.3",
     "semantic-release": "^15.9.15",
     "source-map-support": "^0.5.3",
