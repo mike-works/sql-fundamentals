@@ -60,6 +60,7 @@
     "pg": "^7.4.3"
   },
   "devDependencies": {
+    "@mike-works/js-lib-renovate-config": "^2.0.0",
     "@mike-works/workshop-semantic-release-config": "^1.0.0",
     "@types/accounting": "^0.4.1",
     "@types/body-parser": "^1.17.0",
