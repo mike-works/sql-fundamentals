@@ -10,10 +10,8 @@ addons:
   postgresql: '9.4'
   apt:
     sources:
-      - heroku
       - mysql-5.7-trusty
     packages:
-      - heroku-toolbelt
       - mysql-server
       - mysql-client
 
@@ -59,16 +57,16 @@ script:
   - echo "SHOULD_DEPLOY=$SHOULD_DEPLOY"
   - npm test
 
-deploy:
-  skip_cleanup: true
-  provider: heroku
-  api_key:
-    secure: V2Qerq2HW1rwhJ76O8e5VZ5PRECQBxTT+bEtXikA8mioXkvNUYC5rPDcF46KbQg6rGy3gsTk2iUFkmNRFAiZgnHfub2ViM2OptdJhlGHxzTEDxSe5Ny8HLhFXH0KO9CvJbmRfUGUwXGgaaULX4EFOH2FLGadO184J3AnhPNj10+3FW/KPcthQN4rozRVUBOeI1kmOTifB4eO+XZEdkLRn7g7apzy+FIkZFcUSYaDQcBGUb9l/SYxb2Pd5xMx2SG8lW3SasGD0ZN/XGFo75cyyz42w1u7r4h5/tltn6RpKLzmA9YEi9V6zMTT9LNU/kSh6ylWndE0U2yBMzAJZ5jkwBLpQPlTNz3JWNUZTYNpR/S+rjSBglLN3InTxvKO4ebdz1vzNArk7LzjC3jNBvYl3+kfOSoybS7kAXb/cdXT+EqMqCWWU3F+cuDS1IxUaLdXTci7/BUnmTHQGfdH3Pu/Ha2SPEPSbGwusU+lUYdHxsasvcGtCtn7o9shctZUysNP+SVL7Mp3+reP927wgGt6uGLeRDLd6K7sXxZ11AzMiO+o30hjDCVWKCG/vCSsLB8uGnQJzSqo2ESRbxO0m9Mh5ANrt078mR+/A0UPIUlZd6fTUX3swc6UP+RcUquXs8WQ5icDfMXfn3+r+BUAzsOvJwUDHvsH/rvai7Y3P5doNbg=
-  app: damp-oasis-38940
-  on:
-    repo: mike-works/sql-fundamentals
-    branch: solutions-pro
-    condition: $SHOULD_DEPLOY
+# deploy:
+#   skip_cleanup: true
+#   provider: heroku
+#   api_key:
+#     secure: V2Qerq2HW1rwhJ76O8e5VZ5PRECQBxTT+bEtXikA8mioXkvNUYC5rPDcF46KbQg6rGy3gsTk2iUFkmNRFAiZgnHfub2ViM2OptdJhlGHxzTEDxSe5Ny8HLhFXH0KO9CvJbmRfUGUwXGgaaULX4EFOH2FLGadO184J3AnhPNj10+3FW/KPcthQN4rozRVUBOeI1kmOTifB4eO+XZEdkLRn7g7apzy+FIkZFcUSYaDQcBGUb9l/SYxb2Pd5xMx2SG8lW3SasGD0ZN/XGFo75cyyz42w1u7r4h5/tltn6RpKLzmA9YEi9V6zMTT9LNU/kSh6ylWndE0U2yBMzAJZ5jkwBLpQPlTNz3JWNUZTYNpR/S+rjSBglLN3InTxvKO4ebdz1vzNArk7LzjC3jNBvYl3+kfOSoybS7kAXb/cdXT+EqMqCWWU3F+cuDS1IxUaLdXTci7/BUnmTHQGfdH3Pu/Ha2SPEPSbGwusU+lUYdHxsasvcGtCtn7o9shctZUysNP+SVL7Mp3+reP927wgGt6uGLeRDLd6K7sXxZ11AzMiO+o30hjDCVWKCG/vCSsLB8uGnQJzSqo2ESRbxO0m9Mh5ANrt078mR+/A0UPIUlZd6fTUX3swc6UP+RcUquXs8WQ5icDfMXfn3+r+BUAzsOvJwUDHvsH/rvai7Y3P5doNbg=
+#   app: damp-oasis-38940
+#   on:
+#     repo: mike-works/sql-fundamentals
+#     branch: solutions-pro
+#     condition: $SHOULD_DEPLOY
 
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
