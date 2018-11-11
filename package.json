@@ -50,7 +50,7 @@
     "sql-formatter": "2.3.2",
     "sqlite": "3.0.0",
     "sqlite3": "4.0.4",
-    "winston": "2.4.4",
+    "winston": "3.1.0",
     "ws": "6.1.0"
   },
   "optionalDependencies": {
