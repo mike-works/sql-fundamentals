@@ -46,7 +46,7 @@
     "lodash": "4.17.11",
     "moment": "2.22.2",
     "scripty": "1.8.0",
-    "server-timing": "1.1.2",
+    "server-timing": "2.1.0",
     "sql-formatter": "2.3.2",
     "sqlite": "3.0.0",
     "sqlite3": "4.0.4",
