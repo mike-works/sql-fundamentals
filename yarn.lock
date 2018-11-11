@@ -2022,10 +2022,10 @@ db-migrate-mysql@1.1.10:
     moment "^2.11.2"
     mysql "^2.10.2"
 
-db-migrate-pg@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-0.3.1.tgz#2fc56e35875a022305bc2d32a762ed2ca1e4be63"
-  integrity sha512-lxzGFkVe5ISXfaR4A+Vc6bkP0R3WpWw2LDSnLXrFER6pMLJFq/8bpGS/ttOKxZgP5sjKvms8SmE6nWSuNeRaBQ==
+db-migrate-pg@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-0.4.0.tgz#4ccab08a8bda89e1164f11259005209449c0359b"
+  integrity sha512-N49I0qEh7e8fd852R3zD5ed+w2jyqTHsBkIULoTgafgTr3QBvbYLOZcQ4FWNtGa+h0lrxtwh7qvv6LMbv916YQ==
   dependencies:
     bluebird "^3.1.1"
     db-migrate-base "^1.5.2"
