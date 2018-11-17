@@ -7157,10 +7157,10 @@ write-file-atomic@^2.0.0, write-file-atomic@^2.3.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-ws@6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-6.1.1.tgz#3f5a17e51059272dc18cf039d3ef29eee5d3fdc6"
-  integrity sha512-tfSg0NBK1w9FkVhIftPp2lWPoFu3AInndGyydLPTNSIA4o1V7GveE2fCTF7kFmHZ/+NGVObBptvFXwzF7ALXDQ==
+ws@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.1.2.tgz#3cc7462e98792f0ac679424148903ded3b9c3ad8"
+  integrity sha512-rfUqzvz0WxmSXtJpPMX2EeASXabOrSMk1ruMOV3JBTBjo4ac2lDjGGsbQSyxj8Odhw5fBib8ZKEjDNvgouNKYw==
   dependencies:
     async-limiter "~1.0.0"
 
