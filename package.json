@@ -57,7 +57,7 @@
     "db-migrate-mysql": "1.1.10",
     "db-migrate-pg": "0.4.0",
     "mysql2": "1.6.4",
-    "pg": "7.6.1"
+    "pg": "7.7.1"
   },
   "devDependencies": {
     "@mike-works/js-lib-renovate-config": "2.0.0",
