@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no-namespace
 declare namespace Handlebars {
   interface ExpHbsState {
     cache: boolean;
@@ -10,15 +11,6 @@ declare namespace Handlebars {
 
   interface HelperOptions {
     name: string;
-    hash: { [key: string]: any };
-    fn: (ctxt: any) => {};
-    data: {
-      exphbs: ExpHbsState;
-      root: {
-        settings: any;
-        request: Request;
-      };
-    };
   }
 
   interface HelperSet {

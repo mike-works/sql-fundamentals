@@ -50,13 +50,8 @@ function installMiddlewares(app: express.Application) {
     expressWinston.logger({
       // expressFormat: true,
       meta: false,
-      msg:
-        '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
-      transports: [
-        new winston.transports.Console({
-          colorize: true
-        })
-      ],
+      msg: '{{req.method}}: {{res.statusCode}} ({{res.responseTime}}ms)\t{{req.url}}',
+      transports: [new winston.transports.Console()],
       skip(req: express.Request, res: express.Response) {
         return /^\/static\//.test(req.path);
       }
@@ -78,9 +73,7 @@ async function setupProdMiddleware(app: express.Application) {
   app.disable('x-powered-by');
 }
 
-export async function startExpressServer(): Promise<
-  [express.Application, http.Server]
-> {
+export async function startExpressServer(): Promise<[express.Application, http.Server]> {
   const app = express();
 
   // parse application/x-www-form-urlencoded

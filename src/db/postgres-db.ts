@@ -13,8 +13,8 @@ class PostgresPreparedStatement implements SQLPreparedStatement {
   protected name: string;
   protected text: string;
   protected values: any[];
-  protected client: pg.Client;
-  public constructor(name: string, text: string, values: any[], client: pg.Client) {
+  protected client: pg.PoolClient;
+  public constructor(name: string, text: string, values: any[], client: pg.PoolClient) {
     this.client = client;
     this.name = name;
     this.text = text;
@@ -89,10 +89,10 @@ export default class PostgresDB extends SQLDatabase {
       client.release();
     }
   }
-  private static pubSubSupport: pg.Client;
-  private client: pg.Client;
+  private static pubSubSupport: pg.PoolClient;
+  private client: pg.PoolClient;
 
-  protected constructor(client: pg.Client) {
+  protected constructor(client: pg.PoolClient) {
     super();
     this.client = client;
   }
