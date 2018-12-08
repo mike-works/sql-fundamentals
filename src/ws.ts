@@ -23,10 +23,7 @@ class WebSocketManager {
   public constructor(server: Server) {
     this.wss = new WS.Server({ server });
     this.wss.on('connection', this.onConnect.bind(this));
-    this.heartbeatInterval = setInterval(
-      this.onHeartbeat.bind(this),
-      WS_HEARTBEAT_PULSE
-    );
+    this.heartbeatInterval = setInterval(this.onHeartbeat.bind(this), WS_HEARTBEAT_PULSE) as any;
   }
   public refreshAllClients() {
     this.broadcast('refresh');
@@ -51,7 +48,7 @@ class WebSocketManager {
   protected onConnect(ws: WebSocket) {
     this.connectedSockets.push(ws);
     ws.isAlive = true;
-    ws.on('pong', heartbeat);
+    ws.on('pong', heartbeat as any);
     ws.on('message', this.onMessagereceived.bind(this));
     ws.on('error', (err: Error) => {
       logger.error('WS ERROR', err.message);
