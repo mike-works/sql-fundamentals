@@ -55,6 +55,7 @@ script:
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
   - echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
   - echo "SHOULD_DEPLOY=$SHOULD_DEPLOY"
+  - tsc
   - npm test
 
 # deploy:
