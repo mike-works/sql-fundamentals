@@ -35,10 +35,6 @@ jobs:
       install: yarn install --no-optional --non-interactive --no-lockfile
       name: 'Floating Dependencies'
     - node_js: 'stable'
-      name: 'Fixed Dependencies'
-      env: DB_TYPE=sqlite
-      install: yarn install --no-optional --non-interactive
-    - node_js: 'stable'
       name: 'PostgreSQL'
       env: DB_TYPE=pg
     - node_js: 'stable'
@@ -46,15 +42,19 @@ jobs:
       env: DB_TYPE=mysql
 
     - stage: 'Additional Tests'
-      node_js: '6'
+      node_js: 'stable'
+      name: 'Fixed Dependencies'
+      env: DB_TYPE=sqlite
+      install: yarn install --no-optional --non-interactive
+    - node_js: '10'
       env: DB_TYPE=mysql
     - node_js: '8'
       env: DB_TYPE=mysql
-    - node_js: '6'
+    - node_js: '10'
       env: DB_TYPE=pg
     - node_js: '8'
       env: DB_TYPE=pg
-    - node_js: '6'
+    - node_js: '10'
       env: DB_TYPE=sqlite
       install: yarn install --no-optional --non-interactive
     - node_js: '8'
