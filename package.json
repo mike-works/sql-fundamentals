@@ -28,7 +28,6 @@
     "db:migrate:sqlite": "scripty",
     "db:migrate:heroku:pg": "DATABASE_URL=$DATABASE_URL?ssl=true npm run db:migrate:pg --- up",
     "db:migrate:create": "scripty",
-    "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
@@ -85,7 +84,6 @@
     "semantic-release": "15.12.4",
     "source-map-support": "0.5.9",
     "sql-template-strings": "2.2.2",
-    "travis-deploy-once": "5.0.9",
     "ts-node": "5.0.1",
     "tslint": "5.11.0",
     "typescript": "3.2.2"

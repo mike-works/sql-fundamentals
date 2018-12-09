@@ -15,26 +15,54 @@ addons:
       - mysql-server
       - mysql-client
 
-matrix:
+stages:
+  - 'Tests'
+  - 'Additional Tests'
+  - name: 'Deploy'
+    if: branch = master AND type = push
+
+jobs:
+  fail_fast: true
   include:
+    - stage: 'Tests'
+      node_js: 'stable'
+      env: DB_TYPE=sqlite
+      install: yarn install --no-optional --non-interactive
+      name: 'TypeScript compiles'
+      script: tsc
+    - node_js: 'stable'
+      env: DB_TYPE=sqlite
+      install: yarn install --no-optional --non-interactive --no-lockfile
+      name: 'Floating Dependencies'
+    - node_js: 'stable'
+      name: 'Fixed Dependencies'
+      env: DB_TYPE=sqlite
+      install: yarn install --no-optional --non-interactive
+    - node_js: 'stable'
+      env: DB_TYPE=pg
+    - node_js: 'stable'
+      env: DB_TYPE=mysql
+
+    - stage: 'Additional Tests'
     - node_js: '6'
       env: DB_TYPE=mysql
     - node_js: '8'
-      env: DB_TYPE=mysql
-    - node_js: 'stable'
       env: DB_TYPE=mysql
     - node_js: '6'
       env: DB_TYPE=pg
     - node_js: '8'
       env: DB_TYPE=pg
-    - node_js: 'stable'
-      env: DB_TYPE=pg SHOULD_DEPLOY=true
     - node_js: '6'
       env: DB_TYPE=sqlite
+      install: yarn install --no-optional --non-interactive
     - node_js: '8'
       env: DB_TYPE=sqlite
-    - node_js: 'stable'
-      env: DB_TYPE=sqlite
+      install: yarn install --no-optional --non-interactive
+
+    - stage: 'Deploy'
+      script: yarn semantic-release
+
+install: yarn install --non-interactive --no-lockfile
 
 before_install:
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
@@ -44,19 +72,10 @@ before_install:
   - mysql_config_editor set --login-path=client --host=localhost --user=root
   - sudo service mysql restart
 
-install:
-  - if [ "$DB_TYPE" == "sqlite" ]; then npm install --no-shrinkwrap  --no-optional; else npm install --no-shrinkwrap; fi
-
 before_script:
   - ./scripts/ci/setup-db.sh
 
-script:
-  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
-  - echo "TRAVIS_NODE_VERSION=$TRAVIS_NODE_VERSION"
-  - echo "SHOULD_DEPLOY=$SHOULD_DEPLOY"
-  - tsc
-  - npm test
+script: yarn test
 
 # deploy:
 #   skip_cleanup: true
@@ -69,8 +88,6 @@ script:
 #     branch: solutions-pro
 #     condition: $SHOULD_DEPLOY
 
-after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
