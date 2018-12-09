@@ -39,12 +39,14 @@ jobs:
       env: DB_TYPE=sqlite
       install: yarn install --no-optional --non-interactive
     - node_js: 'stable'
+      name: 'PostgreSQL'
       env: DB_TYPE=pg
     - node_js: 'stable'
+      name: 'MySQL'
       env: DB_TYPE=mysql
 
     - stage: 'Additional Tests'
-    - node_js: '6'
+      node_js: '6'
       env: DB_TYPE=mysql
     - node_js: '8'
       env: DB_TYPE=mysql
@@ -60,6 +62,7 @@ jobs:
       install: yarn install --no-optional --non-interactive
 
     - stage: 'Deploy'
+      node_js: stable
       script: yarn semantic-release
 
 install: yarn install --non-interactive --no-lockfile
