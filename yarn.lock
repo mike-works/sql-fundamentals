@@ -2519,7 +2519,7 @@ express-validator@5.3.0:
     lodash "^4.17.10"
     validator "^10.4.0"
 
-express-winston@^2.0.0:
+express-winston@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/express-winston/-/express-winston-2.6.0.tgz#3e94a8b5934e8971119653ad18f031274e3a2cb7"
   integrity sha512-m4qvQrrIErAZFMQman8CKnQB8sgVG0dSp/wRFv1ZyoWPpP/6waDZywteAdjMF57uJ5+9O7tkwZb5k9w80ZyvAA==
@@ -6286,7 +6286,7 @@ sql-formatter@2.3.2:
   dependencies:
     lodash "^4.16.0"
 
-sql-template-strings@^2.2.2:
+sql-template-strings@2.2.2, sql-template-strings@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/sql-template-strings/-/sql-template-strings-2.2.2.tgz#3f11508a25addfce217a3042a9d300c3193b96ff"
   integrity sha1-PxFQiiWt384hejBCqdMAwxk7lv8=
@@ -7107,7 +7107,7 @@ winston@2.1.x:
     pkginfo "0.3.x"
     stack-trace "0.0.x"
 
-winston@^2.0.0:
+winston@2.4.4:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.4.tgz#a01e4d1d0a103cf4eada6fc1f886b3110d71c34b"
   integrity sha512-NBo2Pepn4hK4V01UfcWcDlmiVTs7VTB1h7bgnB0rgP146bYhMxX0ypCz3lBOfNxCO4Zuek7yeT+y/zM1OfMw4Q==
