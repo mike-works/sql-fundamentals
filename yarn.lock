@@ -1406,15 +1406,15 @@ db-migrate-shared@^1.2.0:
     db-migrate-base "^1.2.5"
     sqlite3 "^4.0.0"
 
-db-migrate@0.11.4:
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.4.tgz#be12bbbbeaeee45a5766c49a09758999740934f7"
-  integrity sha512-8vVQ1LP8NpO2BTooEUV0qKOwAYp/enbloSA1ZYyHzvvWyer6eqX8RnkBGoPiyt3niibN8VdzidL96Kywg9Yo7w==
+db-migrate@0.11.5:
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.5.tgz#39c7559ed5fd0619de4f07d7f94ed9e40efb1340"
+  integrity sha512-2HSBOQBaKwq93OpMfdBR9O9gm3eTRgj4HB+Zzy7/YJxxNuxGKY9JDCe/Mb0QRlYqxVQDFUJCJRZcDVxadAUDgg==
   dependencies:
     balanced-match "^1.0.0"
     bluebird "^3.1.1"
     db-migrate-shared "^1.2.0"
-    deep-extend "^0.5.1"
+    deep-extend "^0.6.0"
     dotenv "^5.0.1"
     final-fs "^1.6.0"
     inflection "^1.10.0"
@@ -1490,11 +1490,6 @@ deep-equal@~0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-0.2.2.tgz#84b745896f34c684e98f2ce0e42abaf43bba017d"
   integrity sha1-hLdFiW80xoTpjyzg5Cq69Du6AX0=
-
-deep-extend@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.1.tgz#b894a9dd90d3023fbf1c55a394fb858eb2066f1f"
-  integrity sha512-N8vBdOa+DF7zkRrDCsaOXoCs/E2fJfx9B9MrKnnSiHNh4ws7eSys6YQE4KvT1cecKmOASYQBhbKjeuDD9lT81w==
 
 deep-extend@^0.6.0:
   version "0.6.0"
