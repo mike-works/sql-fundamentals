@@ -43,7 +43,7 @@
     "express-winston": "2.6.0",
     "fs-extra": "7.0.1",
     "lodash": "4.17.11",
-    "moment": "2.23.0",
+    "moment": "2.24.0",
     "scripty": "1.9.0",
     "server-timing": "2.1.0",
     "sql-formatter": "2.3.2",
