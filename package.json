@@ -64,7 +64,7 @@
     "@types/accounting": "0.4.1",
     "@types/body-parser": "1.17.0",
     "@types/chai": "4.1.7",
-    "@types/express": "4.16.0",
+    "@types/express": "4.16.1",
     "@types/express-handlebars": "0.0.30",
     "@types/fs-extra": "5.0.4",
     "@types/handlebars": "4.0.40",
