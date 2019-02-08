@@ -80,7 +80,7 @@
     "json-typescript": "1.1.0",
     "mocha": "5.2.0",
     "mocha-typescript": "1.1.17",
-    "nodemon": "1.18.9",
+    "nodemon": "1.18.10",
     "semantic-release": "15.13.3",
     "source-map-support": "0.5.10",
     "sql-template-strings": "2.2.2",
