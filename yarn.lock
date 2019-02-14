@@ -284,10 +284,10 @@
   dependencies:
     moment ">=2.14.0"
 
-"@types/pg@7.4.12":
-  version "7.4.12"
-  resolved "https://registry.yarnpkg.com/@types/pg/-/pg-7.4.12.tgz#cfdc4d5406f868771580a1d58782cc7e4ef844d1"
-  integrity sha512-P/JedqSnce/8lOzyfo0M0Fm0IAwGWaoRlr3qW5a7ENwIxX4r4tNK+Rhu8edZcty7quYtgRQQqn/9otEqugZR2g==
+"@types/pg@7.4.13":
+  version "7.4.13"
+  resolved "https://registry.yarnpkg.com/@types/pg/-/pg-7.4.13.tgz#4630494096bceee5ee562339502e3448c09703a8"
+  integrity sha512-jk/hFADnywyjnWXZ6IeNsAk2lZtKDInZWGs1ASxmLb3QBpwLDGcSvH5s6IIRlPqsXjwzu8btnNbQ5Cx+AX/CjA==
   dependencies:
     "@types/node" "*"
     "@types/pg-types" "*"
