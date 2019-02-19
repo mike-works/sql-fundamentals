@@ -44,7 +44,7 @@
     "fs-extra": "7.0.1",
     "lodash": "4.17.11",
     "moment": "2.24.0",
-    "scripty": "1.9.0",
+    "scripty": "1.9.1",
     "server-timing": "2.1.0",
     "sql-formatter": "2.3.2",
     "sqlite": "3.0.2",
