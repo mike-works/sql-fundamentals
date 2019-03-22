@@ -5572,10 +5572,10 @@ sqlite3@^4.0.0:
     node-pre-gyp "^0.10.3"
     request "^2.87.0"
 
-sqlite@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-3.0.2.tgz#5589e980a070b39e0b8810d723485285a87b9f2c"
-  integrity sha512-catQuNRzqiLcMBLKM4oSM+Toim9yrHKhsrh2iOgIvyOvKVOqXmOmOZpH3gnAecGCkqQ+DjbPCJczpJNnFzYq6Q==
+sqlite@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-3.0.3.tgz#3f519cfc599ffa3270d76f3567bf2abb2ac18742"
+  integrity sha512-DpofdtBibbiOObtdADGZYE6bvnLpjRG4ut/MDTDau2nK40htOLj1E0c55aOkvbnRVqQ0ZPtjj7PJuKKyS0Ypww==
   dependencies:
     sqlite3 "^4.0.0"
   optionalDependencies:
