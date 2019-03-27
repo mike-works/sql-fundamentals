@@ -77,7 +77,7 @@
     "@types/ws": "6.0.1",
     "chai": "4.2.0",
     "db-migrate-plugin-typescript": "2.0.0",
-    "json-typescript": "1.1.0",
+    "json-typescript": "1.1.1",
     "mocha": "6.0.2",
     "mocha-typescript": "1.1.17",
     "nodemon": "1.18.10",
