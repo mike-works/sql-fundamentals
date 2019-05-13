@@ -1398,10 +1398,10 @@ db-migrate-mysql@1.1.10:
     moment "^2.11.2"
     mysql "^2.10.2"
 
-db-migrate-pg@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-0.5.0.tgz#d0536604078e45b9a34e146102ce22cba4982f76"
-  integrity sha512-w2dEET339c+FiRgyWWtYo2s5Va0HOzQjLdtAmccB5hMmHsivuAlZd7etzewQCcE2wZPOe9GvMh70/UBt/yE24A==
+db-migrate-pg@0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-0.5.1.tgz#d42ca6ed497fe5aa1a39c762bd844f89e1e1e8c4"
+  integrity sha512-vbWE4uEjvddENHYgghomTcFAU/JW7sO+U7EYgNZWDl64f64KYtF2oqUr8iKHXKvCPGzhbub+88lV0s7ZCdJ8nA==
   dependencies:
     bluebird "^3.1.1"
     db-migrate-base "^1.6.3"
