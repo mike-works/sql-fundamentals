@@ -38,7 +38,7 @@
     "db-migrate": "0.11.5",
     "db-migrate-sqlite3": "github:mike-north/db-migrate-sqlite",
     "express": "4.16.4",
-    "express-handlebars": "3.0.0",
+    "express-handlebars": "3.0.2",
     "express-validator": "5.3.1",
     "express-winston": "2.6.0",
     "fs-extra": "7.0.1",
