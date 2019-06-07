@@ -207,10 +207,10 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
   integrity sha512-KEIlhXnIutzKwRbQkGWb/I4HFqBuUykAdHgDED6xqwXJfONCjF5VoE0cXEiurh3XauygxzeDzgtXUqvLkxFzzA==
 
-"@types/express-handlebars@0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@types/express-handlebars/-/express-handlebars-0.0.31.tgz#20c65266a2231c5720365350b6886cee5d758dfa"
-  integrity sha512-XPgSg9J8ZOhGnEQByjwIRt1HkacyVRLFdtHJmZ4s3zxuYuQlV4G6Ly/nWbwkkrMBuFa0JOMnm0m9dkNTZZYswA==
+"@types/express-handlebars@0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/express-handlebars/-/express-handlebars-0.0.32.tgz#d48c19ebe49760d51cbddf23b72695c0cebda7e0"
+  integrity sha512-VyKYYg+Hn4M0L818uMipMA2I1WDGWcAnr/OnBJeQHcNfFWcptu2iJhebwS616ZzLHi6dj/NfOVEaPLXn2xKf7w==
 
 "@types/express-serve-static-core@*":
   version "4.16.0"
