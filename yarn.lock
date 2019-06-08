@@ -1442,10 +1442,10 @@ db-migrate-shared@^1.2.0:
     db-migrate-base "^1.2.5"
     sqlite3 "^4.0.0"
 
-db-migrate@0.11.5:
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.5.tgz#39c7559ed5fd0619de4f07d7f94ed9e40efb1340"
-  integrity sha512-2HSBOQBaKwq93OpMfdBR9O9gm3eTRgj4HB+Zzy7/YJxxNuxGKY9JDCe/Mb0QRlYqxVQDFUJCJRZcDVxadAUDgg==
+db-migrate@0.11.6:
+  version "0.11.6"
+  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.6.tgz#06fce6bc7f93c4e06ae7b00de33378ac8fc991ee"
+  integrity sha512-HdX4V/RFVSFE+9XjiVZ3K6ofTXtd8KAam+IE14ln+1RWLGUJ1Qo8HFjEs6H3u01yRnCzvHGU0/oNkllf+ZtjVA==
   dependencies:
     balanced-match "^1.0.0"
     bluebird "^3.1.1"
