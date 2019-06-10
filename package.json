@@ -46,7 +46,7 @@
     "moment": "2.24.0",
     "scripty": "1.9.1",
     "server-timing": "2.1.0",
-    "sql-formatter": "2.3.2",
+    "sql-formatter": "2.3.3",
     "sqlite": "3.0.3",
     "sqlite3": "4.0.6",
     "winston": "2.4.4",
