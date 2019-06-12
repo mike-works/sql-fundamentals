@@ -81,7 +81,7 @@
     "mocha": "6.1.4",
     "mocha-typescript": "1.1.17",
     "nodemon": "1.19.1",
-    "semantic-release": "15.13.12",
+    "semantic-release": "15.13.16",
     "source-map-support": "0.5.12",
     "sql-template-strings": "2.2.2",
     "ts-node": "5.0.1",
