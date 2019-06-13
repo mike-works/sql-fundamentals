@@ -48,7 +48,7 @@
     "server-timing": "2.1.0",
     "sql-formatter": "2.3.3",
     "sqlite": "3.0.3",
-    "sqlite3": "4.0.6",
+    "sqlite3": "4.0.9",
     "winston": "2.4.4",
     "ws": "6.2.1"
   },
