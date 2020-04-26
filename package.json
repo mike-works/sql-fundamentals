@@ -68,7 +68,7 @@
     "@types/express-handlebars": "0.0.32",
     "@types/fs-extra": "7.0.0",
     "@types/handlebars": "4.0.40",
-    "@types/lodash": "4.14.134",
+    "@types/lodash": "4.14.150",
     "@types/mocha": "5.2.7",
     "@types/mysql2": "github:types/mysql2",
     "@types/node": "10.14.10",
