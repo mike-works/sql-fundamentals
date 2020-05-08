@@ -3730,10 +3730,10 @@ mute-stream@~0.0.4:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
 
-mysql2@1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-1.6.5.tgz#6695304fa2ce793dda5c98e8bbec65cbd2e6cb9d"
-  integrity sha512-zedaOOyb3msuuZcJJnxIX/EGOpmljDG7B+UevRH5lqcv+yhy9eCwkArBz8/AO+/rlY3/oCsOdG8R5oD6k0hNfg==
+mysql2@1.6.6:
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-1.6.6.tgz#e4d1038fbc18c0e7c8a5dc19e2d195bd139ffde4"
+  integrity sha512-zQhzZKRavQKwQPmsDw6YYCPivzfERMIxkzoUt33k489DrKF2rm6wyovzy7tyrEbwMPEqrdd7eZ5i1m9eOD+P8w==
   dependencies:
     denque "^1.4.0"
     generate-function "^2.3.1"
