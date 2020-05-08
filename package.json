@@ -65,7 +65,7 @@
     "@types/body-parser": "1.17.0",
     "@types/chai": "4.1.7",
     "@types/express": "4.17.6",
-    "@types/express-handlebars": "0.0.32",
+    "@types/express-handlebars": "0.0.33",
     "@types/fs-extra": "7.0.0",
     "@types/handlebars": "4.0.40",
     "@types/lodash": "4.14.150",
