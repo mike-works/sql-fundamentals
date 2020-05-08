@@ -1478,10 +1478,10 @@ db-migrate-base@^1.2.5:
   dependencies:
     bluebird "^3.1.1"
 
-db-migrate-base@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/db-migrate-base/-/db-migrate-base-2.0.0.tgz#409bf81d679a1974f39cfb87fe20f08bc1cdf4b0"
-  integrity sha512-GRZviOejHiiluJCAG59RxVTaDMzTTrPe2HWx44p48aigoBrr0N9NwMVs9CYEPclBuvZZLOLphQR0V6cQLHACqA==
+db-migrate-base@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/db-migrate-base/-/db-migrate-base-2.3.0.tgz#e1539c733caa6de59bb06db6b230a8fd451c081f"
+  integrity sha512-mxaCkSe7JC2uksvI/rKs+wOQGBSZ6B87xa4b3i+QhB+XRBpGdpMzldKE6INf+EnM6kwhbIPKjyJZgyxui9xBfQ==
   dependencies:
     bluebird "^3.1.1"
 
@@ -1495,13 +1495,13 @@ db-migrate-mysql@1.1.10:
     moment "^2.11.2"
     mysql "^2.10.2"
 
-db-migrate-pg@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-1.0.0.tgz#a644ed700b0905465e05b497dd321785e7ace183"
-  integrity sha512-mdkT1KY8uE+uEWNEznXvhYGu8xQUGLgI+LiXk+2OyDvqoSl87RWKSLF8UaJTgqtl62f6BatMUymGNTzMSSRpuA==
+db-migrate-pg@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-1.2.1.tgz#be6136b93bc1223cb91d09cc16360fe0f0e171eb"
+  integrity sha512-W093cXrXDYQatVuLpJvuEYuua2mzbK4YH7y5MuvUPrKYhVrEvh2v5DwEmkM7xanXENAggOn9lfzcGaiCy8IosA==
   dependencies:
     bluebird "^3.1.1"
-    db-migrate-base "^2.0.0"
+    db-migrate-base "^2.3.0"
     pg "^7.8.0"
     semver "^5.0.3"
 
