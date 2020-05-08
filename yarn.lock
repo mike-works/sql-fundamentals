@@ -5495,10 +5495,10 @@ serve-static@1.14.1:
     parseurl "~1.3.3"
     send "0.17.1"
 
-server-timing@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/server-timing/-/server-timing-2.1.0.tgz#bd83a0f9b9e38df5026f4b64a764cfcf85243458"
-  integrity sha512-RMJ15R2BvNG12RJZwp38Hc6pG19SN7XbMdcnrQUMYm61P3eaJEOBY5sp+u28bG24vKSUImxZodrIGPXA6JCV/g==
+server-timing@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/server-timing/-/server-timing-2.1.1.tgz#e122b27daf7b47ebcc272b806bed98faf0239ebc"
+  integrity sha512-fiyGRZZnFip0QtuENlu7FShK55EKP1/PgaD2Yk3JCE3rxxI3tApWHlvYRvg5zQeQ6WL/6WQ6ah9mL0pTHadv6w==
   dependencies:
     on-headers "^1.0.1"
 
