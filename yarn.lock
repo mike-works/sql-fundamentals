@@ -321,10 +321,10 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
-"@types/sqlite3@3.1.5":
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.5.tgz#c9bbc94b8e8ed0654e1f8bc98716aba6030e9533"
-  integrity sha512-upsrd1zEYMa4Y+prurQ+vpo5SN63BUF6tOjeTv3ziF+9W9PHVh4/S5cy0qAqkHvmOEm/AZhEKd7V/0bR2udmFw==
+"@types/sqlite3@3.1.6":
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.6.tgz#554ce76f886eb187cfc86e2f0bb67cbac4f568ce"
+  integrity sha512-OBsK0KIGUICExQ/ZvnPY4cKx5Kz4NcrVyGTIvOL5y4ajXu7r++RfBajfpGfGDmDVCKcoCDX1dO84/oeyeITnxA==
   dependencies:
     "@types/node" "*"
 
