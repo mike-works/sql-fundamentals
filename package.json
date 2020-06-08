@@ -71,7 +71,7 @@
     "@types/lodash": "4.14.155",
     "@types/mocha": "5.2.7",
     "@types/mysql2": "github:types/mysql2",
-    "@types/node": "10.17.24",
+    "@types/node": "10.17.25",
     "@types/pg": "7.14.3",
     "@types/sqlite3": "3.1.6",
     "@types/ws": "6.0.4",
