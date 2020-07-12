@@ -72,7 +72,7 @@
     "@types/mocha": "5.2.7",
     "@types/mysql2": "github:types/mysql2",
     "@types/node": "10.17.27",
-    "@types/pg": "7.14.3",
+    "@types/pg": "7.14.4",
     "@types/sqlite3": "3.1.6",
     "@types/ws": "6.0.4",
     "chai": "4.2.0",
