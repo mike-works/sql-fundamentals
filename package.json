@@ -50,7 +50,7 @@
     "sqlite": "3.0.6",
     "sqlite3": "4.2.0",
     "winston": "2.4.5",
-    "ws": "6.2.1"
+    "ws": "7.4.5"
   },
   "optionalDependencies": {
     "db-migrate-mysql": "1.1.10",
