@@ -69,7 +69,7 @@
     "@types/fs-extra": "7.0.0",
     "@types/handlebars": "4.0.40",
     "@types/lodash": "4.14.170",
-    "@types/mocha": "5.2.7",
+    "@types/mocha": "8.2.3",
     "@types/mysql2": "github:types/mysql2",
     "@types/node": "10.17.60",
     "@types/pg": "7.14.11",
