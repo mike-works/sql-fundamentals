@@ -33,7 +33,7 @@
   "dependencies": {
     "accounting": "0.4.1",
     "body-parser": "1.19.0",
-    "chalk": "2.4.2",
+    "chalk": "4.1.2",
     "cli-highlight": "2.1.11",
     "db-migrate": "0.11.12",
     "db-migrate-sqlite3": "github:mike-north/db-migrate-sqlite",
