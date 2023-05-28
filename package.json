@@ -47,7 +47,7 @@
     "scripty": "1.9.1",
     "server-timing": "2.1.1",
     "sql-formatter": "2.3.4",
-    "sqlite": "3.0.6",
+    "sqlite": "4.2.1",
     "sqlite3": "4.2.0",
     "winston": "2.4.5",
     "ws": "6.2.2"
