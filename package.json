@@ -84,7 +84,7 @@
     "semantic-release": "15.14.0",
     "source-map-support": "0.5.19",
     "sql-template-strings": "2.2.2",
-    "ts-node": "5.0.1",
+    "ts-node": "10.9.2",
     "tslint": "5.13.1",
     "typescript": "3.3.4000"
   }
