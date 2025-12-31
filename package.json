@@ -48,7 +48,7 @@
     "server-timing": "2.1.1",
     "sql-formatter": "2.3.4",
     "sqlite": "3.0.6",
-    "sqlite3": "4.2.0",
+    "sqlite3": "5.1.7",
     "winston": "2.4.5",
     "ws": "6.2.3"
   },
@@ -73,7 +73,7 @@
     "@types/mysql2": "github:types/mysql2",
     "@types/node": "10.17.60",
     "@types/pg": "7.14.11",
-    "@types/sqlite3": "3.1.7",
+    "@types/sqlite3": "5.1.0",
     "@types/ws": "6.0.4",
     "chai": "4.3.4",
     "db-migrate-plugin-typescript": "2.0.0",
