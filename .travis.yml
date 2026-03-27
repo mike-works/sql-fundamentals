@@ -46,18 +46,18 @@ jobs:
       name: 'Fixed Dependencies'
       env: DB_TYPE=sqlite
       install: yarn install --no-optional --non-interactive
-    - node_js: '10'
+    - node_js: 'v10.24.1'
       env: DB_TYPE=mysql
-    - node_js: '8'
+    - node_js: 'v8.17.0'
       env: DB_TYPE=mysql
-    - node_js: '10'
+    - node_js: 'v10.24.1'
       env: DB_TYPE=pg
-    - node_js: '8'
+    - node_js: 'v8.17.0'
       env: DB_TYPE=pg
-    - node_js: '10'
+    - node_js: 'v10.24.1'
       env: DB_TYPE=sqlite
       install: yarn install --no-optional --non-interactive
-    - node_js: '8'
+    - node_js: 'v8.17.0'
       env: DB_TYPE=sqlite
       install: yarn install --no-optional --non-interactive
 
