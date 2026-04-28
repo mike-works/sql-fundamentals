@@ -378,10 +378,10 @@
     "@types/node" "*"
     "@types/send" "<1"
 
-"@types/sqlite3@3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.7.tgz#84fbc65946603d15cff4968d0cb283d1879dd156"
-  integrity sha512-8FHV/8Uzd7IwdHm5mvmF2Aif4aC/gjrt4axWD9SmfaxITnOjtOhCbOSTuqv/VbH1uq0QrwlaTj9aTz3gmR6u4w==
+"@types/sqlite3@3.1.11":
+  version "3.1.11"
+  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.11.tgz#845044b81585f1fcc143ee8d963ca5da63d0e768"
+  integrity sha512-KYF+QgxAnnAh7DWPdNDroxkDI3/MspH1NMx6m/N/6fT1G6+jvsw4/ZePt8R8cr7ta58aboeTfYFBDxTJ5yv15w==
   dependencies:
     "@types/node" "*"
 
