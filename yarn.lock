@@ -1596,10 +1596,10 @@ db-migrate-shared@^1.2.0:
     db-migrate-base "^1.2.5"
     sqlite3 "^4.0.0"
 
-db-migrate@0.11.12:
-  version "0.11.12"
-  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.12.tgz#2798fc46da51fc2589497d462f3c6116802cfb6a"
-  integrity sha512-HUS8T5A3sKGCi+hz9XMKMwAKfU9sqhpDufW9nbVSRc5wxDO695uxA5lDe+If0OdvwwQOVxOnEZqkzAAxgyeFWg==
+db-migrate@0.11.14:
+  version "0.11.14"
+  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.14.tgz#a9fb80e70adc281355f5be3cf6eec141ffd1be5a"
+  integrity sha512-8e+/YsIlM3d69hj+cb6qG6WyubR8nwXfDf9gGLWl4AxHpI6mTomcqhRLNfPrs7Le7AZv2eEsgK8hkXDSQqfIvg==
   dependencies:
     balanced-match "^1.0.0"
     bluebird "^3.1.1"
